@@ -1,6 +1,9 @@
 import Image from "next/image";
+import Form from 'next/form';
+import { calc } from "./calc";
 
 export default function Home() {
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -12,6 +15,21 @@ export default function Home() {
           height={38}
           priority
         />
+        <Form action={calc}>
+          <div className="flex gap-2 flex-col">
+            <label htmlFor="capital">Eigenkapital</label>
+            <input type="number" className="border-stone-700 border rounded-lg" id="captital" name="capital" />
+            <label htmlFor="creditSum">Kreditsumme</label>
+            <input type="number" className="border-stone-700 border rounded-lg" id="creditSum" name="creditSum" />
+            <label htmlFor="interestRate">Zins</label>
+            <input type="number" className="border-stone-700 border rounded-lg" id="interestRate" name="interestRate" />
+            <label htmlFor="rent">Miete</label>
+            <input type="number" className="border-stone-700 border rounded-lg" id="rent" name="rent" />
+            <label htmlFor="monthlyRate">Monatsrate</label>
+            <input type="number" className="border-stone-700 border rounded-lg" id="monthylRate" name="monthlyRate" />
+            <button type="submit"/>
+          </div>
+        </Form>
         <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2 tracking-[-.01em]">
             Get started by editing{" "}
