@@ -9,21 +9,6 @@ import { useState } from "react";
 export default function Home() {
   const [armotizationTable, setArmotizationTable] = useState<any[]>([]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-
-    const formData = new FormData(event.currentTarget);
-    const capital = parseFloat(formData.get('capital') as string) || 0;
-    const creditSum = parseFloat(formData.get('creditSum') as string) || 0;
-    const interestRate = parseFloat(formData.get('interestRate') as string) || 0;
-    const monthlyRate = parseFloat(formData.get('monthlyRate') as string) || 0;
-
-    // Calculate the principal for the amortization table
-    const principalForCalculation = creditSum - capital;
-
-    setArmotizationTable(calcTilgung(principalForCalculation, interestRate, monthlyRate));
-  }
-
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -35,31 +20,7 @@ export default function Home() {
           height={38}
           priority
         />
-        <div>
-          <table>
-            <thead>
-              <tr className="">
-                <th className="px-4 py-2">Jahr</th>
-                <th className="px-4 py-2">Zins</th>
-                <th className="px-4 py-2">Tilgung</th>
-                <th className="px-4 py-2">Jährliche Rate</th>
-                <th className="px-4 py-2">Restschuld</th>
-              </tr>
-            </thead>
-            <tbody>
-              {armotizationTable.map(x => (
-                <tr key={x.year} className="even:bg-[#0f0f0f] border-t border-gray-950">
-                  <td className="px-4 py-2">{x.year}</td>
-                  <td className="px-4 py-2">{Math.round(x.interest).toLocaleString()}</td>
-                  <td className="px-4 py-2">{Math.round(x.principal).toLocaleString()}</td>
-                  <td className="px-4 py-2">{x.yearlyRate.toLocaleString()}</td>
-                  <td className="px-4 py-2">{Math.round(x.remainingPrincipal).toLocaleString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <Form action={calc} onSubmit={handleSubmit}>
+        <Form action={calc}>
           <div className="flex gap-2 flex-col">
             <label htmlFor="capital">Eigenkapital</label>
             <input type="number" className="border-stone-700 border rounded-lg" id="captital" name="capital" />
