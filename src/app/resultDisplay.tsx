@@ -34,6 +34,9 @@ export default function ResultDisplay() {
           if (!result) {
             return;
           }
+          const tilgungungsTabelle = calcTilgung(result[0]);
+          console.log(tilgungungsTabelle);
+          setData(tilgungungsTabelle);
         } catch (e) {
           console.error(e);
         }
