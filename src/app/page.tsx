@@ -1,8 +1,28 @@
+'use client';
+
 import Image from "next/image";
 import Form from 'next/form';
 import { calc } from "./calc";
+import Link from "next/link";
+import { useState } from "react";
 
 export default function Home() {
+  const [armotizationTable, setArmotizationTable] = useState<any[]>([]);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevent the default form submission behavior
+
+    const formData = new FormData(event.currentTarget);
+    const capital = parseFloat(formData.get('capital') as string) || 0;
+    const creditSum = parseFloat(formData.get('creditSum') as string) || 0;
+    const interestRate = parseFloat(formData.get('interestRate') as string) || 0;
+    const monthlyRate = parseFloat(formData.get('monthlyRate') as string) || 0;
+
+    // Calculate the principal for the amortization table
+    const principalForCalculation = creditSum - capital;
+
+    setArmotizationTable(calcTilgung(principalForCalculation, interestRate, monthlyRate));
+  }
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -15,7 +35,31 @@ export default function Home() {
           height={38}
           priority
         />
-        <Form action={calc}>
+        <div>
+          <table>
+            <thead>
+              <tr className="">
+                <th className="px-4 py-2">Jahr</th>
+                <th className="px-4 py-2">Zins</th>
+                <th className="px-4 py-2">Tilgung</th>
+                <th className="px-4 py-2">Jährliche Rate</th>
+                <th className="px-4 py-2">Restschuld</th>
+              </tr>
+            </thead>
+            <tbody>
+              {armotizationTable.map(x => (
+                <tr key={x.year} className="even:bg-[#0f0f0f] border-t border-gray-950">
+                  <td className="px-4 py-2">{x.year}</td>
+                  <td className="px-4 py-2">{Math.round(x.interest).toLocaleString()}</td>
+                  <td className="px-4 py-2">{Math.round(x.principal).toLocaleString()}</td>
+                  <td className="px-4 py-2">{x.yearlyRate.toLocaleString()}</td>
+                  <td className="px-4 py-2">{Math.round(x.remainingPrincipal).toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <Form action={calc} onSubmit={handleSubmit}>
           <div className="flex gap-2 flex-col">
             <label htmlFor="capital">Eigenkapital</label>
             <input type="number" className="border-stone-700 border rounded-lg" id="captital" name="capital" />
@@ -27,16 +71,17 @@ export default function Home() {
             <input type="number" className="border-stone-700 border rounded-lg" id="rent" name="rent" />
             <label htmlFor="monthlyRate">Monatsrate</label>
             <input type="number" className="border-stone-700 border rounded-lg" id="monthylRate" name="monthlyRate" />
-            <button type="submit"/>
+            <button type="submit" />
           </div>
         </Form>
         <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
+            <Link href="/graph">
+              Show results{" "}
+              <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
+              ->
+              </code>
+            </Link>
           </li>
           <li className="tracking-[-.01em]">
             Save and see your changes instantly.

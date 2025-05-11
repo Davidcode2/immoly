@@ -2,35 +2,24 @@
 import { redirect } from 'next/navigation';
 import { connect, disconnect } from './lib/db'; // Adjust the import path as needed
 
-type Scenario = {
-  creditSum: number;
-  interestRate: number;
-  monthlyRate: number;
-  capital: number;
-  rent: number;
-  months: number;
-};
-
 export async function calc(formData: FormData) {
-  const creditSum = Number(formData.get('creditSum'));
+  const principal = Number(formData.get('creditSum'));
   const interest = Number(formData.get('interestRate'));
   const monthlyRate = Number(formData.get('monthlyRate'));
   const capital = Number(formData.get('capital'));
   const rent = Number(formData.get('rent'));
 
-  const rateFixation = 10;
-
-  const yearlyRate = (creditSum * interest) / 100;
+  const yearlyRate = calcYearlyRate(principal, interest);
 
   const client = await connect();
   try {
     const query = `
-      INSERT INTO calculations (credit_sum, interest_rate, monthly_rate, capital, rent, yearly_rate)
+      INSERT INTO calculations (principal, interest_rate, monthly_rate, down_payment, rent, annual_percentage_rate)
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING id;
     `;
     const values = [
-      creditSum,
+      principal,
       interest,
       monthlyRate,
       capital,
@@ -46,3 +35,8 @@ export async function calc(formData: FormData) {
     await disconnect();
   }
 }
+
+function calcYearlyRate(creditSum: number, interest: number) {
+  return (creditSum * interest) / 100;
+}
+
