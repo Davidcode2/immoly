@@ -3,10 +3,10 @@ import { redirect } from 'next/navigation';
 import { connect, disconnect } from './lib/db'; // Adjust the import path as needed
 
 export async function calc(formData: FormData) {
-  const principal = Number(formData.get('creditSum'));
-  const interest = Number(formData.get('interestRate'));
-  const monthlyRate = Number(formData.get('monthlyRate'));
-  const capital = Number(formData.get('capital'));
+  const capital = Number(formData.get('down_payment'));
+  const principal = Number(formData.get('principal'));
+  const interest = Number(formData.get('interest_rate'));
+  const monthlyRate = Number(formData.get('monthly_rate'));
   const rent = Number(formData.get('rent'));
 
   const yearlyRate = calcYearlyRate(principal, interest);

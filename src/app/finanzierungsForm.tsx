@@ -51,18 +51,28 @@ export default function FinanzierungsForm({ values, setInput }: { values: any, s
   }, [values]);
 
   return (
-    <Form ref={formRef} action={calc}>
+    <Form action={calc}>
       <div className="flex gap-2 flex-col">
-        <label htmlFor="capital">Eigenkapital</label>
-        <input type="number" className="border-stone-700 border rounded-lg" id="captital" name="down_payment" value={downPayment} onChange={handleInputChange} />
-        <label htmlFor="creditSum">Kreditsumme</label>
-        <input type="number" className="border-stone-700 border rounded-lg" id="creditSum" name="principal" value={principalValue} onChange={handleInputChange} />
-        <label htmlFor="interestRate">Zins</label>
-        <input type="number" className="border-stone-700 border rounded-lg" id="interestRate" name="interest_rate" max="20" min="0.1" value={interestRate} onChange={handleInputChange} />
-        <label htmlFor="rent">Miete</label>
-        <input type="number" className="border-stone-700 border rounded-lg" id="rent" name="rent" value={rent} onChange={handleInputChange} />
-        <label htmlFor="monthlyRate">Monatsrate</label>
-        <input type="number" className="border-stone-700 border rounded-lg" id="monthylRate" name="monthly_rate" value={monthlyRate} onChange={handleInputChange} />
+        <div>
+          <label htmlFor="capital">Eigenkapital</label>
+          <input type="number" className="border-stone-700 border rounded-lg p-1" id="captital" name="down_payment" value={downPayment} onChange={handleInputChange} />
+        </div>
+        <div>
+          <label htmlFor="creditSum">Kreditsumme</label>
+          <input type="number" className="border-stone-700 border rounded-lg p-1" id="creditSum" name="principal" value={principalValue} onChange={handleInputChange} />
+        </div>
+        <div>
+          <label htmlFor="interestRate">Zins</label><br/>
+          <input type="decimal" className="border-stone-700 border rounded-lg p-1" id="interestRate" name="interest_rate" max="20" min="0.1" value={interestRate} onChange={handleInputChange} />
+        </div>
+        <div>
+          <label htmlFor="rent">Miete</label>
+          <input type="number" className="border-stone-700 border rounded-lg p-1" id="rent" name="rent" value={rent} onChange={handleInputChange} />
+        </div>
+        <div>
+          <label htmlFor="monthlyRate">Monatsrate</label>
+          <input type="number" className="border-stone-700 border rounded-lg p-1" id="monthylRate" name="monthly_rate" value={monthlyRate} onChange={handleInputChange} />
+        </div>
         <button type="submit" />
       </div>
     </Form>
