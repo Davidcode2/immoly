@@ -29,7 +29,6 @@ export async function calc(formData: FormData) {
     const result = await client.query(query, values);
 
     const calculationId = result.rows[0].id;
-    console.log('Inserted calculation with ID:', calculationId);
     redirect(`/graph?calculationId=${calculationId}`);
   } finally {
     await disconnect();

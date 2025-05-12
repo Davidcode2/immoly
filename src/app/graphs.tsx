@@ -3,7 +3,6 @@ import getCalculations from './lib/getCalculations';
 
 export default async function Graphs() {
   const calculationData = await getCalculations();
-  console.log(calculationData);
 
   return (
     <div className="grid grid-cols-4 items-center gap-16">

@@ -12,14 +12,11 @@ export default function FinanzierungsForm({ values, setInput }: { values: any, s
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(name);
     switch (name) {
       case 'down_payment':
-        console.log('down_payment', value);
         setDownPayment(value);
         break;
       case 'principal':
-        console.log('principal', value);
         setPrincipal(value);
         break;
       case 'interest_rate':

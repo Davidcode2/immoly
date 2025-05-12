@@ -18,7 +18,6 @@ export default function ResultDisplay() {
   useEffect(() => {
     async function loadData() {
       const tilgungungsTabelle = calcTilgung(input);
-      console.log(tilgungungsTabelle);
       setData(tilgungungsTabelle);
     }
     loadData();
@@ -29,13 +28,11 @@ export default function ResultDisplay() {
       if (calculationId) {
         try {
           const result = await getCalculation(calculationId);
-          console.log(result);
           setFormValues(result);
           if (!result) {
             return;
           }
           const tilgungungsTabelle = calcTilgung(result[0]);
-          console.log(tilgungungsTabelle);
           setData(tilgungungsTabelle);
         } catch (e) {
           console.error(e);
