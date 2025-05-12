@@ -5,11 +5,11 @@ export default async function Graphs() {
   const calculationData = await getCalculations();
 
   return (
-    <div className="grid grid-cols-4 items-center gap-16">
+    <div className="flex items-stretch gap-16 max-w-screen overflow-auto">
       {
-        calculationData && calculationData.map(calcResult => <div key={calcResult.id} className="rounded-md border border-purple-700 p-4">
-          <SingleGraph calculation={calcResult} />
-        </div>)
+        calculationData && calculationData.map(calcResult =>
+          <SingleGraph key={calcResult.id} calculation={calcResult} />
+        )
       }
     </div>
 

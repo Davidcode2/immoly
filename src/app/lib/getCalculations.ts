@@ -28,9 +28,26 @@ export async function getCalculation(id: string) {
       FROM calculations WHERE id = $1;
     `;
     const result = await client.query(query, [id]);
-    return result.rows.length > 0 ? result.rows as CalculationResult : null;
+    return result.rows.length > 0 ? result.rows as CalculationResult[] : null;
   } catch (error) {
     console.error('Error fetching calculations:', error);
+    return null;
+  } finally {
+    await disconnect();
+  }
+}
+
+export async function deleteItem(id: string) {
+  const client = await connect();
+  try {
+    const query = `
+      DELETE
+      FROM calculations WHERE id = $1;
+    `;
+    const result = await client.query(query, [id]);
+    return result.rowCount;
+  } catch (error) {
+    console.error('Error deleting calculation:', error);
     return null;
   } finally {
     await disconnect();

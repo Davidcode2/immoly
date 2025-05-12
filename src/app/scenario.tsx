@@ -21,7 +21,7 @@ export default function Scenario({ calculationId }: { calculationId: string }) {
       }
     }
     loadData();
-  }, []);
+  }, [calculationId]);
 
   const sumZinsen = data ? data.reduce((acc: number, row: any) => acc + row.interest, 0) : 0;
   const paidAfter = data ? (data.length >= 120 ? -1 : data.length) : 0;

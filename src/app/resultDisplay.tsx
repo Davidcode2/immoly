@@ -12,7 +12,7 @@ export default function ResultDisplay() {
   const [data, setData] = useState<any | null>(null);
   const [input, setInput] = useState<any | null>(null);
   const [formValues, setFormValues] = useState<any | null>(null);
-  const selectedScenarios: any[] = [19];
+  const [selectedScenario, setSelectedScenario] = useState<any | null>(18);
 
   const searchParams = useSearchParams();
   const calculationId = searchParams.get('calculationId');
@@ -26,6 +26,7 @@ export default function ResultDisplay() {
   }, [input]);
 
   useEffect(() => {
+    setSelectedScenario(calculationId ? Number(calculationId) - 1 : 19);
     async function loadData() {
       if (calculationId) {
         try {
@@ -68,11 +69,7 @@ export default function ResultDisplay() {
           {data && <Tilgungstabelle table={data as any} />}
         </div>
         <div className="col-start-3 text-sm overflow-auto max-h-[600px]">
-          {
-            selectedScenarios.map((calculationId: any) => {
-              return <Scenario calculationId={calculationId} />;
-            })
-          }
+          <Scenario calculationId={selectedScenario} />
         </div>
       </div>
     </div>
