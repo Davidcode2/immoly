@@ -43,11 +43,24 @@ export default function ResultDisplay() {
     loadData();
   }, [calculationId]);
 
+  const sumZinsen = (data && data.reduce((acc: number, row: any) => acc + row.interest, 0)) || 0;
+  const paidAfter = (data && data.length >= 120 ? -1 : data.length);
+
   return (
     <div className="grid grid-cols-[200px_1fr] gap-16">
       <FinanzierungsForm values={formValues} setInput={setInput} />
-      <div className="border border-slate-600 rounded-lg">
-        <div className="rounded-lg row-start-2 overflow-auto max-h-[600px]">
+      <div className="grid grid-cols-[180px_1fr] border border-slate-600 rounded-lg">
+        <div className="p-4 flex gap-y-2 flex-col">
+          {paidAfter === -1 ? <div className="text-red-500 font-bold">Das wird nichts</div> :
+            <div>Abgezahlt nach<br />
+              <span className="text-green-500 font-bold">{paidAfter}</span> Jahren
+            </div>
+          }
+          <div>Summe Zinsen { paidAfter === -1 && "nach 120 Jahren" }
+            <div className="text-amber-500 font-bold">{(Math.round(sumZinsen)).toLocaleString()}</div>
+          </div>
+        </div>
+        <div className="col-start-2 rounded-lg overflow-auto max-h-[600px]">
           {data && <Tilgungstabelle table={data as any} />}
         </div>
       </div>
