@@ -7,6 +7,7 @@ import Tilgungstabelle from "./tilgungsTabelle";
 import calcTilgung from "./lib/calculateArmotizaztionTable";
 import FinanzierungsForm from "./finanzierungsForm";
 import Scenario from "./scenario";
+import PlotlyChart from './chart';
 
 export default function ResultDisplay() {
   const [data, setData] = useState<any | null>(null);
@@ -46,14 +47,17 @@ export default function ResultDisplay() {
     loadData();
   }, [calculationId]);
 
+
   return (
     <div className="grid grid-cols-[200px_1fr] gap-16">
       <FinanzierungsForm values={formValues} setInput={setInput} />
       <div className="grid grid-cols-[180px_1fr_1fr] border border-slate-600 rounded-lg">
         <Scenario calculationId={selectedScenario} data={data} />
         <div className="col-start-2 rounded-lg text-sm overflow-auto max-h-[600px]">
+
           {data && <Tilgungstabelle table={data as any} />}
         </div>
+          <PlotlyChart data={data} />
         <div className="col-start-3 text-sm overflow-auto max-h-[600px]">
           <Scenario calculationId={selectedScenario} data={null} />
         </div>
