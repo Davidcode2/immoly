@@ -68,11 +68,11 @@ export default function FinanzierungsForm({ values, setInput }: { values: any, s
           <input type="number" className="border-stone-700 border rounded-lg p-1" id="creditSum" name="principal" value={principalValue} onChange={handleInputChange} />
         </div>
         <div>
-          <label htmlFor="interestRate">Zins</label><br/>
+          <label htmlFor="interestRate">Kreditzins</label><br/>
           <input type="decimal" className="border-stone-700 border rounded-lg p-1" id="interestRate" name="interest_rate" max="20" min="0.1" value={interestRate} onChange={handleInputChange} />
         </div>
         <div>
-          <label htmlFor="cashRoi">Kapitalerträge</label><br/>
+          <label htmlFor="cashRoi">Kapitalrendite</label><br/>
           <input type="decimal" className="border-stone-700 border rounded-lg p-1" id="cashRoi" name="cashRoi" max="20" min="0.1" value={cashRoi} onChange={handleInputChange} />
         </div>
         <div>
