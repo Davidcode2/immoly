@@ -9,9 +9,33 @@ interface ChartDataItem {
   Sparen: number;
 }
 
-export default function PlotlyChart({ data, rent }: { data: any, rent: number }) {
+export default function DevelopmentChart({ data, rent, interest = 4 }: { data: any, rent: number, interest: number }) {
   // State to hold the debounced and transformed data that the chart will render
   const [debouncedChartData, setDebouncedChartData] = useState<ChartDataItem[] | null>(null);
+
+  const calcInterest = () => {
+    const interestCalculations = data.reduce((acc: any, currentYearData: any) => {
+      const previousYearBalance = acc.length > 0 ? acc[acc.length - 1].endBalance : 0;
+      const annualSavings = currentYearData.yearlyRate - (rent * 12);
+
+      let balanceBeforeInterest = previousYearBalance + annualSavings;
+      let endBalance = balanceBeforeInterest * (1 + (interest / 100) );
+      let interestEarnedThisYear = endBalance - balanceBeforeInterest;
+
+
+      const yearResult = {
+        year: currentYearData.year,
+        startBalance: previousYearBalance,
+        annualSavings: annualSavings,
+        interestEarned: interestEarnedThisYear,
+        endBalance: endBalance,
+      };
+
+      acc.push(yearResult);
+      return acc;
+    }, []);
+    return interestCalculations;
+  }
 
   // useEffect hook to implement the debounce logic
   useEffect(() => {
@@ -28,10 +52,9 @@ export default function PlotlyChart({ data, rent }: { data: any, rent: number })
         if (x.year !== data.length) {
           return {
             name: x.year,
-            Zins: Math.floor(x.interest),
-            Tilgung: Math.floor(x.principal),
-            Sparen: Math.floor(x.yearlyRate - (rent * 12)),
-          }
+            Sparen: Math.floor(calcInterest().find((item: any) => item.year === x.year)?.endBalance || 0),
+            Getilgt: Math.floor((x.principal * x.year)),
+          };
         }
       });
       setDebouncedChartData(transformedData); // Update the state
@@ -55,9 +78,8 @@ export default function PlotlyChart({ data, rent }: { data: any, rent: number })
       <XAxis dataKey="name" />
       <Tooltip />
       <CartesianGrid stroke="#27232b" />
-      <Line type="monotone" dataKey="Zins" stroke="#ff7300" />
-      <Line type="monotone" dataKey="Tilgung" stroke="#387908" />
       <Line type="monotone" dataKey="Sparen" stroke="#a87908" />
+      <Line type="monotone" dataKey="Getilgt" stroke="#2d7d15" />
     </LineChart>
   );
 }

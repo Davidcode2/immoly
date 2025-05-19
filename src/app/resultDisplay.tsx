@@ -8,6 +8,7 @@ import calcTilgung from "./lib/calculateArmotizaztionTable";
 import FinanzierungsForm from "./finanzierungsForm";
 import Scenario from "./scenario";
 import PlotlyChart from './chart';
+import DevelopmentChart from "./developmentChart";
 
 export default function ResultDisplay() {
   const [data, setData] = useState<any | null>(null);
@@ -57,9 +58,9 @@ export default function ResultDisplay() {
 
           {data && <Tilgungstabelle table={data as any} />}
         </div>
-          <PlotlyChart data={data} />
-        <div className="col-start-3 text-sm overflow-auto max-h-[600px]">
-          <Scenario calculationId={selectedScenario} data={null} />
+        <div className="col-start-3">
+          <PlotlyChart data={data} rent={input?.rent} />
+          <DevelopmentChart data={data} rent={input?.rent} interest={input?.cashRoi} />
         </div>
       </div>
     </div>
