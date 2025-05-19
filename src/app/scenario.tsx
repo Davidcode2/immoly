@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { getCalculation } from "./lib/getCalculations";
 import calcTilgung from "./lib/calculateArmotizaztionTable";
+import ScenarioTextDisplay from "./scenarioTextDisplay";
 
-export default function Scenario({ calculationId }: { calculationId: string }) {
-  const [data, setData] = useState<any | null>(null);
+export default function Scenario({ calculationId, data }: { calculationId: string, data: any }) {
+  const [_data, setData] = useState<any | null>(null);
+
+  if (!data) {
+    data = _data;
+  }
 
   useEffect(() => {
     async function loadData() {
@@ -28,16 +33,6 @@ export default function Scenario({ calculationId }: { calculationId: string }) {
   const paidInYear = new Date().getFullYear() + paidAfter;
 
   return (
-    <div className="p-4 flex gap-y-2 flex-col">
-      {paidAfter === -1 ? <div className="text-red-500 font-bold">Das wird nichts</div> :
-        <div>Abgezahlt nach<br />
-          <span className="text-green-500 font-bold">{paidAfter}</span> Jahren
-          Im Jahr {paidInYear}
-        </div>
-      }
-      <div>Summe Zinsen {paidAfter === -1 && "nach 120 Jahren"}
-        <div className="text-amber-500 font-bold">{(Math.round(sumZinsen)).toLocaleString()}</div>
-      </div>
-    </div>
+    <ScenarioTextDisplay sumZinsen={sumZinsen} paidAfter={paidAfter} paidInYear={paidInYear} />
   );
 }
