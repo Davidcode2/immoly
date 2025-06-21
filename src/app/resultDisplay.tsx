@@ -9,9 +9,10 @@ import FinanzierungsForm from "./finanzierungsForm";
 import Scenario from "./scenario";
 import PlotlyChart from './chart';
 import DevelopmentChart from "./developmentChart";
+import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 
 export default function ResultDisplay() {
-  const [data, setData] = useState<any | null>(null);
+  const [data, setData] = useState<ArmotizationEntry[] | null>(null);
   const [input, setInput] = useState<any | null>(null);
   const [formValues, setFormValues] = useState<any | null>(null);
   const [selectedScenario, setSelectedScenario] = useState<any | null>(18);

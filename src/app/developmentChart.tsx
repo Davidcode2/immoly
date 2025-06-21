@@ -1,29 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis } from 'recharts';
+import ArmotizationEntry from './lib/models/ArmotizationEntry';
+import ChartDataItem from './lib/models/ChartDataItem';
+import InterestEarnedModel from './lib/models/interestEarnedModel';
 
-// Define the shape of your chart data for better type safety
-interface ChartDataItem {
-  name: string;
-  Zins: number;
-  Tilgung: number;
-  Sparen: number;
-}
 
-export default function DevelopmentChart({ data, rent, interest = 4 }: { data: any, rent: number, interest: number }) {
+export default function DevelopmentChart({ data, rent, interest = 4 }: { data: ArmotizationEntry[], rent: number, interest: number }) {
   // State to hold the debounced and transformed data that the chart will render
   const [debouncedChartData, setDebouncedChartData] = useState<ChartDataItem[] | null>(null);
 
   const calcInterest = () => {
-    const interestCalculations = data.reduce((acc: any, currentYearData: any) => {
+    const interestCalculations = data.reduce((acc: InterestEarnedModel[], currentYearData: ArmotizationEntry) => {
       const previousYearBalance = acc.length > 0 ? acc[acc.length - 1].endBalance : 0;
       const annualSavings = currentYearData.yearlyRate - (rent * 12);
 
-      let balanceBeforeInterest = previousYearBalance + annualSavings;
-      let endBalance = balanceBeforeInterest * (1 + (interest / 100) );
-      let interestEarnedThisYear = endBalance - balanceBeforeInterest;
+      const balanceBeforeInterest = previousYearBalance + annualSavings;
+      const endBalance = balanceBeforeInterest * (1 + (interest / 100) );
+      const interestEarnedThisYear = endBalance - balanceBeforeInterest;
 
 
-      const yearResult = {
+      const yearResult: InterestEarnedModel = {
         year: currentYearData.year,
         startBalance: previousYearBalance,
         annualSavings: annualSavings,
@@ -48,14 +44,13 @@ export default function DevelopmentChart({ data, rent, interest = 4 }: { data: a
     // Set a timeout to transform and update the chart data
     const timeoutId = setTimeout(() => {
       console.log('Debounce timeout fired! Updating chart data...');
-      const transformedData: ChartDataItem[] = data.map((x: any) => {
-        if (x.year !== data.length) {
-          return {
-            name: x.year,
-            Sparen: Math.floor(calcInterest().find((item: any) => item.year === x.year)?.endBalance || 0),
-            Getilgt: Math.floor((x.principal * x.year)),
-          };
-        }
+      const validEntries = data.filter((x: ArmotizationEntry) => x.year !== data.length);
+      const transformedData: ChartDataItem[] = validEntries.map((x: ArmotizationEntry) => {
+        return {
+          name: x.year.toString(),
+          Sparen: Math.floor(calcInterest().find((item: InterestEarnedModel) => item.year === x.year)?.endBalance || 0),
+          Tilgung: Math.floor((x.principal * x.year)),
+        };
       });
       setDebouncedChartData(transformedData); // Update the state
     }, 1000); // 1500ms debounce time

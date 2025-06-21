@@ -1,15 +1,15 @@
 import Form from "next/form";
 import { calc } from "./calc";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import CashRoiModel from "./lib/models/cashRoiModel";
 
-export default function FinanzierungsForm({ values, setInput }: { values: any, setInput: (data: any) => void }) {
+export default function FinanzierungsForm({ values, setInput }: { values: CashRoiModel[], setInput: (data: CashRoiModel) => void }) {
   const [downPayment, setDownPayment] = useState<number | string>('');
   const [principalValue, setPrincipal] = useState<number | string>('');
   const [interestRate, setInterestRate] = useState<number | string>('');
   const [cashRoi, setCashRoi] = useState<number | string>('');
   const [rent, setRent] = useState<number | string>('');
   const [monthlyRate, setMonthlyRate] = useState<number | string>('');
-  const formRef = useRef<HTMLFormElement>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -36,12 +36,12 @@ export default function FinanzierungsForm({ values, setInput }: { values: any, s
         break;
     }
     setInput({
-      down_payment: name === 'down_payment' ? value : downPayment,
-      principal: name === 'principal' ? value : principalValue,
-      interest_rate: name === 'interest_rate' ? value : interestRate,
-      cashRoi: name === 'cashRoi' ? value : cashRoi,
-      rent: name === 'rent' ? value : rent,
-      monthly_rate: name === 'monthly_rate' ? value : monthlyRate,
+      principal: name === 'principal' ? Number(value) : Number(principalValue),
+      down_payment: name === 'down_payment' ? Number(value) : Number(downPayment),
+      interest_rate: name === 'interest_rate' ? Number(value) : Number(interestRate),
+      cash_roi: name === 'cashRoi' ? Number(value) : Number(cashRoi),
+      rent: name === 'rent' ? Number(value) : Number(rent),
+      monthly_rate: name === 'monthly_rate' ? Number(value) : Number(monthlyRate),
     });
   };
 
@@ -50,7 +50,7 @@ export default function FinanzierungsForm({ values, setInput }: { values: any, s
       setDownPayment(values[0].down_payment || '');
       setPrincipal(values[0].principal || '');
       setInterestRate(values[0].interest_rate || '');
-      setCashRoi(values[0].cashRoi || '');
+      setCashRoi(values[0].cash_roi || '');
       setRent(values[0].rent || '');
       setMonthlyRate(values[0].monthly_rate || '');
     }
