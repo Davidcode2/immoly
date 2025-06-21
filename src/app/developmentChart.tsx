@@ -41,6 +41,8 @@ export default function DevelopmentChart({ data, rent, interest = 4 }: { data: A
       return;
     }
 
+    const interestRes = calcInterest();
+
     // Set a timeout to transform and update the chart data
     const timeoutId = setTimeout(() => {
       console.log('Debounce timeout fired! Updating chart data...');
@@ -48,7 +50,7 @@ export default function DevelopmentChart({ data, rent, interest = 4 }: { data: A
       const transformedData: ChartDataItem[] = validEntries.map((x: ArmotizationEntry) => {
         return {
           name: x.year.toString(),
-          Sparen: Math.floor(calcInterest().find((item: InterestEarnedModel) => item.year === x.year)?.endBalance || 0),
+          Sparen: Math.floor(interestRes.find((item: InterestEarnedModel) => item.year === x.year)?.endBalance || 0),
           Tilgung: Math.floor((x.principal * x.year)),
         };
       });
