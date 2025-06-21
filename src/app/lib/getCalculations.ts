@@ -20,7 +20,7 @@ export default async function getCalculations() {
   }
 }
 
-export async function getCalculation(id: string) {
+export async function getCalculation(id: string): Promise<CalculationResult[] | null> {
   const client = await connect();
   try {
     const query = `

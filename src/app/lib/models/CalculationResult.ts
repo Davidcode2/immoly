@@ -5,5 +5,6 @@ export default interface CalculationResult extends BaseModel {
   annual_percentage_rate: number;
   loan_term_in_months: number;
   created_at: string;
+  cash_roi: number;
 }
 

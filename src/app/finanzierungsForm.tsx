@@ -2,57 +2,67 @@ import Form from "next/form";
 import { calc } from "./calc";
 import { useEffect, useState } from "react";
 import CashRoiModel from "./lib/models/cashRoiModel";
+import CalculationResult from "./lib/models/CalculationResult";
 
-export default function FinanzierungsForm({ values, setInput }: { values: CashRoiModel[], setInput: (data: CashRoiModel) => void }) {
-  const [downPayment, setDownPayment] = useState<number | string>('');
-  const [principalValue, setPrincipal] = useState<number | string>('');
-  const [interestRate, setInterestRate] = useState<number | string>('');
-  const [cashRoi, setCashRoi] = useState<number | string>('');
-  const [rent, setRent] = useState<number | string>('');
-  const [monthlyRate, setMonthlyRate] = useState<number | string>('');
+export default function FinanzierungsForm({
+  values,
+  setInput,
+}: {
+  values: CalculationResult[];
+  setInput: (data: CashRoiModel) => void;
+}) {
+  const [downPayment, setDownPayment] = useState<number | string>("");
+  const [principalValue, setPrincipal] = useState<number | string>("");
+  const [interestRate, setInterestRate] = useState<number | string>("");
+  const [cashRoi, setCashRoi] = useState<number | string>("");
+  const [rent, setRent] = useState<number | string>("");
+  const [monthlyRate, setMonthlyRate] = useState<number | string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     switch (name) {
-      case 'down_payment':
+      case "down_payment":
         setDownPayment(value);
         break;
-      case 'principal':
+      case "principal":
         setPrincipal(value);
         break;
-      case 'interest_rate':
+      case "interest_rate":
         setInterestRate(value);
         break;
-      case 'cashRoi':
+      case "cashRoi":
         setCashRoi(value);
         break;
-      case 'rent':
+      case "rent":
         setRent(value);
         break;
-      case 'monthly_rate':
+      case "monthly_rate":
         setMonthlyRate(value);
         break;
       default:
         break;
     }
     setInput({
-      principal: name === 'principal' ? Number(value) : Number(principalValue),
-      down_payment: name === 'down_payment' ? Number(value) : Number(downPayment),
-      interest_rate: name === 'interest_rate' ? Number(value) : Number(interestRate),
-      cash_roi: name === 'cashRoi' ? Number(value) : Number(cashRoi),
-      rent: name === 'rent' ? Number(value) : Number(rent),
-      monthly_rate: name === 'monthly_rate' ? Number(value) : Number(monthlyRate),
+      principal: name === "principal" ? Number(value) : Number(principalValue),
+      down_payment:
+        name === "down_payment" ? Number(value) : Number(downPayment),
+      interest_rate:
+        name === "interest_rate" ? Number(value) : Number(interestRate),
+      cash_roi: name === "cashRoi" ? Number(value) : Number(cashRoi),
+      rent: name === "rent" ? Number(value) : Number(rent),
+      monthly_rate:
+        name === "monthly_rate" ? Number(value) : Number(monthlyRate),
     });
   };
 
   useEffect(() => {
     if (values) {
-      setDownPayment(values[0].down_payment || '');
-      setPrincipal(values[0].principal || '');
-      setInterestRate(values[0].interest_rate || '');
-      setCashRoi(values[0].cash_roi || '');
-      setRent(values[0].rent || '');
-      setMonthlyRate(values[0].monthly_rate || '');
+      setDownPayment(values[0].down_payment || "");
+      setPrincipal(values[0].principal || "");
+      setInterestRate(values[0].interest_rate || "");
+      setCashRoi(values[0].cash_roi || "");
+      setRent(values[0].rent || "");
+      setMonthlyRate(values[0].monthly_rate || "");
     }
   }, [values]);
 
@@ -61,27 +71,75 @@ export default function FinanzierungsForm({ values, setInput }: { values: CashRo
       <div className="flex gap-2 flex-col">
         <div>
           <label htmlFor="capital">Eigenkapital</label>
-          <input type="number" className="border-stone-700 border rounded-lg p-1" id="captital" name="down_payment" value={downPayment} onChange={handleInputChange} />
+          <input
+            type="number"
+            className="border-stone-700 border rounded-lg p-1"
+            id="captital"
+            name="down_payment"
+            value={downPayment}
+            onChange={handleInputChange}
+          />
         </div>
         <div>
           <label htmlFor="creditSum">Kreditsumme</label>
-          <input type="number" className="border-stone-700 border rounded-lg p-1" id="creditSum" name="principal" value={principalValue} onChange={handleInputChange} />
+          <input
+            type="number"
+            className="border-stone-700 border rounded-lg p-1"
+            id="creditSum"
+            name="principal"
+            value={principalValue}
+            onChange={handleInputChange}
+          />
         </div>
         <div>
-          <label htmlFor="interestRate">Kreditzins</label><br/>
-          <input type="decimal" className="border-stone-700 border rounded-lg p-1" id="interestRate" name="interest_rate" max="20" min="0.1" value={interestRate} onChange={handleInputChange} />
+          <label htmlFor="interestRate">Kreditzins</label>
+          <br />
+          <input
+            type="decimal"
+            className="border-stone-700 border rounded-lg p-1"
+            id="interestRate"
+            name="interest_rate"
+            max="20"
+            min="0.1"
+            value={interestRate}
+            onChange={handleInputChange}
+          />
         </div>
         <div>
-          <label htmlFor="cashRoi">Kapitalrendite</label><br/>
-          <input type="decimal" className="border-stone-700 border rounded-lg p-1" id="cashRoi" name="cashRoi" max="20" min="0.1" value={cashRoi} onChange={handleInputChange} />
+          <label htmlFor="cashRoi">Kapitalrendite</label>
+          <br />
+          <input
+            type="decimal"
+            className="border-stone-700 border rounded-lg p-1"
+            id="cashRoi"
+            name="cashRoi"
+            max="20"
+            min="0.1"
+            value={cashRoi}
+            onChange={handleInputChange}
+          />
         </div>
         <div>
           <label htmlFor="rent">Miete</label>
-          <input type="number" className="border-stone-700 border rounded-lg p-1" id="rent" name="rent" value={rent} onChange={handleInputChange} />
+          <input
+            type="number"
+            className="border-stone-700 border rounded-lg p-1"
+            id="rent"
+            name="rent"
+            value={rent}
+            onChange={handleInputChange}
+          />
         </div>
         <div>
           <label htmlFor="monthlyRate">Monatsrate</label>
-          <input type="number" className="border-stone-700 border rounded-lg p-1" id="monthylRate" name="monthly_rate" value={monthlyRate} onChange={handleInputChange} />
+          <input
+            type="number"
+            className="border-stone-700 border rounded-lg p-1"
+            id="monthylRate"
+            name="monthly_rate"
+            value={monthlyRate}
+            onChange={handleInputChange}
+          />
         </div>
         <button type="submit" />
       </div>
