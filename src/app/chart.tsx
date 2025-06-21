@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis } from 'recharts';
+import ArmotizationEntry from './lib/models/ArmotizationEntry';
 
 // Define the shape of your chart data for better type safety
 interface ChartDataItem {
@@ -9,11 +10,9 @@ interface ChartDataItem {
   Sparen: number;
 }
 
-export default function PlotlyChart({ data, rent }: { data: any, rent: number }) {
-  // State to hold the debounced and transformed data that the chart will render
+export default function PlotlyChart({ data, rent }: { data: ArmotizationEntry[], rent: number }) {
   const [debouncedChartData, setDebouncedChartData] = useState<ChartDataItem[] | null>(null);
 
-  // useEffect hook to implement the debounce logic
   useEffect(() => {
     // If there's no incoming data, clear the debounced data and return
     if (!data) {
@@ -24,10 +23,10 @@ export default function PlotlyChart({ data, rent }: { data: any, rent: number })
     // Set a timeout to transform and update the chart data
     const timeoutId = setTimeout(() => {
       console.log('Debounce timeout fired! Updating chart data...');
-      const transformedData: ChartDataItem[] = data.map((x: any) => {
+      const transformedData: ChartDataItem[] = data.map((x: ArmotizationEntry) => {
         if (x.year !== data.length) {
           return {
-            name: x.year,
+            name: x.year.toString(),
             Zins: Math.floor(x.interest),
             Tilgung: Math.floor(x.principal),
             Sparen: Math.floor(x.yearlyRate - (rent * 12)),

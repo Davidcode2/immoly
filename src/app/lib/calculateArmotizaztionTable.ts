@@ -1,3 +1,4 @@
+import ArmotizationEntry from './models/ArmotizationEntry';
 import CalculationResult from './models/CalculationResult';
 
 export default function calcTilgung(calculation: CalculationResult) {
@@ -28,7 +29,7 @@ export default function calcTilgung(calculation: CalculationResult) {
       remainingPrincipal -= principalPaidYearly;
     }
 
-    const armortizationEntry: any = {
+    const armortizationEntry: ArmotizationEntry = {
       year: armotizationTable.length + 1,
       interest: interestForYear,
       principal: principalPaidYearly,
@@ -40,3 +41,4 @@ export default function calcTilgung(calculation: CalculationResult) {
   }
   return armotizationTable;
 }
+
