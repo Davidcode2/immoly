@@ -8,7 +8,7 @@ export default function FinanzierungsForm({
   values,
   setInput,
 }: {
-  values: CalculationResult[];
+  values: CalculationResult[] | null;
   setInput: (data: CashRoiModel) => void;
 }) {
   const [downPayment, setDownPayment] = useState<number | string>("");

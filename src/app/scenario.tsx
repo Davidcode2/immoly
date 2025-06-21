@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { getCalculation } from "./lib/getCalculations";
 import calcTilgung from "./lib/calculateArmotizaztionTable";
 import ScenarioTextDisplay from "./scenarioTextDisplay";
+import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 
-export default function Scenario({ calculationId, data }: { calculationId: string, data: any }) {
-  const [_data, setData] = useState<any | null>(null);
+export default function Scenario({ calculationId, data }: { calculationId: string | null, data: ArmotizationEntry[] | null }) {
+  const [_data, setData] = useState<ArmotizationEntry[] | null>(null);
 
   if (!data) {
     data = _data;
@@ -28,7 +29,7 @@ export default function Scenario({ calculationId, data }: { calculationId: strin
     loadData();
   }, [calculationId]);
 
-  const sumZinsen = data ? data.reduce((acc: number, row: any) => acc + row.interest, 0) : 0;
+  const sumZinsen = data ? data.reduce((acc: number, row: ArmotizationEntry) => acc + row.interest, 0) : 0;
   const paidAfter = data ? (data.length >= 120 ? -1 : data.length) : 0;
   const paidInYear = new Date().getFullYear() + paidAfter;
 

@@ -37,7 +37,7 @@ export default function Home() {
             <Link href="/graph">
               Show results{" "}
               <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              ->
+              -&gt;
               </code>
             </Link>
           </li>

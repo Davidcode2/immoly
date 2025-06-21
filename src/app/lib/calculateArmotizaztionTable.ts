@@ -1,7 +1,7 @@
 import ArmotizationEntry from './models/ArmotizationEntry';
-import CalculationResult from './models/CalculationResult';
+import BaseModel from './models/baseModel';
 
-export default function calcTilgung(calculation: CalculationResult): ArmotizationEntry[] {
+export default function calcTilgung(calculation: BaseModel): ArmotizationEntry[] {
   if (!calculation) {
     return [];
   }

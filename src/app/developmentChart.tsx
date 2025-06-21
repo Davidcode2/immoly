@@ -74,7 +74,7 @@ export default function DevelopmentChart({ data, rent, interest = 4 }: { data: A
       <Tooltip />
       <CartesianGrid stroke="#27232b" />
       <Line type="monotone" dataKey="Sparen" stroke="#a87908" />
-      <Line type="monotone" dataKey="Getilgt" stroke="#2d7d15" />
+      <Line type="monotone" dataKey="Tilgung" stroke="#2d7d15" />
     </LineChart>
   );
 }
