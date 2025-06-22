@@ -20,21 +20,19 @@ export default function PlotlyChart({ data, rent }: { data: ArmotizationEntry[],
       return;
     }
 
-    // Set a timeout to transform and update the chart data
     const timeoutId = setTimeout(() => {
       console.log('Debounce timeout fired! Updating chart data...');
-      const transformedData: ChartDataItem[] = data.map((x: ArmotizationEntry) => {
-        if (x.year !== data.length) {
+      const filteredData = data.filter((x: ArmotizationEntry) => x.year !== data.length);
+      const transformedData: ChartDataItem[] = filteredData.map((x: ArmotizationEntry) => {
           return {
             name: x.year.toString(),
             Zins: Math.floor(x.interest),
             Tilgung: Math.floor(x.principal),
             Sparen: Math.floor(x.yearlyRate - (rent * 12)),
           }
-        }
       });
-      setDebouncedChartData(transformedData); // Update the state
-    }, 1000); // 1500ms debounce time
+      setDebouncedChartData(transformedData);
+    }, 1000);
 
     // Cleanup function: This runs if 'data' changes before the timeout,
     // or when the component unmounts. It clears the previous timeout.
@@ -44,7 +42,6 @@ export default function PlotlyChart({ data, rent }: { data: ArmotizationEntry[],
     };
   }, [data]); // The effect re-runs whenever the 'data' prop changes
 
-  // Render null if no debounced data is available yet
   if (!debouncedChartData) {
     return null;
   }
