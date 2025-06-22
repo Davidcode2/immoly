@@ -65,7 +65,7 @@ export default function ResultDisplay() {
     <div className="grid grid-cols-[200px_1fr] gap-16">
       <FinanzierungsForm values={formValues} setInput={setInput} />
       <div className="grid grid-cols-[180px_1fr_1fr] border border-slate-600 rounded-lg">
-        {!data && <div className="text-center text-2xl col-span-full my-auto">Gebe deine Daten ein oder wähle ein Szenario...</div>}
+        {!data && <div className="text-center text-2xl col-span-full my-auto">Gib deine Daten ein oder wähle ein Szenario...</div>}
         {data && (
           <>
             <Scenario calculationId={selectedScenario} data={data} />
