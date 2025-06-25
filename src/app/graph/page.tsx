@@ -1,8 +1,11 @@
+export const dynamic = 'force-dynamic';
+
 import Link from 'next/link';
 import Graphs from 'app/graphs';
 import ResultDisplay from 'app/resultDisplay';
 import { Suspense } from 'react';
 import Loading from 'app/loading';
+
 
 export default async function GraphPage() {
   if (process.env.SKIP_BUILD_STATIC_GENERATION === 'true') {
