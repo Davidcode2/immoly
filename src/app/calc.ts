@@ -1,6 +1,6 @@
 'use server';
 import { redirect } from 'next/navigation';
-import { connect, disconnect } from './lib/db'; // Adjust the import path as needed
+import { connect, disconnect } from './lib/db';
 
 export async function calc(formData: FormData) {
   const capital = Number(formData.get('down_payment'));
