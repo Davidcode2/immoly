@@ -9,6 +9,7 @@ on:
 env:
   IMAGE_NAME: ${{ github.repository }}
   REGISTRY: ghcr.io
+  DEPLOYMENT_DIR: /opt/deployments/immoly
 
 jobs:
   check-for-changes:
@@ -125,12 +126,25 @@ jobs:
         with:
           ssh-private-key: ${{ env.PRIVATE_SSH_KEY }}
 
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create deployment dir
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }} << 'EOF'
+            mkdir -p ${{ env.DEPLOYMENT_DIR }}
+          EOF
+
+      - name: Transfer docker-compose.yml
+        run: |
+          scp -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }} docker-compose.yml ${{ env.DEPLOYMENT_DIR }}
+
       - name: Deploy on server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }} << 'EOF'
             docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
 
-            cd ${{ directory }}
+            cd ${{ env.DEPLOYMENT_DIR }}
             docker compose stop || true
 
             DB_USER="${{ env.DB_USER }}" \
