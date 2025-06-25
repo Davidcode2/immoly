@@ -71,6 +71,8 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            SKIP_BUILD_STATIC_GENERATION=true
 
   deploy:
     runs-on: ubuntu-latest

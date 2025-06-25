@@ -4,6 +4,10 @@ import { connect, disconnect } from "./db";
 import CalculationResult from "./models/CalculationResult";
 
 export default async function getCalculations() {
+  if (process.env.SKIP_BUILD_STATIC_GENERATION === "true") {
+    console.warn('Skipping static generation for calculations due to SKIP_BUILD_STATIC_GENERATION flag.');
+    return [] as CalculationResult[];
+  }
   const client = await connect();
   try {
     const query = `
@@ -21,6 +25,10 @@ export default async function getCalculations() {
 }
 
 export async function getCalculation(id: string): Promise<CalculationResult[] | null> {
+  if (process.env.SKIP_BUILD_STATIC_GENERATION === "true") {
+    console.warn('Skipping static generation for calculations due to SKIP_BUILD_STATIC_GENERATION flag.');
+    return [] as CalculationResult[];
+  }
   const client = await connect();
   try {
     const query = `
