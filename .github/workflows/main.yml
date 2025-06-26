@@ -114,9 +114,9 @@ jobs:
         run: |
           REPO_NAME=$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
 
-          DB_USER=$(aws ssm get-parameter --name "/${{ env.REPO_NAME }}/db/user" --with-decryption --query 'Parameter.Value' --output text)
-          DB_PASSWORD=$(aws ssm get-parameter --name "/{{ env.REPO_NAME }}/db/password" --with-decryption --query 'Parameter.Value' --output text)
-          DB_NAME=$(aws ssm get-parameter --name "/{{ env.REPO_NAME }}/db/name" --with-decryption --query 'Parameter.Value' --output text)
+          DB_USER=$(aws ssm get-parameter --name "/$REPO_NAME/db/user" --with-decryption --query 'Parameter.Value' --output text)
+          DB_PASSWORD=$(aws ssm get-parameter --name "/$REPO_NAME/db/password" --with-decryption --query 'Parameter.Value' --output text)
+          DB_NAME=$(aws ssm get-parameter --name "/$REPO_NAME/db/name" --with-decryption --query 'Parameter.Value' --output text)
           DB_HOST=immoly-postgres
           DB_PORT=5432
 
