@@ -6,7 +6,6 @@ import InterestEarnedModel from './lib/models/interestEarnedModel';
 
 
 export default function DevelopmentChart({ data, rent, interest = 4 }: { data: ArmotizationEntry[], rent: number, interest: number }) {
-  // State to hold the debounced and transformed data that the chart will render
   const [debouncedChartData, setDebouncedChartData] = useState<ChartDataItem[] | null>(null);
 
   const calcInterest = () => {
@@ -33,9 +32,7 @@ export default function DevelopmentChart({ data, rent, interest = 4 }: { data: A
     return interestCalculations;
   }
 
-  // useEffect hook to implement the debounce logic
   useEffect(() => {
-    // If there's no incoming data, clear the debounced data and return
     if (!data) {
       setDebouncedChartData(null);
       return;
@@ -43,7 +40,6 @@ export default function DevelopmentChart({ data, rent, interest = 4 }: { data: A
 
     const interestRes = calcInterest();
 
-    // Set a timeout to transform and update the chart data
     const timeoutId = setTimeout(() => {
       console.log('Debounce timeout fired! Updating chart data...');
       const validEntries = data.filter((x: ArmotizationEntry) => x.year !== data.length);
@@ -54,8 +50,8 @@ export default function DevelopmentChart({ data, rent, interest = 4 }: { data: A
           Tilgung: Math.floor((x.principal * x.year)),
         };
       });
-      setDebouncedChartData(transformedData); // Update the state
-    }, 1000); // 1500ms debounce time
+      setDebouncedChartData(transformedData);
+    }, 1000);
 
     // Cleanup function: This runs if 'data' changes before the timeout,
     // or when the component unmounts. It clears the previous timeout.
@@ -63,9 +59,8 @@ export default function DevelopmentChart({ data, rent, interest = 4 }: { data: A
       console.log('Clearing previous debounce timer...');
       clearTimeout(timeoutId);
     };
-  }, [data]); // The effect re-runs whenever the 'data' prop changes
+  }, [data]);
 
-  // Render null if no debounced data is available yet
   if (!debouncedChartData) {
     return null;
   }
