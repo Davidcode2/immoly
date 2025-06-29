@@ -109,6 +109,11 @@ jobs:
           echo "$key" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
+      - name: Start ssh-agent and add key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ env.PRIVATE_SSH_KEY }}
+
       - name: Retrieve Database Secrets from SSM
         id: get-db-secrets
         run: |
@@ -126,11 +131,6 @@ jobs:
           echo "DB_NAME=$DB_NAME" >> .env.temp
           echo "DB_HOST=$DB_HOST" >> .env.temp
           echo "DB_PORT=$DB_PORT" >> .env.temp
-
-      - name: Start ssh-agent and add key
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ env.PRIVATE_SSH_KEY }}
 
       - name: Checkout code
         uses: actions/checkout@v4
