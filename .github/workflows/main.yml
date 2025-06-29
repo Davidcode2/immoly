@@ -142,7 +142,7 @@ jobs:
 
       - name: Transfer docker-compose.yml
         run: |
-          scp -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }} docker-compose.yml ${{ env.DEPLOYMENT_DIR }}
+          scp -o StrictHostKeyChecking=no $ docker-compose.yml {{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }}:${{ env.DEPLOYMENT_DIR }}
 
       - name: Deploy on server
         run: |
