@@ -14,7 +14,8 @@ services:
     image: postgres:16.0-alpine
     restart: unless-stopped
     volumes: 
-      - immoly-volume
+      - immoly-volume:/var/lib/postgresql/data
+        
     networks: 
       - immoly-network
 
