@@ -15,9 +15,12 @@ services:
     restart: unless-stopped
     volumes: 
       - immoly-volume:/var/lib/postgresql/data
-        
     networks: 
       - immoly-network
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
 
 volumes: 
   immoly-volume:
