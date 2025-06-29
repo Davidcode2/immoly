@@ -152,11 +152,12 @@ jobs:
             cd ${{ env.DEPLOYMENT_DIR }}
             docker compose stop || true
 
-            DB_USER="${{ env.DB_USER }}" \
-            DB_PASSWORD="${{ env.DB_PASSWORD }}" \
-            DB_NAME="${{ env.DB_NAME }}" \
-            DB_HOST="${{ env.DB_HOST }}" \
-            DB_PORT="${{ env.DB_PORT }}" \
+            export DB_USER='${{ env.DB_USER }}'
+            export DB_PASSWORD='${{ env.DB_PASSWORD }}'
+            export DB_NAME='${{ env.DB_NAME }}'
+            export DB_HOST='${{ env.DB_HOST }}'
+            export DB_PORT='${{ env.DB_PORT }}'
+
             docker compose up -d || true
 
             docker image prune -f
