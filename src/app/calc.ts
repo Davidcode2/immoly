@@ -38,4 +38,3 @@ export async function calc(formData: FormData) {
 function calcYearlyRate(creditSum: number, interest: number) {
   return (creditSum * interest) / 100;
 }
-
