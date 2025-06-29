@@ -3,7 +3,7 @@ services:
     container_name: immoly-app
     depends_on: 
       - immoly-postgres
-    image: ghcr.io/davidcode2/immoly:latest
+    image: ghcr.io/davidcode2/immoly:${IMAGE_TAG:-latest}
     restart: unless-stopped
     networks: 
       - app-network

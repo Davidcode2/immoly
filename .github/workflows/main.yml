@@ -147,6 +147,8 @@ jobs:
           scp -o StrictHostKeyChecking=no .env.temp ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }}:${{ env.DEPLOYMENT_DIR }}/.env
 
       - name: Deploy on server
+        env:
+          DEPLOY_IMAGE_TAG: ${{ github.sha }}
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }} << 'EOF'
             docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
@@ -154,6 +156,7 @@ jobs:
             cd ${{ env.DEPLOYMENT_DIR }}
             docker compose stop || true
 
+            IMAGE_TAG=${DEPLOY_IMAGE_TAG} docker compose up -d
             docker compose up -d || true
 
             docker image prune -f
