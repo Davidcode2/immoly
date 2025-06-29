@@ -120,11 +120,12 @@ jobs:
           DB_HOST=immoly-postgres
           DB_PORT=5432
 
-          echo "DB_USER=$DB_USER" >> $GITHUB_ENV
-          echo "DB_PASSWORD=$DB_PASSWORD" >> $GITHUB_ENV
-          echo "DB_NAME=$DB_NAME" >> $GITHUB_ENV
-          echo "DB_HOST=$DB_HOST" >> $GITHUB_ENV
-          echo "DB_PORT=$DB_PORT" >> $GITHUB_ENV
+          # Create .env file content
+          echo "DB_USER=$DB_USER" > .env.temp
+          echo "DB_PASSWORD=$DB_PASSWORD" >> .env.temp
+          echo "DB_NAME=$DB_NAME" >> .env.temp
+          echo "DB_HOST=$DB_HOST" >> .env.temp
+          echo "DB_PORT=$DB_PORT" >> .env.temp
 
       - name: Start ssh-agent and add key
         uses: webfactory/ssh-agent@v0.9.0
@@ -143,6 +144,7 @@ jobs:
       - name: Transfer docker-compose.yml
         run: |
           scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }}:${{ env.DEPLOYMENT_DIR }}
+          scp -o StrictHostKeyChecking=no .env.temp ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }}:${{ env.DEPLOYMENT_DIR }}/.env
 
       - name: Deploy on server
         run: |
@@ -151,12 +153,6 @@ jobs:
 
             cd ${{ env.DEPLOYMENT_DIR }}
             docker compose stop || true
-
-            export DB_USER='${{ env.DB_USER }}'
-            export DB_PASSWORD='${{ env.DB_PASSWORD }}'
-            export DB_NAME='${{ env.DB_NAME }}'
-            export DB_HOST='${{ env.DB_HOST }}'
-            export DB_PORT='${{ env.DB_PORT }}'
 
             docker compose up -d || true
 
