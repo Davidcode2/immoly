@@ -41,4 +41,3 @@ export default function calcTilgung(calculation: BaseModel): ArmotizationEntry[]
   }
   return armotizationTable;
 }
-
