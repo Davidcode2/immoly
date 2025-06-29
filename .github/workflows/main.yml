@@ -156,8 +156,8 @@ jobs:
             cd ${{ env.DEPLOYMENT_DIR }}
             docker compose stop || true
 
+            docker compose pull
             IMAGE_TAG=${DEPLOY_IMAGE_TAG} docker compose up -d
-            docker compose up -d || true
 
             docker image prune -f
           EOF
