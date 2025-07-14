@@ -53,4 +53,3 @@ export default function PlotlyChart({ data, rent }: { data: ArmotizationEntry[],
     </LineChart>
   );
 }
-
