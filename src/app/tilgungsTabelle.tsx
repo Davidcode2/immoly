@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 import calcSondertilgung from "./lib/sondertilgung";
+import calcTilgung from "./lib/calculateArmotizaztionTable";
 
 type PropTypes = {
   table: ArmotizationEntry[];
@@ -11,30 +12,37 @@ export default function Tilgungstabelle({ table }: PropTypes) {
   const _calcSondertilgung = (remainingPrincipal: number, year: number) => {
     const sondertilgung = getSondertilgungFromUser();
     calcSondertilgung(remainingPrincipal, 1000);
-    setTilgungstabelle(recalcTable(year, sondertilgung))
-  }
+    const newTable = recalcTable(year, sondertilgung);
+    console.log(newTable);
+    setTilgungstabelle(newTable);
+  };
 
   const getSondertilgungFromUser = () => {
     return 1000;
-  }
+  };
 
   const recalcTable = (year: number, sondertilgung: number) => {
-    const tableUpToSondertilgung = tilgungsTabelle.filter((x: ArmotizationEntry) => x.year < year);
-    const recalculated = tilgungsTabelle.map((x: ArmotizationEntry) => {
-      if (x.year === year) {
-        const newValue = {
-          year: x.year,
-          interest: x.interest,
-          principal: x.principal,
-          yearlyRate: x.yearlyRate,
-          remainingPrincipal: x.remainingPrincipal - sondertilgung
-        } as ArmotizationEntry
-        return newValue;
-      }
-      return x;
+    const tableUpToSondertilgung = tilgungsTabelle.filter(
+      (x: ArmotizationEntry) => x.year < year,
+    );
+    const impactedEntry = tilgungsTabelle.find(
+      (x: ArmotizationEntry) => x.year === year,
+    );
+    if (!impactedEntry) {
+      return table;
+    }
+    const tableFromSondertilgung = calcTilgung({
+      principal: impactedEntry.principal - sondertilgung,
+      down_payment: 0,
+      interest_rate: 3,
+      monthly_rate: impactedEntry.yearlyRate / 12,
+      rent: 1000,
     });
-    return recalculated;
-  }
+    const newTable: ArmotizationEntry[] = tableUpToSondertilgung;
+    newTable.push(impactedEntry);
+    newTable.push(...tableFromSondertilgung);
+    return newTable;
+  };
 
   return (
     <div>
@@ -50,12 +58,17 @@ export default function Tilgungstabelle({ table }: PropTypes) {
           </tr>
         </thead>
         <tbody>
-          {table.map((x) => (
+          {tilgungsTabelle.map((x) => (
             <tr
               key={x.year}
               className="even:bg-[#0f0f0f] border-t border-gray-950"
             >
-              <td className="px-4 py-2 text-gray-800 hover:text-gray-200" onClick={() => _calcSondertilgung(x.remainingPrincipal)}>+</td>
+              <td
+                className="px-4 py-2 text-gray-800 hover:text-gray-200 hover:cursor-pointer"
+                onClick={() => _calcSondertilgung(x.remainingPrincipal, x.year)}
+              >
+                +
+              </td>
               <td className="px-4 py-2">{x.year}</td>
               <td className="px-4 py-2">
                 {Math.round(x.interest).toLocaleString()}
