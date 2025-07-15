@@ -70,7 +70,7 @@ export default function ResultDisplay() {
           <>
             <Scenario calculationId={selectedScenario} data={data} />
             <div className="col-start-2 rounded-lg text-sm overflow-auto max-h-[600px]">
-              {data && <Tilgungstabelle table={data as ArmotizationEntry[]} />}
+              {data && <Tilgungstabelle table={data as ArmotizationEntry[]} formInput={input} />}
             </div>
             <div className="col-start-3">
               {input && (

@@ -1,24 +1,23 @@
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
-import calcSondertilgung from "./lib/sondertilgung";
 import calcTilgung from "./lib/calculateArmotizaztionTable";
-import Form from "next/form";
+import CashRoiModel from "./lib/models/cashRoiModel";
 
 type PropTypes = {
   table: ArmotizationEntry[];
+  formInput: CashRoiModel | null
 };
 
-export default function Tilgungstabelle({ table }: PropTypes) {
+export default function Tilgungstabelle({ table, formInput }: PropTypes) {
   useEffect(() => {
     setTilgungstabelle(table);
   }, [table]);
 
   const [tilgungsTabelle, setTilgungstabelle] = useState(table);
 
-  const _calcSondertilgung = (event: any, remainingPrincipal: number, year: number) => {
+  const _calcSondertilgung = (event: any, year: number) => {
     event.preventDefault();
     const sondertilgungAmount = event.target.elements.sonderTilgungAmount.value;
-    calcSondertilgung(remainingPrincipal, 1000);
     const newTable = recalcTable(year, sondertilgungAmount);
     setTilgungstabelle(newTable);
   };
@@ -36,9 +35,9 @@ export default function Tilgungstabelle({ table }: PropTypes) {
     const tableFromSondertilgung = calcTilgung({
       principal: impactedEntry.remainingPrincipal - sondertilgung,
       down_payment: 0,
-      interest_rate: 3,
-      monthly_rate: impactedEntry.yearlyRate / 12,
-      rent: 1000,
+      interest_rate: formInput?.interest_rate || 3,
+      monthly_rate: formInput?.monthly_rate || 1500,
+      rent: formInput?.rent || 0,
     });
     tableFromSondertilgung.map((x: ArmotizationEntry) => {
       x.year = x.year + year;
@@ -82,7 +81,7 @@ export default function Tilgungstabelle({ table }: PropTypes) {
                 {Math.round(x.remainingPrincipal).toLocaleString()}
               </td>
               <td className="px-4 py-2 ">
-                <form onSubmit={(e) => _calcSondertilgung(e, x.remainingPrincipal, x.year)} className="flex gap-4"> 
+                <form onSubmit={(e) => _calcSondertilgung(e, x.year)} className="flex gap-4"> 
                   <button
                     className="hover:cursor-pointer text-gray-800 hover:text-gray-200"
                   >
