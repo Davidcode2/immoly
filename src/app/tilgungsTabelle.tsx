@@ -56,12 +56,12 @@ export default function Tilgungstabelle({ table }: PropTypes) {
       <table className="overflow-auto">
         <thead>
           <tr className="sticky top-0 bg-black">
-            <th className="px-4 py-2">Sondertilgung</th>
             <th className="px-4 py-2">Jahr</th>
             <th className="px-4 py-2">Zins</th>
             <th className="px-4 py-2">Tilgung</th>
             <th className="px-4 py-2">Jährliche Rate</th>
             <th className="px-4 py-2">Restschuld</th>
+            <th className="px-4 py-2">Sondertilgung</th>
           </tr>
         </thead>
         <tbody>
@@ -70,16 +70,6 @@ export default function Tilgungstabelle({ table }: PropTypes) {
               key={x.year}
               className="even:bg-[#0f0f0f] border-t border-gray-950"
             >
-              <td className="px-4 py-2 ">
-                <form onSubmit={(e) => _calcSondertilgung(e, x.remainingPrincipal, x.year)} className="flex gap-4"> 
-                  <button
-                    className="hover:cursor-pointer text-gray-800 hover:text-gray-200"
-                  >
-                  +
-                  </button>
-                  <input type="number" name="sonderTilgungAmount" className="text-green-400 rounded-md text-sm p-[3px] active:text-gray-200 w-20" />
-                </form>
-              </td>
               <td className="px-4 py-2">{x.year}</td>
               <td className="px-4 py-2">
                 {Math.round(x.interest).toLocaleString()}
@@ -90,6 +80,16 @@ export default function Tilgungstabelle({ table }: PropTypes) {
               <td className="px-4 py-2">{x.yearlyRate.toLocaleString()}</td>
               <td className="px-4 py-2">
                 {Math.round(x.remainingPrincipal).toLocaleString()}
+              </td>
+              <td className="px-4 py-2 ">
+                <form onSubmit={(e) => _calcSondertilgung(e, x.remainingPrincipal, x.year)} className="flex gap-4"> 
+                  <button
+                    className="hover:cursor-pointer text-gray-800 hover:text-gray-200"
+                  >
+                  +
+                  </button>
+                  <input type="number" name="sonderTilgungAmount" className="text-green-400 rounded-md text-sm p-[3px] active:text-gray-200 w-20" />
+                </form>
               </td>
             </tr>
           ))}

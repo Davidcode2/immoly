@@ -81,7 +81,7 @@ export default function FinanzierungsForm({
           />
         </div>
         <div>
-          <label htmlFor="creditSum">Kreditsumme</label>
+          <label htmlFor="creditSum">Kaufsumme</label>
           <input
             type="number"
             className="border-stone-700 border rounded-lg p-1"

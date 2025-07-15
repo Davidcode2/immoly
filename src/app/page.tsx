@@ -21,7 +21,7 @@ export default function Home() {
           <div className="flex gap-2 flex-col">
             <label htmlFor="capital">Eigenkapital</label>
             <input type="number" className="border-stone-700 border rounded-lg" id="captital" name="capital" />
-            <label htmlFor="creditSum">Kreditsumme</label>
+            <label htmlFor="creditSum">Kaufsumme</label>
             <input type="number" className="border-stone-700 border rounded-lg" id="creditSum" name="creditSum" />
             <label htmlFor="interestRate">Zins</label>
             <input type="number" className="border-stone-700 border rounded-lg" id="interestRate" name="interestRate" />
