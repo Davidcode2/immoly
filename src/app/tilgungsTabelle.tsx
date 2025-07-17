@@ -51,7 +51,7 @@ export default function Tilgungstabelle({ table, formInput }: PropTypes) {
   };
 
   return (
-    <div>
+    <div className="rounded-lg grid justify-stretch">
       <table className="overflow-auto">
         <thead>
           <tr className="sticky top-0 bg-black">

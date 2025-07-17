@@ -64,25 +64,40 @@ export default function ResultDisplay() {
   return (
     <div className="grid grid-cols-[200px_1fr] gap-16">
       <FinanzierungsForm values={formValues} setInput={setInput} />
-      <div className="grid grid-cols-[180px_1fr_1fr] border border-slate-600 rounded-lg">
-        {!data && <div className="text-center text-2xl col-span-full my-auto">Gib deine Daten ein oder wähle ein Szenario...</div>}
+      <div className="grid grid-cols-[180px_1fr]">
+        {!data && (
+          <div className="text-center text-2xl col-span-full my-auto">
+            Gib deine Daten ein oder wähle ein Szenario...
+          </div>
+        )}
         {data && (
           <>
             <Scenario calculationId={selectedScenario} data={data} />
-            <div className="col-start-2 rounded-lg text-sm overflow-auto max-h-[600px]">
-              {data && <Tilgungstabelle table={data as ArmotizationEntry[]} formInput={input} />}
-            </div>
-            <div className="col-start-3">
-              {input && (
-                <>
-                  <PlotlyChart data={data} rent={input.rent} />
-                  <DevelopmentChart
-                    data={data}
-                    rent={input.rent}
-                    interest={input.cash_roi}
+            <div className="gap-4 grid grid-cols-[3fr_2fr]">
+              <div className="col-start-1 rounded-lg text-sm overflow-auto max-h-[620px] border border-slate-600">
+                {data && (
+                  <Tilgungstabelle
+                    table={data as ArmotizationEntry[]}
+                    formInput={input}
                   />
-                </>
-              )}
+                )}
+              </div>
+              <div className="col-start-2">
+                {input && (
+                  <div className="grid gap-4">
+                    <div className="border border-slate-600 rounded-lg">
+                      <PlotlyChart data={data} rent={input.rent} />
+                    </div>
+                    <div className="border border-slate-600 rounded-lg">
+                      <DevelopmentChart
+                        data={data}
+                        rent={input.rent}
+                        interest={input.cash_roi}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </>
         )}
