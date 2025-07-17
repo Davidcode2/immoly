@@ -68,8 +68,8 @@ export default function FinanzierungsForm({
 
   return (
     <Form action={storeInDb}>
-      <div className="flex gap-2 flex-col">
-        <div>
+      <div className="grid gap-2 flex-col">
+        <div className="grid w-[200px]">
           <label htmlFor="capital">Eigenkapital</label>
           <input
             type="number"
@@ -80,7 +80,7 @@ export default function FinanzierungsForm({
             onChange={handleInputChange}
           />
         </div>
-        <div>
+        <div className="grid max-w-[200px]">
           <label htmlFor="creditSum">Kaufsumme</label>
           <input
             type="number"
@@ -91,7 +91,7 @@ export default function FinanzierungsForm({
             onChange={handleInputChange}
           />
         </div>
-        <div>
+        <div className="grid max-w-[200px]">
           <label htmlFor="interestRate">Kreditzins</label>
           <br />
           <input
@@ -105,7 +105,7 @@ export default function FinanzierungsForm({
             onChange={handleInputChange}
           />
         </div>
-        <div>
+        <div className="grid max-w-[200px]">
           <label htmlFor="cashRoi">Kapitalrendite</label>
           <br />
           <input
@@ -119,7 +119,7 @@ export default function FinanzierungsForm({
             onChange={handleInputChange}
           />
         </div>
-        <div>
+        <div className="grid max-w-[200px]">
           <label htmlFor="rent">Miete</label>
           <input
             type="number"
@@ -130,7 +130,7 @@ export default function FinanzierungsForm({
             onChange={handleInputChange}
           />
         </div>
-        <div>
+        <div className="grid max-w-[200px]">
           <label htmlFor="monthlyRate">Monatsrate</label>
           <input
             type="number"

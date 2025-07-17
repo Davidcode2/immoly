@@ -51,16 +51,16 @@ export default function Tilgungstabelle({ table, formInput }: PropTypes) {
   };
 
   return (
-    <div className="rounded-lg grid justify-stretch">
+    <div className="rounded-lg grid justify-stretch text-xs lg:text-base">
       <table className="overflow-auto">
         <thead>
-          <tr className="sticky top-0 bg-black">
+          <tr className="sticky text-left top-0 bg-black">
             <th className="px-4 py-2">Jahr</th>
-            <th className="px-4 py-2">Zins</th>
-            <th className="px-4 py-2">Tilgung</th>
-            <th className="px-4 py-2">Jährliche Rate</th>
-            <th className="px-4 py-2">Restschuld</th>
-            <th className="px-4 py-2">Sondertilgung</th>
+            <th className="sm:px-4 py-2">Zins</th>
+            <th className="sm:px-4 py-2">Tilgung</th>
+            <th className="sm:px-4 py-2">Jährliche Rate</th>
+            <th className="sm:px-4 py-2">Restschuld</th>
+            <th className="sm:px-4 py-2">Sondertilgung</th>
           </tr>
         </thead>
         <tbody>
@@ -70,17 +70,17 @@ export default function Tilgungstabelle({ table, formInput }: PropTypes) {
               className="even:bg-[#0f0f0f] border-t border-gray-950"
             >
               <td className="px-4 py-2">{x.year}</td>
-              <td className="px-4 py-2">
+              <td className="sm:px-4 py-2">
                 {Math.round(x.interest).toLocaleString()}
               </td>
-              <td className="px-4 py-2">
+              <td className="sm:px-4 py-2">
                 {Math.round(x.principal).toLocaleString()}
               </td>
-              <td className="px-4 py-2">{x.yearlyRate.toLocaleString()}</td>
-              <td className="px-4 py-2">
+              <td className="sm:px-4 py-2">{x.yearlyRate.toLocaleString()}</td>
+              <td className="sm:px-4 py-2">
                 {Math.round(x.remainingPrincipal).toLocaleString()}
               </td>
-              <td className="px-4 py-2 ">
+              <td className="sm:px-4 py-2 ">
                 <form onSubmit={(e) => _calcSondertilgung(e, x.year)} className="flex gap-4"> 
                   <button
                     className="hover:cursor-pointer text-gray-800 hover:text-gray-200"

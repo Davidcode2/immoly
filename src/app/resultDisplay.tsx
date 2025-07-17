@@ -62,9 +62,9 @@ export default function ResultDisplay() {
   }, [calculationId]);
 
   return (
-    <div className="grid grid-cols-[200px_1fr] gap-16">
+    <div className="grid md:grid-cols-[200px_1fr] gap-16">
       <FinanzierungsForm values={formValues} setInput={setInput} />
-      <div className="grid grid-cols-[180px_1fr]">
+      <div className="grid 2xl:grid-cols-[180px_1fr]">
         {!data && (
           <div className="text-center text-2xl col-span-full my-auto">
             Gib deine Daten ein oder wähle ein Szenario...
@@ -73,8 +73,8 @@ export default function ResultDisplay() {
         {data && (
           <>
             <Scenario calculationId={selectedScenario} data={data} />
-            <div className="gap-4 grid grid-cols-[3fr_2fr]">
-              <div className="col-start-1 rounded-lg text-sm overflow-auto max-h-[620px] border border-slate-600">
+            <div className="gap-4 grid xl:grid-cols-[3fr_2fr]">
+              <div className="xl:col-start-1 rounded-lg text-sm overflow-auto max-h-[620px] border border-slate-600">
                 {data && (
                   <Tilgungstabelle
                     table={data as ArmotizationEntry[]}
@@ -82,13 +82,13 @@ export default function ResultDisplay() {
                   />
                 )}
               </div>
-              <div className="col-start-2">
+              <div className="xl:col-start-2">
                 {input && (
                   <div className="grid gap-4">
-                    <div className="border border-slate-600 rounded-lg">
+                    <div className="grid min-w-[410px] justify-around border border-slate-600 rounded-lg">
                       <PlotlyChart data={data} rent={input.rent} />
                     </div>
-                    <div className="border border-slate-600 rounded-lg">
+                    <div className="grid justify-around border border-slate-600 rounded-lg">
                       <DevelopmentChart
                         data={data}
                         rent={input.rent}
