@@ -9,11 +9,11 @@ type PropTypes = {
 };
 
 export default function Tilgungstabelle({ table, formInput }: PropTypes) {
+  const [tilgungsTabelle, setTilgungstabelle] = useState(table);
+  
   useEffect(() => {
     setTilgungstabelle(table);
   }, [table]);
-
-  const [tilgungsTabelle, setTilgungstabelle] = useState(table);
 
   const _calcSondertilgung = (event: any, year: number) => {
     event.preventDefault();

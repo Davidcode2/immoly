@@ -1,16 +1,34 @@
-'use server';
-import { redirect } from 'next/navigation';
-import { connect, disconnect } from './lib/db';
+"use server";
+import { redirect } from "next/navigation";
+import { connect, disconnect } from "./lib/db";
+import BaseModel from "./lib/models/baseModel";
 
-export async function calc(formData: FormData) {
-  const capital = Number(formData.get('down_payment'));
-  const principal = Number(formData.get('principal'));
-  const interest = Number(formData.get('interest_rate'));
-  const monthlyRate = Number(formData.get('monthly_rate'));
-  const rent = Number(formData.get('rent'));
+export async function storeInDb(formData: FormData) {
+  const model = {
+    down_payment: Number(formData.get("down_payment")),
+    principal: Number(formData.get("principal")),
+    interest_rate: Number(formData.get("interest_rate")),
+    monthly_rate: Number(formData.get("monthly_rate")),
+    rent: Number(formData.get("rent")),
+  } as BaseModel;
 
-  const yearlyRate = calcYearlyRate(principal, interest);
+  const yearlyRate = calcYearlyRate(model.principal, model.interest_rate);
+  console.log(model);
+  const result = await storeCalculationInDb(model, yearlyRate);
+  console.log(result);
+  if (!result) {
+    throw new Error("Failed to store calculation in database");
+  }
 
+  const calculationId = result.rows[0].id;
+  redirect(`/graph?calculationId=${calculationId}`);
+}
+
+function calcYearlyRate(creditSum: number, interest: number) {
+  return (creditSum * interest) / 100;
+}
+
+async function storeCalculationInDb(model: BaseModel, yearly_rate: number) {
   const client = await connect();
   try {
     const query = `
@@ -19,22 +37,18 @@ export async function calc(formData: FormData) {
       RETURNING id;
     `;
     const values = [
-      principal,
-      interest,
-      monthlyRate,
-      capital,
-      rent,
-      yearlyRate,
+      model.principal,
+      model.interest_rate,
+      model.monthly_rate,
+      model.down_payment,
+      model.rent,
+      yearly_rate,
     ];
     const result = await client.query(query, values);
-
-    const calculationId = result.rows[0].id;
-    redirect(`/graph?calculationId=${calculationId}`);
+    return result;
+  } catch (e) {
+    console.error(e, "Error occured when storing calculation in database");
   } finally {
     await disconnect();
   }
-}
-
-function calcYearlyRate(creditSum: number, interest: number) {
-  return (creditSum * interest) / 100;
 }

@@ -1,5 +1,5 @@
 import Form from "next/form";
-import { calc } from "./calc";
+import { storeInDb } from "./calc";
 import { useEffect, useState } from "react";
 import CashRoiModel from "./lib/models/cashRoiModel";
 import CalculationResult from "./lib/models/CalculationResult";
@@ -67,7 +67,7 @@ export default function FinanzierungsForm({
   }, [values]);
 
   return (
-    <Form action={calc}>
+    <Form action={storeInDb}>
       <div className="flex gap-2 flex-col">
         <div>
           <label htmlFor="capital">Eigenkapital</label>

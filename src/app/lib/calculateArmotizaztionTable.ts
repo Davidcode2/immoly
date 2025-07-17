@@ -13,7 +13,7 @@ export default function calcTilgung(calculation: BaseModel): ArmotizationEntry[]
   let counter = 0;
   while (remainingPrincipal >= 0.1) {
     if (counter >= 120) {
-      console.error(
+      console.log(
         'Maximum iterations (120) reached. Stopping calculation to prevent infinite loop.',
       );
       break;

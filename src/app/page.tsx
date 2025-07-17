@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
 import Image from "next/image";
-import Form from 'next/form';
-import { calc } from "./calc";
+import Form from "next/form";
+import { storeInDb } from "./calc";
 import Link from "next/link";
 
 export default function Home() {
@@ -17,18 +17,45 @@ export default function Home() {
           height={38}
           priority
         />
-        <Form action={calc}>
+        <Form action={storeInDb}>
           <div className="flex gap-2 flex-col">
             <label htmlFor="capital">Eigenkapital</label>
-            <input type="number" className="border-stone-700 border rounded-lg" id="captital" name="capital" />
+            <input
+              type="number"
+              className="border-stone-700 border rounded-lg"
+              id="captital"
+              name="capital"
+            />
             <label htmlFor="creditSum">Kaufsumme</label>
-            <input type="number" className="border-stone-700 border rounded-lg" id="creditSum" name="creditSum" />
+            <input
+              type="number"
+              className="border-stone-700 border rounded-lg"
+              id="creditSum"
+              name="creditSum"
+            />
             <label htmlFor="interestRate">Zins</label>
-            <input type="number" className="border-stone-700 border rounded-lg" id="interestRate" name="interestRate" />
+            <input
+              type="decimal"
+              className="border-stone-700 border rounded-lg"
+              id="interestRate"
+              name="interestRate"
+              max="20"
+              min="0.1"
+            />
             <label htmlFor="rent">Miete</label>
-            <input type="number" className="border-stone-700 border rounded-lg" id="rent" name="rent" />
+            <input
+              type="number"
+              className="border-stone-700 border rounded-lg"
+              id="rent"
+              name="rent"
+            />
             <label htmlFor="monthlyRate">Monatsrate</label>
-            <input type="number" className="border-stone-700 border rounded-lg" id="monthylRate" name="monthlyRate" />
+            <input
+              type="number"
+              className="border-stone-700 border rounded-lg"
+              id="monthylRate"
+              name="monthlyRate"
+            />
             <button type="submit" />
           </div>
         </Form>
@@ -37,7 +64,7 @@ export default function Home() {
             <Link href="/graph">
               Show results{" "}
               <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              -&gt;
+                -&gt;
               </code>
             </Link>
           </li>
