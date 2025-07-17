@@ -15,10 +15,11 @@ export default function Tilgungstabelle({ table, formInput }: PropTypes) {
     setTilgungstabelle(table);
   }, [table]);
 
-  const _calcSondertilgung = (event: any, year: number) => {
+  const _calcSondertilgung = (event: React.FormEvent<HTMLFormElement>, year: number) => {
     event.preventDefault();
-    const sondertilgungAmount = event.target.elements.sonderTilgungAmount.value;
-    const newTable = recalcTable(year, sondertilgungAmount);
+    const form = event.target as HTMLFormElement;
+    const sondertilgungAmount = (form.elements.namedItem('sonderTilgungAmount') as HTMLInputElement).value;
+    const newTable = recalcTable(year, Number(sondertilgungAmount));
     setTilgungstabelle(newTable);
   };
 
