@@ -20,9 +20,7 @@ services:
 
   migrations:
     container_name: immoly-migrations
-    build:
-      context: .
-      dockerfile: dockerfile.migrations
+    image: ghcr.io/davidcode2/immoly-migrations:${IMAGE_TAG:-latest}
     depends_on:
       immoly-postgres:
         condition: service_healthy
@@ -30,7 +28,6 @@ services:
       - immoly-network
     env_file:
       - ./.env
-    working_dir: /app
     command: ["npx", "drizzle-kit", "migrate"]
 
   immoly-app:
