@@ -1,6 +1,6 @@
 export default function ScenarioTextDisplay({ paidAfter, paidInYear, sumZinsen }: { paidAfter: number, paidInYear: number, sumZinsen: number }) {
   return (
-    <div className="md:p-4 py-4 md:px-2 flex gap-y-2 flex-col">
+    <div className="flex bg-gradient-to-tl from-sky-900/40 to-purple-800/20 p-8 gap-y-2 flex-col rounded-lg shadow shadow-purple-900">
       {paidAfter === -1 ? <div className="text-red-500 font-bold">Das wird nichts</div> :
         <div>Abgezahlt nach<br />
           <span className="text-green-500 font-bold">{paidAfter}</span> Jahren
