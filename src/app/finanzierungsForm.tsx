@@ -92,17 +92,6 @@ export default function FinanzierungsForm({
           />
         </div>
         <div className="grid max-w-[200px]">
-          <label htmlFor="creditSum">Kaufsumme</label>
-          <input
-            type="number"
-            className="border-stone-700 border rounded-lg p-1"
-            id="creditSum"
-            name="principal"
-            value={principalValue}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="grid max-w-[200px]">
           <label htmlFor="interestRate">Kreditzins</label>
           <input
             type="decimal"
@@ -112,6 +101,17 @@ export default function FinanzierungsForm({
             max="20"
             min="0.1"
             value={interestRate}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="grid max-w-[200px]">
+          <label htmlFor="creditSum">Kaufsumme</label>
+          <input
+            type="number"
+            className="border-stone-700 border rounded-lg p-1"
+            id="creditSum"
+            name="principal"
+            value={principalValue}
             onChange={handleInputChange}
           />
         </div>
