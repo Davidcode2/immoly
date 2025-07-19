@@ -149,6 +149,10 @@ jobs:
           scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }}:${{ env.DEPLOYMENT_DIR }}
           scp -o StrictHostKeyChecking=no .env.temp ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }}:${{ env.DEPLOYMENT_DIR }}/.env
 
+      - name: Transfer dockerfile.migrations
+        run: |
+          scp -o StrictHostKeyChecking=no dockerfile.migrations ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }}:${{ env.DEPLOYMENT_DIR }}
+
       - name: Deploy on server
         env:
           DEPLOY_IMAGE_TAG: ${{ github.sha }}
