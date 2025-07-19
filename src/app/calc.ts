@@ -52,3 +52,4 @@ async function storeCalculationInDb(model: BaseModel, yearly_rate: number) {
     await disconnect();
   }
 }
+
