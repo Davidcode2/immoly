@@ -1,30 +1,52 @@
-services: 
-  immoly-app: 
-    container_name: immoly-app
-    depends_on: 
-      - immoly-postgres
-    image: ghcr.io/davidcode2/immoly:${IMAGE_TAG:-latest}
-    restart: unless-stopped
-    networks: 
-      - app-network
-      - immoly-network
-    env_file:
-      - ./.env
-    
+services:
   immoly-postgres:
     container_name: immoly-postgres
     image: postgres:16.0-alpine
     restart: unless-stopped
-    volumes: 
+    volumes:
       - immoly-volume:/var/lib/postgresql/data
-    networks: 
+    networks:
       - immoly-network
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DATABASE}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
-volumes: 
+  migrations:
+    container_name: immoly-migrations
+    build:
+      context: .
+      dockerfile: dockerfile.migrations
+    depends_on:
+      immoly-postgres:
+        condition: service_healthy
+    networks:
+      - immoly-network
+    env_file:
+      - ./.env
+    working_dir: /app
+    command: ["npx", "drizzle-kit", "migrate"]
+
+  immoly-app:
+    container_name: immoly-app
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+    image: ghcr.io/davidcode2/immoly:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    networks:
+      - app-network
+      - immoly-network
+    env_file:
+      - ./.env
+
+volumes:
   immoly-volume:
 
 networks:

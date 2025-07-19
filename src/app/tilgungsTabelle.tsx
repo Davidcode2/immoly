@@ -68,7 +68,7 @@ export default function Tilgungstabelle({ table, formInput }: PropTypes) {
           {tilgungsTabelle.map((x) => (
             <tr
               key={x.year}
-              className="even:bg-[#0f0f0f] border-t border-gray-950"
+              className="hover:bg-purple-600 even:bg-[#0f0f0f] border-t border-gray-950"
             >
               <td className="px-4 py-2">{x.year}</td>
               <td className="sm:px-4 py-2">

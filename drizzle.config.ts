@@ -5,7 +5,11 @@ export default defineConfig({
   schema: './src/app/lib/db/schema.ts',
   dialect: 'postgresql',
   dbCredentials: {
-    url: process.env.POSTGRES_CONNECTION_STRING!,
+    host: process.env.POSTGRES_HOST!,
+    port: Number(process.env.POSTGRES_PORT),
+    user: process.env.POSTGRES_USER!,
+    password: process.env.POSTGRES_PASSWORD!,
+    database: process.env.POSTGRES_DATABASE!,
     ssl: process.env.NODE_ENV === 'production' ? true : false,
   },
 });
