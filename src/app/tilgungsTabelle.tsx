@@ -51,17 +51,21 @@ export default function Tilgungstabelle({ table, formInput }: PropTypes) {
     return newTable;
   };
 
+  const screenWidthMobile = () => {
+    return window.innerWidth < 640;
+  }
+
   return (
     <div className="rounded-lg grid justify-stretch text-xs lg:text-base">
-      <table className="overflow-auto">
+      <table className="overflow-auto table-fixed">
         <thead>
           <tr className="sticky text-left top-0 bg-black">
-            <th className="px-4 py-2">Jahr</th>
-            <th className="sm:px-4 py-2">Zins</th>
+            <th className="sm:pl-4 pl-2 sm:pr-2 py-2">Jahr</th>
+            <th className="sm:pl-4 py-2">Zins</th>
             <th className="sm:px-4 py-2">Tilgung</th>
-            <th className="sm:px-4 py-2">Jährliche Rate</th>
-            <th className="sm:px-4 py-2">Restschuld</th>
-            <th className="sm:px-4 py-2">Sondertilgung</th>
+            <th className="sm:px-4 py-2">{ screenWidthMobile() ? "Jhl. Rate" : "Jährliche Rate"}</th>
+            <th className="sm:px-4 py-2">{ screenWidthMobile() ? "Rest" : "Restschuld" }</th>
+            <th className="sm:px-4 py-2">{ screenWidthMobile() ? "S.Tilgung": "Sondertilgung" }</th>
           </tr>
         </thead>
         <tbody>
@@ -81,14 +85,14 @@ export default function Tilgungstabelle({ table, formInput }: PropTypes) {
               <td className="sm:px-4 py-2">
                 {Math.round(x.remainingPrincipal).toLocaleString()}
               </td>
-              <td className="sm:px-4 py-2 ">
-                <form onSubmit={(e) => _calcSondertilgung(e, x.year)} className="flex gap-4"> 
+              <td className="sm:px-4 py-2 w-24">
+                <form onSubmit={(e) => _calcSondertilgung(e, x.year)} className="flex sm:gap-4 justify-fit"> 
                   <button
                     className="hover:cursor-pointer text-gray-800 hover:text-gray-200"
                   >
                   +
                   </button>
-                  <input type="number" name="sonderTilgungAmount" className="text-green-400 rounded-md text-sm p-[3px] active:text-gray-200 w-20" />
+                  <input size={3} type="number" name="sonderTilgungAmount" className="text-green-400 rounded-md text-sm p-[3px] active:text-gray-200 w-20" />
                 </form>
               </td>
             </tr>
