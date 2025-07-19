@@ -1,5 +1,5 @@
-// lib/db.ts
 import { Client } from 'pg';
+import { drizzle } from 'drizzle-orm/node-postgres';
 
 const dbConfig = {
   user: process.env.POSTGRES_USER,
@@ -8,6 +8,9 @@ const dbConfig = {
   password: process.env.POSTGRES_PASSWORD,
   port: process.env.POSTGRES_PORT ? parseInt(process.env.POSTGRES_PORT, 10) : 5432,
 };
+
+
+const db = drizzle(process.env.DATABASE_URL!);
 
 let pool: Client | null = null;
 

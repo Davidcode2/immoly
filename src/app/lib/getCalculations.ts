@@ -1,6 +1,6 @@
 'use server';
 
-import { connect, disconnect } from "./db";
+import { connect, disconnect } from "./db/db";
 import CalculationResult from "./models/CalculationResult";
 
 export default async function getCalculations() {
