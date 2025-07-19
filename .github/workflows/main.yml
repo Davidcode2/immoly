@@ -89,7 +89,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4.2.1
         with:
           aws-region: eu-central-1
-          role-to-assume: arn:aws:iam::${{secrets.AWS_ACCOUNT_ID}}:role/ci-role 
+          role-to-assume: arn:aws:iam::${{secrets.AWS_ACCOUNT_ID}}:role/ci-role
 
       - name: Get IP address from SSM
         id: get-server-ip
@@ -129,6 +129,14 @@ jobs:
           echo "POSTGRES_DB=$DB_NAME" >> .env.temp
           echo "POSTGRES_HOST=$DB_HOST" >> .env.temp
           echo "POSTGRES_PORT=$DB_PORT" >> .env.temp
+
+          # Create DATABASE_URL env var
+          echo "DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}" >> $GITHUB_ENV
+
+      - name: Apply Drizzle Migrations
+        env:
+          POSTGRES_CONNECTION_STRING: ${{ env.DATABASE_URL }}
+        run: npx drizzle-kit migrate
 
       - name: Start ssh-agent and add key
         uses: webfactory/ssh-agent@v0.9.0
