@@ -64,7 +64,7 @@ export default function ResultDisplay() {
   return (
     <div className="grid md:grid-cols-[200px_1fr] md:gap-16">
       <FinanzierungsForm values={formValues} setInput={setInput} />
-      <div className="grid 2xl:grid-cols-[180px_1fr]">
+      <div className="grid">
         {!data && (
           <div className="text-center text-2xl col-span-full my-auto">
             Gib deine Daten ein oder wähle ein Szenario...
