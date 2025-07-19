@@ -20,7 +20,7 @@ export default function SingleGraph({ calculation }: { calculation: CalculationR
       <div className="px-4 pb-4">
         <div>
           <p>Investitionssumme: {calculation.principal.toLocaleString()}</p>
-          <p>Zins: {calculation.interest_rate}%</p>
+          <p>Zins: {Number(calculation.interest_rate).toFixed(2)}%</p>
           <p>Eigenkapital: {calculation.down_payment.toLocaleString()}</p>
           <p>Monatliche Rate: {calculation.monthly_rate.toLocaleString()}</p>
           <p>Miete: {calculation.rent}</p>

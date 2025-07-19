@@ -100,7 +100,7 @@ export default function FinanzierungsForm({
             name="interest_rate"
             max="20"
             min="0.1"
-            value={interestRate}
+            value={Number(interestRate).toFixed(2)}
             onChange={handleInputChange}
           />
         </div>
