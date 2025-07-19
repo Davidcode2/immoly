@@ -1,5 +1,5 @@
 import { Client } from 'pg';
-import { drizzle } from 'drizzle-orm/node-postgres';
+//import { drizzle } from 'drizzle-orm/node-postgres';
 
 const dbConfig = {
   user: process.env.POSTGRES_USER,
@@ -10,7 +10,7 @@ const dbConfig = {
 };
 
 
-const db = drizzle(process.env.DATABASE_URL!);
+//const db = drizzle(process.env.DATABASE_URL!);
 
 let pool: Client | null = null;
 
