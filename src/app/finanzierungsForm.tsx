@@ -104,7 +104,6 @@ export default function FinanzierungsForm({
         </div>
         <div className="grid max-w-[200px]">
           <label htmlFor="interestRate">Kreditzins</label>
-          <br />
           <input
             type="decimal"
             className="border-stone-700 border rounded-lg p-1"
@@ -118,7 +117,6 @@ export default function FinanzierungsForm({
         </div>
         <div className="grid max-w-[200px]">
           <label htmlFor="cashRoi">Kapitalrendite <span className="text-xs text-gray-400">(optional)</span></label>
-          <br />
           <input
             type="decimal"
             className="border-stone-700 border rounded-lg p-1"
