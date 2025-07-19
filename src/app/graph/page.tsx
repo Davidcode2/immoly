@@ -12,7 +12,7 @@ export default async function GraphPage() {
     return <div>Skipped at build time</div>;
   }
   return (
-    <div className="grid gap-4 p-3 lg:p-8 pb-20 sm:p-10 font-[family-name:var(--font-geist-sans)]">
+    <div className="grid gap-4 p-3 lg:p-8 pb-20 sm:p-10 font-[family-name:var(--font-geist-sans)] max-w-[2000px] mx-auto">
       <button className="rounded-full bg-slate-200 px-2 w-fit text-slate-800">
         <code>
           <Link href="/">back</Link>
@@ -27,4 +27,3 @@ export default async function GraphPage() {
     </div>
   );
 }
-
