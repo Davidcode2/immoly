@@ -1,15 +1,30 @@
-FROM node:20-alpine AS migration_builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
 COPY package.json ./
 COPY package-lock.json ./
 
-RUN npm ci --omit=dev && npm install --no-save drizzle-kit drizzle-orm typescript tsx dotenv
+RUN npm install --no-save \
+    drizzle-kit \
+    drizzle-orm \
+    typescript \
+    tsx \
+    dotenv
 
 COPY drizzle.config.ts ./
-COPY src/app/lib/db/schema.ts ./src/app/lib/db/
-COPY drizzle ./drizzle 
+COPY src/app/lib/db/schema.ts ./src/app/lib/db/ 
+COPY drizzle ./drizzle
+
+FROM node:20-alpine AS migrator_runtime
+
+WORKDIR /app
+
+COPY --from=builder /app/node_modules ./node_modules/
+
+COPY --from=builder /app/drizzle.config.ts ./
+COPY --from=builder /app/src/app/lib/db/schema.ts ./src/app/lib/db/
+COPY --from=builder /app/drizzle ./drizzle
 
 # the 'command' field in docker-compose will override this.
 # CMD ["npx", "drizzle-kit", "migrate"]
