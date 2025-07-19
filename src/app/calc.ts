@@ -2,6 +2,7 @@
 import { redirect } from "next/navigation";
 import { connect, disconnect } from "./lib/db/db";
 import BaseModel from "./lib/models/baseModel";
+import { Client } from "pg";
 
 export async function storeInDb(formData: FormData) {
   const model = {
@@ -13,15 +14,15 @@ export async function storeInDb(formData: FormData) {
   } as BaseModel;
 
   const yearlyRate = calcYearlyRate(model.principal, model.interest_rate);
-  console.log(model);
   const result = await storeCalculationInDb(model, yearlyRate);
-  console.log(result);
-  if (!result) {
+  if (result === undefined || result === null) {
     throw new Error("Failed to store calculation in database");
   }
 
-  const calculationId = result.rows[0].id;
-  redirect(`/graph?calculationId=${calculationId}`);
+  if (result !== 0) {
+    const calculationId = result;
+    redirect(`/graph?calculationId=${calculationId}`);
+  }
 }
 
 function calcYearlyRate(creditSum: number, interest: number) {
@@ -30,6 +31,13 @@ function calcYearlyRate(creditSum: number, interest: number) {
 
 async function storeCalculationInDb(model: BaseModel, yearly_rate: number) {
   const client = await connect();
+
+  const numberOfEntriesExceeded = await isNumberOfEntriesExceeded(client);
+  if (numberOfEntriesExceeded) {
+    await disconnect();
+    return 0;
+  }
+
   try {
     const query = `
       INSERT INTO calculations (principal, interest_rate, monthly_rate, down_payment, rent, annual_percentage_rate)
@@ -45,10 +53,24 @@ async function storeCalculationInDb(model: BaseModel, yearly_rate: number) {
       yearly_rate,
     ];
     const result = await client.query(query, values);
-    return result;
+    return result.rows[0].id;
   } catch (e) {
     console.error(e, "Error occured when storing calculation in database");
   } finally {
     await disconnect();
+  }
+}
+
+async function isNumberOfEntriesExceeded(client: Client) {
+  try {
+    const numberOfEntriesQuery = `SELECT COUNT(*) FROM calculations;`;
+    const numberOfEntries = await client.query(numberOfEntriesQuery);
+    if (numberOfEntries.rows[0].count >= 15) {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    console.error(e, "Error occured when counting entries in database");
+    return true;
   }
 }
