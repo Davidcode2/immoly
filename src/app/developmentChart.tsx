@@ -3,6 +3,7 @@ import { CartesianGrid, Line, LineChart, Tooltip, XAxis } from 'recharts';
 import ArmotizationEntry from './lib/models/ArmotizationEntry';
 import ChartDataItem from './lib/models/ChartDataItem';
 import InterestEarnedModel from './lib/models/interestEarnedModel';
+import { calcWidth } from './utils/screenWidth';
 
 
 export default function DevelopmentChart({ data, rent, interest = 4 }: { data: ArmotizationEntry[], rent: number, interest: number }) {
@@ -66,7 +67,7 @@ export default function DevelopmentChart({ data, rent, interest = 4 }: { data: A
   }
 
   return (
-    <LineChart width={400} height={300} data={debouncedChartData}>
+    <LineChart width={calcWidth()} height={300} data={debouncedChartData}>
       <XAxis dataKey="name" />
       <Tooltip />
       <CartesianGrid stroke="#27232b" />

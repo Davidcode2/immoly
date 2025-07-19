@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis } from 'recharts';
 import ArmotizationEntry from './lib/models/ArmotizationEntry';
+import { calcWidth } from './utils/screenWidth';
 
 interface ChartDataItem {
   name: string;
@@ -43,7 +44,7 @@ export default function PlotlyChart({ data, rent }: { data: ArmotizationEntry[],
   }
 
   return (
-    <LineChart className="grid justify-stretch" width={400} height={300} data={debouncedChartData}>
+    <LineChart className="grid justify-stretch" width={calcWidth()} height={300} data={debouncedChartData}>
       <XAxis dataKey="name" />
       <Tooltip />
       <CartesianGrid stroke="#27232b" />
