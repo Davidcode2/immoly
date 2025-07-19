@@ -85,7 +85,7 @@ export default function ResultDisplay() {
               <div className="xl:col-start-2">
                 {input && (
                   <div className="grid gap-4">
-                    <div className="grid min-w-[410px] justify-around border border-slate-600 rounded-lg">
+                    <div className="grid justify-around border border-slate-600 rounded-lg">
                       <PlotlyChart data={data} rent={input.rent} />
                     </div>
                     <div className="grid justify-around border border-slate-600 rounded-lg">
