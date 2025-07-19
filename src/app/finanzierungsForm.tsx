@@ -67,9 +67,9 @@ export default function FinanzierungsForm({
   }, [values]);
 
   return (
-    <Form action={storeInDb}>
+    <Form action={storeInDb} className="mx-auto">
       <div className="grid gap-2 flex-col">
-        <div className="grid w-[200px]">
+        <div className="grid">
           <label htmlFor="capital">Eigenkapital</label>
           <input
             type="number"
