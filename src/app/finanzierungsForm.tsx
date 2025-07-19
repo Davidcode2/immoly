@@ -81,6 +81,17 @@ export default function FinanzierungsForm({
           />
         </div>
         <div className="grid max-w-[200px]">
+          <label htmlFor="monthlyRate">Monatsrate</label>
+          <input
+            type="number"
+            className="border-stone-700 border rounded-lg p-1"
+            id="monthylRate"
+            name="monthly_rate"
+            value={monthlyRate}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="grid max-w-[200px]">
           <label htmlFor="creditSum">Kaufsumme</label>
           <input
             type="number"
@@ -106,7 +117,7 @@ export default function FinanzierungsForm({
           />
         </div>
         <div className="grid max-w-[200px]">
-          <label htmlFor="cashRoi">Kapitalrendite</label>
+          <label htmlFor="cashRoi">Kapitalrendite <span className="text-xs text-gray-400">(optional)</span></label>
           <br />
           <input
             type="decimal"
@@ -120,24 +131,13 @@ export default function FinanzierungsForm({
           />
         </div>
         <div className="grid max-w-[200px]">
-          <label htmlFor="rent">Miete</label>
+          <label htmlFor="rent">Miete <span className="text-xs text-gray-400">(optional)</span></label>
           <input
             type="number"
             className="border-stone-700 border rounded-lg p-1"
             id="rent"
             name="rent"
             value={rent}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="grid max-w-[200px]">
-          <label htmlFor="monthlyRate">Monatsrate</label>
-          <input
-            type="number"
-            className="border-stone-700 border rounded-lg p-1"
-            id="monthylRate"
-            name="monthly_rate"
-            value={monthlyRate}
             onChange={handleInputChange}
           />
         </div>
