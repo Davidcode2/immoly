@@ -91,12 +91,23 @@ export default function Tilgungstabelle({
     if (formInput && formInput.interest_rate && formInput.monthly_rate) {
       const newTable = [...tilgungsTabelle];
       tilgungsTabelle.forEach((tableRow: ArmotizationEntry) => {
+        const tableRowNew = newTable.find(x => x.year === tableRow.year);
+        if (!tableRowNew) {
+          return newTable;
+        }
         const sondertilgung = sondertilgungen.find(
           (y) => y.year === tableRow.year,
         );
         if (sondertilgung) {
+          console.log(
+            `table row - amount: ${(tableRow.remainingPrincipal - sondertilgung.amount).toLocaleString("de")}\nyear: ${tableRow.year}\namount: ${sondertilgung.amount}`,
+          );
+          const newReducedPrincipal = tableRowNew.remainingPrincipal - sondertilgung.amount;
+          if (newReducedPrincipal < 0) {
+            return newTable;
+          }
           const newTilgung = calcTilgung({
-            principal: tableRow.remainingPrincipal - sondertilgung.amount,
+            principal: newReducedPrincipal,
             down_payment: 0,
             interest_rate: formInput?.interest_rate,
             monthly_rate: formInput?.monthly_rate,
@@ -105,16 +116,11 @@ export default function Tilgungstabelle({
           newTilgung.forEach((x: ArmotizationEntry) => {
             x.year = x.year + tableRow.year;
           });
-          console.log(newTable);
-          console.log(tilgungsTabelle.indexOf(tableRow));
-          console.log(newTilgung);
           newTable.splice(
             tilgungsTabelle.indexOf(tableRow) + 1,
-            tilgungsTabelle.length,
+            newTable.length,
             ...newTilgung,
           );
-        } else {
-          //newTable.push(tableRow);
         }
       });
       return newTable;
