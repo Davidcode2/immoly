@@ -35,55 +35,18 @@ export default function Tilgungstabelle({
     const sondertilgungAmount = (
       form.elements.namedItem("sonderTilgungAmount") as HTMLInputElement
     ).value;
-    console.log("year when setting sondertilgung:", year);
     await updateSondertilgungInDb(
       Number(calculationId),
       year,
       Number(sondertilgungAmount),
     );
-    const sondertilgungen = await getSondertilgungen(calculationId!);
-    console.log("sondertilgungen after update:", sondertilgungen);
-    //const newTable = await recalcTable(year, Number(sondertilgungAmount));
     const newTable = await recalcForAllSondertilgungen();
     setTilgungstabelle(newTable);
     setData(newTable);
   };
 
-  const recalcTable = async (year: number, sondertilgung: number) => {
-    // recalc only for last year (implementation below) if the latest entry is the last year
-    // recalc only for the subsequent years if the latest entry is not the last year
-    const tableUpToSondertilgung = tilgungsTabelle.filter(
-      (x: ArmotizationEntry) => x.year < year,
-    );
-    const impactedEntry = tilgungsTabelle.find(
-      (x: ArmotizationEntry) => x.year === year,
-    );
-    if (!impactedEntry) {
-      return table;
-    }
-    if (formInput && formInput.interest_rate && formInput.monthly_rate) {
-      const tableFromSondertilgung = calcTilgung({
-        principal: impactedEntry.remainingPrincipal - sondertilgung,
-        down_payment: 0,
-        interest_rate: formInput.interest_rate,
-        monthly_rate: formInput.monthly_rate,
-        rent: formInput?.rent || 0,
-      });
-      tableFromSondertilgung.forEach((x: ArmotizationEntry) => {
-        x.year = x.year + year;
-      });
-
-      const newTable: ArmotizationEntry[] = tableUpToSondertilgung;
-      newTable.push(impactedEntry);
-      newTable.push(...tableFromSondertilgung);
-      return newTable;
-    }
-    return table;
-  };
-
   const recalcForAllSondertilgungen = async () => {
     const sondertilgungen = await getSondertilgungen(calculationId!);
-    console.log(sondertilgungen);
     if (!sondertilgungen) {
       return tilgungsTabelle;
     }
@@ -99,9 +62,6 @@ export default function Tilgungstabelle({
           (y) => y.year === tableRow.year,
         );
         if (sondertilgung) {
-          console.log(
-            `table row - amount: ${(tableRow.remainingPrincipal - sondertilgung.amount).toLocaleString("de")}\nyear: ${tableRow.year}\namount: ${sondertilgung.amount}`,
-          );
           const newReducedPrincipal = tableRowNew.remainingPrincipal - sondertilgung.amount;
           if (newReducedPrincipal < 0) {
             return newTable;
