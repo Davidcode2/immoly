@@ -120,14 +120,14 @@ export default function Tilgungstabelle({
             >
               <td className="px-4 py-2">{x.year}</td>
               <td className="sm:px-4 py-2">
-                {Math.round(x.interest).toLocaleString()}
+                {Math.round(x.interest).toLocaleString("de")}
               </td>
               <td className="sm:px-4 py-2">
-                {Math.round(x.principal).toLocaleString()}
+                {Math.round(x.principal).toLocaleString("de")}
               </td>
-              <td className="sm:px-4 py-2">{x.yearlyRate.toLocaleString()}</td>
+              <td className="sm:px-4 py-2">{x.yearlyRate.toLocaleString("de")}</td>
               <td className="sm:px-4 py-2">
-                {Math.round(x.remainingPrincipal).toLocaleString()}
+                {Math.round(x.remainingPrincipal).toLocaleString("de")}
               </td>
               <td className="sm:px-4 py-2 w-24">
                 <form
