@@ -6,6 +6,7 @@ import {
   getSondertilgungen,
   updateSondertilgungInDb,
 } from "./lib/storeSondertilgungInDb";
+import { Sondertilgung } from "./lib/models/sondertilgung";
 
 type PropTypes = {
   table: ArmotizationEntry[];
@@ -21,10 +22,39 @@ export default function Tilgungstabelle({
   calculationId,
 }: PropTypes) {
   const [tilgungsTabelle, setTilgungstabelle] = useState(table);
+  const [sonderTilgung, setSonderTilgung] = useState<Sondertilgung[]>(
+    tilgungsTabelle.map((x) => ({ year: x.year, amount: x.sondertilgung })),
+  );
 
   useEffect(() => {
     setTilgungstabelle(table);
   }, [table]);
+
+  const handleSonderTilgungChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    year: number,
+  ) => {
+    setSonderTilgung(
+      sonderTilgung.map((x) => {
+        if (x.year === year) {
+          x.amount = Number(event.target.value);
+        }
+        return x;
+      }),
+    );
+    setTilgungstabelle((prevTable) => {
+      const newTable = [...prevTable];
+      const index = newTable.findIndex(
+        (row) => row.year === Number(event.target.name),
+      );
+      if (index !== -1) {
+        const updatedRow = { ...newTable[index] };
+        updatedRow.sondertilgung = Number(event.target.value);
+        newTable[index] = updatedRow;
+      }
+      return newTable;
+    });
+  };
 
   const _calcSondertilgung = async (
     event: React.FormEvent<HTMLFormElement>,
@@ -54,7 +84,7 @@ export default function Tilgungstabelle({
     if (formInput && formInput.interest_rate && formInput.monthly_rate) {
       const newTable = [...tilgungsTabelle];
       tilgungsTabelle.forEach((tableRow: ArmotizationEntry) => {
-        const tableRowNew = newTable.find(x => x.year === tableRow.year);
+        const tableRowNew = newTable.find((x) => x.year === tableRow.year);
         if (!tableRowNew) {
           return newTable;
         }
@@ -62,7 +92,8 @@ export default function Tilgungstabelle({
           (y) => y.year === tableRow.year,
         );
         if (sondertilgung) {
-          const newReducedPrincipal = tableRowNew.remainingPrincipal - sondertilgung.amount;
+          const newReducedPrincipal =
+            tableRowNew.remainingPrincipal - sondertilgung.amount;
           if (newReducedPrincipal < 0) {
             return newTable;
           }
@@ -125,7 +156,9 @@ export default function Tilgungstabelle({
               <td className="sm:px-4 py-2">
                 {Math.round(x.principal).toLocaleString("de")}
               </td>
-              <td className="sm:px-4 py-2">{x.yearlyRate.toLocaleString("de")}</td>
+              <td className="sm:px-4 py-2">
+                {x.yearlyRate.toLocaleString("de")}
+              </td>
               <td className="sm:px-4 py-2">
                 {Math.round(x.remainingPrincipal).toLocaleString("de")}
               </td>
@@ -141,6 +174,8 @@ export default function Tilgungstabelle({
                     size={3}
                     type="number"
                     name="sonderTilgungAmount"
+                    value={sonderTilgung.find((y) => y.year === x.year)?.amount || ""}
+                    onChange={(e) => handleSonderTilgungChange(e, x.year)}
                     className="text-green-400 rounded-md text-sm p-[3px] active:text-gray-200 w-20"
                   />
                 </form>

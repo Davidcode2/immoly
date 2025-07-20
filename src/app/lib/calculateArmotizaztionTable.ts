@@ -1,7 +1,9 @@
-import ArmotizationEntry from './models/ArmotizationEntry';
-import BaseModel from './models/baseModel';
+import ArmotizationEntry from "./models/ArmotizationEntry";
+import CashRoiModel from "./models/cashRoiModel";
 
-export default function calcTilgung(calculation: BaseModel): ArmotizationEntry[] {
+export default function calcTilgung(
+  calculation: CashRoiModel,
+): ArmotizationEntry[] {
   if (!calculation) {
     return [];
   }
@@ -14,7 +16,7 @@ export default function calcTilgung(calculation: BaseModel): ArmotizationEntry[]
   while (remainingPrincipal >= 0.1) {
     if (counter >= 120) {
       console.log(
-        'Maximum iterations (120) reached. Stopping calculation to prevent infinite loop.',
+        "Maximum iterations (120) reached. Stopping calculation to prevent infinite loop.",
       );
       break;
     }
@@ -35,6 +37,11 @@ export default function calcTilgung(calculation: BaseModel): ArmotizationEntry[]
       principal: principalPaidYearly,
       yearlyRate: yearlyRate,
       remainingPrincipal: remainingPrincipal,
+      sondertilgung: calculation.sondertilgungen
+        ? calculation.sondertilgungen.find(
+            (x) => x.year === armotizationTable.length + 1,
+          )?.amount || 0
+        : 0,
     };
     armotizationTable.push(armortizationEntry);
     counter++;

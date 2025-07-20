@@ -96,7 +96,7 @@ export default function ResultDisplay() {
                       <DevelopmentChart
                         data={data}
                         rent={input.rent}
-                        interest={input.cash_roi}
+                        interest={input.cash_roi || 0}
                       />
                     </div>
                   </div>

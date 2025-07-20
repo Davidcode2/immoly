@@ -4,4 +4,5 @@ export default interface ArmotizationEntry {
   principal: number;
   yearlyRate: number;
   remainingPrincipal: number;
+  sondertilgung: number;
 }
