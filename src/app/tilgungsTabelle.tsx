@@ -2,28 +2,48 @@ import { useEffect, useState } from "react";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 import calcTilgung from "./lib/calculateArmotizaztionTable";
 import CashRoiModel from "./lib/models/cashRoiModel";
+import { getSondertilgungen, updateSondertilgungInDb } from "./lib/storeSondertilgungInDb";
 
 type PropTypes = {
   table: ArmotizationEntry[];
   formInput: CashRoiModel | null
+  setData: (tilgungstabelle: ArmotizationEntry[]) => void;
+  calculationId: string | null;
 };
 
-export default function Tilgungstabelle({ table, formInput }: PropTypes) {
+export default function Tilgungstabelle({ table, formInput, setData, calculationId }: PropTypes) {
   const [tilgungsTabelle, setTilgungstabelle] = useState(table);
   
   useEffect(() => {
     setTilgungstabelle(table);
   }, [table]);
 
-  const _calcSondertilgung = (event: React.FormEvent<HTMLFormElement>, year: number) => {
+  const _calcSondertilgung = async (event: React.FormEvent<HTMLFormElement>, year: number) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const sondertilgungAmount = (form.elements.namedItem('sonderTilgungAmount') as HTMLInputElement).value;
-    const newTable = recalcTable(year, Number(sondertilgungAmount));
+    await updateSondertilgungInDb(Number(calculationId), year, Number(sondertilgungAmount));
+    const newTable = await recalcTable(year, Number(sondertilgungAmount));
     setTilgungstabelle(newTable);
+    setData(newTable);
   };
 
-  const recalcTable = (year: number, sondertilgung: number) => {
+  const recalcTable = async (year: number, sondertilgung: number) => {
+    // check all sondertilgung entries 
+
+    const sondertilgungen = await getSondertilgungen(calculationId!);
+    if (!sondertilgungen) {
+      return table;
+    }
+    console.log("before sort" + sondertilgungen);
+    sondertilgungen.sort((a, b) => a.year - b.year);
+    console.log(sondertilgungen);
+    for (const entry of sondertilgungen) {
+      if (entry.year === year) {
+      }
+    }
+    // recalc only for last year (implementation below) if the latest entry is the last year
+    // recalc only for the subsequent years if the latest entry is not the last year
     const tableUpToSondertilgung = tilgungsTabelle.filter(
       (x: ArmotizationEntry) => x.year < year,
     );

@@ -81,6 +81,8 @@ export default function ResultDisplay() {
                   <Tilgungstabelle
                     table={data as ArmotizationEntry[]}
                     formInput={input}
+                    setData={setData}
+                    calculationId={calculationId}
                   />
                 )}
               </div>

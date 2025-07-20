@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Form from "next/form";
-import { storeInDb } from "./calc";
+import { storeInDb } from "./lib/calc";
 import Link from "next/link";
 
 export default function Home() {

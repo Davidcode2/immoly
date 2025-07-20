@@ -1,7 +1,7 @@
 "use server";
 import { redirect } from "next/navigation";
-import { connect, disconnect } from "./lib/db/db";
-import BaseModel from "./lib/models/baseModel";
+import { connect, disconnect } from "./db/db";
+import BaseModel from "./models/baseModel";
 import { Client } from "pg";
 
 export async function storeInDb(formData: FormData) {

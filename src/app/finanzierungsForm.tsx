@@ -1,5 +1,5 @@
 import Form from "next/form";
-import { storeInDb } from "./calc";
+import { storeInDb } from "./lib/calc";
 import { useEffect, useState } from "react";
 import CashRoiModel from "./lib/models/cashRoiModel";
 import CalculationResult from "./lib/models/CalculationResult";
