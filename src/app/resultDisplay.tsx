@@ -66,8 +66,10 @@ export default function ResultDisplay() {
       <FinanzierungsForm values={formValues} setInput={setInput} />
       <div className="grid">
         {!data && (
-          <div className="text-center text-2xl col-span-full my-auto">
-            Gib deine Daten ein oder wähle ein Szenario...
+          <div className="hidden border border-slate-600 h-full md:flex md:justify-center md:items-center text-2xl col-span-full rounded-lg">
+            <div className="px-4">
+              Gib deine Daten ein oder wähle ein Szenario...
+            </div>
           </div>
         )}
         {data && (
