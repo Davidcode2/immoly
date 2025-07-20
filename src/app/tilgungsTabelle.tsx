@@ -35,27 +35,21 @@ export default function Tilgungstabelle({
     const sondertilgungAmount = (
       form.elements.namedItem("sonderTilgungAmount") as HTMLInputElement
     ).value;
+    console.log("year when setting sondertilgung:", year);
     await updateSondertilgungInDb(
       Number(calculationId),
       year,
       Number(sondertilgungAmount),
     );
-    const newTable = await recalcTable(year, Number(sondertilgungAmount));
+    const sondertilgungen = await getSondertilgungen(calculationId!);
+    console.log("sondertilgungen after update:", sondertilgungen);
+    //const newTable = await recalcTable(year, Number(sondertilgungAmount));
+    const newTable = await recalcForAllSondertilgungen();
     setTilgungstabelle(newTable);
     setData(newTable);
   };
 
   const recalcTable = async (year: number, sondertilgung: number) => {
-    // check all sondertilgung entries
-
-    const sondertilgungen = await getSondertilgungen(calculationId!);
-    if (!sondertilgungen) {
-      return table;
-    }
-    console.log("before sort" + sondertilgungen);
-    sondertilgungen.sort((a, b) => a.year - b.year);
-    console.log(sondertilgungen);
-
     // recalc only for last year (implementation below) if the latest entry is the last year
     // recalc only for the subsequent years if the latest entry is not the last year
     const tableUpToSondertilgung = tilgungsTabelle.filter(
@@ -67,22 +61,66 @@ export default function Tilgungstabelle({
     if (!impactedEntry) {
       return table;
     }
-    const tableFromSondertilgung = calcTilgung({
-      principal: impactedEntry.remainingPrincipal - sondertilgung,
-      down_payment: 0,
-      interest_rate: formInput?.interest_rate || 3,
-      monthly_rate: formInput?.monthly_rate || 1500,
-      rent: formInput?.rent || 0,
-    });
-    tableFromSondertilgung.map((x: ArmotizationEntry) => {
-      x.year = x.year + year;
-      return x;
-    });
+    if (formInput && formInput.interest_rate && formInput.monthly_rate) {
+      const tableFromSondertilgung = calcTilgung({
+        principal: impactedEntry.remainingPrincipal - sondertilgung,
+        down_payment: 0,
+        interest_rate: formInput.interest_rate,
+        monthly_rate: formInput.monthly_rate,
+        rent: formInput?.rent || 0,
+      });
+      tableFromSondertilgung.forEach((x: ArmotizationEntry) => {
+        x.year = x.year + year;
+      });
 
-    const newTable: ArmotizationEntry[] = tableUpToSondertilgung;
-    newTable.push(impactedEntry);
-    newTable.push(...tableFromSondertilgung);
-    return newTable;
+      const newTable: ArmotizationEntry[] = tableUpToSondertilgung;
+      newTable.push(impactedEntry);
+      newTable.push(...tableFromSondertilgung);
+      return newTable;
+    }
+    return table;
+  };
+
+  const recalcForAllSondertilgungen = async () => {
+    const sondertilgungen = await getSondertilgungen(calculationId!);
+    console.log(sondertilgungen);
+    if (!sondertilgungen) {
+      return tilgungsTabelle;
+    }
+    sondertilgungen.sort((a, b) => a.year - b.year);
+    if (formInput && formInput.interest_rate && formInput.monthly_rate) {
+      const newTable = [...tilgungsTabelle];
+      tilgungsTabelle.forEach((tableRow: ArmotizationEntry) => {
+        const sondertilgung = sondertilgungen.find(
+          (y) => y.year === tableRow.year,
+        );
+        if (sondertilgung) {
+          const newTilgung = calcTilgung({
+            principal: tableRow.remainingPrincipal - sondertilgung.amount,
+            down_payment: 0,
+            interest_rate: formInput?.interest_rate,
+            monthly_rate: formInput?.monthly_rate,
+            rent: formInput?.rent || 0,
+          });
+          newTilgung.forEach((x: ArmotizationEntry) => {
+            x.year = x.year + tableRow.year;
+          });
+          console.log(newTable);
+          console.log(tilgungsTabelle.indexOf(tableRow));
+          console.log(newTilgung);
+          newTable.splice(
+            tilgungsTabelle.indexOf(tableRow) + 1,
+            tilgungsTabelle.length,
+            ...newTilgung,
+          );
+        } else {
+          //newTable.push(tableRow);
+        }
+      });
+      return newTable;
+    } else {
+      return tilgungsTabelle;
+    }
   };
 
   const screenWidthMobile = () => {
