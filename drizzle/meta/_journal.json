@@ -29,6 +29,13 @@
       "when": 1753004756064,
       "tag": "0003_friendly_brood",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1753025858868,
+      "tag": "0004_skinny_nighthawk",
+      "breakpoints": true
     }
   ]
 }

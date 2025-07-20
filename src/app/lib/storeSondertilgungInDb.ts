@@ -62,7 +62,7 @@ async function storeSonderTilgungInDb(
   const query = `
   INSERT INTO sondertilgungen (calculation_id, amount, year) 
   VALUES ($1, $2, $3) 
-  ON CONFLICT (year) 
+  ON CONFLICT (calculation_id, year)
   DO UPDATE SET
   amount = EXCLUDED.amount;`;
 

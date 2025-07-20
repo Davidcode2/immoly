@@ -1,0 +1,2 @@
+ALTER TABLE "sondertilgungen" DROP CONSTRAINT "sondertilgungen_year_unique";--> statement-breakpoint
+ALTER TABLE "sondertilgungen" ADD CONSTRAINT "sondertilgungen_year_calculation_id_unique" UNIQUE("year","calculation_id");
