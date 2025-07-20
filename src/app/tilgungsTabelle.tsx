@@ -2,34 +2,51 @@ import { useEffect, useState } from "react";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 import calcTilgung from "./lib/calculateArmotizaztionTable";
 import CashRoiModel from "./lib/models/cashRoiModel";
-import { getSondertilgungen, updateSondertilgungInDb } from "./lib/storeSondertilgungInDb";
+import {
+  getSondertilgungen,
+  updateSondertilgungInDb,
+} from "./lib/storeSondertilgungInDb";
 
 type PropTypes = {
   table: ArmotizationEntry[];
-  formInput: CashRoiModel | null
+  formInput: CashRoiModel | null;
   setData: (tilgungstabelle: ArmotizationEntry[]) => void;
   calculationId: string | null;
 };
 
-export default function Tilgungstabelle({ table, formInput, setData, calculationId }: PropTypes) {
+export default function Tilgungstabelle({
+  table,
+  formInput,
+  setData,
+  calculationId,
+}: PropTypes) {
   const [tilgungsTabelle, setTilgungstabelle] = useState(table);
-  
+
   useEffect(() => {
     setTilgungstabelle(table);
   }, [table]);
 
-  const _calcSondertilgung = async (event: React.FormEvent<HTMLFormElement>, year: number) => {
+  const _calcSondertilgung = async (
+    event: React.FormEvent<HTMLFormElement>,
+    year: number,
+  ) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
-    const sondertilgungAmount = (form.elements.namedItem('sonderTilgungAmount') as HTMLInputElement).value;
-    await updateSondertilgungInDb(Number(calculationId), year, Number(sondertilgungAmount));
+    const sondertilgungAmount = (
+      form.elements.namedItem("sonderTilgungAmount") as HTMLInputElement
+    ).value;
+    await updateSondertilgungInDb(
+      Number(calculationId),
+      year,
+      Number(sondertilgungAmount),
+    );
     const newTable = await recalcTable(year, Number(sondertilgungAmount));
     setTilgungstabelle(newTable);
     setData(newTable);
   };
 
   const recalcTable = async (year: number, sondertilgung: number) => {
-    // check all sondertilgung entries 
+    // check all sondertilgung entries
 
     const sondertilgungen = await getSondertilgungen(calculationId!);
     if (!sondertilgungen) {
@@ -38,10 +55,7 @@ export default function Tilgungstabelle({ table, formInput, setData, calculation
     console.log("before sort" + sondertilgungen);
     sondertilgungen.sort((a, b) => a.year - b.year);
     console.log(sondertilgungen);
-    for (const entry of sondertilgungen) {
-      if (entry.year === year) {
-      }
-    }
+
     // recalc only for last year (implementation below) if the latest entry is the last year
     // recalc only for the subsequent years if the latest entry is not the last year
     const tableUpToSondertilgung = tilgungsTabelle.filter(
@@ -73,7 +87,7 @@ export default function Tilgungstabelle({ table, formInput, setData, calculation
 
   const screenWidthMobile = () => {
     return window.innerWidth < 640;
-  }
+  };
 
   return (
     <div className="rounded-lg grid justify-stretch text-xs lg:text-base">
@@ -83,9 +97,15 @@ export default function Tilgungstabelle({ table, formInput, setData, calculation
             <th className="sm:pl-4 pl-2 sm:pr-2 py-2">Jahr</th>
             <th className="sm:pl-4 py-2">Zins</th>
             <th className="sm:px-4 py-2">Tilgung</th>
-            <th className="sm:px-4 py-2">{ screenWidthMobile() ? "Jhl. Rate" : "Jährliche Rate"}</th>
-            <th className="sm:px-4 py-2">{ screenWidthMobile() ? "Rest" : "Restschuld" }</th>
-            <th className="sm:px-4 py-2">{ screenWidthMobile() ? "S.Tilgung": "Sondertilgung" }</th>
+            <th className="sm:px-4 py-2">
+              {screenWidthMobile() ? "Jhl. Rate" : "Jährliche Rate"}
+            </th>
+            <th className="sm:px-4 py-2">
+              {screenWidthMobile() ? "Rest" : "Restschuld"}
+            </th>
+            <th className="sm:px-4 py-2">
+              {screenWidthMobile() ? "S.Tilgung" : "Sondertilgung"}
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -106,13 +126,19 @@ export default function Tilgungstabelle({ table, formInput, setData, calculation
                 {Math.round(x.remainingPrincipal).toLocaleString()}
               </td>
               <td className="sm:px-4 py-2 w-24">
-                <form onSubmit={(e) => _calcSondertilgung(e, x.year)} className="flex sm:gap-4 justify-fit"> 
-                  <button
-                    className="hover:cursor-pointer text-gray-800 hover:text-gray-200"
-                  >
-                  +
+                <form
+                  onSubmit={(e) => _calcSondertilgung(e, x.year)}
+                  className="flex sm:gap-4 justify-fit"
+                >
+                  <button className="hover:cursor-pointer text-gray-800 hover:text-gray-200">
+                    +
                   </button>
-                  <input size={3} type="number" name="sonderTilgungAmount" className="text-green-400 rounded-md text-sm p-[3px] active:text-gray-200 w-20" />
+                  <input
+                    size={3}
+                    type="number"
+                    name="sonderTilgungAmount"
+                    className="text-green-400 rounded-md text-sm p-[3px] active:text-gray-200 w-20"
+                  />
                 </form>
               </td>
             </tr>
