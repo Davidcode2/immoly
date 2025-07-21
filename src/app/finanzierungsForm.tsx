@@ -69,7 +69,7 @@ export default function FinanzierungsForm({
   return (
     <Form action={storeInDb} className="mx-auto">
       <div className="p-2 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 shadow border border-purple-500/30 backdrop-blur-2xl rounded-lg">
-        <div className="grid gap-6">
+        <div className="grid gap-2 md:gap-6">
           <div>
             {/* Eigenkapital */}
             <label
