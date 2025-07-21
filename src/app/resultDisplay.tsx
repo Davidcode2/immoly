@@ -62,7 +62,7 @@ export default function ResultDisplay() {
   }, [calculationId]);
 
   return (
-    <div className="grid md:grid-cols-[200px_1fr] md:gap-16">
+    <div className="grid md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16">
       <FinanzierungsForm values={formValues} setInput={setInput} />
       <div className="grid">
         {!data && (

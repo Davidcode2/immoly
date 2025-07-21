@@ -67,80 +67,87 @@ export default function FinanzierungsForm({
   }, [values]);
 
   return (
-    <Form action={storeInDb} className="mx-auto">
-      <div className="grid gap-2 flex-col">
-        <div className="grid">
-          <label htmlFor="capital">Eigenkapital</label>
-          <input
-            type="number"
-            className="border-stone-700 border rounded-lg p-1"
-            id="captital"
-            name="down_payment"
-            value={downPayment}
-            onChange={handleInputChange}
-          />
+    <div className="p-2 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 shadow border border-purple-500/30 backdrop-blur-2xl rounded-lg">
+      <Form action={storeInDb} className="mx-auto">
+        <div className="grid gap-2 flex-col">
+          <div className="grid">
+            <label htmlFor="capital">Eigenkapital</label>
+            <input
+              type="number"
+              className="border-stone-700 border rounded-lg p-1"
+              id="captital"
+              name="down_payment"
+              value={downPayment}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="grid max-w-[200px]">
+            <label htmlFor="monthlyRate">Monatsrate</label>
+            <input
+              type="number"
+              className="border-stone-700 border rounded-lg p-1"
+              id="monthylRate"
+              name="monthly_rate"
+              value={monthlyRate}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="grid max-w-[200px]">
+            <label htmlFor="interestRate">Kreditzins</label>
+            <input
+              type="decimal"
+              className="border-stone-700 border rounded-lg p-1"
+              id="interestRate"
+              name="interest_rate"
+              max="20"
+              min="0.1"
+              value={interestRate}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="grid max-w-[200px]">
+            <label htmlFor="creditSum">Kaufsumme</label>
+            <input
+              type="number"
+              className="border-stone-700 border rounded-lg p-1"
+              id="creditSum"
+              name="principal"
+              value={principalValue}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="grid max-w-[200px]">
+            <label htmlFor="cashRoi">
+              Kapitalrendite{" "}
+              <span className="text-xs text-gray-400">(optional)</span>
+            </label>
+            <input
+              type="decimal"
+              className="border-stone-700 border rounded-lg p-1"
+              id="cashRoi"
+              name="cashRoi"
+              max="20"
+              min="0.1"
+              value={cashRoi}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="grid max-w-[200px]">
+            <label htmlFor="rent">
+              Miete <span className="text-xs text-gray-400">(optional)</span>
+            </label>
+            <input
+              type="number"
+              className="border-stone-700 border rounded-lg p-1"
+              id="rent"
+              name="rent"
+              value={rent}
+              onChange={handleInputChange}
+            />
+          </div>
+          <button type="submit" />
         </div>
-        <div className="grid max-w-[200px]">
-          <label htmlFor="monthlyRate">Monatsrate</label>
-          <input
-            type="number"
-            className="border-stone-700 border rounded-lg p-1"
-            id="monthylRate"
-            name="monthly_rate"
-            value={monthlyRate}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="grid max-w-[200px]">
-          <label htmlFor="interestRate">Kreditzins</label>
-          <input
-            type="decimal"
-            className="border-stone-700 border rounded-lg p-1"
-            id="interestRate"
-            name="interest_rate"
-            max="20"
-            min="0.1"
-            value={interestRate}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="grid max-w-[200px]">
-          <label htmlFor="creditSum">Kaufsumme</label>
-          <input
-            type="number"
-            className="border-stone-700 border rounded-lg p-1"
-            id="creditSum"
-            name="principal"
-            value={principalValue}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="grid max-w-[200px]">
-          <label htmlFor="cashRoi">Kapitalrendite <span className="text-xs text-gray-400">(optional)</span></label>
-          <input
-            type="decimal"
-            className="border-stone-700 border rounded-lg p-1"
-            id="cashRoi"
-            name="cashRoi"
-            max="20"
-            min="0.1"
-            value={cashRoi}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="grid max-w-[200px]">
-          <label htmlFor="rent">Miete <span className="text-xs text-gray-400">(optional)</span></label>
-          <input
-            type="number"
-            className="border-stone-700 border rounded-lg p-1"
-            id="rent"
-            name="rent"
-            value={rent}
-            onChange={handleInputChange}
-          />
-        </div>
-        <button type="submit" />
-      </div>
-    </Form>
+      </Form>
+    </div>
   );
 }
