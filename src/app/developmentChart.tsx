@@ -70,7 +70,7 @@ export default function DevelopmentChart({ data, rent, interest = 4 }: { data: A
     <LineChart width={calcWidth()} height={300} data={debouncedChartData}>
       <XAxis dataKey="name" />
       <Tooltip />
-      <CartesianGrid stroke="#27232b" />
+      <CartesianGrid stroke="#3b3d40" />
       <Line type="monotone" dataKey="Sparen" stroke="#a87908" />
       <Line type="monotone" dataKey="Tilgung" stroke="#2d7d15" />
     </LineChart>

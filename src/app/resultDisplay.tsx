@@ -12,6 +12,8 @@ import DevelopmentChart from "./developmentChart";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 import CalculationResult from "./lib/models/CalculationResult";
 import CashRoiModel from "./lib/models/cashRoiModel";
+import Image from "next/image";
+import IconsHeader from "./components/iconsHeader";
 
 export default function ResultDisplay() {
   const [data, setData] = useState<ArmotizationEntry[] | null>(null);
@@ -63,7 +65,16 @@ export default function ResultDisplay() {
 
   return (
     <div className="grid md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16">
-      <FinanzierungsForm values={formValues} setInput={setInput} />
+      <div className="p-2 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 shadow border border-purple-500/30 backdrop-blur-2xl rounded-lg">
+        <Image
+          src="/immoly_logo_square_transparent_text.webp"
+          width={200}
+          height={10}
+          alt="Logo"
+          className="mx-auto mb-4"
+        />
+        <FinanzierungsForm values={formValues} setInput={setInput} />
+      </div>
       <div className="grid">
         {!data && (
           <div className="hidden border border-slate-600 h-full md:flex md:justify-center md:items-center text-2xl col-span-full rounded-lg">
@@ -74,7 +85,12 @@ export default function ResultDisplay() {
         )}
         {data && (
           <>
-            <Scenario calculationId={selectedScenario} data={data} />
+            <div className="grid grid-cols-2">
+              <Scenario calculationId={selectedScenario} data={data} />
+              <div className="ml-auto">
+                <IconsHeader />
+              </div>
+            </div>
             <div className="gap-4 grid xl:grid-cols-[3fr_2fr]">
               <div className="xl:col-start-1 rounded-lg text-sm overflow-auto max-h-[620px] border border-slate-600">
                 {data && (
@@ -89,10 +105,10 @@ export default function ResultDisplay() {
               <div className="xl:col-start-2">
                 {input && (
                   <div className="grid gap-4">
-                    <div className="grid justify-around border border-slate-600 rounded-lg">
+                    <div className="grid justify-around border backdrop-blur-sm border-slate-600 rounded-lg">
                       <PlotlyChart data={data} rent={input.rent} />
                     </div>
-                    <div className="grid justify-around border border-slate-600 rounded-lg">
+                    <div className="grid justify-around border border-slate-600 backdrop-blur-sm rounded-lg">
                       <DevelopmentChart
                         data={data}
                         rent={input.rent}

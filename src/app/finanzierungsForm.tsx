@@ -67,7 +67,7 @@ export default function FinanzierungsForm({
   }, [values]);
 
   return (
-    <div className="p-2 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 shadow border border-purple-500/30 backdrop-blur-2xl rounded-lg">
+    <div className="">
       <Form action={storeInDb} className="mx-auto">
         <div className="grid gap-2 flex-col">
           <div className="grid">

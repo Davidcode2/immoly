@@ -125,7 +125,7 @@ export default function Tilgungstabelle({
   };
 
   return (
-    <div className="rounded-lg grid justify-stretch text-xs lg:text-base">
+    <div className="backdrop-blur-lg rounded-lg grid justify-stretch text-xs lg:text-base">
       <table className="overflow-auto table-fixed">
         <thead>
           <tr className="sticky text-left top-0 bg-black">
@@ -147,7 +147,7 @@ export default function Tilgungstabelle({
           {tilgungsTabelle.map((x) => (
             <tr
               key={x.year}
-              className="hover:bg-purple-600 even:bg-[#0f0f0f] border-t border-gray-950"
+              className="hover:bg-purple-600 even:bg-[#0f0f0f]/20 border-t border-gray-950"
             >
               <td className="px-4 py-2">{x.year}</td>
               <td className="sm:px-4 py-2">

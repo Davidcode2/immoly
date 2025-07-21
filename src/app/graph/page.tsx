@@ -12,12 +12,7 @@ export default async function GraphPage() {
     return <div>Skipped at build time</div>;
   }
   return (
-    <div className="bg-[url(/images/grainy_gradient.jpg)] bg-cover scheme-dark grid gap-4 p-3 lg:p-8 pb-20 sm:p-10 font-[family-name:var(--font-geist-sans)] max-w-[2000px] mx-auto">
-      <button className="rounded-full bg-slate-200 px-2 w-fit text-slate-800">
-        <code>
-          <Link href="/">back</Link>
-        </code>
-      </button>
+    <div className="bg-[url(/images/grainy_gradient_dark_wide.jpg)] bg-cover saturate-90 scheme-dark grid gap-4 p-3 lg:p-8 pb-20 sm:p-10 font-[family-name:var(--font-geist-sans)] max-w-[2000px] mx-auto">
       <div className="grid items-center gap-8">
         <Suspense fallback={<Loading />}>
           <ResultDisplay />

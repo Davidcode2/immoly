@@ -47,7 +47,7 @@ export default function PlotlyChart({ data, rent }: { data: ArmotizationEntry[],
     <LineChart className="grid justify-stretch" width={calcWidth()} height={300} data={debouncedChartData}>
       <XAxis dataKey="name" />
       <Tooltip />
-      <CartesianGrid stroke="#27232b" />
+      <CartesianGrid stroke="#3b3d40" />
       <Line type="monotone" dataKey="Zins" stroke="#ff7300" />
       <Line type="monotone" dataKey="Tilgung" stroke="#387908" />
       <Line type="monotone" dataKey="Sparen" stroke="#a87908" />
