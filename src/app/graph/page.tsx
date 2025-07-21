@@ -1,6 +1,5 @@
 export const dynamic = "force-dynamic";
 
-import Link from "next/link";
 import Graphs from "app/graphs";
 import ResultDisplay from "app/resultDisplay";
 import { Suspense } from "react";
