@@ -67,36 +67,57 @@ export default function FinanzierungsForm({
   }, [values]);
 
   return (
-    <div className="">
-      <Form action={storeInDb} className="mx-auto">
-        <div className="grid gap-2 flex-col">
-          <div className="grid">
-            <label htmlFor="capital">Eigenkapital</label>
+    <Form action={storeInDb} className="mx-auto">
+      <div className="p-2 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 shadow border border-purple-500/30 backdrop-blur-2xl rounded-lg">
+        <div className="grid gap-6">
+          <div>
+            {/* Eigenkapital */}
+            <label
+              htmlFor="capital"
+              className="uppercase text-xs font-semibold mb-1 text-stone-400"
+            >
+              Eigenkapital
+            </label>
             <input
               type="number"
-              className="border-stone-700 border rounded-lg p-1"
-              id="captital"
+              className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
+              id="capital" // Corrected id from 'captital'
               name="down_payment"
               value={downPayment}
               onChange={handleInputChange}
             />
           </div>
-          <div className="grid max-w-[200px]">
-            <label htmlFor="monthlyRate">Monatsrate</label>
+
+          {/* Monatsrate */}
+          <div className="grid">
+            <label
+              htmlFor="monthlyRate"
+              className="uppercase text-xs font-semibold mb-1 text-stone-400"
+            >
+              Monatsrate
+            </label>
             <input
               type="number"
-              className="border-stone-700 border rounded-lg p-1"
-              id="monthylRate"
+              className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
+              id="monthlyRate" // Corrected id from 'monthylRate'
               name="monthly_rate"
               value={monthlyRate}
               onChange={handleInputChange}
             />
           </div>
-          <div className="grid max-w-[200px]">
-            <label htmlFor="interestRate">Kreditzins</label>
+
+          {/* Kreditzins */}
+          <div className="grid">
+            <label
+              htmlFor="interestRate"
+              className="uppercase text-xs font-semibold mb-1 text-stone-400"
+            >
+              Kreditzins
+            </label>
             <input
-              type="decimal"
-              className="border-stone-700 border rounded-lg p-1"
+              type="number" // Changed to number for better input handling with min/max
+              step="0.1" // Allow decimal steps
+              className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
               id="interestRate"
               name="interest_rate"
               max="20"
@@ -105,25 +126,40 @@ export default function FinanzierungsForm({
               onChange={handleInputChange}
             />
           </div>
-          <div className="grid max-w-[200px]">
-            <label htmlFor="creditSum">Kaufsumme</label>
+
+          {/* Kaufsumme */}
+          <div className="grid">
+            <label
+              htmlFor="creditSum"
+              className="uppercase text-xs font-semibold mb-1 text-stone-400"
+            >
+              Kaufsumme
+            </label>
             <input
               type="number"
-              className="border-stone-700 border rounded-lg p-1"
+              className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
               id="creditSum"
               name="principal"
               value={principalValue}
               onChange={handleInputChange}
             />
           </div>
-          <div className="grid max-w-[200px]">
-            <label htmlFor="cashRoi">
+
+          {/* Kapitalrendite (optional) */}
+          <div className="grid">
+            <label
+              htmlFor="cashRoi"
+              className="uppercase text-xs font-semibold mb-1 text-stone-400"
+            >
               Kapitalrendite{" "}
-              <span className="text-xs text-gray-400">(optional)</span>
+              <span className="text-xs text-gray-400 normal-case font-normal">
+                (optional)
+              </span>
             </label>
             <input
-              type="decimal"
-              className="border-stone-700 border rounded-lg p-1"
+              type="number" // Changed to number for consistency
+              step="0.1" // Allow decimal steps
+              className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
               id="cashRoi"
               name="cashRoi"
               max="20"
@@ -132,22 +168,36 @@ export default function FinanzierungsForm({
               onChange={handleInputChange}
             />
           </div>
-          <div className="grid max-w-[200px]">
-            <label htmlFor="rent">
-              Miete <span className="text-xs text-gray-400">(optional)</span>
+
+          {/* Miete (optional) */}
+          <div className="grid mb-10">
+            <label
+              htmlFor="rent"
+              className="uppercase text-xs font-semibold mb-1 text-stone-400"
+            >
+              Miete{" "}
+              <span className="text-xs text-gray-400 normal-case font-normal">
+                (optional)
+              </span>
             </label>
             <input
               type="number"
-              className="border-stone-700 border rounded-lg p-1"
+              className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
               id="rent"
               name="rent"
               value={rent}
               onChange={handleInputChange}
             />
           </div>
-          <button type="submit" />
         </div>
-      </Form>
-    </div>
+      </div>
+
+      <button
+        type="submit"
+        className="mt-6 w-full bg-purple-900/60 backdrop-blur-md hover:bg-purple-700/80 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 shadow-md"
+      >
+        Berechnen
+      </button>
+    </Form>
   );
 }

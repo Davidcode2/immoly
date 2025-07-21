@@ -65,13 +65,13 @@ export default function ResultDisplay() {
 
   return (
     <div className="grid md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16">
-      <div className="p-2 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 shadow border border-purple-500/30 backdrop-blur-2xl rounded-lg">
+      <div className="p-8 bg-gradient-to-tl from-purple-800/30 to-neutral-900/70 shadow border border-purple-500/30 backdrop-blur-2xl rounded-lg">
         <Image
           src="/immoly_logo_square_transparent_text.webp"
           width={200}
           height={10}
           alt="Logo"
-          className="mx-auto mb-4"
+          className="mx-auto mb-16"
         />
         <FinanzierungsForm values={formValues} setInput={setInput} />
       </div>
