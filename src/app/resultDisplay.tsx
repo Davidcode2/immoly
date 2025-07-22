@@ -3,7 +3,6 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getCalculation } from "./lib/getCalculations";
-import Tilgungstabelle from "./tilgungsTabelle";
 import calcTilgung from "./lib/calculateArmotizaztionTable";
 import FinanzierungsForm from "./finanzierungsForm";
 import Scenario from "./scenario";
@@ -14,6 +13,8 @@ import CalculationResult from "./lib/models/CalculationResult";
 import CashRoiModel from "./lib/models/cashRoiModel";
 import Image from "next/image";
 import IconsHeader from "./components/iconsHeader";
+import NoData from "./components/noData";
+import TilgungstabelleContainer from "./components/tilgungstabelleContainer";
 
 export default function ResultDisplay() {
   const [data, setData] = useState<ArmotizationEntry[] | null>(null);
@@ -76,32 +77,17 @@ export default function ResultDisplay() {
         <FinanzierungsForm values={formValues} setInput={setInput} />
       </div>
       <div className="grid">
-        {!data && (
-          <div className="hidden border border-slate-600 h-full md:flex md:justify-center md:items-center text-2xl col-span-full rounded-lg">
-            <div className="px-4">
-              Gib deine Daten ein oder wähle ein Szenario...
-            </div>
-          </div>
-        )}
+        <NoData data={data} />
         {data && (
           <>
-            <div className="grid grid-cols-2">
+            <div className="grid md:grid-cols-2">
               <Scenario calculationId={selectedScenario} data={data} />
               <div className="ml-auto">
                 <IconsHeader />
               </div>
             </div>
             <div className="gap-4 grid xl:grid-cols-[3fr_2fr]">
-              <div className="xl:col-start-1 rounded-lg text-sm overflow-auto max-h-[620px] border border-slate-600">
-                {data && (
-                  <Tilgungstabelle
-                    table={data as ArmotizationEntry[]}
-                    formInput={input}
-                    setData={setData}
-                    calculationId={calculationId}
-                  />
-                )}
-              </div>
+            <TilgungstabelleContainer data={data} calculationId={calculationId} input={input} setData={setData}/>
               <div className="xl:col-start-2">
                 {input && (
                   <div className="grid gap-4">
