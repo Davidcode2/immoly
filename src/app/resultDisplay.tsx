@@ -72,10 +72,13 @@ export default function ResultDisplay() {
           width={200}
           height={10}
           alt="Logo"
-          className="mx-auto mb-16"
+          className="mx-auto md:mb-16"
         />
-        <div className="md:hidden mx-auto p-4 mb-32">
+        <div className="md:hidden mx-auto p-4 ">
           <IconsHeader />
+        </div>
+        <div className="font-bold text-center p-4 mb-10">
+          Die Plattform für Immobilienkredite. Kalkulieren Sie was möglich ist.
         </div>
         <FinanzierungsForm values={formValues} setInput={setInput} />
       </div>
