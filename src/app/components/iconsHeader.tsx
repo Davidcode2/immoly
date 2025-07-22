@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function IconsHeader() {
   return (
-    <div className="flex gap-2">
+    <div className="flex justify-center gap-2">
       <a href="https://github.com/davidcode2">
         <svg
           viewBox="0 0 100 100"

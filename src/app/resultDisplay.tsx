@@ -74,6 +74,9 @@ export default function ResultDisplay() {
           alt="Logo"
           className="mx-auto mb-16"
         />
+        <div className="md:hidden mx-auto p-4 mb-32">
+          <IconsHeader />
+        </div>
         <FinanzierungsForm values={formValues} setInput={setInput} />
       </div>
       <div className="grid">
@@ -82,12 +85,17 @@ export default function ResultDisplay() {
           <>
             <div className="grid md:grid-cols-2">
               <Scenario calculationId={selectedScenario} data={data} />
-              <div className="ml-auto">
+              <div className="hidden md:block ml-auto">
                 <IconsHeader />
               </div>
             </div>
             <div className="gap-4 grid xl:grid-cols-[3fr_2fr]">
-            <TilgungstabelleContainer data={data} calculationId={calculationId} input={input} setData={setData}/>
+              <TilgungstabelleContainer
+                data={data}
+                calculationId={calculationId}
+                input={input}
+                setData={setData}
+              />
               <div className="xl:col-start-2">
                 {input && (
                   <div className="grid gap-4">
