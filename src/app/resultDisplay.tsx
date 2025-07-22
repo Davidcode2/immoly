@@ -89,7 +89,7 @@ export default function ResultDisplay() {
                 <IconsHeader />
               </div>
             </div>
-            <div className="gap-4 grid xl:grid-cols-[3fr_2fr]">
+            <div className="md:gap-4 gap-y-20 grid xl:grid-cols-[3fr_2fr]">
               <TilgungstabelleContainer
                 data={data}
                 calculationId={calculationId}
@@ -98,7 +98,7 @@ export default function ResultDisplay() {
               />
               <div className="xl:col-start-2">
                 {input && (
-                  <div className="grid gap-4">
+                  <div className="grid md:gap-4 gap-y-20">
                     <div className="grid justify-around min-h-[300px] border backdrop-blur-sm border-slate-600 rounded-lg">
                       <PlotlyChart data={data} rent={input.rent} />
                     </div>
