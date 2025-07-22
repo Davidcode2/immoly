@@ -81,7 +81,7 @@ export default function FinanzierungsForm({
             <input
               type="number"
               className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
-              id="capital" // Corrected id from 'captital'
+              id="capital"
               name="down_payment"
               value={downPayment}
               onChange={handleInputChange}
@@ -99,7 +99,7 @@ export default function FinanzierungsForm({
             <input
               type="number"
               className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
-              id="monthlyRate" // Corrected id from 'monthylRate'
+              id="monthlyRate"
               name="monthly_rate"
               value={monthlyRate}
               onChange={handleInputChange}
@@ -115,8 +115,8 @@ export default function FinanzierungsForm({
               Kreditzins
             </label>
             <input
-              type="number" // Changed to number for better input handling with min/max
-              step="0.1" // Allow decimal steps
+              type="number"
+              step="0.1"
               className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
               id="interestRate"
               name="interest_rate"
@@ -157,8 +157,8 @@ export default function FinanzierungsForm({
               </span>
             </label>
             <input
-              type="number" // Changed to number for consistency
-              step="0.1" // Allow decimal steps
+              type="number"
+              step="0.1"
               className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
               id="cashRoi"
               name="cashRoi"
