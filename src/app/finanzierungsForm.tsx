@@ -56,7 +56,7 @@ export default function FinanzierungsForm({
   };
 
   useEffect(() => {
-    if (values) {
+    if (values && values[0]) {
       setDownPayment(values[0].down_payment || "");
       setPrincipal(values[0].principal || "");
       setInterestRate(values[0].interest_rate || "");
