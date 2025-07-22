@@ -15,8 +15,8 @@ export default function SingleGraph({ calculation }: { calculation: CalculationR
   }
 
   return (
-    <div className="backdrop-blur-lg rounded-md border border-purple-700 flex flex-col text-xs justify-between min-w-64">
-      <button className="ml-auto px-2 text-amber-200" onClick={deleteSelectedItem}>x</button>
+    <div className="backdrop-blur-lg rounded-md border border-slate-600 flex flex-col text-xs justify-between min-w-64">
+      <button className="ml-auto px-2 text-red-300" onClick={deleteSelectedItem}>x</button>
       <div className="px-4 pb-4">
         <div>
           <p>Investitionssumme: {calculation.principal.toLocaleString()}</p>

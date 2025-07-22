@@ -1,5 +1,5 @@
 {
-  "id": "64300383-6ec6-46fd-b007-acd339233c71",
+  "id": "96a13306-149a-4b4f-9bec-42d7c577e9ba",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -33,9 +33,9 @@
         },
         "interest_rate": {
           "name": "interest_rate",
-          "type": "integer",
+          "type": "numeric(8, 4)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "monthly_rate": {
           "name": "monthly_rate",
@@ -59,10 +59,9 @@
         },
         "annual_percentage_rate": {
           "name": "annual_percentage_rate",
-          "type": "numeric(8, 4)",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": true,
-          "default": "'0.00'"
+          "notNull": true
         },
         "created_at": {
           "name": "created_at",
@@ -76,6 +75,77 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sondertilgungen": {
+      "name": "sondertilgungen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "sondertilgungen_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "calculation_id": {
+          "name": "calculation_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "amount": {
+          "name": "amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "year": {
+          "name": "year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sondertilgungen_calculation_id_calculations_id_fk": {
+          "name": "sondertilgungen_calculation_id_calculations_id_fk",
+          "tableFrom": "sondertilgungen",
+          "tableTo": "calculations",
+          "columnsFrom": [
+            "calculation_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "sondertilgungen_year_calculation_id_unique": {
+          "name": "sondertilgungen_year_calculation_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "year",
+            "calculation_id"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
