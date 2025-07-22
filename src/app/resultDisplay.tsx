@@ -105,10 +105,10 @@ export default function ResultDisplay() {
               <div className="xl:col-start-2">
                 {input && (
                   <div className="grid gap-4">
-                    <div className="grid justify-around border backdrop-blur-sm border-slate-600 rounded-lg">
+                    <div className="grid justify-around min-h-[300px] border backdrop-blur-sm border-slate-600 rounded-lg">
                       <PlotlyChart data={data} rent={input.rent} />
                     </div>
-                    <div className="grid justify-around border border-slate-600 backdrop-blur-sm rounded-lg">
+                    <div className="grid justify-around min-h-[300px] border border-slate-600 backdrop-blur-sm rounded-lg">
                       <DevelopmentChart
                         data={data}
                         rent={input.rent}
