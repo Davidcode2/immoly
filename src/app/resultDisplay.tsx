@@ -64,6 +64,12 @@ export default function ResultDisplay() {
     loadData();
   }, [calculationId]);
 
+  const thinOutGraphDataPoints = (data: ArmotizationEntry[]) => {
+    return data.length > 25
+      ? data.filter((x: ArmotizationEntry) => data.indexOf(x) % 2)
+      : data;
+  };
+
   return (
     <div className="grid md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16">
       <div className="p-4 md:p-8 bg-gradient-to-tl from-purple-800/30 to-neutral-900/70 shadow border border-purple-500/30 backdrop-blur-2xl rounded-lg">
@@ -77,7 +83,7 @@ export default function ResultDisplay() {
         <div className="md:hidden mx-auto p-4 ">
           <IconsHeader />
         </div>
-        <div className="font-bold text-center p-4 mb-10">
+        <div className="md:hidden font-bold text-center p-4 mb-10">
           Die Plattform für Immobilienkredite. Kalkulieren Sie was möglich ist.
         </div>
         <FinanzierungsForm values={formValues} setInput={setInput} />
@@ -103,11 +109,14 @@ export default function ResultDisplay() {
                 {input && (
                   <div className="grid md:gap-4 gap-y-20">
                     <div className="grid justify-around min-h-[300px] border backdrop-blur-sm border-slate-600 rounded-lg">
-                      <PlotlyChart data={data} rent={input.rent} />
+                      <PlotlyChart
+                        data={thinOutGraphDataPoints(data)}
+                        rent={input.rent}
+                      />
                     </div>
                     <div className="grid justify-around min-h-[300px] border border-slate-600 backdrop-blur-sm rounded-lg">
                       <DevelopmentChart
-                        data={data}
+                        data={thinOutGraphDataPoints(data)}
                         rent={input.rent}
                         interest={input.cash_roi || 0}
                       />

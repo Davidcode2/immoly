@@ -1,7 +1,7 @@
 export function calcWidth() {
   const mobileScreen = window.innerWidth < 400;
   if (mobileScreen) {
-    return window.innerWidth - 20;
+    return window.innerWidth - 40;
   }
   const tabletScreen = window.innerWidth < 765;
   if (tabletScreen) {
