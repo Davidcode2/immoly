@@ -89,7 +89,7 @@ export default function ResultDisplay() {
         <FinanzierungsForm values={formValues} setInput={setInput} />
       </div>
       <div className="grid">
-        <NoData data={data} />
+        {!data && <NoData />}
         {data && (
           <>
             <div className="grid md:grid-cols-2">
