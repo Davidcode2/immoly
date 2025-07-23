@@ -71,7 +71,7 @@ export default function ResultDisplay() {
   };
 
   return (
-    <div className="grid md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16">
+    <div className="grid px-3 md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16">
       <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-purple-800/30 to-neutral-900/70 p-4 shadow backdrop-blur-2xl md:p-8">
         <Image
           src="/immoly_logo_square_transparent_text.webp"

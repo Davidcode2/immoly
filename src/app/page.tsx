@@ -12,7 +12,7 @@ export default async function GraphPage() {
   }
   return (
     <div className="bg-[url(/images/grainy_gradient_dark_wide_smooth_enlarged.jpg)] bg-cover saturate-90">
-      <div className="mx-auto grid min-h-screen max-w-[2000px] gap-4 p-3 pb-20 font-[family-name:var(--font-geist-sans)] scheme-dark sm:p-10 lg:p-8">
+      <div className="mx-auto grid min-h-screen max-w-[2000px] gap-4 pb-20 font-[family-name:var(--font-geist-sans)] scheme-dark sm:p-10 lg:p-8">
         <div className="my-auto flex flex-col gap-4">
           <Suspense fallback={<Loading />}>
             <ResultDisplay />
