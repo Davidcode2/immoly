@@ -125,20 +125,20 @@ export default function Tilgungstabelle({
   };
 
   return (
-    <div className="backdrop-blur-lg rounded-lg grid justify-stretch text-xs lg:text-base">
-      <table className="overflow-auto table-fixed">
+    <div className="grid justify-stretch rounded-lg text-xs backdrop-blur-lg lg:text-base">
+      <table className="table-fixed overflow-auto">
         <thead>
-          <tr className="sticky text-left top-0 bg-black">
-            <th className="sm:pl-4 pl-2 sm:pr-2 py-2">Jahr</th>
-            <th className="sm:pl-4 py-2">Zins</th>
-            <th className="sm:px-4 py-2">Tilgung</th>
-            <th className="sm:px-4 py-2">
+          <tr className="sticky top-0 bg-black text-left">
+            <th className="py-2 pl-2 sm:pr-2 sm:pl-4">Jahr</th>
+            <th className="py-2 sm:pl-4">Zins</th>
+            <th className="py-2 sm:px-4">Tilgung</th>
+            <th className="py-2 sm:px-4">
               {screenWidthMobile() ? "Jhl. Rate" : "Jährliche Rate"}
             </th>
-            <th className="sm:px-4 py-2">
+            <th className="py-2 sm:px-4">
               {screenWidthMobile() ? "Rest" : "Restschuld"}
             </th>
-            <th className="sm:px-4 py-2">
+            <th className="py-2 sm:px-4">
               {screenWidthMobile() ? "S.Tilgung" : "Sondertilgung"}
             </th>
           </tr>
@@ -147,36 +147,38 @@ export default function Tilgungstabelle({
           {tilgungsTabelle.map((x) => (
             <tr
               key={x.year}
-              className="hover:bg-purple-600 even:bg-[#0f0f0f]/20 border-t border-gray-950"
+              className="border-t border-gray-950 even:bg-[#0f0f0f]/20 hover:bg-purple-600"
             >
               <td className="px-4 py-2">{x.year}</td>
-              <td className="sm:px-4 py-2">
+              <td className="py-2 sm:px-4">
                 {Math.round(x.interest).toLocaleString("de")}
               </td>
-              <td className="sm:px-4 py-2">
+              <td className="py-2 sm:px-4">
                 {Math.round(x.principal).toLocaleString("de")}
               </td>
-              <td className="sm:px-4 py-2">
+              <td className="py-2 sm:px-4">
                 {x.yearlyRate.toLocaleString("de")}
               </td>
-              <td className="sm:px-4 py-2">
+              <td className="py-2 sm:px-4">
                 {Math.round(x.remainingPrincipal).toLocaleString("de")}
               </td>
-              <td className="sm:px-4 py-2 w-24">
+              <td className="w-24 py-2 sm:px-4">
                 <form
                   onSubmit={(e) => _calcSondertilgung(e, x.year)}
-                  className="flex sm:gap-4 justify-fit"
+                  className="justify-fit flex sm:gap-4"
                 >
-                  <button className="hover:cursor-pointer text-gray-800 hover:text-gray-200">
+                  <button className="text-gray-800 hover:cursor-pointer hover:text-gray-200">
                     +
                   </button>
                   <input
                     size={3}
                     type="number"
                     name="sonderTilgungAmount"
-                    value={sonderTilgung.find((y) => y.year === x.year)?.amount || ""}
+                    value={
+                      sonderTilgung.find((y) => y.year === x.year)?.amount || ""
+                    }
                     onChange={(e) => handleSonderTilgungChange(e, x.year)}
-                    className="text-green-400 rounded-md text-sm p-[3px] active:text-gray-200 w-20"
+                    className="w-20 rounded-md p-[3px] text-sm text-green-400 active:text-gray-200"
                   />
                 </form>
               </td>

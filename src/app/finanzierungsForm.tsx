@@ -68,19 +68,19 @@ export default function FinanzierungsForm({
 
   return (
     <Form action={storeInDb} className="mx-auto">
-      <div className="p-2 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 shadow border border-purple-500/30 backdrop-blur-2xl rounded-lg">
+      <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-2 shadow backdrop-blur-2xl">
         <div className="grid gap-2 md:gap-6">
           <div className="grid">
             {/* Eigenkapital */}
             <label
               htmlFor="capital"
-              className="uppercase text-xs font-semibold mb-1 text-stone-400"
+              className="mb-1 text-xs font-semibold text-stone-400 uppercase"
             >
               Eigenkapital
             </label>
             <input
               type="number"
-              className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
+              className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
               id="capital"
               name="down_payment"
               value={downPayment}
@@ -92,13 +92,13 @@ export default function FinanzierungsForm({
           <div className="grid">
             <label
               htmlFor="monthlyRate"
-              className="uppercase text-xs font-semibold mb-1 text-stone-400"
+              className="mb-1 text-xs font-semibold text-stone-400 uppercase"
             >
               Monatsrate
             </label>
             <input
               type="number"
-              className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
+              className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
               id="monthlyRate"
               name="monthly_rate"
               value={monthlyRate}
@@ -110,14 +110,14 @@ export default function FinanzierungsForm({
           <div className="grid">
             <label
               htmlFor="interestRate"
-              className="uppercase text-xs font-semibold mb-1 text-stone-400"
+              className="mb-1 text-xs font-semibold text-stone-400 uppercase"
             >
               Kreditzins
             </label>
             <input
               type="number"
               step="0.1"
-              className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
+              className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
               id="interestRate"
               name="interest_rate"
               max="20"
@@ -131,13 +131,13 @@ export default function FinanzierungsForm({
           <div className="grid">
             <label
               htmlFor="creditSum"
-              className="uppercase text-xs font-semibold mb-1 text-stone-400"
+              className="mb-1 text-xs font-semibold text-stone-400 uppercase"
             >
               Kaufsumme
             </label>
             <input
               type="number"
-              className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
+              className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
               id="creditSum"
               name="principal"
               value={principalValue}
@@ -149,17 +149,17 @@ export default function FinanzierungsForm({
           <div className="grid">
             <label
               htmlFor="cashRoi"
-              className="uppercase text-xs font-semibold mb-1 text-stone-400"
+              className="mb-1 text-xs font-semibold text-stone-400 uppercase"
             >
               Kapitalrendite{" "}
-              <span className="text-xs text-gray-400 normal-case font-normal">
+              <span className="text-xs font-normal text-gray-400 normal-case">
                 (optional)
               </span>
             </label>
             <input
               type="number"
               step="0.1"
-              className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
+              className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
               id="cashRoi"
               name="cashRoi"
               max="20"
@@ -170,19 +170,19 @@ export default function FinanzierungsForm({
           </div>
 
           {/* Miete (optional) */}
-          <div className="grid mb-10">
+          <div className="mb-10 grid">
             <label
               htmlFor="rent"
-              className="uppercase text-xs font-semibold mb-1 text-stone-400"
+              className="mb-1 text-xs font-semibold text-stone-400 uppercase"
             >
               Miete{" "}
-              <span className="text-xs text-gray-400 normal-case font-normal">
+              <span className="text-xs font-normal text-gray-400 normal-case">
                 (optional)
               </span>
             </label>
             <input
               type="number"
-              className="bg-transparent border-b border-stone-700 pb-1 focus:outline-none focus:border-slate-500 transition-colors duration-200"
+              className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
               id="rent"
               name="rent"
               value={rent}
@@ -194,7 +194,7 @@ export default function FinanzierungsForm({
 
       <button
         type="submit"
-        className="mt-6 w-full bg-purple-900/60 backdrop-blur-md hover:bg-purple-700/80 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 shadow-md"
+        className="mt-6 w-full rounded-lg bg-purple-900/60 px-4 py-2 font-bold text-white shadow-md backdrop-blur-md transition-colors duration-200 hover:bg-purple-700/80"
       >
         Berechnen
       </button>

@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis } from "recharts";
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+} from "recharts";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 import ChartDataItem from "./lib/models/ChartDataItem";
 import InterestEarnedModel from "./lib/models/interestEarnedModel";
@@ -23,7 +30,7 @@ export default function DevelopmentChart({
       (acc: InterestEarnedModel[], currentYearData: ArmotizationEntry) => {
         const previousYearBalance =
           acc.length > 0 ? acc[acc.length - 1].endBalance : 0;
-        const annualSavings = currentYearData.yearlyRate - (rent * 12);
+        const annualSavings = currentYearData.yearlyRate - rent * 12;
 
         const balanceBeforeInterest = previousYearBalance + annualSavings;
         const endBalance = balanceBeforeInterest * (1 + interest / 100);

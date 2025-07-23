@@ -20,4 +20,4 @@ export function calcWidth() {
     return window.innerWidth / 4;
   }
   return 400;
-};
+}

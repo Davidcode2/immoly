@@ -72,7 +72,7 @@ export default function ResultDisplay() {
 
   return (
     <div className="grid md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16">
-      <div className="p-4 md:p-8 bg-gradient-to-tl from-purple-800/30 to-neutral-900/70 shadow border border-purple-500/30 backdrop-blur-2xl rounded-lg">
+      <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-purple-800/30 to-neutral-900/70 p-4 shadow backdrop-blur-2xl md:p-8">
         <Image
           src="/immoly_logo_square_transparent_text.webp"
           width={200}
@@ -80,10 +80,10 @@ export default function ResultDisplay() {
           alt="Logo"
           className="mx-auto md:mb-16"
         />
-        <div className="md:hidden mx-auto p-4 ">
+        <div className="mx-auto p-4 md:hidden">
           <IconsHeader />
         </div>
-        <div className="md:hidden font-bold text-center p-4 mb-10">
+        <div className="mb-10 p-4 text-center font-bold md:hidden">
           Die Plattform für Immobilienkredite. Kalkulieren Sie was möglich ist.
         </div>
         <FinanzierungsForm values={formValues} setInput={setInput} />
@@ -94,11 +94,11 @@ export default function ResultDisplay() {
           <>
             <div className="grid md:grid-cols-2">
               <Scenario calculationId={selectedScenario} data={data} />
-              <div className="hidden md:block ml-auto">
+              <div className="ml-auto hidden md:block">
                 <IconsHeader />
               </div>
             </div>
-            <div className="md:gap-4 gap-y-20 grid xl:grid-cols-[3fr_2fr]">
+            <div className="grid gap-y-20 md:gap-4 xl:grid-cols-[3fr_2fr]">
               <TilgungstabelleContainer
                 data={data}
                 calculationId={calculationId}
@@ -107,14 +107,14 @@ export default function ResultDisplay() {
               />
               <div className="xl:col-start-2">
                 {input && (
-                  <div className="grid md:gap-4 gap-y-20">
-                    <div className="grid justify-around min-h-[300px] border bg-neutral-950/10 backdrop-blur-lg border-slate-600 rounded-lg shadow-lg">
+                  <div className="grid gap-y-20 md:gap-4">
+                    <div className="grid min-h-[300px] justify-around rounded-lg border border-slate-600 bg-neutral-950/10 shadow-lg backdrop-blur-lg">
                       <PlotlyChart
                         data={thinOutGraphDataPoints(data)}
                         rent={input.rent}
                       />
                     </div>
-                    <div className="grid justify-around min-h-[300px] border bg-neutral-950/10 border-slate-600 backdrop-blur-lg rounded-lg shadow-lg">
+                    <div className="grid min-h-[300px] justify-around rounded-lg border border-slate-600 bg-neutral-950/10 shadow-lg backdrop-blur-lg">
                       <DevelopmentChart
                         data={thinOutGraphDataPoints(data)}
                         rent={input.rent}

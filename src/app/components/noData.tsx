@@ -7,7 +7,7 @@ export default function NoData(data: PropTypes) {
   return (
     <>
       {!data && (
-        <div className="hidden border border-slate-600 h-full md:flex md:justify-center md:items-center text-2xl col-span-full rounded-lg">
+        <div className="col-span-full hidden h-full rounded-lg border border-slate-600 text-2xl md:flex md:items-center md:justify-center">
           <div className="px-4">
             Gib deine Daten ein oder wähle ein Szenario...
           </div>

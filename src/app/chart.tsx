@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis } from "recharts";
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+} from "recharts";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 import { calcWidth } from "./utils/screenWidth";
 

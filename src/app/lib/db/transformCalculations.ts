@@ -1,7 +1,12 @@
-import { CalculationWithSondertilgung, DBSingleCalculationRow } from "../models/CalculationResult";
+import {
+  CalculationWithSondertilgung,
+  DBSingleCalculationRow,
+} from "../models/CalculationResult";
 import { Sondertilgung } from "../models/sondertilgung";
 
-export function transformCalculationResults(dbRows: DBSingleCalculationRow[]): CalculationWithSondertilgung[] {
+export function transformCalculationResults(
+  dbRows: DBSingleCalculationRow[],
+): CalculationWithSondertilgung[] {
   const calculationsMap = new Map<number, CalculationWithSondertilgung>();
 
   dbRows.forEach((row) => {
@@ -19,7 +24,7 @@ export function transformCalculationResults(dbRows: DBSingleCalculationRow[]): C
         loan_term_in_months: 0,
         created_at: row.created_at,
         cash_roi: 0,
-        sondertilgungen: [], 
+        sondertilgungen: [],
       };
       calculationsMap.set(row.id, calculation);
     }

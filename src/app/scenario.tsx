@@ -46,18 +46,18 @@ export default function Scenario({
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <div className="md:mx-0 my-16 md:mb-4 md:mt-0 border border-purple-500 backdrop-blur-2xl rounded-lg md:max-w-60 bg-blur">
+      <div className="bg-blur my-16 rounded-lg border border-purple-500 backdrop-blur-2xl md:mx-0 md:mt-0 md:mb-4 md:max-w-60">
         <ScenarioTextDisplay
           sumZinsen={sumZinsen}
           paidAfter={paidAfter}
           paidInYear={paidInYear}
         />
       </div>
-      <div className="md:hidden my-16 border border-purple-500/70 backdrop-blur-xl rounded-lg bg-blur flex justify-center items-center p-8 flex-col">
+      <div className="bg-blur my-16 flex flex-col items-center justify-center rounded-lg border border-purple-500/70 p-8 backdrop-blur-xl md:hidden">
         Why did the scarecrow win an award? 🏆 Because he was outstanding in his
         field! 🧑‍🌾😂
         <div>
-          <div className="font-cursive text-xs pt-2 italic">Gemini</div>
+          <div className="font-cursive pt-2 text-xs italic">Gemini</div>
           <div className="font-cursive text-xs"> - thinks this is funny</div>
         </div>
       </div>

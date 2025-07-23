@@ -1,4 +1,4 @@
-import { Client } from 'pg';
+import { Client } from "pg";
 //import { drizzle } from 'drizzle-orm/node-postgres';
 
 const dbConfig = {
@@ -6,9 +6,10 @@ const dbConfig = {
   host: process.env.POSTGRES_HOST,
   database: process.env.POSTGRES_DB,
   password: process.env.POSTGRES_PASSWORD,
-  port: process.env.POSTGRES_PORT ? parseInt(process.env.POSTGRES_PORT, 10) : 5432,
+  port: process.env.POSTGRES_PORT
+    ? parseInt(process.env.POSTGRES_PORT, 10)
+    : 5432,
 };
-
 
 //const db = drizzle(process.env.DATABASE_URL!);
 
@@ -18,7 +19,7 @@ async function connect() {
   if (!pool) {
     pool = new Client(dbConfig);
     await pool.connect();
-    console.log('Connected to PostgreSQL');
+    console.log("Connected to PostgreSQL");
   }
   return pool;
 }
@@ -27,7 +28,7 @@ async function disconnect() {
   if (pool) {
     await pool.end();
     pool = null;
-    console.log('Disconnected from PostgreSQL');
+    console.log("Disconnected from PostgreSQL");
   }
 }
 

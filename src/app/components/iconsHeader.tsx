@@ -19,7 +19,7 @@ export default function IconsHeader() {
       <svg
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-[22px] fill-white ml-[4px]"
+        className="ml-[4px] h-6 w-[22px] fill-white"
       >
         <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
         <g

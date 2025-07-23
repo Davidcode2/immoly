@@ -16,7 +16,7 @@ export default function TilgungstabelleContainer({
   setData,
 }: PropTypes) {
   return (
-    <div className="xl:col-start-1 rounded-lg text-sm overflow-auto max-h-[620px] border border-slate-600 shadow-lg">
+    <div className="max-h-[620px] overflow-auto rounded-lg border border-slate-600 text-sm shadow-lg xl:col-start-1">
       {data && (
         <Tilgungstabelle
           table={data as ArmotizationEntry[]}

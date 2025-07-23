@@ -2,7 +2,9 @@
 
 import { connect, disconnect } from "./db/db";
 import { transformCalculationResults } from "./db/transformCalculations";
-import CalculationResult, { CalculationWithSondertilgung } from "./models/CalculationResult";
+import CalculationResult, {
+  CalculationWithSondertilgung,
+} from "./models/CalculationResult";
 
 export default async function getCalculations() {
   if (process.env.SKIP_BUILD_STATIC_GENERATION === "true") {

@@ -5,4 +5,3 @@ export default interface BaseModel {
   monthly_rate: number;
   rent: number;
 }
-

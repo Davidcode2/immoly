@@ -1,14 +1,29 @@
-export default function ScenarioTextDisplay({ paidAfter, paidInYear, sumZinsen }: { paidAfter: number, paidInYear: number, sumZinsen: number }) {
+export default function ScenarioTextDisplay({
+  paidAfter,
+  paidInYear,
+  sumZinsen,
+}: {
+  paidAfter: number;
+  paidInYear: number;
+  sumZinsen: number;
+}) {
   return (
-    <div className="flex bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-8 gap-y-2 flex-col rounded-lg shadow shadow-purple-900">
-      {paidAfter === -1 ? <div className="text-red-500 font-bold">Das wird nichts</div> :
-        <div>Abgezahlt nach<br />
-          <span className="text-green-500 font-bold">{paidAfter}</span> Jahren
+    <div className="flex flex-col gap-y-2 rounded-lg bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-8 shadow shadow-purple-900 backdrop-blur-2xl">
+      {paidAfter === -1 ? (
+        <div className="font-bold text-red-500">Das wird nichts</div>
+      ) : (
+        <div>
+          Abgezahlt nach
+          <br />
+          <span className="font-bold text-green-500">{paidAfter}</span> Jahren
           Im Jahr {paidInYear}
         </div>
-      }
-      <div>Summe Zinsen {paidAfter === -1 && "nach 120 Jahren"}
-        <div className="text-amber-500 font-bold">{(Math.round(sumZinsen)).toLocaleString()}</div>
+      )}
+      <div>
+        Summe Zinsen {paidAfter === -1 && "nach 120 Jahren"}
+        <div className="font-bold text-amber-500">
+          {Math.round(sumZinsen).toLocaleString()}
+        </div>
       </div>
     </div>
   );
