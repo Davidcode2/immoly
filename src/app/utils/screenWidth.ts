@@ -15,9 +15,13 @@ export function calcWidth() {
   if (bigScreen) {
     return 400;
   }
-  const veryBigScreen = window.innerWidth > 2000;
+  const veryBigScreen = window.innerWidth > 2000 && window.innerWidth < 3500;
   if (veryBigScreen) {
     return window.innerWidth / 4;
+  }
+  const ultraWide = window.innerWidth > 3500;
+  if (ultraWide) {
+    return window.innerWidth / 8;
   }
   return 400;
 }

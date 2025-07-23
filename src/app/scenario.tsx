@@ -46,7 +46,7 @@ export default function Scenario({
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <div className="bg-blur my-16 rounded-lg border border-purple-500 backdrop-blur-2xl md:mx-0 md:mt-0 md:mb-4 md:max-w-60">
+      <div className="my-16 rounded-lg border border-purple-500 backdrop-blur-2xl md:mx-0 md:mt-0 md:mb-4">
         <ScenarioTextDisplay
           sumZinsen={sumZinsen}
           paidAfter={paidAfter}
