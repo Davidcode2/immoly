@@ -28,6 +28,9 @@ export default function Tilgungstabelle({
 
   useEffect(() => {
     setTilgungstabelle(table);
+    setSonderTilgung(
+      table.map((x) => ({ year: x.year, amount: x.sondertilgung })),
+    );
   }, [table]);
 
   const handleSonderTilgungChange = (
@@ -70,13 +73,19 @@ export default function Tilgungstabelle({
       year,
       Number(sondertilgungAmount),
     );
-    const newTable = await recalcForAllSondertilgungen();
+    const sondertilgungen = await getSondertilgungen(calculationId!);
+    console.log(sondertilgungen);
+    if (sondertilgungen) {
+      setSonderTilgung(sondertilgungen);
+    }
+    const newTable = await recalcForAllSondertilgungen(sondertilgungen);
     setTilgungstabelle(newTable);
     setData(newTable);
   };
 
-  const recalcForAllSondertilgungen = async () => {
-    const sondertilgungen = await getSondertilgungen(calculationId!);
+  const recalcForAllSondertilgungen = async (
+    sondertilgungen: Sondertilgung[] | undefined,
+  ) => {
     if (!sondertilgungen) {
       return tilgungsTabelle;
     }

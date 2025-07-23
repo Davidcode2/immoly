@@ -21,7 +21,7 @@ export async function storeInDb(formData: FormData) {
 
   if (result !== 0) {
     const calculationId = result;
-    redirect(`/calculationId=${calculationId}`);
+    redirect(`/?calculationId=${calculationId}`);
   }
 }
 
