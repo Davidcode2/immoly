@@ -36,6 +36,8 @@ export default function Tilgungstabelle({
     );
   }, [table]);
 
+  useEffect(() => {}, [sonderTilgung]);
+
   const handleSonderTilgungChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     year: number,
@@ -55,7 +57,9 @@ export default function Tilgungstabelle({
     });
   };
 
-  const getSondertilgungFromForm = (event: React.FormEvent<HTMLFormElement>) => {
+  const getSondertilgungFromForm = (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
     const form = event.target as HTMLFormElement;
     const sondertilgungAmount = (
       form.elements.namedItem("sonderTilgungAmount") as HTMLInputElement
@@ -68,7 +72,7 @@ export default function Tilgungstabelle({
     year: number,
   ) => {
     event.preventDefault();
-    const updatedSondertilgungAmount = getSondertilgungFromForm(event); 
+    const updatedSondertilgungAmount = getSondertilgungFromForm(event);
     await updateSondertilgungInDb(
       Number(calculationId),
       year,
@@ -79,7 +83,11 @@ export default function Tilgungstabelle({
     if (sondertilgungen) {
       setSonderTilgung(sondertilgungen);
     }
-    const newTable = await recalcForAllSondertilgungen(sondertilgungen, tilgungsTabelle, formInput);
+    const newTable = await recalcForAllSondertilgungen(
+      sondertilgungen,
+      tilgungsTabelle,
+      formInput,
+    );
     setTilgungstabelle(newTable);
     setData(newTable);
   };
