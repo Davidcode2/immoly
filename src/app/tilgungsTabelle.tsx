@@ -8,8 +8,6 @@ import {
 import { Sondertilgung } from "./lib/models/sondertilgung";
 import {
   recalcForAllSondertilgungen,
-  updateSondertilgungInTable,
-  updateSondertilgungForYear,
 } from "./lib/sondertilgungHandler";
 import SondertilgungInput from "./components/sondertilgungInput";
 
@@ -35,18 +33,6 @@ export default function Tilgungstabelle({
   useEffect(() => {
     setTemporaryTable(table);
   }, [table]);
-
-  //  useEffect(() => {
-  //    const recalculate = async () => {
-  //      const newTable = await recalcForAllSondertilgungen(
-  //        sonderTilgung!,
-  //        table,
-  //        formInput,
-  //      );
-  //      setTable(newTable);
-  //    };
-  //    recalculate();
-  //  }, [sonderTilgung]);
 
   const getSondertilgungFromForm = (
     event: React.FormEvent<HTMLFormElement>,
