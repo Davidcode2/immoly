@@ -1,4 +1,4 @@
-import { Client } from "pg";
+import { Pool } from "pg";
 //import { drizzle } from 'drizzle-orm/node-postgres';
 
 const dbConfig = {
@@ -11,25 +11,31 @@ const dbConfig = {
     : 5432,
 };
 
+declare const global: typeof globalThis & {
+  pool?: Pool;
+};
+
 //const db = drizzle(process.env.DATABASE_URL!);
 
-let pool: Client | null = null;
+let pool: Pool | null = null;
 
 async function connect() {
   if (!pool) {
-    pool = new Client(dbConfig);
+    if (process.env.NODE_ENV === "production") {
+      pool = new Pool(dbConfig);
+    } else {
+      if (!global.pool) {
+        global.pool = new Pool(dbConfig);
+      }
+      pool = global.pool;
+    }
+    pool = new Pool(dbConfig);
     await pool.connect();
     console.log("Connected to PostgreSQL");
   }
   return pool;
 }
 
-async function disconnect() {
-  if (pool) {
-    await pool.end();
-    pool = null;
-    console.log("Disconnected from PostgreSQL");
-  }
-}
+await connect();
 
-export { connect, disconnect };
+export default pool;

@@ -1,6 +1,6 @@
 "use server";
 
-import { connect, disconnect } from "./db/db";
+import pool from "./db/db";
 import { transformCalculationResults } from "./db/transformCalculations";
 import CalculationResult, {
   CalculationWithSondertilgung,
@@ -13,19 +13,16 @@ export default async function getCalculations() {
     );
     return [] as CalculationResult[];
   }
-  const client = await connect();
   try {
     const query = `
       SELECT id, principal, interest_rate, monthly_rate, down_payment, rent, annual_percentage_rate, created_at
       FROM calculations;
     `;
-    const result = await client.query(query);
+    const result = await pool!.query(query);
     return result.rows.length > 0 ? (result.rows as CalculationResult[]) : null;
   } catch (error) {
     console.error("Error fetching calculations:", error);
     return null;
-  } finally {
-    await disconnect();
   }
 }
 
@@ -38,7 +35,6 @@ export async function getCalculation(
     );
     return [] as CalculationWithSondertilgung[];
   }
-  const client = await connect();
   try {
     const query = `
       SELECT c.id, c.principal, c.interest_rate, c.monthly_rate, c.down_payment, c.rent, c.annual_percentage_rate, c.created_at, s.year, s.amount
@@ -46,7 +42,7 @@ export async function getCalculation(
       LEFT JOIN sondertilgungen s ON c.id = s.calculation_id
       WHERE c.id = $1;
     `;
-    const result = await client.query(query, [id]);
+    const result = await pool!.query(query, [id]);
 
     if (result && result.rows) {
       const res = transformCalculationResults(result.rows);
@@ -57,19 +53,16 @@ export async function getCalculation(
   } catch (error) {
     console.error("Error fetching calculations:", error);
     return null;
-  } finally {
-    await disconnect();
-  }
+  } 
 }
 
 export async function deleteItem(id: string) {
-  const client = await connect();
   try {
     const query = `
       DELETE
       FROM calculations WHERE id = $1;
     `;
-    const result = await client.query(query, [id]);
+    const result = await pool!.query(query, [id]);
     return result.rowCount;
   } catch (error) {
     console.error("Error deleting calculation:", error);

@@ -1,5 +1,5 @@
 "use server";
-import { connect, disconnect } from "./db/db";
+import pool from "./db/db";
 
 export async function updateSondertilgungInDb(
   calculationId: number,
@@ -19,9 +19,8 @@ export async function updateSondertilgungInDb(
 
 export async function getSondertilgungen(calculationId: string) {
   const query = `SELECT * FROM sondertilgungen WHERE calculation_id = $1`;
-  const client = await connect();
   try {
-    const res = await client.query(query, [calculationId]);
+    const res = await pool!.query(query, [calculationId]);
     if (res && res.rows) {
       return res.rows;
     }
@@ -29,16 +28,13 @@ export async function getSondertilgungen(calculationId: string) {
     return [];
   } catch (error) {
     console.error("Error fetching sondertilgungen from database:", error);
-  } finally {
-    await disconnect();
   }
 }
 
 async function deleteSondertilgungFromDb(calculationId: number, year: number) {
-  const client = await connect();
   const query = `DELETE FROM sondertilgungen WHERE calculation_id = $1 AND year = $2`;
   try {
-    const res = await client.query(query, [calculationId, year]);
+    const res = await pool!.query(query, [calculationId, year]);
     if (res && res.rowCount) {
       return res.rowCount > 0 ? true : false;
     }
@@ -47,8 +43,6 @@ async function deleteSondertilgungFromDb(calculationId: number, year: number) {
   } catch (error) {
     console.error("Error deleting sondertilgung from database:", error);
     throw error;
-  } finally {
-    await disconnect();
   }
 }
 
@@ -64,9 +58,8 @@ async function storeSonderTilgungInDb(
   DO UPDATE SET
   amount = EXCLUDED.amount;`;
 
-  const client = await connect();
   try {
-    const res = await client.query(query, [calculationId, amount, year]);
+    const res = await pool!.query(query, [calculationId, amount, year]);
     if (res && res.rowCount) {
       return res.rowCount > 0 ? true : false;
     }
@@ -75,7 +68,5 @@ async function storeSonderTilgungInDb(
   } catch (error) {
     console.error("Error storing sondertilgung in database:", error);
     throw error;
-  } finally {
-    await disconnect();
   }
 }

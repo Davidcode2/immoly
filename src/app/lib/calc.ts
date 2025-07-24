@@ -1,8 +1,7 @@
 "use server";
 import { redirect } from "next/navigation";
-import { connect, disconnect } from "./db/db";
+import pool from "./db/db";
 import BaseModel from "./models/baseModel";
-import { Client } from "pg";
 
 export async function storeInDb(formData: FormData) {
   const model = {
@@ -30,11 +29,8 @@ function calcYearlyRate(creditSum: number, interest: number) {
 }
 
 async function storeCalculationInDb(model: BaseModel, yearly_rate: number) {
-  const client = await connect();
-
-  const numberOfEntriesExceeded = await isNumberOfEntriesExceeded(client);
+  const numberOfEntriesExceeded = await isNumberOfEntriesExceeded();
   if (numberOfEntriesExceeded) {
-    await disconnect();
     return 0;
   }
 
@@ -52,19 +48,17 @@ async function storeCalculationInDb(model: BaseModel, yearly_rate: number) {
       model.rent,
       yearly_rate,
     ];
-    const result = await client.query(query, values);
+    const result = await pool!.query(query, values);
     return result.rows[0].id;
   } catch (e) {
     console.error(e, "Error occured when storing calculation in database");
-  } finally {
-    await disconnect();
   }
 }
 
-async function isNumberOfEntriesExceeded(client: Client) {
+async function isNumberOfEntriesExceeded() {
   try {
     const numberOfEntriesQuery = `SELECT COUNT(*) FROM calculations;`;
-    const numberOfEntries = await client.query(numberOfEntriesQuery);
+    const numberOfEntries = await pool!.query(numberOfEntriesQuery);
     if (numberOfEntries.rows[0].count >= 15) {
       return true;
     }
