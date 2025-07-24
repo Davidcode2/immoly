@@ -1,6 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
-import pool from "./db/db";
+import { getPool } from "./db/db";
 import BaseModel from "./models/baseModel";
 
 export async function storeInDb(formData: FormData) {
@@ -48,6 +48,7 @@ async function storeCalculationInDb(model: BaseModel, yearly_rate: number) {
       model.rent,
       yearly_rate,
     ];
+    const pool = await getPool();
     const result = await pool!.query(query, values);
     return result.rows[0].id;
   } catch (e) {
@@ -58,6 +59,7 @@ async function storeCalculationInDb(model: BaseModel, yearly_rate: number) {
 async function isNumberOfEntriesExceeded() {
   try {
     const numberOfEntriesQuery = `SELECT COUNT(*) FROM calculations;`;
+    const pool = await getPool();
     const numberOfEntries = await pool!.query(numberOfEntriesQuery);
     if (numberOfEntries.rows[0].count >= 15) {
       return true;

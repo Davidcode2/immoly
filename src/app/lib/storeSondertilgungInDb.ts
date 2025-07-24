@@ -1,5 +1,5 @@
 "use server";
-import pool from "./db/db";
+import { getPool } from "./db/db";
 
 export async function updateSondertilgungInDb(
   calculationId: number,
@@ -20,6 +20,7 @@ export async function updateSondertilgungInDb(
 export async function getSondertilgungen(calculationId: string) {
   const query = `SELECT * FROM sondertilgungen WHERE calculation_id = $1`;
   try {
+    const pool = await getPool();
     const res = await pool!.query(query, [calculationId]);
     if (res && res.rows) {
       return res.rows;
@@ -34,7 +35,8 @@ export async function getSondertilgungen(calculationId: string) {
 async function deleteSondertilgungFromDb(calculationId: number, year: number) {
   const query = `DELETE FROM sondertilgungen WHERE calculation_id = $1 AND year = $2`;
   try {
-    const res = await pool!.query(query, [calculationId, year]);
+    const pool = await getPool();
+    const res = await pool.query(query, [calculationId, year]);
     if (res && res.rowCount) {
       return res.rowCount > 0 ? true : false;
     }
@@ -59,7 +61,8 @@ async function storeSonderTilgungInDb(
   amount = EXCLUDED.amount;`;
 
   try {
-    const res = await pool!.query(query, [calculationId, amount, year]);
+    const pool = await getPool();
+    const res = await pool.query(query, [calculationId, amount, year]);
     if (res && res.rowCount) {
       return res.rowCount > 0 ? true : false;
     }

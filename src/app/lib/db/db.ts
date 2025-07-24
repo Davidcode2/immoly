@@ -19,7 +19,7 @@ declare const global: typeof globalThis & {
 
 let pool: Pool | null = null;
 
-async function connect() {
+export async function getPool() {
   if (!pool) {
     if (process.env.NODE_ENV === "production") {
       pool = new Pool(dbConfig);
@@ -35,7 +35,5 @@ async function connect() {
   }
   return pool;
 }
-
-await connect();
 
 export default pool;

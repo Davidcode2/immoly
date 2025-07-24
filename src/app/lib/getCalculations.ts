@@ -1,12 +1,13 @@
 "use server";
 
-import pool from "./db/db";
+import { getPool } from "./db/db";
 import { transformCalculationResults } from "./db/transformCalculations";
 import CalculationResult, {
   CalculationWithSondertilgung,
 } from "./models/CalculationResult";
 
 export default async function getCalculations() {
+  const pool = await getPool();
   if (process.env.SKIP_BUILD_STATIC_GENERATION === "true") {
     console.warn(
       "Skipping static generation for calculations due to SKIP_BUILD_STATIC_GENERATION flag.",
@@ -29,6 +30,7 @@ export default async function getCalculations() {
 export async function getCalculation(
   id: string,
 ): Promise<CalculationWithSondertilgung[] | null> {
+  const pool = await getPool();
   if (process.env.SKIP_BUILD_STATIC_GENERATION === "true") {
     console.warn(
       "Skipping static generation for calculations due to SKIP_BUILD_STATIC_GENERATION flag.",
@@ -52,7 +54,7 @@ export async function getCalculation(
   } catch (error) {
     console.error("Error fetching calculations:", error);
     return null;
-  } 
+  }
 }
 
 export async function deleteItem(id: string) {
@@ -61,6 +63,7 @@ export async function deleteItem(id: string) {
       DELETE
       FROM calculations WHERE id = $1;
     `;
+    const pool = await getPool();
     const result = await pool!.query(query, [id]);
     return result.rowCount;
   } catch (error) {
