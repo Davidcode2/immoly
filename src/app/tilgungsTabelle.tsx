@@ -11,6 +11,7 @@ import {
   updateSondertilgungInTable,
   updateSondertilgungForYear,
 } from "./lib/sondertilgungHandler";
+import SondertilgungInput from "./components/sondertilgungInput";
 
 type PropTypes = {
   table: ArmotizationEntry[];
@@ -33,9 +34,6 @@ export default function Tilgungstabelle({
 
   useEffect(() => {
     setTemporaryTable(table);
-    setSonderTilgungen(
-      table.map((x) => ({ year: x.year, amount: x.sondertilgung })),
-    );
   }, [table]);
 
   //  useEffect(() => {
@@ -49,18 +47,6 @@ export default function Tilgungstabelle({
   //    };
   //    recalculate();
   //  }, [sonderTilgung]);
-
-  const handleSonderTilgungChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    year: number,
-  ) => {
-    const updatedSondertilgungAmount = Number(event.target.value);
-    const updatedSondertilgungen = updateSondertilgungForYear(sonderTilgungen, year, updatedSondertilgungAmount);
-    setSonderTilgungen(updatedSondertilgungen);
-    setTemporaryTable((prevTable) => {
-      return updateSondertilgungInTable(prevTable, year, updatedSondertilgungAmount);
-    });
-  };
 
   const getSondertilgungFromForm = (
     event: React.FormEvent<HTMLFormElement>,
@@ -152,15 +138,13 @@ export default function Tilgungstabelle({
                   <button className="text-gray-800 hover:cursor-pointer hover:text-gray-200">
                     +
                   </button>
-                  <input
-                    size={3}
-                    type="number"
-                    name="sonderTilgungAmount"
-                    value={
-                      sonderTilgungen.find((y: Sondertilgung) => y.year === x.year)?.amount || ""
+                  <SondertilgungInput
+                    year={x.year}
+                    sondertilgung={
+                      sonderTilgungen.find(
+                        (y: Sondertilgung) => y.year === x.year,
+                      )?.amount || 0
                     }
-                    onChange={(e) => handleSonderTilgungChange(e, x.year)}
-                    className="w-20 rounded-md p-[3px] text-sm text-green-400 active:text-gray-200"
                   />
                 </form>
               </td>
