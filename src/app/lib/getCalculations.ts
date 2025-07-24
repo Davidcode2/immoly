@@ -49,7 +49,6 @@ export async function getCalculation(
       return res;
     }
     throw new Error("No calculations found for the given ID");
-    //return result.rows.length > 0 ? (result.rows as CalculationResult[]) : null;
   } catch (error) {
     console.error("Error fetching calculations:", error);
     return null;
@@ -67,7 +66,5 @@ export async function deleteItem(id: string) {
   } catch (error) {
     console.error("Error deleting calculation:", error);
     return null;
-  } finally {
-    await disconnect();
   }
 }

@@ -27,13 +27,13 @@ export default function Tilgungstabelle({
 }: PropTypes) {
   const [temporaryTable, setTemporaryTable] =
     useState<ArmotizationEntry[]>(table);
-  const [sonderTilgung, setSonderTilgung] = useState<Sondertilgung[]>(
+  const [sonderTilgungen, setSonderTilgungen] = useState<Sondertilgung[]>(
     table.map((x) => ({ year: x.year, amount: x.sondertilgung })),
   );
 
   useEffect(() => {
     setTemporaryTable(table);
-    setSonderTilgung(
+    setSonderTilgungen(
       table.map((x) => ({ year: x.year, amount: x.sondertilgung })),
     );
   }, [table]);
@@ -55,8 +55,8 @@ export default function Tilgungstabelle({
     year: number,
   ) => {
     const updatedSondertilgungAmount = Number(event.target.value);
-    const updatedSondertilgungen = updateSondertilgungForYear(sonderTilgung, year, updatedSondertilgungAmount);
-    setSonderTilgung(updatedSondertilgungen);
+    const updatedSondertilgungen = updateSondertilgungForYear(sonderTilgungen, year, updatedSondertilgungAmount);
+    setSonderTilgungen(updatedSondertilgungen);
     setTemporaryTable((prevTable) => {
       return updateSondertilgungInTable(prevTable, year, updatedSondertilgungAmount);
     });
@@ -76,7 +76,8 @@ export default function Tilgungstabelle({
     const sondertilgungen = await getSondertilgungen(calculationId!);
     console.log(sondertilgungen);
     if (sondertilgungen) {
-      setSonderTilgung(sondertilgungen);
+      setSonderTilgungen(sondertilgungen);
+      console.log(sonderTilgungen);
       return sondertilgungen;
     }
   };
@@ -156,7 +157,7 @@ export default function Tilgungstabelle({
                     type="number"
                     name="sonderTilgungAmount"
                     value={
-                      sonderTilgung.find((y) => y.year === x.year)?.amount || ""
+                      sonderTilgungen.find((y: Sondertilgung) => y.year === x.year)?.amount || ""
                     }
                     onChange={(e) => handleSonderTilgungChange(e, x.year)}
                     className="w-20 rounded-md p-[3px] text-sm text-green-400 active:text-gray-200"
