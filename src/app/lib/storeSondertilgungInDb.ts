@@ -1,6 +1,4 @@
 "use server";
-
-import { Client } from "pg";
 import { connect, disconnect } from "./db/db";
 
 export async function updateSondertilgungInDb(
@@ -8,12 +6,15 @@ export async function updateSondertilgungInDb(
   year: number,
   amount: number,
 ) {
-  const client = await connect();
-  if (amount <= 0) {
-    const res = await deleteSondertilgungFromDb(client, calculationId, year);
-    return res;
+  try {
+    if (amount <= 0) {
+      const res = await deleteSondertilgungFromDb(calculationId, year);
+      return res;
+    }
+    storeSonderTilgungInDb(calculationId, amount, year);
+  } catch (error) {
+    console.error("Error updating sondertilgung in database:", error);
   }
-  storeSonderTilgungInDb(client, calculationId, amount, year);
 }
 
 export async function getSondertilgungen(calculationId: string) {
@@ -33,11 +34,8 @@ export async function getSondertilgungen(calculationId: string) {
   }
 }
 
-async function deleteSondertilgungFromDb(
-  client: Client,
-  calculationId: number,
-  year: number,
-) {
+async function deleteSondertilgungFromDb(calculationId: number, year: number) {
+  const client = await connect();
   const query = `DELETE FROM sondertilgungen WHERE calculation_id = $1 AND year = $2`;
   try {
     const res = await client.query(query, [calculationId, year]);
@@ -48,13 +46,13 @@ async function deleteSondertilgungFromDb(
     return false;
   } catch (error) {
     console.error("Error deleting sondertilgung from database:", error);
+    throw error;
   } finally {
     await disconnect();
   }
 }
 
 async function storeSonderTilgungInDb(
-  client: Client,
   calculationId: number,
   amount: number,
   year: number,
@@ -66,6 +64,7 @@ async function storeSonderTilgungInDb(
   DO UPDATE SET
   amount = EXCLUDED.amount;`;
 
+  const client = await connect();
   try {
     const res = await client.query(query, [calculationId, amount, year]);
     if (res && res.rowCount) {
@@ -75,6 +74,7 @@ async function storeSonderTilgungInDb(
     return false;
   } catch (error) {
     console.error("Error storing sondertilgung in database:", error);
+    throw error;
   } finally {
     await disconnect();
   }

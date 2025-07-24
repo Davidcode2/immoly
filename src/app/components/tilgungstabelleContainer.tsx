@@ -4,24 +4,24 @@ import Tilgungstabelle from "app/tilgungsTabelle";
 
 type PropTypes = {
   calculationId: string | null;
-  data: ArmotizationEntry[] | null;
+  table: ArmotizationEntry[] | null;
   input: CashRoiModel | null;
-  setData: (tilgungsTabelle: ArmotizationEntry[]) => void;
+  setTable: (tilgungsTabelle: ArmotizationEntry[]) => void;
 };
 
 export default function TilgungstabelleContainer({
   calculationId,
-  data,
+  table,
   input,
-  setData,
+  setTable,
 }: PropTypes) {
   return (
     <div className="max-h-[620px] overflow-auto rounded-lg border border-slate-600 text-sm shadow-lg xl:col-start-1">
-      {data && (
+      {table && (
         <Tilgungstabelle
-          table={data as ArmotizationEntry[]}
+          table={table as ArmotizationEntry[]}
           formInput={input}
-          setData={setData}
+          setTable={setTable}
           calculationId={calculationId}
         />
       )}

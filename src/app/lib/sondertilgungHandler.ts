@@ -3,7 +3,7 @@ import ArmotizationEntry from "./models/ArmotizationEntry";
 import CashRoiModel from "./models/cashRoiModel";
 import { Sondertilgung } from "./models/sondertilgung";
 
-export const updateSondertilgung = (
+export const updateSondertilgungInTable = (
   currentTable: ArmotizationEntry[],
   updatedYear: number,
   updatedSondertilgungAmount: number,
@@ -18,6 +18,19 @@ export const updateSondertilgung = (
   return newTable;
 };
 
+export const updateSondertilgungForYear = (
+  sondertilgungen: Sondertilgung[],
+  year: number,
+  amount: number,
+) => {
+  const currentSondertilgungIndex = sondertilgungen.findIndex(
+    (x) => x.year === year,
+  );
+  const copy = [...sondertilgungen];
+  copy[currentSondertilgungIndex].amount = amount;
+  return copy;
+};
+
 export const recalcForAllSondertilgungen = async (
   sondertilgungen: Sondertilgung[] | undefined,
   tilgungsTabelle: ArmotizationEntry[],
@@ -27,7 +40,11 @@ export const recalcForAllSondertilgungen = async (
     return tilgungsTabelle;
   }
   sondertilgungen.sort((a, b) => a.year - b.year);
-  if (calculationValues && calculationValues.interest_rate && calculationValues.monthly_rate) {
+  if (
+    calculationValues &&
+    calculationValues.interest_rate &&
+    calculationValues.monthly_rate
+  ) {
     const newTable = [...tilgungsTabelle];
     tilgungsTabelle.forEach((tableRow: ArmotizationEntry) => {
       const tableRowNew = newTable.find((x) => x.year === tableRow.year);

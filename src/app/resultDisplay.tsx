@@ -17,7 +17,7 @@ import NoData from "./components/noData";
 import TilgungstabelleContainer from "./components/tilgungstabelleContainer";
 
 export default function ResultDisplay() {
-  const [data, setData] = useState<ArmotizationEntry[] | null>(null);
+  const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
   const [input, setInput] = useState<CashRoiModel | null>(null);
   const [formValues, setFormValues] = useState<CalculationResult[] | null>(
     null,
@@ -34,7 +34,7 @@ export default function ResultDisplay() {
       }
 
       const tilgungungsTabelle = calcTilgung(input);
-      setData(tilgungungsTabelle);
+      setTable(tilgungungsTabelle);
     }
     loadData();
   }, [input]);
@@ -54,7 +54,7 @@ export default function ResultDisplay() {
           setFormValues(result);
           setInput(result[0]);
           const tilgungungsTabelle = calcTilgung(result[0]);
-          setData(tilgungungsTabelle);
+          setTable(tilgungungsTabelle);
         } catch (e) {
           console.error(e);
         }
@@ -89,34 +89,34 @@ export default function ResultDisplay() {
         <FinanzierungsForm values={formValues} setInput={setInput} />
       </div>
       <div className="grid">
-        {!data && <NoData />}
-        {data && (
+        {!table && <NoData />}
+        {table && (
           <>
             <div className="grid md:grid-cols-2">
-              <Scenario calculationId={selectedScenario} data={data} />
+              <Scenario calculationId={selectedScenario} data={table} />
               <div className="ml-auto hidden md:block">
                 <IconsHeader />
               </div>
             </div>
             <div className="grid gap-y-20 md:gap-4 xl:grid-cols-[3fr_2fr]">
               <TilgungstabelleContainer
-                data={data}
+                table={table}
                 calculationId={calculationId}
                 input={input}
-                setData={setData}
+                setTable={setTable}
               />
               <div className="xl:col-start-2">
                 {input && (
                   <div className="grid gap-y-20 md:gap-4">
                     <div className="grid min-h-[300px] justify-around rounded-lg border border-slate-600 bg-neutral-950/10 shadow-lg backdrop-blur-lg">
                       <PlotlyChart
-                        data={thinOutGraphDataPoints(data)}
+                        data={thinOutGraphDataPoints(table)}
                         rent={input.rent}
                       />
                     </div>
                     <div className="grid min-h-[300px] justify-around rounded-lg border border-slate-600 bg-neutral-950/10 shadow-lg backdrop-blur-lg">
                       <DevelopmentChart
-                        data={thinOutGraphDataPoints(data)}
+                        data={thinOutGraphDataPoints(table)}
                         rent={input.rent}
                         interest={input.cash_roi || 0}
                       />

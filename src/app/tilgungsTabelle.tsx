@@ -8,52 +8,57 @@ import {
 import { Sondertilgung } from "./lib/models/sondertilgung";
 import {
   recalcForAllSondertilgungen,
-  updateSondertilgung,
+  updateSondertilgungInTable,
+  updateSondertilgungForYear,
 } from "./lib/sondertilgungHandler";
 
 type PropTypes = {
   table: ArmotizationEntry[];
   formInput: CashRoiModel | null;
-  setData: (tilgungstabelle: ArmotizationEntry[]) => void;
+  setTable: (tilgungstabelle: ArmotizationEntry[]) => void;
   calculationId: string | null;
 };
 
 export default function Tilgungstabelle({
   table,
   formInput,
-  setData,
+  setTable,
   calculationId,
 }: PropTypes) {
-  const [tilgungsTabelle, setTilgungstabelle] = useState(table);
+  const [temporaryTable, setTemporaryTable] =
+    useState<ArmotizationEntry[]>(table);
   const [sonderTilgung, setSonderTilgung] = useState<Sondertilgung[]>(
-    tilgungsTabelle.map((x) => ({ year: x.year, amount: x.sondertilgung })),
+    table.map((x) => ({ year: x.year, amount: x.sondertilgung })),
   );
 
   useEffect(() => {
-    setTilgungstabelle(table);
+    setTemporaryTable(table);
     setSonderTilgung(
       table.map((x) => ({ year: x.year, amount: x.sondertilgung })),
     );
   }, [table]);
 
-  useEffect(() => {}, [sonderTilgung]);
+  //  useEffect(() => {
+  //    const recalculate = async () => {
+  //      const newTable = await recalcForAllSondertilgungen(
+  //        sonderTilgung!,
+  //        table,
+  //        formInput,
+  //      );
+  //      setTable(newTable);
+  //    };
+  //    recalculate();
+  //  }, [sonderTilgung]);
 
   const handleSonderTilgungChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     year: number,
   ) => {
-    const updatedYear = Number(event.target.name);
-    const updatedSondertilgung = Number(event.target.value);
-    setSonderTilgung(
-      sonderTilgung.map((x) => {
-        if (x.year === year) {
-          x.amount = updatedSondertilgung;
-        }
-        return x;
-      }),
-    );
-    setTilgungstabelle((prevTable) => {
-      return updateSondertilgung(prevTable, updatedYear, updatedSondertilgung);
+    const updatedSondertilgungAmount = Number(event.target.value);
+    const updatedSondertilgungen = updateSondertilgungForYear(sonderTilgung, year, updatedSondertilgungAmount);
+    setSonderTilgung(updatedSondertilgungen);
+    setTemporaryTable((prevTable) => {
+      return updateSondertilgungInTable(prevTable, year, updatedSondertilgungAmount);
     });
   };
 
@@ -67,7 +72,16 @@ export default function Tilgungstabelle({
     return sondertilgungAmount;
   };
 
-  const _calcSondertilgung = async (
+  const getSondertilgungAndSet = async () => {
+    const sondertilgungen = await getSondertilgungen(calculationId!);
+    console.log(sondertilgungen);
+    if (sondertilgungen) {
+      setSonderTilgung(sondertilgungen);
+      return sondertilgungen;
+    }
+  };
+
+  const handleSondertilgungSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
     year: number,
   ) => {
@@ -78,18 +92,13 @@ export default function Tilgungstabelle({
       year,
       Number(updatedSondertilgungAmount),
     );
-    const sondertilgungen = await getSondertilgungen(calculationId!);
-    console.log(sondertilgungen);
-    if (sondertilgungen) {
-      setSonderTilgung(sondertilgungen);
-    }
+    const sondertilgungen = await getSondertilgungAndSet();
     const newTable = await recalcForAllSondertilgungen(
-      sondertilgungen,
-      tilgungsTabelle,
+      sondertilgungen!,
+      table,
       formInput,
     );
-    setTilgungstabelle(newTable);
-    setData(newTable);
+    setTable(newTable);
   };
 
   const screenWidthMobile = () => {
@@ -116,7 +125,7 @@ export default function Tilgungstabelle({
           </tr>
         </thead>
         <tbody>
-          {tilgungsTabelle.map((x) => (
+          {temporaryTable.map((x) => (
             <tr
               key={x.year}
               className="border-t border-gray-950 even:bg-[#0f0f0f]/20 hover:bg-purple-600"
@@ -136,7 +145,7 @@ export default function Tilgungstabelle({
               </td>
               <td className="w-24 py-2 sm:px-4">
                 <form
-                  onSubmit={(e) => _calcSondertilgung(e, x.year)}
+                  onSubmit={(e) => handleSondertilgungSubmit(e, x.year)}
                   className="justify-fit flex sm:gap-4"
                 >
                   <button className="text-gray-800 hover:cursor-pointer hover:text-gray-200">
