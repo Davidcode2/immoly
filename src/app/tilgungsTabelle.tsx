@@ -38,18 +38,18 @@ export default function Tilgungstabelle({
     event: React.ChangeEvent<HTMLInputElement>,
     year: number,
   ) => {
+    const updatedYear = Number(event.target.name);
+    const updatedSondertilgung = Number(event.target.value);
     setSonderTilgung(
       sonderTilgung.map((x) => {
         if (x.year === year) {
-          x.amount = Number(event.target.value);
+          x.amount = updatedSondertilgung;
         }
         return x;
       }),
     );
     setTilgungstabelle((prevTable) => {
-      const year = Number(event.target.name);
-      const updatedSondertilgung = Number(event.target.value);
-      return updateSondertilgung(prevTable, year, updatedSondertilgung);
+      return updateSondertilgung(prevTable, updatedYear, updatedSondertilgung);
     });
   };
 
