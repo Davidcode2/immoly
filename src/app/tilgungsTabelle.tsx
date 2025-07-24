@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
-import calcTilgung from "./lib/calculateArmotizaztionTable";
 import CashRoiModel from "./lib/models/cashRoiModel";
 import {
   getSondertilgungen,
   updateSondertilgungInDb,
 } from "./lib/storeSondertilgungInDb";
 import { Sondertilgung } from "./lib/models/sondertilgung";
-import { updateSondertilgung } from "./lib/sondertilgungHandler";
+import {
+  recalcForAllSondertilgungen,
+  updateSondertilgung,
+} from "./lib/sondertilgungHandler";
 
 type PropTypes = {
   table: ArmotizationEntry[];
@@ -53,74 +55,33 @@ export default function Tilgungstabelle({
     });
   };
 
+  const getSondertilgungFromForm = (event: React.FormEvent<HTMLFormElement>) => {
+    const form = event.target as HTMLFormElement;
+    const sondertilgungAmount = (
+      form.elements.namedItem("sonderTilgungAmount") as HTMLInputElement
+    ).value;
+    return sondertilgungAmount;
+  };
+
   const _calcSondertilgung = async (
     event: React.FormEvent<HTMLFormElement>,
     year: number,
   ) => {
     event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const sondertilgungAmount = (
-      form.elements.namedItem("sonderTilgungAmount") as HTMLInputElement
-    ).value;
+    const updatedSondertilgungAmount = getSondertilgungFromForm(event); 
     await updateSondertilgungInDb(
       Number(calculationId),
       year,
-      Number(sondertilgungAmount),
+      Number(updatedSondertilgungAmount),
     );
     const sondertilgungen = await getSondertilgungen(calculationId!);
     console.log(sondertilgungen);
     if (sondertilgungen) {
       setSonderTilgung(sondertilgungen);
     }
-    const newTable = await recalcForAllSondertilgungen(sondertilgungen);
+    const newTable = await recalcForAllSondertilgungen(sondertilgungen, tilgungsTabelle, formInput);
     setTilgungstabelle(newTable);
     setData(newTable);
-  };
-
-  const recalcForAllSondertilgungen = async (
-    sondertilgungen: Sondertilgung[] | undefined,
-  ) => {
-    if (!sondertilgungen) {
-      return tilgungsTabelle;
-    }
-    sondertilgungen.sort((a, b) => a.year - b.year);
-    if (formInput && formInput.interest_rate && formInput.monthly_rate) {
-      const newTable = [...tilgungsTabelle];
-      tilgungsTabelle.forEach((tableRow: ArmotizationEntry) => {
-        const tableRowNew = newTable.find((x) => x.year === tableRow.year);
-        if (!tableRowNew) {
-          return newTable;
-        }
-        const sondertilgung = sondertilgungen.find(
-          (y) => y.year === tableRow.year,
-        );
-        if (sondertilgung) {
-          const newReducedPrincipal =
-            tableRowNew.remainingPrincipal - sondertilgung.amount;
-          if (newReducedPrincipal < 0) {
-            return newTable;
-          }
-          const newTilgung = calcTilgung({
-            principal: newReducedPrincipal,
-            down_payment: 0,
-            interest_rate: formInput?.interest_rate,
-            monthly_rate: formInput?.monthly_rate,
-            rent: formInput?.rent || 0,
-          });
-          newTilgung.forEach((x: ArmotizationEntry) => {
-            x.year = x.year + tableRow.year;
-          });
-          newTable.splice(
-            tilgungsTabelle.indexOf(tableRow) + 1,
-            newTable.length,
-            ...newTilgung,
-          );
-        }
-      });
-      return newTable;
-    } else {
-      return tilgungsTabelle;
-    }
   };
 
   const screenWidthMobile = () => {
