@@ -7,6 +7,7 @@ import {
   updateSondertilgungInDb,
 } from "./lib/storeSondertilgungInDb";
 import { Sondertilgung } from "./lib/models/sondertilgung";
+import { updateSondertilgung } from "./lib/sondertilgungHandler";
 
 type PropTypes = {
   table: ArmotizationEntry[];
@@ -46,16 +47,9 @@ export default function Tilgungstabelle({
       }),
     );
     setTilgungstabelle((prevTable) => {
-      const newTable = [...prevTable];
-      const index = newTable.findIndex(
-        (row) => row.year === Number(event.target.name),
-      );
-      if (index !== -1) {
-        const updatedRow = { ...newTable[index] };
-        updatedRow.sondertilgung = Number(event.target.value);
-        newTable[index] = updatedRow;
-      }
-      return newTable;
+      const year = Number(event.target.name);
+      const updatedSondertilgung = Number(event.target.value);
+      return updateSondertilgung(prevTable, year, updatedSondertilgung);
     });
   };
 
