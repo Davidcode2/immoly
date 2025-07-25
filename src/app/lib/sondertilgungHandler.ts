@@ -66,6 +66,7 @@ export const recalcForAllSondertilgungen = async (
           interest_rate: calculationValues?.interest_rate,
           monthly_rate: calculationValues?.monthly_rate,
           rent: calculationValues?.rent || 0,
+          sondertilgungen: sondertilgungen,
         });
         newTilgung.forEach((x: ArmotizationEntry) => {
           x.year = x.year + tableRow.year;

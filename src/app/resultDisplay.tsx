@@ -15,6 +15,8 @@ import Image from "next/image";
 import IconsHeader from "./components/iconsHeader";
 import NoData from "./components/noData";
 import TilgungstabelleContainer from "./components/tilgungstabelleContainer";
+import { getSondertilgungen } from "./lib/storeSondertilgungInDb";
+import { recalcForAllSondertilgungen } from "./lib/sondertilgungHandler";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -33,8 +35,18 @@ export default function ResultDisplay() {
         return;
       }
 
-      const tilgungungsTabelle = calcTilgung(input);
-      setTable(tilgungungsTabelle);
+      const tilgungsTabelle = calcTilgung(input);
+      const sondertilgungen = await getSondertilgungen(calculationId!);
+      if (sondertilgungen) {
+        const tableWithSondertilgungen = await recalcForAllSondertilgungen(
+          sondertilgungen,
+          tilgungsTabelle,
+          input,
+        );
+        setTable(tableWithSondertilgungen);
+      } else {
+        setTable(tilgungsTabelle);
+      }
     }
     loadData();
   }, [input]);
@@ -71,7 +83,7 @@ export default function ResultDisplay() {
   };
 
   return (
-    <div className="grid pt-3 px-3 md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16">
+    <div className="grid px-3 pt-3 md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16">
       <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-purple-800/30 to-neutral-900/70 p-4 shadow backdrop-blur-2xl md:p-8">
         <Image
           src="/immoly_logo_square_transparent_text.webp"

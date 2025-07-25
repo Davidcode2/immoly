@@ -32,6 +32,7 @@ export default function Tilgungstabelle({
 
   useEffect(() => {
     setTemporaryTable(table);
+    getSondertilgungAndSet();
   }, [table]);
 
   const getSondertilgungFromForm = (
@@ -46,10 +47,8 @@ export default function Tilgungstabelle({
 
   const getSondertilgungAndSet = async () => {
     const sondertilgungen = await getSondertilgungen(calculationId!);
-    console.log(sondertilgungen);
     if (sondertilgungen) {
       setSonderTilgungen(sondertilgungen);
-      console.log(sonderTilgungen);
       return sondertilgungen;
     }
   };
