@@ -37,16 +37,12 @@ export default function ResultDisplay() {
 
       const tilgungsTabelle = calcTilgung(input);
       const sondertilgungen = await getSondertilgungen(calculationId!);
-      if (sondertilgungen) {
-        const tableWithSondertilgungen = await recalcForAllSondertilgungen(
-          sondertilgungen,
-          tilgungsTabelle,
-          input,
-        );
-        setTable(tableWithSondertilgungen);
-      } else {
-        setTable(tilgungsTabelle);
-      }
+      const tableWithSondertilgungen = await recalcForAllSondertilgungen(
+        sondertilgungen,
+        tilgungsTabelle,
+        input,
+      );
+      setTable(tableWithSondertilgungen);
     }
     loadData();
   }, [input]);
