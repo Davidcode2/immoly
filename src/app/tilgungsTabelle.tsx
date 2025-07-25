@@ -6,9 +6,7 @@ import {
   updateSondertilgungInDb,
 } from "./lib/storeSondertilgungInDb";
 import { Sondertilgung } from "./lib/models/sondertilgung";
-import {
-  recalcForAllSondertilgungen,
-} from "./lib/sondertilgungHandler";
+import { recalcForAllSondertilgungen } from "./lib/sondertilgungHandler";
 import SondertilgungInput from "./components/sondertilgungInput";
 
 type PropTypes = {
@@ -44,6 +42,12 @@ export default function Tilgungstabelle({
     ).value;
     return sondertilgungAmount;
   };
+
+  const getSondertilgung = (year: number) => {
+    const sondertilgung = sonderTilgungen.find((y: Sondertilgung) => y.year === year);
+    const amount = sondertilgung?.amount || "";
+    return String(amount);
+  }
 
   const getSondertilgungAndSet = async () => {
     const sondertilgungen = await getSondertilgungen(calculationId!);
@@ -126,9 +130,7 @@ export default function Tilgungstabelle({
                   <SondertilgungInput
                     year={x.year}
                     sondertilgung={
-                      sonderTilgungen.find(
-                        (y: Sondertilgung) => y.year === x.year,
-                      )?.amount || 0
+                      getSondertilgung(x.year)
                     }
                   />
                 </form>
