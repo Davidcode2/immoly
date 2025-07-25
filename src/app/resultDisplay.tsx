@@ -72,12 +72,6 @@ export default function ResultDisplay() {
     loadData();
   }, [calculationId]);
 
-  const thinOutGraphDataPoints = (data: ArmotizationEntry[]) => {
-    return data.length > 25
-      ? data.filter((x: ArmotizationEntry) => data.indexOf(x) % 2)
-      : data;
-  };
-
   return (
     <div className="grid px-3 pt-3 md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16">
       <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-purple-800/30 to-neutral-900/70 p-4 shadow backdrop-blur-2xl md:p-8">
@@ -118,13 +112,13 @@ export default function ResultDisplay() {
                   <div className="grid gap-y-20 md:gap-4">
                     <div className="grid min-h-[300px] justify-around rounded-lg border border-slate-600 bg-neutral-950/10 shadow-lg backdrop-blur-lg">
                       <PlotlyChart
-                        data={thinOutGraphDataPoints(table)}
+                        data={table}
                         rent={input.rent}
                       />
                     </div>
                     <div className="grid min-h-[300px] justify-around rounded-lg border border-slate-600 bg-neutral-950/10 shadow-lg backdrop-blur-lg">
                       <DevelopmentChart
-                        data={thinOutGraphDataPoints(table)}
+                        data={table}
                         rent={input.rent}
                         interest={input.cash_roi || 0}
                       />
