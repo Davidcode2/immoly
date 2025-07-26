@@ -4,19 +4,18 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getCalculation } from "./lib/getCalculations";
 import calcTilgung from "./lib/calculateArmotizaztionTable";
-import FinanzierungsForm from "./finanzierungsForm";
 import Scenario from "./scenario";
 import PlotlyChart from "./chart";
 import DevelopmentChart from "./developmentChart";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 import CalculationResult from "./lib/models/CalculationResult";
 import CashRoiModel from "./lib/models/cashRoiModel";
-import Image from "next/image";
 import IconsHeader from "./components/iconsHeader";
 import NoData from "./components/noData";
 import TilgungstabelleContainer from "./components/tilgungstabelleContainer";
 import { getSondertilgungen } from "./lib/storeSondertilgungInDb";
 import { recalcForAllSondertilgungen } from "./lib/sondertilgungHandler";
+import FinanzierungsFormContainer from "./components/finanzierungsFormContainer";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -73,23 +72,10 @@ export default function ResultDisplay() {
   }, [calculationId]);
 
   return (
-    <div className="grid px-3 pt-3 md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16">
-      <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-purple-800/30 to-neutral-900/70 p-4 shadow backdrop-blur-2xl md:p-8">
-        <Image
-          src="/immoly_logo_square_transparent_text.webp"
-          width={200}
-          height={10}
-          alt="Logo"
-          className="mx-auto md:mb-16"
-        />
-        <div className="mx-auto p-4 md:hidden">
-          <IconsHeader />
-        </div>
-        <div className="mb-10 p-4 text-center font-bold md:hidden">
-          Die Plattform für Immobilienkredite. Kalkulieren Sie was möglich ist.
-        </div>
-        <FinanzierungsForm values={formValues} setInput={setInput} />
-      </div>
+    <div
+      className={`grid px-3 pt-3 md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16 ${table && "items-start"}`}
+    >
+      <FinanzierungsFormContainer formValues={formValues} setInput={setInput} />
       <div className="grid">
         {!table && <NoData />}
         {table && (
@@ -111,10 +97,7 @@ export default function ResultDisplay() {
                 {input && (
                   <div className="grid gap-y-20 md:gap-4">
                     <div className="grid min-h-[300px] justify-around rounded-lg border border-slate-600 bg-neutral-950/10 shadow-lg backdrop-blur-lg">
-                      <PlotlyChart
-                        data={table}
-                        rent={input.rent}
-                      />
+                      <PlotlyChart data={table} rent={input.rent} />
                     </div>
                     <div className="grid min-h-[300px] justify-around rounded-lg border border-slate-600 bg-neutral-950/10 shadow-lg backdrop-blur-lg">
                       <DevelopmentChart

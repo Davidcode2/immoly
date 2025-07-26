@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import CashRoiModel from "./lib/models/cashRoiModel";
 import CalculationResult from "./lib/models/CalculationResult";
 import SliderInput from "./components/slider/sliderInput";
+import OptionalParameters from "./components/optionalParameters";
 
 export default function FinanzierungsForm({
   values,
@@ -18,6 +19,8 @@ export default function FinanzierungsForm({
   const [cashRoi, setCashRoi] = useState<number | string>("");
   const [rent, setRent] = useState<number | string>("");
   const [monthlyRate, setMonthlyRate] = useState<number | string>("");
+
+  const [showExtended, setShowExtended] = useState<boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -66,7 +69,7 @@ export default function FinanzierungsForm({
       return 20;
     }
     return Number(numValue);
-  }
+  };
 
   useEffect(() => {
     if (values && values[0]) {
@@ -82,7 +85,7 @@ export default function FinanzierungsForm({
   return (
     <Form action={storeInDb} className="mx-auto">
       <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-2 shadow backdrop-blur-2xl">
-        <div className="grid gap-2 md:gap-6">
+        <div className="grid gap-2 md:gap-6 mb-4">
           {/* Eigenkapital */}
           <SliderInput
             min={0}
@@ -124,57 +127,26 @@ export default function FinanzierungsForm({
             htmlFor={"creditSum"}
             handleChange={handleInputChange}
           />
-          {/* Kapitalrendite (optional) */}
-          <div className="grid">
-            <label
-              htmlFor="cashRoi"
-              className="mb-1 text-xs font-semibold text-stone-400 uppercase"
-            >
-              Kapitalrendite{" "}
-              <span className="text-xs font-normal text-gray-400 normal-case">
-                (optional)
-              </span>
-            </label>
-            <input
-              type="number"
-              step="0.1"
-              className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
-              id="cashRoi"
-              name="cashRoi"
-              max="20"
-              min="0.0"
-              maxLength={2}
-              value={cashRoi}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* Miete (optional) */}
-          <div className="mb-10 grid">
-            <label
-              htmlFor="rent"
-              className="mb-1 text-xs font-semibold text-stone-400 uppercase"
-            >
-              Miete{" "}
-              <span className="text-xs font-normal text-gray-400 normal-case">
-                (optional)
-              </span>
-            </label>
-            <input
-              type="number"
-              className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
-              id="rent"
-              name="rent"
-              value={rent}
-              onChange={handleInputChange}
-            />
-          </div>
         </div>
+      </div>
+      <button
+        className="relative bottom-2 mr-auto rounded-lg p-2 pt-0 text-gray-400 hover:bg-purple-600"
+        type="button"
+        onClick={() => setShowExtended(!showExtended)}
+      >
+        &#8964;
+      </button>
+      <div className={`${showExtended ? "block" : "hidden" } rounded-lg border border-purple-500/30 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-2 shadow backdrop-blur-2xl`}>
+        <OptionalParameters
+          cashRoi={cashRoi}
+          handleInputChange={handleInputChange}
+          rent={rent}
+        />
       </div>
 
       <button
         type="submit"
-        className="mt-6 w-full rounded-lg bg-purple-900/60 px-4 py-2 font-bold text-white shadow-md backdrop-blur-md transition-colors duration-200 hover:bg-purple-700/80"
+        className="mt-2 w-full rounded-lg bg-purple-900/60 px-4 py-2 font-bold text-white shadow-md backdrop-blur-md transition-colors duration-200 hover:bg-purple-700/80"
       >
         Berechnen
       </button>
