@@ -3,6 +3,7 @@ import { storeInDb } from "./lib/calc";
 import { useEffect, useState } from "react";
 import CashRoiModel from "./lib/models/cashRoiModel";
 import CalculationResult from "./lib/models/CalculationResult";
+import SliderInput from "./components/sliderInput";
 
 export default function FinanzierungsForm({
   values,
@@ -71,21 +72,8 @@ export default function FinanzierungsForm({
       <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-2 shadow backdrop-blur-2xl">
         <div className="grid gap-2 md:gap-6">
           <div className="grid">
+            <SliderInput min={0} max={500000} step={1000} value={downPayment} handleChange={handleInputChange} />
             {/* Eigenkapital */}
-            <label
-              htmlFor="capital"
-              className="mb-1 text-xs font-semibold text-stone-400 uppercase"
-            >
-              Eigenkapital
-            </label>
-            <input
-              type="number"
-              className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
-              id="capital"
-              name="down_payment"
-              value={downPayment}
-              onChange={handleInputChange}
-            />
           </div>
 
           {/* Monatsrate */}
