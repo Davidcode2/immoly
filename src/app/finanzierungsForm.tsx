@@ -71,68 +71,47 @@ export default function FinanzierungsForm({
     <Form action={storeInDb} className="mx-auto">
       <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-2 shadow backdrop-blur-2xl">
         <div className="grid gap-2 md:gap-6">
-          <div className="grid">
-            <SliderInput min={0} max={500000} step={1000} value={downPayment} handleChange={handleInputChange} />
-            {/* Eigenkapital */}
-          </div>
-
-          {/* Monatsrate */}
-          <div className="grid">
-            <label
-              htmlFor="monthlyRate"
-              className="mb-1 text-xs font-semibold text-stone-400 uppercase"
-            >
-              Monatsrate
-            </label>
-            <input
-              type="number"
-              className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
-              id="monthlyRate"
-              name="monthly_rate"
-              value={monthlyRate}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* Kreditzins */}
-          <div className="grid">
-            <label
-              htmlFor="interestRate"
-              className="mb-1 text-xs font-semibold text-stone-400 uppercase"
-            >
-              Kreditzins
-            </label>
-            <input
-              type="number"
-              step="0.1"
-              className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
-              id="interestRate"
-              name="interest_rate"
-              max="20"
-              min="0.1"
-              value={interestRate}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* Kaufsumme */}
-          <div className="grid">
-            <label
-              htmlFor="creditSum"
-              className="mb-1 text-xs font-semibold text-stone-400 uppercase"
-            >
-              Kaufsumme
-            </label>
-            <input
-              type="number"
-              className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
-              id="creditSum"
-              name="principal"
-              value={principalValue}
-              onChange={handleInputChange}
-            />
-          </div>
-
+          {/* Eigenkapital */}
+          <SliderInput
+            min={0}
+            max={500000}
+            step={1000}
+            value={Number(downPayment) || 0}
+            inputName={"down_payment"}
+            label={"Eigenkapital"}
+            htmlFor={"capital"}
+            handleChange={handleInputChange}
+          />
+          <SliderInput
+            min={0}
+            max={10000}
+            step={10}
+            value={Number(monthlyRate) || 0}
+            inputName={"monthly_rate"}
+            label={"Monatsrate"}
+            htmlFor={"monthlyRate"}
+            handleChange={handleInputChange}
+          />
+          <SliderInput
+            min={0.1}
+            max={6}
+            step={0.1}
+            value={Number(interestRate) || 0}
+            inputName={"interest_rate"}
+            label={"Kreditzins"}
+            htmlFor={"interestRate"}
+            handleChange={handleInputChange}
+          />
+          <SliderInput
+            min={50000}
+            max={1500000}
+            step={10000}
+            value={Number(principalValue) || 0}
+            inputName={"principal"}
+            label={"Kaufsumme"}
+            htmlFor={"creditSum"}
+            handleChange={handleInputChange}
+          />
           {/* Kapitalrendite (optional) */}
           <div className="grid">
             <label
@@ -151,7 +130,7 @@ export default function FinanzierungsForm({
               id="cashRoi"
               name="cashRoi"
               max="20"
-              min="0.1"
+              min="0.0"
               value={cashRoi}
               onChange={handleInputChange}
             />

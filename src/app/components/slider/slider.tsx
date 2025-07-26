@@ -6,10 +6,11 @@ type SliderProps = {
   min: number;
   max: number;
   step?: number;
+  inputName: string,
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Slider: React.FC<SliderProps> = ({ value, min, max, step = 1, onChange }) => {
+const Slider: React.FC<SliderProps> = ({ value, min, max, step = 1, inputName, onChange }) => {
   const [inputValue, setInputValue] = useState(value);
 
   const localChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,8 +32,8 @@ const Slider: React.FC<SliderProps> = ({ value, min, max, step = 1, onChange }) 
       max={max}
       step={step}
       onChange={localChange}
-      name="down_payment"
-      className="bg-purple-600"
+      name={inputName}
+      className="mt-1"
     />
   );
 };
