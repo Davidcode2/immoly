@@ -1,6 +1,4 @@
-import React, { useState } from "react";
 import Slider from "./slider";
-import NumberInput from "./numberInputSlider";
 
 type SliderInputProps = {
   min: number;
@@ -20,6 +18,12 @@ const SliderInput: React.FC<SliderInputProps> = ({
 
   return (
     <div>
+      <label
+        htmlFor="capital"
+        className="mb-1 text-xs font-semibold text-stone-400 uppercase"
+      >
+        Eigenkapital
+      </label>
       <Slider
         value={value}
         min={min}
@@ -27,12 +31,6 @@ const SliderInput: React.FC<SliderInputProps> = ({
         step={step}
         onChange={handleChange}
       />
-      <label
-        htmlFor="capital"
-        className="mb-1 text-xs font-semibold text-stone-400 uppercase"
-      >
-        Eigenkapital
-      </label>
       <input
         type="number"
         className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"

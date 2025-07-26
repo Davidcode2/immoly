@@ -3,7 +3,7 @@ import { storeInDb } from "./lib/calc";
 import { useEffect, useState } from "react";
 import CashRoiModel from "./lib/models/cashRoiModel";
 import CalculationResult from "./lib/models/CalculationResult";
-import SliderInput from "./components/sliderInput";
+import SliderInput from "./components/slider/sliderInput";
 
 export default function FinanzierungsForm({
   values,

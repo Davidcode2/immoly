@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import './slider.css';
 
 type SliderProps = {
   value: number;
@@ -31,6 +32,7 @@ const Slider: React.FC<SliderProps> = ({ value, min, max, step = 1, onChange }) 
       step={step}
       onChange={localChange}
       name="down_payment"
+      className="bg-purple-600"
     />
   );
 };
