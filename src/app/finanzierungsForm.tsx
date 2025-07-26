@@ -32,6 +32,10 @@ export default function FinanzierungsForm({
         setInterestRate(value);
         break;
       case "cashRoi":
+        if (Number(cashRoi) > 20) {
+          setCashRoi(20);
+          return;
+        }
         setCashRoi(value);
         break;
       case "rent":
@@ -49,12 +53,20 @@ export default function FinanzierungsForm({
         name === "down_payment" ? Number(value) : Number(downPayment),
       interest_rate:
         name === "interest_rate" ? Number(value) : Number(interestRate),
-      cash_roi: name === "cashRoi" ? Number(value) : Number(cashRoi),
+      cash_roi: name === "cashRoi" ? checkCashRoi(value) : Number(cashRoi),
       rent: name === "rent" ? Number(value) : Number(rent),
       monthly_rate:
         name === "monthly_rate" ? Number(value) : Number(monthlyRate),
     });
   };
+
+  const checkCashRoi = (value: number | string) => {
+    const numValue = Number(value);
+    if (numValue > 20) {
+      return 20;
+    }
+    return Number(numValue);
+  }
 
   useEffect(() => {
     if (values && values[0]) {
@@ -131,6 +143,7 @@ export default function FinanzierungsForm({
               name="cashRoi"
               max="20"
               min="0.0"
+              maxLength={2}
               value={cashRoi}
               onChange={handleInputChange}
             />
