@@ -45,10 +45,12 @@ export default function Tilgungstabelle({
   };
 
   const getSondertilgung = (year: number) => {
-    const sondertilgung = sonderTilgungen.find((y: Sondertilgung) => y.year === year);
+    const sondertilgung = sonderTilgungen.find(
+      (y: Sondertilgung) => y.year === year,
+    );
     const amount = sondertilgung?.amount || "";
     return String(amount);
-  }
+  };
 
   const getSondertilgungAndSet = async () => {
     const sondertilgungen = await getSondertilgungen(calculationId!);
@@ -79,7 +81,7 @@ export default function Tilgungstabelle({
   };
 
   return (
-    <div className="grid justify-stretch max-h-[600px]  rounded-lg text-xs backdrop-blur-lg lg:text-base">
+    <div className="grid h-[600px] justify-stretch rounded-lg text-xs backdrop-blur-lg lg:text-base">
       <table className="table-fixed overflow-auto">
         <thead>
           <tr className="sticky top-0 bg-black text-left">
@@ -126,9 +128,7 @@ export default function Tilgungstabelle({
                   </button>
                   <SondertilgungInput
                     year={x.year}
-                    sondertilgung={
-                      getSondertilgung(x.year)
-                    }
+                    sondertilgung={getSondertilgung(x.year)}
                   />
                 </form>
               </td>
@@ -139,4 +139,3 @@ export default function Tilgungstabelle({
     </div>
   );
 }
-
