@@ -10,7 +10,7 @@ import {
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 import ChartDataItem from "./lib/models/ChartDataItem";
 import InterestEarnedModel from "./lib/models/interestEarnedModel";
-import { calcWidth } from "./utils/screenWidth";
+import { calcWidth, screenWidthMobile } from "./utils/screenWidth";
 
 export default function DevelopmentChart({
   data,
@@ -94,7 +94,7 @@ export default function DevelopmentChart({
   }
 
   return (
-    <LineChart width={calcWidth()} height={300} data={debouncedChartData}>
+    <LineChart width={calcWidth()} height={screenWidthMobile() ? 200 : 300} data={debouncedChartData}>
       <XAxis dataKey="name" />
       <Tooltip />
       <CartesianGrid stroke="#3b3d40" />

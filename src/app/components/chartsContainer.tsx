@@ -6,17 +6,17 @@ import CashRoiModel from "app/lib/models/cashRoiModel";
 type PropTypes = {
   table: ArmotizationEntry[];
   input: CashRoiModel | null;
-}
+};
 
 export default function ChartsContainer({ input, table }: PropTypes) {
   return (
     <div className="xl:col-start-2">
       {input && (
         <div className="grid gap-y-20 md:gap-4">
-          <div className="grid min-h-[300px] justify-around rounded-lg border border-slate-600 bg-neutral-950/10 shadow-lg backdrop-blur-lg">
+          <div className="grid min-h-[200px] justify-around rounded-lg border border-slate-600 bg-neutral-950/10 shadow-lg backdrop-blur-lg md:min-h-[300px]">
             <PlotlyChart data={table} rent={input.rent} />
           </div>
-          <div className="grid min-h-[300px] justify-around rounded-lg border border-slate-600 bg-neutral-950/10 shadow-lg backdrop-blur-lg">
+          <div className="hidden md:grid min-h-[200px] justify-around rounded-lg border border-slate-600 bg-neutral-950/10 shadow-lg backdrop-blur-lg md:min-h-[300px]">
             <DevelopmentChart
               data={table}
               rent={input.rent}

@@ -148,7 +148,7 @@ export default function FinanzierungsForm({
         type="submit"
         className="mt-2 w-full rounded-lg bg-purple-900/60 px-4 py-2 font-bold text-white shadow-md backdrop-blur-md transition-colors duration-200 hover:bg-purple-700/80"
       >
-        Berechnen
+        Berechnung speichern
       </button>
     </Form>
   );

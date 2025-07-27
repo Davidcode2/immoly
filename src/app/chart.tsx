@@ -8,7 +8,7 @@ import {
   XAxis,
 } from "recharts";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
-import { calcWidth } from "./utils/screenWidth";
+import { calcWidth, screenWidthMobile } from "./utils/screenWidth";
 
 interface ChartDataItem {
   name: string;
@@ -66,7 +66,7 @@ export default function PlotlyChart({
     <LineChart
       className="grid justify-stretch"
       width={calcWidth()}
-      height={300}
+      height={screenWidthMobile() ? 200 : 300}
       data={debouncedChartData}
     >
       <XAxis dataKey="name" />

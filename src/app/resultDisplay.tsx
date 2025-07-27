@@ -90,7 +90,7 @@ export default function ResultDisplay() {
                   <IconsHeader />
                 </div>
               </div>
-              <div className="grid gap-y-20 md:gap-4 xl:grid-cols-[3fr_2fr]">
+              <div className="grid gap-4 xl:grid-cols-[3fr_2fr]">
                 <TilgungstabelleContainer
                   table={table}
                   calculationId={calculationId}

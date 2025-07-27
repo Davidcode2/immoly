@@ -8,6 +8,7 @@ import {
 import { Sondertilgung } from "./lib/models/sondertilgung";
 import { recalcForAllSondertilgungen } from "./lib/sondertilgungHandler";
 import SondertilgungInput from "./components/sondertilgungInput";
+import { screenWidthMobile } from "./utils/screenWidth";
 
 type PropTypes = {
   table: ArmotizationEntry[];
@@ -75,10 +76,6 @@ export default function Tilgungstabelle({
       formInput,
     );
     setTable(newTable);
-  };
-
-  const screenWidthMobile = () => {
-    return window.innerWidth < 640;
   };
 
   return (

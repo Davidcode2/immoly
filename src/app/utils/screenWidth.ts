@@ -11,17 +11,21 @@ export function calcWidth() {
   if (regularScreen) {
     return window.innerWidth - 400;
   }
-  const bigScreen = window.innerWidth > 1280 && window.innerWidth < 2000;
+  const bigScreen = window.innerWidth >= 1280 && window.innerWidth < 2000;
   if (bigScreen) {
     return 400;
   }
-  const veryBigScreen = window.innerWidth > 2000 && window.innerWidth < 3500;
+  const veryBigScreen = window.innerWidth >= 2000 && window.innerWidth < 3500;
   if (veryBigScreen) {
     return window.innerWidth / 4;
   }
-  const ultraWide = window.innerWidth > 3500;
+  const ultraWide = window.innerWidth >= 3500;
   if (ultraWide) {
     return window.innerWidth / 8;
   }
   return 400;
 }
+
+export const screenWidthMobile = () => {
+  return window.innerWidth < 640;
+};
