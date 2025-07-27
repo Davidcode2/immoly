@@ -130,13 +130,13 @@ export default function FinanzierungsForm({
         </div>
       </div>
       <button
-        className="relative bottom-2 mr-auto rounded-lg p-2 pt-0 text-gray-400 hover:bg-purple-600"
+        className="mr-auto rounded-lg p-1 text-xs text-gray-400 hover:text-gray-200"
         type="button"
         onClick={() => setShowExtended(!showExtended)}
       >
-        &#8964;
+      { showExtended ? "Weniger Optionen" : "Mehr Optionen" }
       </button>
-      <div className={`${showExtended ? "block" : "hidden" } rounded-lg border border-purple-500/30 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-2 shadow backdrop-blur-2xl`}>
+      <div className={`${showExtended ? "block" : "hidden" } rounded-lg border border-purple-500/30 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-2 shadow backdrop-blur-2xl mb-2`}>
         <OptionalParameters
           cashRoi={cashRoi}
           handleInputChange={handleInputChange}
@@ -146,7 +146,7 @@ export default function FinanzierungsForm({
 
       <button
         type="submit"
-        className="mt-2 w-full rounded-lg bg-purple-900/60 px-4 py-2 font-bold text-white shadow-md backdrop-blur-md transition-colors duration-200 hover:bg-purple-700/80"
+        className="mt-1 w-full rounded-lg bg-purple-900/60 px-4 py-2 font-bold text-white shadow-md backdrop-blur-md transition-colors duration-200 hover:bg-purple-700/80"
       >
         Berechnung speichern
       </button>
