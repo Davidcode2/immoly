@@ -35,27 +35,23 @@ export default function ResultDisplay() {
   }, []);
 
   useEffect(() => {
-    async function loadData() {
-      if (!input) {
-        return;
+    const debounceTimeout = setTimeout(() => {
+      async function loadData() {
+        if (!input) return;
+
+        const tilgungsTabelle = calcTilgung(input);
+        const sondertilgungen = await getSondertilgungen(calculationId!);
+        const tableWithSondertilgungen = await recalcForAllSondertilgungen(
+          sondertilgungen,
+          tilgungsTabelle,
+          input,
+        );
+        setTable(tableWithSondertilgungen);
       }
 
-      const tilgungsTabelle = calcTilgung(input);
-      const sondertilgungen = await getSondertilgungen(calculationId!);
-      const tableWithSondertilgungen = await recalcForAllSondertilgungen(
-        sondertilgungen,
-        tilgungsTabelle,
-        input,
-      );
-      setTable(tableWithSondertilgungen);
-    }
-
-    const debounceTimeout = setTimeout(async () => {
-      if (debounceTimeout) {
-        clearTimeout(debounceTimeout);
-      }
       loadData();
-    }, 5);
+    }, 10);
+
     return () => {
       clearTimeout(debounceTimeout);
     };

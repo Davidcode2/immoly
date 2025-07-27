@@ -16,7 +16,6 @@ const Slider: React.FC<SliderProps> = ({ value, min, max, step = 1, inputName, o
   const localChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
     setInputValue(newValue);
-    console.log(e);
     onChange(e);
   }
 
