@@ -6,9 +6,11 @@ import {
   LineChart,
   Tooltip,
   XAxis,
+  YAxis,
 } from "recharts";
-import ArmotizationEntry from "./lib/models/ArmotizationEntry";
-import { calcWidth, screenWidthMobile } from "./utils/screenWidth";
+import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
+import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
+import { renderThousandIndicator } from "./chartHelper";
 
 interface ChartDataItem {
   name: string;
@@ -70,6 +72,10 @@ export default function PlotlyChart({
       data={debouncedChartData}
     >
       <XAxis dataKey="name" />
+      <YAxis
+        tick={renderThousandIndicator}
+        label={{ value: "€", position: "insideLeft" }}
+      />
       <Tooltip />
       <CartesianGrid stroke="#3b3d40" />
       <Legend />

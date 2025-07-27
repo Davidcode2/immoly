@@ -1,5 +1,5 @@
-import PlotlyChart from "app/chart";
-import DevelopmentChart from "app/developmentChart";
+import PlotlyChart from "./chart";
+import DevelopmentChart from "./developmentChart";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 

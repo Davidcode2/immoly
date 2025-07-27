@@ -2,19 +2,19 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getCalculation } from "./lib/getCalculations";
-import calcTilgung from "./lib/calculateArmotizaztionTable";
-import Scenario from "./scenario";
-import ArmotizationEntry from "./lib/models/ArmotizationEntry";
-import CalculationResult from "./lib/models/CalculationResult";
-import CashRoiModel from "./lib/models/cashRoiModel";
-import IconsHeader from "./components/iconsHeader";
-import NoData from "./components/noData";
-import TilgungstabelleContainer from "./components/tilgungstabelleContainer";
-import { getSondertilgungen } from "./lib/storeSondertilgungInDb";
-import { recalcForAllSondertilgungen } from "./lib/sondertilgungHandler";
-import FinanzierungsFormContainer from "./components/finanzierungsFormContainer";
-import ChartsContainer from "./components/chartsContainer";
+import { getCalculation } from "app/lib/getCalculations";
+import calcTilgung from "app/lib/calculateArmotizaztionTable";
+import Scenario from "app/scenario";
+import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
+import CalculationResult from "app/lib/models/CalculationResult";
+import CashRoiModel from "app/lib/models/cashRoiModel";
+import IconsHeader from "app/components/iconsHeader";
+import NoData from "app/components/noData";
+import TilgungstabelleContainer from "app/components/tilgungstabelleContainer";
+import { getSondertilgungen } from "app/lib/storeSondertilgungInDb";
+import { recalcForAllSondertilgungen } from "app/lib/sondertilgungHandler";
+import FinanzierungsFormContainer from "app/components/finanzierungsFormContainer";
+import ChartsContainer from "app/components/charts/chartsContainer";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);

@@ -6,11 +6,13 @@ import {
   LineChart,
   Tooltip,
   XAxis,
+  YAxis,
 } from "recharts";
-import ArmotizationEntry from "./lib/models/ArmotizationEntry";
-import ChartDataItem from "./lib/models/ChartDataItem";
-import InterestEarnedModel from "./lib/models/interestEarnedModel";
-import { calcWidth, screenWidthMobile } from "./utils/screenWidth";
+import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
+import ChartDataItem from "app/lib/models/ChartDataItem";
+import InterestEarnedModel from "app/lib/models/interestEarnedModel";
+import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
+import { renderThousandIndicator } from "./chartHelper";
 
 export default function DevelopmentChart({
   data,
@@ -96,6 +98,10 @@ export default function DevelopmentChart({
   return (
     <LineChart width={calcWidth()} height={screenWidthMobile() ? 200 : 300} data={debouncedChartData}>
       <XAxis dataKey="name" />
+      <YAxis
+        tick={renderThousandIndicator}
+        label={{ value: "€", position: "insideLeft" }}
+      />
       <Tooltip />
       <CartesianGrid stroke="#3b3d40" />
       <Legend />
