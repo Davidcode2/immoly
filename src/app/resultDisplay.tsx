@@ -86,32 +86,30 @@ export default function ResultDisplay() {
         <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-purple-800/30 to-neutral-900/70 p-4 shadow backdrop-blur-2xl md:hidden md:p-8">
           <Hero />
         </div>
-        <div>
-          {!table ? (
-            <NoData />
-          ) : (
-            <div className="grid gap-y-4">
-              <div className="grid md:grid-cols-2">
-                <Scenario calculationId={selectedScenario} data={table} />
-                <div className="ml-auto hidden md:block">
-                  <IconsHeader />
-                </div>
-              </div>
-              <div className="grid gap-4 xl:grid-cols-[3fr_2fr]">
-                <TilgungstabelleContainer
-                  table={table}
-                  calculationId={calculationId}
-                  input={input}
-                  setTable={setTable}
-                />
-                <ChartsContainer input={input} table={table} />
-                <div className="md:hidden">
-                  <FinanzierungsForm values={formValues} setInput={setInput} />
-                </div>
+        {!table ? (
+          <NoData />
+        ) : (
+          <div className="grid gap-y-4">
+            <div className="grid md:grid-cols-2">
+              <Scenario calculationId={selectedScenario} data={table} />
+              <div className="ml-auto hidden md:block">
+                <IconsHeader />
               </div>
             </div>
-          )}
-        </div>
+            <div className="grid gap-4 xl:grid-cols-[3fr_2fr]">
+              <TilgungstabelleContainer
+                table={table}
+                calculationId={calculationId}
+                input={input}
+                setTable={setTable}
+              />
+              <ChartsContainer input={input} table={table} />
+              <div className="md:hidden">
+                <FinanzierungsForm values={formValues} setInput={setInput} />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
