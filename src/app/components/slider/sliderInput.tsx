@@ -29,22 +29,24 @@ const SliderInput: React.FC<SliderInputProps> = ({
       >
         {label}
       </label>
-      <Slider
-        value={value}
-        min={min}
-        max={max}
-        step={step}
-        inputName={inputName}
-        onChange={handleChange}
-      />
-      <input
-        type="number"
-        className="text-xl md:text-base border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
-        id={htmlFor}
-        name={inputName}
-        value={value}
-        onChange={handleChange}
-      />
+      <div className="flex flex-col gap-y-3 md:gap-y-0">
+        <Slider
+          value={value}
+          min={min}
+          max={max}
+          step={step}
+          inputName={inputName}
+          onChange={handleChange}
+        />
+        <input
+          type="number"
+          className="border-b border-stone-700 bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-slate-500 focus:outline-none md:text-base"
+          id={htmlFor}
+          name={inputName}
+          value={value}
+          onChange={handleChange}
+        />
+      </div>
     </div>
   );
 };
