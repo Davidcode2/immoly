@@ -39,7 +39,7 @@ const SliderInput: React.FC<SliderInputProps> = ({
       />
       <input
         type="number"
-        className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
+        className="text-xl md:text-base border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
         id={htmlFor}
         name={inputName}
         value={value}
