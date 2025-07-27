@@ -29,70 +29,44 @@ jobs:
               - 'src/app/**'
               - 'src/app'
 
-  build-and-push:
+  check-for-new-migrations:
     runs-on: ubuntu-latest
-    needs: check-for-changes
-    if: needs.check-for-changes.outputs.src == 'true' || github.event_name == 'workflow_dispatch'
-
-    permissions:
-      contents: read
-      packages: write
-
+    outputs:
+      src: ${{ steps.filter.outputs.src }}
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+      - name: Check for relevant changes
+        id: filter
+        uses: dorny/paths-filter@v3
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          filters: |
+            src:
+              - 'drizzle/migrations/**'
+              - 'drizzle/migrations'
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+  build-and-push:
+    uses: ./.github/workflows/build-and-push.yml
+    needs: check-for-changes
+    if: needs.check-for-changes.outputs.src == 'true' || github.event_name == 'workflow_dispatch'
+    with:
+      image_name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      dockerfile: dockerfile
+      build_args: |
+        SKIP_BUILD_STATIC_GENERATION=true
+    secrets:
+      github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=sha,enable=true
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: dockerfile
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          build-args: |
-            SKIP_BUILD_STATIC_GENERATION=true
-
-      - name: Extract Docker metadata for Migrations Image
-        id: meta_migrations
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ github.repository }}-migrations
-          tags: |
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=sha,enable=true
-
-      - name: Build and push Migrations Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: dockerfile.migrations
-          push: true
-          tags: ${{ steps.meta_migrations.outputs.tags }}
-          labels: ${{ steps.meta_migrations.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+  build-and-push-migrations-image:
+    uses: ./.github/workflows/build-and-push.yml
+    needs: check-for-new-migrations
+    if: needs.check-for-new-migrations.outputs.src == 'true' || github.event_name == 'workflow_dispatch'
+    with:
+      image_name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-migrations
+      dockerfile: dockerfile.migrations
+    secrets:
+      github_token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
