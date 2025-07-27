@@ -1,5 +1,4 @@
 import FinanzierungsForm from "app/finanzierungsForm";
-import CalculationResult from "app/lib/models/CalculationResult";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import Hero from "./hero";
 

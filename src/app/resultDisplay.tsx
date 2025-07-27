@@ -6,7 +6,6 @@ import { getCalculation } from "app/lib/getCalculations";
 import calcTilgung from "app/lib/calculateArmotizaztionTable";
 import Scenario from "app/scenario";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
-import CalculationResult from "app/lib/models/CalculationResult";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import IconsHeader from "app/components/iconsHeader";
 import NoData from "app/components/noData";
@@ -21,9 +20,6 @@ import FinanzierungsForm from "./finanzierungsForm";
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
   const [input, setInput] = useState<CashRoiModel | null>(null);
-  const [formValues, setFormValues] = useState<CalculationResult[] | null>(
-    null,
-  );
   const [selectedScenario, setSelectedScenario] = useState<string | null>("18");
 
   const searchParams = useSearchParams();
@@ -68,7 +64,6 @@ export default function ResultDisplay() {
           if (!result) {
             return;
           }
-          setFormValues(result);
           setInput(result[0]);
           const tilgungungsTabelle = calcTilgung(result[0]);
           setTable(tilgungungsTabelle);
