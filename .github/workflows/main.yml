@@ -51,7 +51,7 @@ jobs:
     needs: check-for-changes
     if: needs.check-for-changes.outputs.src == 'true' || github.event_name == 'workflow_dispatch'
     with:
-      image_name: ghcr.io/${{ env.IMAGE_NAME }}
+      image_name: ghcr.io/${{ github.repository }}
       dockerfile: dockerfile
       build_args: |
         SKIP_BUILD_STATIC_GENERATION=true
@@ -61,7 +61,7 @@ jobs:
     needs: check-for-new-migrations
     if: needs.check-for-new-migrations.outputs.src == 'true' || github.event_name == 'workflow_dispatch'
     with:
-      image_name: ghcr.io/${{ env.IMAGE_NAME }}-migrations
+      image_name: ghcr.io/${{ github.repository }}-migrations
       dockerfile: dockerfile.migrations
 
   deploy:
