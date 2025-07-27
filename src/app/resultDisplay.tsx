@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 import { getCalculation } from "./lib/getCalculations";
 import calcTilgung from "./lib/calculateArmotizaztionTable";
 import Scenario from "./scenario";
-import PlotlyChart from "./chart";
-import DevelopmentChart from "./developmentChart";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 import CalculationResult from "./lib/models/CalculationResult";
 import CashRoiModel from "./lib/models/cashRoiModel";
@@ -16,6 +14,7 @@ import TilgungstabelleContainer from "./components/tilgungstabelleContainer";
 import { getSondertilgungen } from "./lib/storeSondertilgungInDb";
 import { recalcForAllSondertilgungen } from "./lib/sondertilgungHandler";
 import FinanzierungsFormContainer from "./components/finanzierungsFormContainer";
+import ChartsContainer from "./components/chartsContainer";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -73,7 +72,7 @@ export default function ResultDisplay() {
 
   return (
     <div
-      className={`grid px-3 pt-3 md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16 ${table && "items-start"}`}
+      className={`grid px-3 gap-y-8 pt-3 md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16 ${table && "items-start"}`}
     >
       <FinanzierungsFormContainer formValues={formValues} setInput={setInput} />
       <div className="grid">
@@ -93,22 +92,7 @@ export default function ResultDisplay() {
                 input={input}
                 setTable={setTable}
               />
-              <div className="xl:col-start-2">
-                {input && (
-                  <div className="grid gap-y-20 md:gap-4">
-                    <div className="grid min-h-[300px] justify-around rounded-lg border border-slate-600 bg-neutral-950/10 shadow-lg backdrop-blur-lg">
-                      <PlotlyChart data={table} rent={input.rent} />
-                    </div>
-                    <div className="grid min-h-[300px] justify-around rounded-lg border border-slate-600 bg-neutral-950/10 shadow-lg backdrop-blur-lg">
-                      <DevelopmentChart
-                        data={table}
-                        rent={input.rent}
-                        interest={input.cash_roi || 0}
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
+              <ChartsContainer input={input} table={table}/>
             </div>
           </>
         )}

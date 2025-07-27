@@ -53,14 +53,6 @@ export default function Scenario({
           paidInYear={paidInYear}
         />
       </div>
-      <div className="bg-blur my-16 flex flex-col items-center justify-center rounded-lg border border-purple-500/70 p-8 backdrop-blur-xl md:hidden">
-        Why did the scarecrow win an award? 🏆 Because he was outstanding in his
-        field! 🧑‍🌾😂
-        <div>
-          <div className="font-cursive pt-2 text-xs italic">Gemini</div>
-          <div className="font-cursive text-xs"> - thinks this is funny</div>
-        </div>
-      </div>
     </div>
   );
 }
