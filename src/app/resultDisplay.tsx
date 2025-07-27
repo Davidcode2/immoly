@@ -55,7 +55,7 @@ export default function ResultDisplay() {
         clearTimeout(debounceTimeout);
       }
       loadData();
-    }, 20);
+    }, 5);
     return () => {
       clearTimeout(debounceTimeout);
     };

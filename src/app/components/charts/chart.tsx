@@ -80,9 +80,24 @@ export default function PlotlyChart({
       <Tooltip content={customToolTip} />
       <CartesianGrid stroke="#3b3d40" />
       <Legend />
-      <Line type="monotone" dataKey="Zins" stroke="#ff7300" />
-      <Line type="monotone" dataKey="Tilgung" stroke="#387908" />
-      <Line type="monotone" dataKey="Sparen" stroke="#a87908" />
+      <Line
+        type="monotone"
+        dataKey="Zins"
+        stroke="#ff7300 "
+        animationDuration={1000}
+      />
+      <Line
+        type="monotone"
+        dataKey="Tilgung"
+        stroke="#387908"
+        animationDuration={1000}
+      />
+      <Line
+        type="monotone"
+        dataKey="Sparen"
+        stroke="#a87908"
+        animationDuration={1000}
+      />
     </LineChart>
   );
 }

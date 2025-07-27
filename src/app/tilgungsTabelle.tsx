@@ -79,7 +79,7 @@ export default function Tilgungstabelle({
   };
 
   return (
-    <div className="grid justify-stretch rounded-lg text-xs backdrop-blur-lg lg:text-base">
+    <div className="grid justify-stretch max-h-[600px]  rounded-lg text-xs backdrop-blur-lg lg:text-base">
       <table className="table-fixed overflow-auto">
         <thead>
           <tr className="sticky top-0 bg-black text-left">
