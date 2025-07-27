@@ -51,7 +51,7 @@ export default function PlotlyChart({
         },
       );
       setDebouncedChartData(transformedData);
-    }, 1000);
+    }, 500);
 
     return () => {
       clearTimeout(timeoutId);

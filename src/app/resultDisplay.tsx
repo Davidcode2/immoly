@@ -49,7 +49,16 @@ export default function ResultDisplay() {
       );
       setTable(tableWithSondertilgungen);
     }
-    loadData();
+
+    const debounceTimeout = setTimeout(async () => {
+      if (debounceTimeout) {
+        clearTimeout(debounceTimeout);
+      }
+      loadData();
+    }, 20);
+    return () => {
+      clearTimeout(debounceTimeout);
+    };
   }, [input]);
 
   useEffect(() => {
@@ -80,37 +89,34 @@ export default function ResultDisplay() {
         className={`grid gap-y-4 md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16 ${table && "items-start"}`}
       >
         <div className="hidden md:block">
-          <FinanzierungsFormContainer
-            formValues={input}
-            setInput={setInput}
-          />
+          <FinanzierungsFormContainer formValues={input} setInput={setInput} />
         </div>
         <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-purple-800/30 to-neutral-900/70 p-4 shadow backdrop-blur-2xl md:hidden md:p-8">
           <Hero />
         </div>
-        <div className="grid gap-y-4 h-full">
+        <div className="grid h-full gap-y-4">
           {!table ? (
             <NoData />
           ) : (
-          <>
-            <div className="grid md:grid-cols-2">
-              <Scenario calculationId={selectedScenario} data={table} />
-              <div className="ml-auto hidden md:block">
-                <IconsHeader />
+            <>
+              <div className="grid md:grid-cols-2">
+                <Scenario calculationId={selectedScenario} data={table} />
+                <div className="ml-auto hidden md:block">
+                  <IconsHeader />
+                </div>
               </div>
-            </div>
-            <div className="grid gap-4 xl:grid-cols-[3fr_2fr]">
-              <TilgungstabelleContainer
-                table={table}
-                calculationId={calculationId}
-                input={input}
-                setTable={setTable}
-              />
-              <ChartsContainer input={input} table={table} />
-              <div className="md:hidden">
-                <FinanzierungsForm values={input} setInput={setInput} />
+              <div className="grid gap-4 xl:grid-cols-[3fr_2fr]">
+                <TilgungstabelleContainer
+                  table={table}
+                  calculationId={calculationId}
+                  input={input}
+                  setTable={setTable}
+                />
+                <ChartsContainer input={input} table={table} />
+                <div className="md:hidden">
+                  <FinanzierungsForm values={input} setInput={setInput} />
+                </div>
               </div>
-            </div>
             </>
           )}
         </div>
