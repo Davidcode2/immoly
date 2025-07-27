@@ -55,8 +55,6 @@ jobs:
       dockerfile: dockerfile
       build_args: |
         SKIP_BUILD_STATIC_GENERATION=true
-    secrets:
-      github_token: ${{ secrets.GITHUB_TOKEN }}
 
   build-and-push-migrations-image:
     uses: ./.github/workflows/build-and-push.yml
@@ -65,8 +63,6 @@ jobs:
     with:
       image_name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-migrations
       dockerfile: dockerfile.migrations
-    secrets:
-      github_token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
