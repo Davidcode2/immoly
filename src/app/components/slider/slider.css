@@ -97,3 +97,50 @@ input[type="range"]::-ms-fill-upper {
 input[type="range"]:focus::-ms-fill-upper {
   background: #8e30c9;
 }
+
+/*****************************************/
+/******* Adjust for small screens ********/
+/*****************************************/
+
+@media (max-width: 600px) {
+  /**********************/
+  /******* thumb ********/
+  /**********************/
+
+  /* Chrome */
+  input[type="range"]::-webkit-slider-thumb {
+    height: 22px;
+    width: 22px;
+    margin-top: -8.3px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  }
+
+  /* Firefox */
+  input[type="range"]::-moz-range-thumb {
+    height: 22px;
+    width: 22px;
+  }
+
+  /* IE */
+  input[type="range"]::-ms-thumb {
+    height: 22px;
+    width: 22px;
+  }
+
+  /**********************/
+  /******* track ********/
+  /**********************/
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 7.4px;
+    border-radius: 3px;
+  }
+
+  input[type="range"]::-moz-range-track {
+    height: 7.4px;
+    border-radius: 3px;
+  }
+
+  input[type="range"]::-ms-track {
+    height: 7.4px;
+    border-radius: 3px;
+  }
+}
