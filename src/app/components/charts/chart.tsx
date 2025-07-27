@@ -72,7 +72,7 @@ export default function PlotlyChart({
       <XAxis dataKey="name" />
       <YAxis
         tick={renderThousandIndicator}
-        label={{ value: "€", position: "insideLeft" }}
+        label={{ value: "€", position: "insideTopLeft" }}
       />
       <Tooltip content={customToolTip} />
       <CartesianGrid stroke="#3b3d40" />
