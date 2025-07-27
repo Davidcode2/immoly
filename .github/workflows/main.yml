@@ -47,6 +47,9 @@ jobs:
               - 'drizzle/migrations'
 
   build-and-push:
+    permissions:
+      contents: read
+      packages: write
     uses: ./.github/workflows/build-and-push.yml
     needs: check-for-changes
     if: needs.check-for-changes.outputs.src == 'true' || github.event_name == 'workflow_dispatch'
@@ -57,6 +60,9 @@ jobs:
         SKIP_BUILD_STATIC_GENERATION=true
 
   build-and-push-migrations-image:
+    permissions:
+      contents: read
+      packages: write
     uses: ./.github/workflows/build-and-push.yml
     needs: check-for-new-migrations
     if: needs.check-for-new-migrations.outputs.src == 'true' || github.event_name == 'workflow_dispatch'
