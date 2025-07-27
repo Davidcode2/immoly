@@ -6,7 +6,7 @@ export default function IconsHeader() {
       <a href="https://github.com/davidcode2">
         <svg
           viewBox="0 0 100 100"
-          className="mt-[3px] h-5 w-5 fill-black dark:fill-white"
+          className="mt-[3px] h-5 w-5 fill-white"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
