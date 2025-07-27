@@ -12,7 +12,7 @@ import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import ChartDataItem from "app/lib/models/ChartDataItem";
 import InterestEarnedModel from "app/lib/models/interestEarnedModel";
 import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
-import { renderThousandIndicator } from "./chartHelper";
+import { customToolTip, renderThousandIndicator } from "./chartHelper";
 
 export default function DevelopmentChart({
   data,
@@ -63,7 +63,6 @@ export default function DevelopmentChart({
     const interestRes = calcInterest();
 
     const timeoutId = setTimeout(() => {
-      console.log("Debounce timeout fired! Updating chart data...");
       const validEntries = data.filter(
         (x: ArmotizationEntry) => x.year !== data.length,
       );
@@ -86,7 +85,6 @@ export default function DevelopmentChart({
     // Cleanup function: This runs if 'data' changes before the timeout,
     // or when the component unmounts. It clears the previous timeout.
     return () => {
-      console.log("Clearing previous debounce timer...");
       clearTimeout(timeoutId);
     };
   }, [data]);
@@ -96,13 +94,17 @@ export default function DevelopmentChart({
   }
 
   return (
-    <LineChart width={calcWidth()} height={screenWidthMobile() ? 200 : 300} data={debouncedChartData}>
+    <LineChart
+      width={calcWidth()}
+      height={screenWidthMobile() ? 200 : 300}
+      data={debouncedChartData}
+    >
       <XAxis dataKey="name" />
       <YAxis
         tick={renderThousandIndicator}
         label={{ value: "€", position: "insideLeft" }}
       />
-      <Tooltip />
+      <Tooltip content={customToolTip} />
       <CartesianGrid stroke="#3b3d40" />
       <Legend />
       <Line type="monotone" dataKey="Sparen" stroke="#a87908" />

@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
-import { renderThousandIndicator } from "./chartHelper";
+import { customToolTip, renderThousandIndicator } from "./chartHelper";
 
 interface ChartDataItem {
   name: string;
@@ -37,7 +37,6 @@ export default function PlotlyChart({
     }
 
     const timeoutId = setTimeout(() => {
-      console.log("Debounce timeout fired! Updating chart data...");
       const filteredData = data.filter(
         (x: ArmotizationEntry) => x.year !== data.length,
       );
@@ -55,7 +54,6 @@ export default function PlotlyChart({
     }, 1000);
 
     return () => {
-      console.log("Clearing previous debounce timer...");
       clearTimeout(timeoutId);
     };
   }, [data]);
@@ -76,7 +74,7 @@ export default function PlotlyChart({
         tick={renderThousandIndicator}
         label={{ value: "€", position: "insideLeft" }}
       />
-      <Tooltip />
+      <Tooltip content={customToolTip} />
       <CartesianGrid stroke="#3b3d40" />
       <Legend />
       <Line type="monotone" dataKey="Zins" stroke="#ff7300" />
