@@ -99,7 +99,9 @@ export default function DevelopmentChart({
       height={screenWidthMobile() ? 200 : 300}
       data={debouncedChartData}
     >
-      <XAxis dataKey="name" />
+      <XAxis dataKey="name"
+        label={{ value: "Jahr", position: "insideBottomRight" }}
+      />
       <YAxis
         tick={renderThousandIndicator}
         label={{ value: "€", position: "insideTopLeft" }}

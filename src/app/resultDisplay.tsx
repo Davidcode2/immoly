@@ -15,6 +15,8 @@ import { getSondertilgungen } from "app/lib/storeSondertilgungInDb";
 import { recalcForAllSondertilgungen } from "app/lib/sondertilgungHandler";
 import FinanzierungsFormContainer from "app/components/finanzierungsFormContainer";
 import ChartsContainer from "app/components/charts/chartsContainer";
+import Hero from "./components/hero";
+import FinanzierungsForm from "./finanzierungsForm";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -75,10 +77,15 @@ export default function ResultDisplay() {
       <div
         className={`grid gap-y-4 md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16 ${table && "items-start"}`}
       >
-        <FinanzierungsFormContainer
-          formValues={formValues}
-          setInput={setInput}
-        />
+        <div className="hidden md:block">
+          <FinanzierungsFormContainer
+            formValues={formValues}
+            setInput={setInput}
+          />
+        </div>
+        <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-purple-800/30 to-neutral-900/70 p-4 shadow backdrop-blur-2xl md:hidden md:p-8">
+          <Hero />
+        </div>
         <div>
           {!table ? (
             <NoData />
@@ -98,6 +105,9 @@ export default function ResultDisplay() {
                   setTable={setTable}
                 />
                 <ChartsContainer input={input} table={table} />
+                <div className="md:hidden">
+                  <FinanzierungsForm values={formValues} setInput={setInput} />
+                </div>
               </div>
             </div>
           )}
