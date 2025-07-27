@@ -53,9 +53,7 @@ export default function ResultDisplay() {
   }, [input]);
 
   useEffect(() => {
-    setSelectedScenario(
-      calculationId ? (Number(calculationId) - 1).toString() : "19",
-    );
+    setSelectedScenario((Number(calculationId) - 1).toString());
     async function loadData() {
       console.log("Loading data for calculationId:", calculationId);
       if (calculationId) {
@@ -90,10 +88,11 @@ export default function ResultDisplay() {
         <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-purple-800/30 to-neutral-900/70 p-4 shadow backdrop-blur-2xl md:hidden md:p-8">
           <Hero />
         </div>
-        {!table ? (
-          <NoData />
-        ) : (
-          <div className="grid gap-y-4">
+        <div className="grid gap-y-4 h-full">
+          {!table ? (
+            <NoData />
+          ) : (
+          <>
             <div className="grid md:grid-cols-2">
               <Scenario calculationId={selectedScenario} data={table} />
               <div className="ml-auto hidden md:block">
@@ -112,8 +111,9 @@ export default function ResultDisplay() {
                 <FinanzierungsForm values={input} setInput={setInput} />
               </div>
             </div>
-          </div>
-        )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
