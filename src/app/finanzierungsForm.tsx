@@ -88,7 +88,7 @@ export default function FinanzierungsForm({
           {/* Eigenkapital */}
           <SliderInput
             min={0}
-            max={500000}
+            max={450000}
             step={1000}
             value={Number(downPayment) || 0}
             inputName={"down_payment"}
@@ -97,10 +97,10 @@ export default function FinanzierungsForm({
             handleChange={handleInputChange}
           />
           <SliderInput
-            min={0}
-            max={10000}
+            min={500}
+            max={6000}
             step={10}
-            value={Number(monthlyRate) || 0}
+            value={Number(monthlyRate)}
             inputName={"monthly_rate"}
             label={"Monatsrate"}
             htmlFor={"monthlyRate"}
