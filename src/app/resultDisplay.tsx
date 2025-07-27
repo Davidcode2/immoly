@@ -30,6 +30,15 @@ export default function ResultDisplay() {
   const calculationId = searchParams.get("calculationId");
 
   useEffect(() => {
+    setInput({
+      monthly_rate: 1400,
+      principal: 480000,
+      down_payment: 70000,
+      interest_rate: 3.8,
+    } as CashRoiModel);
+  }, []);
+
+  useEffect(() => {
     async function loadData() {
       if (!input) {
         return;
@@ -79,7 +88,7 @@ export default function ResultDisplay() {
       >
         <div className="hidden md:block">
           <FinanzierungsFormContainer
-            formValues={formValues}
+            formValues={input}
             setInput={setInput}
           />
         </div>
@@ -105,7 +114,7 @@ export default function ResultDisplay() {
               />
               <ChartsContainer input={input} table={table} />
               <div className="md:hidden">
-                <FinanzierungsForm values={formValues} setInput={setInput} />
+                <FinanzierungsForm values={input} setInput={setInput} />
               </div>
             </div>
           </div>

@@ -10,7 +10,7 @@ export default function FinanzierungsForm({
   values,
   setInput,
 }: {
-  values: CalculationResult[] | null;
+  values: CashRoiModel | null;
   setInput: (data: CashRoiModel) => void;
 }) {
   const [downPayment, setDownPayment] = useState<number | string>("");
@@ -72,13 +72,13 @@ export default function FinanzierungsForm({
   };
 
   useEffect(() => {
-    if (values && values[0]) {
-      setDownPayment(values[0].down_payment || "");
-      setPrincipal(values[0].principal || "");
-      setInterestRate(values[0].interest_rate || "");
-      setCashRoi(values[0].cash_roi || "");
-      setRent(values[0].rent || "");
-      setMonthlyRate(values[0].monthly_rate || "");
+    if (values && values) {
+      setDownPayment(values.down_payment || "");
+      setPrincipal(values.principal || "");
+      setInterestRate(values.interest_rate || "");
+      setCashRoi(values.cash_roi || "");
+      setRent(values.rent || "");
+      setMonthlyRate(values.monthly_rate || "");
     }
   }, [values]);
 

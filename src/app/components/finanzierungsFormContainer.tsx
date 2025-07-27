@@ -4,7 +4,7 @@ import CashRoiModel from "app/lib/models/cashRoiModel";
 import Hero from "./hero";
 
 type PropTypes = {
-  formValues: CalculationResult[] | null;
+  formValues: CashRoiModel | null;
   setInput: (data: CashRoiModel) => void;
 };
 
