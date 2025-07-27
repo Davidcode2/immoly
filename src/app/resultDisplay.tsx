@@ -71,31 +71,37 @@ export default function ResultDisplay() {
   }, [calculationId]);
 
   return (
-    <div
-      className={`grid px-3 gap-y-8 pt-3 md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16 ${table && "items-start"}`}
-    >
-      <FinanzierungsFormContainer formValues={formValues} setInput={setInput} />
-      <div className="grid">
-        {!table && <NoData />}
-        {table && (
-          <>
-            <div className="grid md:grid-cols-2">
-              <Scenario calculationId={selectedScenario} data={table} />
-              <div className="ml-auto hidden md:block">
-                <IconsHeader />
+    <div className="px-3 pt-3">
+      <div
+        className={`grid gap-y-4 md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16 ${table && "items-start"}`}
+      >
+        <FinanzierungsFormContainer
+          formValues={formValues}
+          setInput={setInput}
+        />
+        <div>
+          {!table ? (
+            <NoData />
+          ) : (
+            <div className="grid gap-y-4">
+              <div className="grid md:grid-cols-2">
+                <Scenario calculationId={selectedScenario} data={table} />
+                <div className="ml-auto hidden md:block">
+                  <IconsHeader />
+                </div>
+              </div>
+              <div className="grid gap-y-20 md:gap-4 xl:grid-cols-[3fr_2fr]">
+                <TilgungstabelleContainer
+                  table={table}
+                  calculationId={calculationId}
+                  input={input}
+                  setTable={setTable}
+                />
+                <ChartsContainer input={input} table={table} />
               </div>
             </div>
-            <div className="grid gap-y-20 md:gap-4 xl:grid-cols-[3fr_2fr]">
-              <TilgungstabelleContainer
-                table={table}
-                calculationId={calculationId}
-                input={input}
-                setTable={setTable}
-              />
-              <ChartsContainer input={input} table={table}/>
-            </div>
-          </>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
