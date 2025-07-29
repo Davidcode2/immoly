@@ -11,21 +11,29 @@ export default function SondertilgungInput({ sondertilgung }: PropTypes) {
 
   useEffect(() => {
     setAmount(sondertilgung);
+    setValueChanged(hasValueChanged(sondertilgung));
   }, [sondertilgung]);
 
-  const hasValueChanged = (newValue: number) => {
-    const res = Number(amount) != newValue;
-    if (newValue <= 0) {
+  const hasValueChanged = (newValue: string) => {
+    if (newValue != amount) {
+      return true;
+    }
+    const newValueNumber = Number(newValue);
+    const res = Number(amount) != newValueNumber;
+    if (newValueNumber <= 0) {
       return false;
     }
     console.log(res);
     return res;
   };
 
+  useEffect(() => {
+    setValueChanged(hasValueChanged(sondertilgung));
+  }, [amount])
+
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   const onChange = (e: any) => {
     const newAmount = e.target.value;
-    setValueChanged(hasValueChanged(Number(newAmount)));
     setAmount(String(newAmount));
   };
 
