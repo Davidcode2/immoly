@@ -60,6 +60,34 @@ export default function Tilgungstabelle({
     }
   };
 
+  const handleSondertilgungChange = async (
+    sondertilgungAmount: number,
+    year: number,
+  ) => {
+    console.log(sondertilgungAmount);
+    const sondertilgungen = await getSondertilgungAndSet();
+    const update = async () => {
+      await updateSondertilgungInDb(
+        Number(calculationId),
+        year,
+        Number(sondertilgungAmount),
+      );
+      //const sondertilgungen = await getSondertilgungAndSet();
+      const newTable = await recalcForAllSondertilgungen(
+        sondertilgungen!,
+        table,
+        formInput,
+      );
+      setTable(newTable);
+    };
+    const timeout = setTimeout(() => {
+      if (timeout) {
+        clearInterval(timeout);
+      }
+      update();
+    }, 10);
+  };
+
   const handleSondertilgungSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
     year: number,
@@ -129,6 +157,7 @@ export default function Tilgungstabelle({
                   <SondertilgungInput
                     year={x.year}
                     sondertilgung={getSondertilgung(x.year)}
+                    onChange={handleSondertilgungChange}
                   />
                 </form>
               </td>
