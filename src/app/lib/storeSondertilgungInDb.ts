@@ -8,10 +8,9 @@ export async function updateSondertilgungInDb(
 ) {
   try {
     if (amount <= 0) {
-      const res = await deleteSondertilgungFromDb(calculationId, year);
-      return res;
+      await deleteSondertilgungFromDb(calculationId, year);
     }
-    storeSonderTilgungInDb(calculationId, amount, year);
+    await storeSonderTilgungInDb(calculationId, amount, year);
   } catch (error) {
     console.error("Error updating sondertilgung in database:", error);
   }
