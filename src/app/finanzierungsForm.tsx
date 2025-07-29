@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import CashRoiModel from "./lib/models/cashRoiModel";
 import SliderInput from "./components/slider/sliderInput";
 import OptionalParameters from "./components/optionalParameters";
+import NumberInput from "./services/numberFormatter";
 
 export default function FinanzierungsForm({
   values,
@@ -86,6 +87,7 @@ export default function FinanzierungsForm({
       <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-2 shadow backdrop-blur-2xl">
         <div className="grid gap-2 md:gap-6 mb-4">
           {/* Eigenkapital */}
+          <NumberInput/>
           <SliderInput
             min={0}
             max={450000}

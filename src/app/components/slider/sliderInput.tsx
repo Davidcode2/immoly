@@ -1,3 +1,4 @@
+import NumberInput from "app/services/numberFormatter";
 import Slider from "./slider";
 
 type SliderInputProps = {
@@ -38,14 +39,7 @@ const SliderInput: React.FC<SliderInputProps> = ({
           inputName={inputName}
           onChange={handleChange}
         />
-        <input
-          type="number"
-          className="w-36 md:w-auto border-b border-stone-700 bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-slate-500 focus:outline-none md:text-base"
-          id={htmlFor}
-          name={inputName}
-          value={value}
-          onChange={handleChange}
-        />
+        <NumberInput handleChange={handleChange} id={htmlFor} inputName={inputName} value={value} />
       </div>
     </div>
   );
