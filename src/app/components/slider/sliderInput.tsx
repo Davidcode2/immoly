@@ -32,7 +32,7 @@ const SliderInput: React.FC<SliderInputProps> = ({
       >
         {label}
       </label>
-      <div className="flex w-68 flex-col gap-y-3 md:gap-y-0">
+      <div className="flex md:w-68 flex-col gap-y-3 md:gap-y-0">
         <Slider
           value={value}
           min={min}

@@ -87,7 +87,7 @@ export default function ResultDisplay() {
         <div className="hidden md:block">
           <FinanzierungsFormContainer formValues={input} setInput={setInput} />
         </div>
-        <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-purple-800/30 to-neutral-900/70 p-4 shadow backdrop-blur-2xl md:hidden md:p-8">
+        <div className="rounded-lg border border-slate-500/30 bg-gradient-to-tl from-purple-800/30 to-neutral-900/70 p-4 shadow backdrop-blur-2xl md:hidden md:p-8">
           <Hero />
         </div>
         <div className="grid h-full gap-y-4">

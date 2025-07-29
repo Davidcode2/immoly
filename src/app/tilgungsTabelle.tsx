@@ -82,7 +82,7 @@ export default function Tilgungstabelle({
 
   return (
     <div className="grid h-[600px] justify-stretch rounded-lg text-xs lg:text-base">
-      <table className="table-fixed overflow-auto backdrop-blur-lg bg-gradient-to-tl from-purple-800/30 to-neutral-900/70">
+      <table className="table-fixed overflow-auto backdrop-blur-lg bg-neutral-800/20">
         <thead>
           <tr className="sticky top-0 bg-black/90 text-left">
             <th className="py-2 pl-2 sm:pr-2 sm:pl-4">Jahr</th>
