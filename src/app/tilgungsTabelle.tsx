@@ -81,10 +81,10 @@ export default function Tilgungstabelle({
   };
 
   return (
-    <div className="grid h-[600px] justify-stretch rounded-lg text-xs backdrop-blur-lg lg:text-base">
-      <table className="table-fixed overflow-auto">
+    <div className="grid h-[600px] justify-stretch rounded-lg text-xs lg:text-base">
+      <table className="table-fixed overflow-auto backdrop-blur-lg bg-gradient-to-tl from-purple-800/30 to-neutral-900/70">
         <thead>
-          <tr className="sticky top-0 bg-black text-left">
+          <tr className="sticky top-0 bg-black/90 text-left">
             <th className="py-2 pl-2 sm:pr-2 sm:pl-4">Jahr</th>
             <th className="py-2 sm:pl-4">Zins</th>
             <th className="py-2 sm:px-4">Tilgung</th>
@@ -103,7 +103,7 @@ export default function Tilgungstabelle({
           {temporaryTable.map((x) => (
             <tr
               key={x.year}
-              className="border-t border-gray-950 even:bg-[#0f0f0f]/20 hover:bg-purple-600"
+              className="border-t border-gray-950 even:bg-[#0f0f0f]/40 hover:bg-stone-700"
             >
               <td className="px-4 py-2">{x.year}</td>
               <td className="py-2 sm:px-4">

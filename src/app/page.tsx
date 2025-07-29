@@ -11,7 +11,7 @@ export default async function GraphPage() {
     return <div>Skipped at build time</div>;
   }
   return (
-    <div className="bg-[url(/images/grainy_gradient_dark_wide_smooth_enlarged.jpg)] bg-cover saturate-90">
+    <div className="bg-[url(/images/fire_spray_bg.jpg)] bg-cover bg-bottom saturate-40">
       <div className="mx-auto min-h-screen max-w-[2000px] pb-20 font-[family-name:var(--font-geist-sans)] sm:p-10">
         <div className="flex flex-col gap-4">
           <Suspense fallback={<Loading />}>

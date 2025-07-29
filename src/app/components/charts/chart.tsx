@@ -85,18 +85,21 @@ export default function PlotlyChart({
         dataKey="Zins"
         stroke="#ff7300 "
         animationDuration={1000}
+        dot={false}
       />
       <Line
         type="monotone"
         dataKey="Tilgung"
         stroke="#387908"
         animationDuration={1000}
+        dot={false}
       />
       <Line
         type="monotone"
         dataKey="Sparen"
         stroke="#a87908"
         animationDuration={1000}
+        dot={false}
       />
     </LineChart>
   );
