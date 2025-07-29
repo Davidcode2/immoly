@@ -9,6 +9,7 @@ type SliderInputProps = {
   label: string;
   inputName: string;
   htmlFor: string;
+  sign?: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -20,6 +21,7 @@ const SliderInput: React.FC<SliderInputProps> = ({
   label,
   inputName,
   htmlFor,
+  sign = "€",
   handleChange,
 }) => {
   return (
@@ -30,7 +32,7 @@ const SliderInput: React.FC<SliderInputProps> = ({
       >
         {label}
       </label>
-      <div className="flex flex-col gap-y-3 md:gap-y-0">
+      <div className="flex w-68 flex-col gap-y-3 md:gap-y-0">
         <Slider
           value={value}
           min={min}
@@ -39,7 +41,15 @@ const SliderInput: React.FC<SliderInputProps> = ({
           inputName={inputName}
           onChange={handleChange}
         />
-        <NumberInput handleChange={handleChange} id={htmlFor} inputName={inputName} value={value} />
+        <div className="flex items-center gap-x-2">
+          <NumberInput
+            handleChange={handleChange}
+            id={htmlFor}
+            inputName={inputName}
+            value={value}
+          />
+          <div className="relative -left-6 text-stone-600">{inputName === "interest_rate" ? "%" : sign}</div>
+        </div>
       </div>
     </div>
   );
