@@ -103,7 +103,7 @@ export default function Tilgungstabelle({
           {temporaryTable.map((x) => (
             <tr
               key={x.year}
-              className="border-t border-gray-950 even:bg-[#0f0f0f]/40 hover:bg-stone-700"
+              className="border-t border-gray-950 even:bg-[#0f0f0f]/40 hover:bg-purple-700"
             >
               <td className="px-4 py-2">{x.year}</td>
               <td className="py-2 sm:px-4">
