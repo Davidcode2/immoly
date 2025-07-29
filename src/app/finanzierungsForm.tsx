@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import CashRoiModel from "./lib/models/cashRoiModel";
 import SliderInput from "./components/slider/sliderInput";
 import OptionalParameters from "./components/optionalParameters";
-import NumberInput from "./services/numberFormatter";
 
 export default function FinanzierungsForm({
   values,

@@ -34,7 +34,7 @@ export default function NumberInput({
   value,
 }: PropTypes) {
   const [displayValue, setDisplayValue] = useState<string>("");
-  const [rawValue, setRawValue] = useState(value);
+  const [, setRawValue] = useState(value);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
