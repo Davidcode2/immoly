@@ -123,9 +123,6 @@ export default function Tilgungstabelle({
                   onSubmit={(e) => handleSondertilgungSubmit(e, x.year)}
                   className="justify-fit flex sm:gap-4"
                 >
-                  <button className="text-gray-800 hover:cursor-pointer hover:text-gray-200">
-                    +
-                  </button>
                   <SondertilgungInput
                     year={x.year}
                     sondertilgung={getSondertilgung(x.year)}
