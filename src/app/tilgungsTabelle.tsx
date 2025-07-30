@@ -11,6 +11,7 @@ import SondertilgungInput from "./components/sondertilgungInput";
 import { screenWidthMobile } from "./utils/screenWidth";
 import CenteredModal from "./components/centeredModal";
 import TilgungsWechselModal from "./components/tilgungsWechselModal";
+import recalcForTilgungswechsel from "./lib/recalcForTilgungswechsel";
 
 type PropTypes = {
   table: ArmotizationEntry[];
@@ -28,6 +29,7 @@ export default function Tilgungstabelle({
   const [temporaryTable, setTemporaryTable] =
     useState<ArmotizationEntry[]>(table);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [selectedYear, setSelectedYear] = useState<number>(0);
   const tilgungsWechselModalRef = useRef<HTMLDivElement>(null);
   const [sonderTilgungen, setSonderTilgungen] = useState<Sondertilgung[]>(
     table.map((x) => ({ year: x.year, amount: x.sondertilgung })),
@@ -84,7 +86,20 @@ export default function Tilgungstabelle({
     setTable(newTable);
   };
 
-  const openModal = () => {
+  const handleTilgungsWechsel = async (
+    event: React.FormEvent<HTMLFormElement>,
+    year: number,
+  ) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const newTilgung = form.elements.namedItem("newTilgung") as HTMLInputElement;
+    const interest_rate = formInput?.interest_rate;
+    const newTable = recalcForTilgungswechsel(table, year, Number(newTilgung.value), interest_rate!);
+    setTable(newTable);
+  };
+
+  const openModal = (selectedYear: number) => {
+    setSelectedYear(selectedYear);
     setShowModal(true);
   };
 
@@ -104,7 +119,10 @@ export default function Tilgungstabelle({
     >
       {showModal && (
         <CenteredModal>
-          <TilgungsWechselModal />
+          <TilgungsWechselModal
+            handleSubmit={handleTilgungsWechsel}
+            year={selectedYear!}
+          />
         </CenteredModal>
       )}
       <table className="table-fixed overflow-auto bg-neutral-800/20 backdrop-blur-lg">
@@ -129,7 +147,7 @@ export default function Tilgungstabelle({
             <tr
               key={x.year}
               className="border-t border-gray-950 even:bg-[#0f0f0f]/40 hover:bg-purple-700"
-              onClick={openModal}
+              onClick={() => openModal(x.year)}
             >
               <td className="px-4 py-2">{x.year}</td>
               <td className="py-2 sm:px-4">
