@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 import CashRoiModel from "./lib/models/cashRoiModel";
 import {
@@ -9,6 +9,8 @@ import { Sondertilgung } from "./lib/models/sondertilgung";
 import { recalcForAllSondertilgungen } from "./lib/sondertilgungHandler";
 import SondertilgungInput from "./components/sondertilgungInput";
 import { screenWidthMobile } from "./utils/screenWidth";
+import CenteredModal from "./components/centeredModal";
+import TilgungsWechselModal from "./components/tilgungsWechselModal";
 
 type PropTypes = {
   table: ArmotizationEntry[];
@@ -25,6 +27,8 @@ export default function Tilgungstabelle({
 }: PropTypes) {
   const [temporaryTable, setTemporaryTable] =
     useState<ArmotizationEntry[]>(table);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const tilgungsWechselModalRef = useRef<HTMLDivElement>(null);
   const [sonderTilgungen, setSonderTilgungen] = useState<Sondertilgung[]>(
     table.map((x) => ({ year: x.year, amount: x.sondertilgung })),
   );
@@ -80,9 +84,32 @@ export default function Tilgungstabelle({
     setTable(newTable);
   };
 
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  document.body.addEventListener("click", (e: any) => {
+    const contextMenu = tilgungsWechselModalRef.current;
+    if (e.target.classList.contains("tilgungsWechselModal")) return;
+    if (showModal) {
+      setShowModal(false);
+      contextMenu?.classList.remove("open");
+    }
+  });
+
   return (
-    <div className="grid h-[600px] justify-stretch rounded-lg text-xs lg:text-base">
-      <table className="table-fixed overflow-auto backdrop-blur-lg bg-neutral-800/20">
+    <div
+      ref={tilgungsWechselModalRef}
+      className="grid h-[600px] justify-stretch rounded-lg text-xs lg:text-base"
+    >
+      {showModal && (
+        <div className="tilgungsWechselModal">
+          <CenteredModal>
+            <TilgungsWechselModal />
+          </CenteredModal>
+        </div>
+      )}
+      <table className="table-fixed overflow-auto bg-neutral-800/20 backdrop-blur-lg">
         <thead>
           <tr className="sticky top-0 bg-black/90 text-left">
             <th className="py-2 pl-2 sm:pr-2 sm:pl-4">Jahr</th>
@@ -104,6 +131,7 @@ export default function Tilgungstabelle({
             <tr
               key={x.year}
               className="border-t border-gray-950 even:bg-[#0f0f0f]/40 hover:bg-purple-700"
+              onClick={openModal}
             >
               <td className="px-4 py-2">{x.year}</td>
               <td className="py-2 sm:px-4">
