@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getCalculation } from "app/lib/getCalculations";
+import { getCalculation } from "app/lib/calculationAccessor";
 import calcTilgung from "app/lib/calculateArmotizaztionTable";
 import Scenario from "app/scenario";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
@@ -10,7 +10,7 @@ import CashRoiModel from "app/lib/models/cashRoiModel";
 import IconsHeader from "app/components/iconsHeader";
 import NoData from "app/components/noData";
 import TilgungstabelleContainer from "app/components/tilgungstabelleContainer";
-import { getSondertilgungen } from "app/lib/storeSondertilgungInDb";
+import { getSondertilgungen } from "app/lib/sondertilgungDatabaseService";
 import { recalcForAllSondertilgungen } from "app/lib/sondertilgungHandler";
 import FinanzierungsFormContainer from "app/components/baseDataForm/finanzierungsFormContainer";
 import ChartsContainer from "app/components/charts/chartsContainer";

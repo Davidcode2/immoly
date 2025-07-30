@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCalculation } from "./lib/getCalculations";
+import { getCalculation } from "./lib/calculationAccessor";
 import calcTilgung from "./lib/calculateArmotizaztionTable";
 import ScenarioTextDisplay from "./scenarioTextDisplay";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";

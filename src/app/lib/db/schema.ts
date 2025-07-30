@@ -31,3 +31,16 @@ export const sondertilgungen = pgTable(
   },
   (t) => [unique().on(t.year, t.calculation_id)],
 );
+
+export const tilgungswechsel = pgTable(
+  "tilgungswechsel",
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    calculation_id: integer()
+      .notNull()
+      .references(() => calculations.id, { onDelete: "cascade" }),
+    amount: integer().notNull(),
+    year: integer().notNull(),
+  },
+  (t) => [unique().on(t.year, t.calculation_id)],
+);

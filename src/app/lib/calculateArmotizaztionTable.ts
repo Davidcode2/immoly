@@ -1,9 +1,7 @@
 import ArmotizationEntry from "./models/ArmotizationEntry";
 import CashRoiModel from "./models/cashRoiModel";
 
-export default function calcTilgung(
-  calculation: CashRoiModel,
-): ArmotizationEntry[] {
+export default function calcTilgung(calculation: CashRoiModel): ArmotizationEntry[] {
   if (!calculation) {
     return [];
   }
@@ -11,6 +9,7 @@ export default function calcTilgung(
     calculation.principal - calculation.down_payment;
   let yearlyRate = calculation.monthly_rate * 12;
   let remainingPrincipal = principalForCalculation;
+
   const armotizationTable = [];
   let counter = 0;
   while (remainingPrincipal >= 0.1) {
@@ -37,14 +36,18 @@ export default function calcTilgung(
       principal: principalPaidYearly,
       yearlyRate: yearlyRate,
       remainingPrincipal: remainingPrincipal,
-      sondertilgung: calculation.sondertilgungen
-        ? calculation.sondertilgungen.find(
-            (x) => x.year === armotizationTable.length + 1,
-          )?.amount || 0
-        : 0,
-    };
+      sondertilgung: findSondertilgung(calculation, armotizationTable)
+    }
     armotizationTable.push(armortizationEntry);
     counter++;
   }
   return armotizationTable;
+}
+
+const findSondertilgung = (calculation: CashRoiModel, armotizationTable: ArmotizationEntry[]) => {
+  if (calculation.sondertilgungen) {
+    const sondertilgungForYear = calculation.sondertilgungen.find((x) => x.year === armotizationTable.length + 1);
+    return sondertilgungForYear?.amount || 0
+  } 
+  return 0;
 }

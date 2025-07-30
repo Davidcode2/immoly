@@ -1,5 +1,5 @@
 import SingleGraph from "./singleGraph";
-import getCalculations from "./lib/getCalculations";
+import getCalculations from "./lib/calculationAccessor";
 
 export default async function Graphs() {
   const calculationData = await getCalculations();

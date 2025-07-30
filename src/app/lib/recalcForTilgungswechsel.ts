@@ -18,7 +18,6 @@ export default function recalcForTilgungswechsel(
     monthly_rate: newTilgung,
     rent: 0,
   };
-  // offset years
   const recalculatedTable = calcTilgung(newCashRoiModel);
   const recalculatedTableWithYearOffset = recalculatedTable.map(x => {
     x.year = x.year + year;

@@ -1,6 +1,6 @@
 "use client";
 import CalculationResult from "./lib/models/CalculationResult";
-import { deleteItem } from "./lib/getCalculations";
+import { deleteItem } from "./lib/calculationAccessor";
 
 export default function SingleGraph({
   calculation,
