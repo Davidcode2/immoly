@@ -100,7 +100,8 @@ export default function Tilgungstabelle({
     setTable(newTable);
   };
 
-  const openModal = (selectedYear: number) => {
+  const openModal = (e: any, selectedYear: number) => {
+    if (e.target.classList.contains("sondertilgungInput")) return;
     setSelectedYear(selectedYear);
     setShowModal(true);
   };
@@ -149,7 +150,7 @@ export default function Tilgungstabelle({
             <tr
               key={x.year}
               className="border-t border-gray-950 even:bg-[#0f0f0f]/40 hover:bg-purple-700"
-              onClick={() => openModal(x.year)}
+              onClick={(e) => openModal(e, x.year)}
             >
               <td className="px-4 py-2">{x.year}</td>
               <td className="py-2 sm:px-4">
@@ -164,10 +165,10 @@ export default function Tilgungstabelle({
               <td className="py-2 sm:px-4">
                 {Math.round(x.remainingPrincipal).toLocaleString("de")}
               </td>
-              <td className="w-24 py-2 sm:px-4">
+              <td className="w-24 py-2 sm:px-4 sondertilgungInput">
                 <form
                   onSubmit={(e) => handleSondertilgungSubmit(e, x.year)}
-                  className="justify-fit flex sm:gap-4"
+                  className="justify-fit flex sm:gap-4 sondertilgungInput"
                 >
                   <SondertilgungInput
                     year={x.year}
