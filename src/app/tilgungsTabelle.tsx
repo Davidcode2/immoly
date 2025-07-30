@@ -103,11 +103,9 @@ export default function Tilgungstabelle({
       className="grid h-[600px] justify-stretch rounded-lg text-xs lg:text-base"
     >
       {showModal && (
-        <div className="tilgungsWechselModal">
-          <CenteredModal>
-            <TilgungsWechselModal />
-          </CenteredModal>
-        </div>
+        <CenteredModal>
+          <TilgungsWechselModal />
+        </CenteredModal>
       )}
       <table className="table-fixed overflow-auto bg-neutral-800/20 backdrop-blur-lg">
         <thead>
