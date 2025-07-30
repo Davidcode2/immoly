@@ -100,15 +100,18 @@ export default function Tilgungstabelle({
     setTable(newTable);
   };
 
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   const openModal = (e: any, selectedYear: number) => {
-    if (e.target.classList.contains("sondertilgungInput")) return;
+    const target = e.target as HTMLElement;
+    if (target.classList.contains("sondertilgungInput")) return;
     setSelectedYear(selectedYear);
     setShowModal(true);
   };
 
-  document.body.addEventListener("click", (e: any) => {
+  document.body.addEventListener("click", (e: MouseEvent) => {
     const contextMenu = tilgungsWechselModalRef.current;
-    if (e.target.classList.contains("tilgungsWechselModal")) return;
+    const target = e.target as HTMLElement;
+    if (target.classList.contains("tilgungsWechselModal")) return;
     if (showModal) {
       setShowModal(false);
       contextMenu?.classList.remove("open");
