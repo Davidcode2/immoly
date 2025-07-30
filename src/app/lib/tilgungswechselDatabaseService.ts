@@ -15,8 +15,8 @@ export default async function storeTilgungsWechselInDb(
   `;
   try {
     const pool = await getPool();
-    const res = pool.query(query, [calculationId, newTilgung, year]);
-    return res;
+    const res = await pool.query(query, [calculationId, newTilgung, year]);
+    return res.rows.length > 0;
   } catch (error) {
     console.error("Error storing tilgungswechsel in database:", error);
     throw error;
