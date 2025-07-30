@@ -1,4 +1,4 @@
-import NumberInput from "app/services/numberFormatter";
+import NumberInput from "app/components/baseDataForm/numberInput";
 import Slider from "./slider";
 
 type SliderInputProps = {

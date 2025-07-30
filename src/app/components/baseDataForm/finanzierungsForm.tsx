@@ -1,9 +1,9 @@
 import Form from "next/form";
-import { storeInDb } from "./lib/calc";
+import { storeInDb } from "app/lib/calc";
 import { useEffect, useState } from "react";
-import CashRoiModel from "./lib/models/cashRoiModel";
-import SliderInput from "./components/slider/sliderInput";
-import OptionalParameters from "./components/optionalParameters";
+import CashRoiModel from "app/lib/models/cashRoiModel";
+import SliderInput from "app/components/slider/sliderInput";
+import OptionalParameters from "app/components/baseDataForm/optionalParameters";
 
 export default function FinanzierungsForm({
   values,

@@ -55,26 +55,14 @@ export const recalcForAllSondertilgungen = async (
         (y) => y.year === tableRow.year,
       );
       if (sondertilgung) {
-        const newReducedPrincipal =
-          tableRowNew.remainingPrincipal - sondertilgung.amount;
-        if (newReducedPrincipal < 0) {
-          return newTable;
-        }
-        const newTilgung = calcTilgung({
-          principal: newReducedPrincipal,
-          down_payment: 0,
-          interest_rate: calculationValues?.interest_rate,
-          monthly_rate: calculationValues?.monthly_rate,
-          rent: calculationValues?.rent || 0,
-          sondertilgungen: sondertilgungen,
-        });
-        newTilgung.forEach((x: ArmotizationEntry) => {
-          x.year = x.year + tableRow.year;
-        });
-        newTable.splice(
-          tilgungsTabelle.indexOf(tableRow) + 1,
-          newTable.length,
-          ...newTilgung,
+        recalcRestOfTableWithSondertilgung(
+          sondertilgung,
+          sondertilgungen,
+          tilgungsTabelle,
+          calculationValues,
+          tableRow,
+          newTable,
+          tableRowNew
         );
       }
     });
@@ -82,4 +70,36 @@ export const recalcForAllSondertilgungen = async (
   } else {
     return tilgungsTabelle;
   }
+};
+
+const recalcRestOfTableWithSondertilgung = (
+  sondertilgung: Sondertilgung,
+  sondertilgungen: Sondertilgung[],
+  tilgungsTabelle: ArmotizationEntry[],
+  calculationValues: CashRoiModel,
+  tableRow: ArmotizationEntry,
+  newTable: ArmotizationEntry[],
+  tableRowNew: ArmotizationEntry,
+) => {
+  const newReducedPrincipal =
+    tableRowNew.remainingPrincipal - sondertilgung.amount;
+  if (newReducedPrincipal < 0) {
+    return newTable;
+  }
+  const newTilgung = calcTilgung({
+    principal: newReducedPrincipal,
+    down_payment: 0,
+    interest_rate: calculationValues?.interest_rate,
+    monthly_rate: calculationValues?.monthly_rate,
+    rent: calculationValues?.rent || 0,
+    sondertilgungen: sondertilgungen,
+  });
+  newTilgung.forEach((x: ArmotizationEntry) => {
+    x.year = x.year + tableRow.year;
+  });
+  newTable.splice(
+    tilgungsTabelle.indexOf(tableRow) + 1,
+    newTable.length,
+    ...newTilgung,
+  );
 };

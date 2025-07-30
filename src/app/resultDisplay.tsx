@@ -12,10 +12,10 @@ import NoData from "app/components/noData";
 import TilgungstabelleContainer from "app/components/tilgungstabelleContainer";
 import { getSondertilgungen } from "app/lib/storeSondertilgungInDb";
 import { recalcForAllSondertilgungen } from "app/lib/sondertilgungHandler";
-import FinanzierungsFormContainer from "app/components/finanzierungsFormContainer";
+import FinanzierungsFormContainer from "app/components/baseDataForm/finanzierungsFormContainer";
 import ChartsContainer from "app/components/charts/chartsContainer";
 import Hero from "./components/hero";
-import FinanzierungsForm from "./finanzierungsForm";
+import FinanzierungsForm from "./components/baseDataForm/finanzierungsForm";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);

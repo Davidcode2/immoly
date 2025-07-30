@@ -1,6 +1,6 @@
-import FinanzierungsForm from "app/finanzierungsForm";
+import FinanzierungsForm from "app/components/baseDataForm/finanzierungsForm";
 import CashRoiModel from "app/lib/models/cashRoiModel";
-import Hero from "./hero";
+import Hero from "app/components/hero";
 
 type PropTypes = {
   formValues: CashRoiModel | null;
