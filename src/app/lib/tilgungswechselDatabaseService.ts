@@ -22,3 +22,21 @@ export default async function storeTilgungsWechselInDb(
     throw error;
   }
 }
+
+export async function getTilgungsWechsel(
+  calculationId: string,
+): Promise<{ year: number; amount: number }[]> {
+  const query = `
+  SELECT year, amount
+  FROM tilgungswechsel
+  WHERE calculation_id = $1;
+  `;
+  try {
+    const pool = await getPool();
+    const res = await pool.query(query, [calculationId]);
+    return res.rows.length > 0 ? res.rows : [];
+  } catch (error) {
+    console.error("Error fetching tilgungswechsel from database:", error);
+    throw error;
+  }
+}
