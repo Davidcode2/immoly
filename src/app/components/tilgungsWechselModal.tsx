@@ -9,9 +9,9 @@ export default function TilgungsWechselModal({
   tilgungswechsel,
 }: PropTypes) {
   return (
-    <div className="tilgungsWechselModal flex h-[300px] w-[400px] flex-col items-center gap-4 rounded-xl bg-gradient-to-tl from-purple-900/90 to-purple-950/90 p-10 shadow">
+    <div className="tilgungsWechselModal flex md:h-[300px] md:w-[400px] w-3/4 flex-col items-center gap-4 rounded-xl bg-gradient-to-tl from-purple-900/90 to-purple-950/90 p-10 shadow">
       <div className="my-auto flex flex-col gap-4">
-        <label className="text-xl px-10 text-center" htmlFor="newTilgung">
+        <label className="text-xl md:px-10 text-center" htmlFor="newTilgung">
           Wählen Sie eine neue monatliche Rate nach {year <= 1 ? "einem Jahr" : year + " Jahren"}
         </label>
         <form
