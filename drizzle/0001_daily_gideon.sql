@@ -7,3 +7,4 @@ CREATE TABLE "tilgungswechsel" (
 );
 --> statement-breakpoint
 ALTER TABLE "tilgungswechsel" ADD CONSTRAINT "tilgungswechsel_calculation_id_calculations_id_fk" FOREIGN KEY ("calculation_id") REFERENCES "public"."calculations"("id") ON DELETE cascade ON UPDATE no action;
+
