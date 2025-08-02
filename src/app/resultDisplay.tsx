@@ -26,12 +26,13 @@ export default function ResultDisplay() {
   const calculationId = searchParams.get("calculationId");
 
   const changeHandler = async () => {
-    const result = await getCalculation(calculationId!);
-    if (!result) {
+    console.log("input: ", input);
+    if (!input) {
       return;
     }
-    console.log(result);
-    const tilgungungsTabelle = calcTilgung(result[0]);
+    input.sondertilgungen = await getSondertilgungen(calculationId!);
+    input.tilgungswechsel = await getTilgungsWechsel(calculationId!);
+    const tilgungungsTabelle = calcTilgung(input);
     setTable(tilgungungsTabelle);
   };
 
@@ -123,7 +124,7 @@ export default function ResultDisplay() {
                 <div className="md:hidden">
                   <FinanzierungsForm values={input} setInput={setInput} />
                 </div>
-                <div className="md:hidden mx-4">
+                <div className="mx-4 md:hidden">
                   <TilgungstabelleContainer
                     table={table}
                     calculationId={calculationId}
