@@ -49,12 +49,9 @@ export default function Tilgungstabelle({
     return sondertilgungAmount;
   };
 
-  const getSondertilgung = (year: number) => {
-    const sondertilgung = sonderTilgungen.find(
-      (y: Sondertilgung) => y.year === year,
-    );
-    const amount = sondertilgung?.amount || "";
-    return String(amount);
+  const getSondertilgung = (entry: ArmotizationEntry) => {
+    const amount = entry.sondertilgung || "";
+    return amount.toLocaleString("de");
   };
 
   const getSondertilgungAndSet = async () => {
@@ -166,7 +163,7 @@ export default function Tilgungstabelle({
                 >
                   <SondertilgungInput
                     year={x.year}
-                    sondertilgung={getSondertilgung(x.year)}
+                    sondertilgung={getSondertilgung(x)}
                   />
                 </form>
               </td>

@@ -58,6 +58,7 @@ const calculateArmotizationTable = (restSumme: number, annuitaet: number, calcul
       yearlyRate: annuitaet,
       remainingPrincipal: restSumme,
       sondertilgung: sondertilgung,
+      tilgungswechsel: tilgungswechsel,
     };
     armotizationTable.push(armortizationEntry);
     counter++;
