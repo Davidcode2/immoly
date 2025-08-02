@@ -110,16 +110,27 @@ export default function ResultDisplay() {
                 </div>
               </div>
               <div className="grid gap-4 xl:grid-cols-[3fr_2fr]">
-                <TilgungstabelleContainer
-                  table={table}
-                  calculationId={calculationId}
-                  input={input}
-                  setTable={setTable}
-                  sendChangeNotification={changeHandler}
-                />
+                <div className="hidden md:block">
+                  <TilgungstabelleContainer
+                    table={table}
+                    calculationId={calculationId}
+                    input={input}
+                    setTable={setTable}
+                    sendChangeNotification={changeHandler}
+                  />
+                </div>
                 <ChartsContainer input={input} table={table} />
                 <div className="md:hidden">
                   <FinanzierungsForm values={input} setInput={setInput} />
+                </div>
+                <div className="md:hidden mx-4">
+                  <TilgungstabelleContainer
+                    table={table}
+                    calculationId={calculationId}
+                    input={input}
+                    setTable={setTable}
+                    sendChangeNotification={changeHandler}
+                  />
                 </div>
               </div>
             </>

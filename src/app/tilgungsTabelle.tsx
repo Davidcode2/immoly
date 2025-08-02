@@ -150,7 +150,7 @@ export default function Tilgungstabelle({
               <td className="py-2 sm:px-4">
                 {Math.round(x.remainingPrincipal).toLocaleString("de")}
               </td>
-              <td className="sondertilgungInput w-24 py-2 sm:px-4">
+              <td className="sondertilgungInput w-16 md:w-24 py-2 sm:px-4">
                 <form
                   onSubmit={(e) => handleSondertilgungSubmit(e, x.year)}
                   className="justify-fit sondertilgungInput flex sm:gap-4"

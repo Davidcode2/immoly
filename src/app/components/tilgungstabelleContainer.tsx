@@ -18,7 +18,7 @@ export default function TilgungstabelleContainer({
   sendChangeNotification,
 }: PropTypes) {
   return (
-    <div className="hidden md:block max-h-[620px] row-start-2 md:row-start-1 overflow-auto rounded-lg border border-slate-600 text-sm shadow-lg xl:col-start-1">
+    <div className="max-h-[200px] md:max-h-[620px] row-start-2 md:row-start-1 overflow-auto rounded-lg border border-slate-600 text-sm shadow-lg xl:col-start-1">
       {table && (
         <Tilgungstabelle
           table={table as ArmotizationEntry[]}
