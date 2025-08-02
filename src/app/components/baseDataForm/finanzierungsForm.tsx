@@ -24,7 +24,9 @@ export default function FinanzierungsForm({
   const monthlyRateInPercent = () => {
     const kreditSumme = Number(principalValue) - Number(downPayment);
     const yearlyRate = Number(monthlyRate) * 12;
-    const monthlyRateInPercent = (100 / kreditSumme) * yearlyRate;
+    const zins = (Number(interestRate) * kreditSumme) / 100;
+    const tilgung = yearlyRate - zins;
+    const monthlyRateInPercent = (100 / kreditSumme) * tilgung;
     return monthlyRateInPercent.toFixed(2) + " %";
   };
 
