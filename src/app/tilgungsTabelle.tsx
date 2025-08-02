@@ -109,16 +109,16 @@ export default function Tilgungstabelle({
       <table className="table-fixed overflow-auto bg-neutral-800/20 backdrop-blur-lg">
         <thead>
           <tr className="sticky top-0 bg-black/90 text-left">
-            <th className="py-2 pl-2 sm:pr-2 sm:pl-4">Jahr</th>
-            <th className="py-2 sm:pl-4">Zins</th>
-            <th className="py-2 sm:px-4">Tilgung</th>
-            <th className="py-2 sm:px-4">
+            <th className="md:py-5 py-3 pl-2 sm:pr-2 sm:pl-4">Jahr</th>
+            <th className="md:py-5 py-3 sm:pl-4">Zins</th>
+            <th className="md:py-5 py-3 sm:px-4">Tilgung</th>
+            <th className="md:py-5 py-3 sm:px-4">
               {screenWidthMobile() ? "Jhl. Rate" : "Jährliche Rate"}
             </th>
-            <th className="py-2 sm:px-4">
+            <th className="md:py-5 py-3 sm:px-4">
               {screenWidthMobile() ? "Rest" : "Restschuld"}
             </th>
-            <th className="py-2 sm:px-4">
+            <th className="md:py-5 py-3 sm:px-4">
               {screenWidthMobile() ? "S.Tilgung" : "Sondertilgung"}
             </th>
           </tr>
@@ -127,18 +127,18 @@ export default function Tilgungstabelle({
           {temporaryTable.map((x) => (
             <tr
               key={x.year}
-              className="border-t border-slate-950 even:bg-[#0f0f0f]/40 hover:bg-purple-700"
+              className="hover:bg-purple-500/40 hover:cursor-pointer hover:shadow"
               onClick={(e) => openModal(e, x)}
             >
-              <td className="px-4 py-2">{x.year}</td>
-              <td className="py-2 sm:px-4">
+              <td className="px-4 md:py-5 py-3">{x.year}</td>
+              <td className="md:py-5 py-3 sm:px-4">
                 {Math.round(x.interest).toLocaleString("de")}
               </td>
-              <td className="py-2 sm:px-4">
+              <td className="md:py-5 py-3 sm:px-4">
                 {Math.round(x.principal).toLocaleString("de")}
               </td>
               <td
-                className={`${x.tilgungswechsel > 0 && "text-sky-500"} py-2 sm:px-4`}
+                className={`${x.tilgungswechsel > 0 && "text-sky-500"} md:py-5 py-3 sm:px-4`}
               >
                 {x.yearlyRate.toLocaleString("de")}
                 {x.tilgungswechsel > 0 && (
@@ -147,10 +147,10 @@ export default function Tilgungstabelle({
                   </div>
                 )}
               </td>
-              <td className="py-2 sm:px-4">
+              <td className="md:py-5 py-3 sm:px-4">
                 {Math.round(x.remainingPrincipal).toLocaleString("de")}
               </td>
-              <td className="sondertilgungInput w-16 md:w-24 py-2 sm:px-4">
+              <td className="sondertilgungInput w-16 md:w-24 md:py-5 py-3 sm:px-4">
                 <form
                   onSubmit={(e) => handleSondertilgungSubmit(e, x.year)}
                   className="justify-fit sondertilgungInput flex sm:gap-4"
