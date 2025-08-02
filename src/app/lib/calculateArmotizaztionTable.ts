@@ -34,7 +34,7 @@ const calculateArmotizationTable = (restSumme: number, annuitaet: number, calcul
 
     if (tilgungswechsel > 0) {
       console.log(`Tilgungswechsel for year ${currentYear}: ${tilgungswechsel}`);
-      annuitaet = tilgungswechsel;
+      annuitaet = tilgungswechsel * 12;
     }
     let tilgung = annuitaet - interestForYear;
 

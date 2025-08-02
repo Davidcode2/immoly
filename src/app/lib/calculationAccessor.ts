@@ -39,18 +39,42 @@ export async function getCalculation(
   }
   try {
     const query = `
-      SELECT c.id, c.principal, c.interest_rate, c.monthly_rate, c.down_payment, c.rent, c.annual_percentage_rate, c.created_at, 
-      s.year, s.amount as sondertilgung_amount,
-      t.year, t.amount as tilgungswechsel_amount
-      FROM calculations c
-      LEFT JOIN sondertilgungen s ON c.id = s.calculation_id
-      LEFT JOIN tilgungswechsel t ON c.id = t.calculation_id
-      WHERE c.id = $1;
-    `;
+    SELECT 
+      c.id,
+      c.principal,
+      c.interest_rate,
+      c.monthly_rate,
+      c.down_payment,
+      c.rent,
+      c.annual_percentage_rate,
+      c.created_at,
+      s.year,
+      s.amount AS sondertilgung_amount,
+      NULL AS tilgungswechsel_amount
+    FROM calculations c
+    LEFT JOIN sondertilgungen s ON c.id = s.calculation_id
+    WHERE c.id = $1
+
+    UNION
+
+    SELECT 
+      c.id,
+      c.principal,
+      c.interest_rate,
+      c.monthly_rate,
+      c.down_payment,
+      c.rent,
+      c.annual_percentage_rate,
+      c.created_at,
+      t.year,
+      NULL AS sondertilgung_amount,
+      t.amount AS tilgungswechsel_amount
+    FROM calculations c
+    LEFT JOIN tilgungswechsel t ON c.id = t.calculation_id
+    WHERE c.id = $1;`;
     const result = await pool!.query(query, [id]);
 
     if (result && result.rows) {
-      console.log("Query result:", result.rows);
       const res = transformCalculationResults(result.rows);
       return res;
     }

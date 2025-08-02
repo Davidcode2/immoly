@@ -6,26 +6,24 @@ import {
   updateSondertilgungInDb,
 } from "./lib/sondertilgungDatabaseService";
 import { Sondertilgung } from "./lib/models/sondertilgung";
-import { recalcForAllSondertilgungen } from "./lib/sondertilgungHandler";
 import SondertilgungInput from "./components/sondertilgungInput";
 import { screenWidthMobile } from "./utils/screenWidth";
 import CenteredModal from "./components/centeredModal";
 import TilgungsWechselModal from "./components/tilgungsWechselModal";
-import recalcForTilgungswechsel from "./lib/recalcForTilgungswechsel";
 import storeTilgungsWechselInDb from "./lib/tilgungswechselDatabaseService";
 
 type PropTypes = {
   table: ArmotizationEntry[];
   formInput: CashRoiModel | null;
   setTable: (tilgungstabelle: ArmotizationEntry[]) => void;
+  sendChangeNotification: () => void;
   calculationId: string | null;
 };
 
 export default function Tilgungstabelle({
   table,
-  formInput,
-  setTable,
   calculationId,
+  sendChangeNotification,
 }: PropTypes) {
   const [temporaryTable, setTemporaryTable] =
     useState<ArmotizationEntry[]>(table);
@@ -78,13 +76,8 @@ export default function Tilgungstabelle({
       year,
       Number(updatedSondertilgungAmount),
     );
-    const sondertilgungen = await getSondertilgungAndSet();
-    const newTable = await recalcForAllSondertilgungen(
-      sondertilgungen!,
-      table,
-      formInput,
-    );
-    setTable(newTable);
+    await getSondertilgungAndSet();
+    sendChangeNotification();
   };
 
   const handleTilgungsWechsel = async (
@@ -94,10 +87,8 @@ export default function Tilgungstabelle({
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const newTilgung = form.elements.namedItem("newTilgung") as HTMLInputElement;
-    const interest_rate = formInput?.interest_rate;
     storeTilgungsWechselInDb(Number(newTilgung.value), year, calculationId!);
-    const newTable = recalcForTilgungswechsel(table, year, Number(newTilgung.value), interest_rate!);
-    setTable(newTable);
+    sendChangeNotification();
   };
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */

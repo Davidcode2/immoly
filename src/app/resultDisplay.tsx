@@ -11,11 +11,11 @@ import IconsHeader from "app/components/iconsHeader";
 import NoData from "app/components/noData";
 import TilgungstabelleContainer from "app/components/tilgungstabelleContainer";
 import { getSondertilgungen } from "app/lib/sondertilgungDatabaseService";
-import { recalcForAllSondertilgungen } from "app/lib/sondertilgungHandler";
 import FinanzierungsFormContainer from "app/components/baseDataForm/finanzierungsFormContainer";
 import ChartsContainer from "app/components/charts/chartsContainer";
 import Hero from "./components/hero";
 import FinanzierungsForm from "./components/baseDataForm/finanzierungsForm";
+import { getTilgungsWechsel } from "./lib/tilgungswechselDatabaseService";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -24,6 +24,16 @@ export default function ResultDisplay() {
 
   const searchParams = useSearchParams();
   const calculationId = searchParams.get("calculationId");
+
+  const changeHandler = async () => {
+    const result = await getCalculation(calculationId!);
+    if (!result) {
+      return;
+    }
+    console.log(result);
+    const tilgungungsTabelle = calcTilgung(result[0]);
+    setTable(tilgungungsTabelle);
+  };
 
   useEffect(() => {
     setInput({
@@ -39,15 +49,11 @@ export default function ResultDisplay() {
       async function loadData() {
         if (!input) return;
 
+        // store this in state
         input.sondertilgungen = await getSondertilgungen(calculationId!);
+        input.tilgungswechsel = await getTilgungsWechsel(calculationId!);
         const tilgungsTabelle = calcTilgung(input);
         setTable(tilgungsTabelle);
-//        const tableWithSondertilgungen = await recalcForAllSondertilgungen(
-//          sondertilgungen,
-//          tilgungsTabelle,
-//          input,
-//        );
-//        setTable(tableWithSondertilgungen);
       }
 
       loadData();
@@ -109,6 +115,7 @@ export default function ResultDisplay() {
                   calculationId={calculationId}
                   input={input}
                   setTable={setTable}
+                  sendChangeNotification={changeHandler}
                 />
                 <ChartsContainer input={input} table={table} />
                 <div className="md:hidden">
