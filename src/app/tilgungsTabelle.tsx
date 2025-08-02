@@ -106,7 +106,7 @@ export default function Tilgungstabelle({
           />
         </CenteredModal>
       )}
-      <table className="table-fixed overflow-auto bg-neutral-800/20 backdrop-blur-lg">
+      <table className="table-fixed overflow-auto bg-neutral-700/20 backdrop-blur-lg">
         <thead>
           <tr className="sticky top-0 bg-black/90 text-left">
             <th className="md:py-5 py-3 pl-2 sm:pr-2 sm:pl-4">Jahr</th>

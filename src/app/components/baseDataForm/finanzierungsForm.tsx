@@ -92,8 +92,8 @@ export default function FinanzierungsForm({
 
   return (
     <Form action={storeInDb} className="mx-auto">
-      <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-2 shadow backdrop-blur-2xl">
-        <div className="mb-4 grid gap-2 md:gap-6">
+      <div className="rounded-lg p-2 shadow backdrop-blur-2xl">
+        <div className="mb-2 grid gap-2 md:gap-8">
           {/* Eigenkapital */}
           <SliderInput
             min={0}
@@ -151,14 +151,14 @@ export default function FinanzierungsForm({
         </div>
       </div>
       <button
-        className="mr-auto rounded-lg p-1 text-xs text-gray-400 hover:text-gray-200"
+        className="mr-auto rounded-lg px-2 pb-4 text-xs text-gray-400 hover:text-gray-200"
         type="button"
         onClick={() => setShowExtended(!showExtended)}
       >
         {showExtended ? "Weniger Optionen" : "Mehr Optionen"}
       </button>
       <div
-        className={`${showExtended ? "block" : "hidden"} mb-2 rounded-lg border border-purple-500/30 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-2 shadow backdrop-blur-2xl`}
+        className={`${showExtended ? "block" : "hidden"} mb-2 rounded-lg p-2 shadow backdrop-blur-2xl`}
       >
         <OptionalParameters
           cashRoi={cashRoi}

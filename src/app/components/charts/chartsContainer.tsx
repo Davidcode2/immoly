@@ -13,10 +13,10 @@ export default function ChartsContainer({ input, table }: PropTypes) {
     <div className="xl:col-start-2">
       {input && (
         <div className="grid gap-y-20 md:gap-4">
-          <div className="grid min-h-[200px] justify-around rounded-lg border border-slate-500/30 bg-neutral-950/50 shadow-lg backdrop-blur-lg md:min-h-[300px]">
+          <div className="grid min-h-[200px] justify-around rounded-lg shadow-lg backdrop-blur-lg md:min-h-[300px]">
             <PlotlyChart data={table} rent={input.rent} />
           </div>
-          <div className="hidden md:grid min-h-[200px] justify-around rounded-lg border border-slate-500/30 bg-neutral-950/50 shadow-lg backdrop-blur-lg md:min-h-[300px]">
+          <div className="hidden md:grid min-h-[200px] justify-around rounded-lg shadow-lg backdrop-blur-lg md:min-h-[300px]">
             <DevelopmentChart
               data={table}
               rent={input.rent}
