@@ -107,7 +107,7 @@ export default function DevelopmentChart({
         label={{ value: "€", position: "insideTopLeft" }}
       />
       <Tooltip content={customToolTip} />
-      <CartesianGrid stroke="#3b3d40" />
+      <CartesianGrid stroke="hsl(10, 10%, 10%)" />
       <Legend />
       <Line type="monotone" dataKey="Sparen" stroke="#a87908" dot={false} />
       <Line type="monotone" dataKey="Tilgung" stroke="#2d7d15" dot={false} />

@@ -78,7 +78,7 @@ export default function PlotlyChart({
         label={{ value: "€", position: "insideTopLeft" }}
       />
       <Tooltip content={customToolTip} />
-      <CartesianGrid stroke="#3b3d40" />
+      <CartesianGrid stroke="hsl(10, 10%, 10%)" />
       <Legend />
       <Line
         type="monotone"
