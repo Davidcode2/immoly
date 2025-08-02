@@ -9,23 +9,29 @@ export default function TilgungsWechselModal({
   tilgungswechsel,
 }: PropTypes) {
   return (
-    <div className="tilgungsWechselModal flex md:h-[300px] md:w-[400px] w-3/4 flex-col items-center gap-4 rounded-xl bg-gradient-to-tl from-purple-900/90 to-purple-950/90 p-10 shadow">
-      <div className="my-auto flex flex-col gap-4">
-        <label className="text-xl md:px-10 text-center" htmlFor="newTilgung">
-          Wählen Sie eine neue monatliche Rate nach {year <= 1 ? "einem Jahr" : year + " Jahren"}
+    <div className="tilgungsWechselModal flex w-3/4 flex-col items-center rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-purple-600/50 to-purple-400/40 shadow-2xl md:w-[400px]">
+      <div className="tilgungsWechselModal">
+        <label
+          className="tilgungsWechselModal flex rounded-t-lg bg-purple-400/40 text-base md:px-10 md:py-10"
+          htmlFor="newTilgung"
+        >
+          Wählen Sie eine neue monatliche Rate nach{" "}
+          {year <= 1 ? "einem Jahr" : year + " Jahren"}
         </label>
         <form
           onSubmit={(e) => handleSubmit(e, year)}
-          className="flex justify-center"
+          className="flex justify-center py-18"
         >
           <input
-            className="tilgungsWechselModal w-36 border-b border-stone-700 bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-slate-200 focus:outline-none md:text-2xl"
+            className="tilgungsWechselModal w-36 border-b border-purple-400 bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-slate-200 focus:outline-none md:text-2xl"
             id="newTilgung"
             name="newTilgung"
             type="text"
             defaultValue={String(tilgungswechsel)}
           />
-          <div className="relative -left-6 top-2 text-lg text-stone-600">€</div>
+          <div className="relative top-1 -left-6 text-lg text-purple-400">
+            €
+          </div>
         </form>
       </div>
     </div>
