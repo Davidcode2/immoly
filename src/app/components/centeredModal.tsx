@@ -8,8 +8,8 @@ export default function CenteredModal({
   children: children,
 }: PropTypes): JSX.Element {
   return (
-    <div className="fixed top-0 left-0 z-50 h-screen w-screen backdrop-blur-sm">
-      <div className="flex h-full items-center justify-center">{children}</div>
+    <div className="fixed inset-0 z-40 backdrop-blur-sm">
+      <div className="sticky top-80 z-50 flex items-center justify-center">{children}</div>
     </div>
   );
 }
