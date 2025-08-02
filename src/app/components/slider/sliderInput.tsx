@@ -24,6 +24,12 @@ const SliderInput: React.FC<SliderInputProps> = ({
   sign = "€",
   handleChange,
 }) => {
+  const monthlyRateInPercent = () => {
+    if (inputName !== "monthly_rate") return "";
+    const monthlyRate = (value / 100) * 12;
+    return monthlyRate.toFixed(2) + "%";
+  };
+
   return (
     <div>
       <label
@@ -32,7 +38,7 @@ const SliderInput: React.FC<SliderInputProps> = ({
       >
         {label}
       </label>
-      <div className="flex md:w-68 flex-col gap-y-3 md:gap-y-0">
+      <div className="flex flex-col gap-y-3 md:w-68 md:gap-y-0">
         <Slider
           value={value}
           min={min}
@@ -48,7 +54,14 @@ const SliderInput: React.FC<SliderInputProps> = ({
             inputName={inputName}
             value={value}
           />
-          <div className="relative -left-6 text-stone-600">{inputName === "interest_rate" ? "%" : sign}</div>
+          <div className="relative -left-6 text-stone-600">
+            {inputName === "interest_rate" ? "%" : sign}
+          </div>
+          {inputName === "monthly_rate" && (
+            <div className="text-xs text-stone-400">
+              {monthlyRateInPercent()}
+            </div>
+          )}
         </div>
       </div>
     </div>
