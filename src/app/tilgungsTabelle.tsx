@@ -24,7 +24,7 @@ export default function Tilgungstabelle({
   const [temporaryTable, setTemporaryTable] =
     useState<ArmotizationEntry[]>(table);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [selectedYear, setSelectedYear] = useState<number>(0);
+  const [selectedEntry, setSelectedEntry] = useState<ArmotizationEntry>();
   const tilgungsWechselModalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -75,10 +75,10 @@ export default function Tilgungstabelle({
   };
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
-  const openModal = (e: any, selectedYear: number) => {
+  const openModal = (e: any, entry: ArmotizationEntry) => {
     const target = e.target as HTMLElement;
     if (target.classList.contains("sondertilgungInput")) return;
-    setSelectedYear(selectedYear);
+    setSelectedEntry(entry);
     setShowModal(true);
   };
 
@@ -101,7 +101,8 @@ export default function Tilgungstabelle({
         <CenteredModal>
           <TilgungsWechselModal
             handleSubmit={handleTilgungsWechsel}
-            year={selectedYear!}
+            year={selectedEntry!.year!}
+            tilgungswechsel={selectedEntry!.tilgungswechsel || selectedEntry!.yearlyRate / 12}
           />
         </CenteredModal>
       )}
@@ -127,7 +128,7 @@ export default function Tilgungstabelle({
             <tr
               key={x.year}
               className="border-t border-gray-950 even:bg-[#0f0f0f]/40 hover:bg-purple-700"
-              onClick={(e) => openModal(e, x.year)}
+              onClick={(e) => openModal(e, x)}
             >
               <td className="px-4 py-2">{x.year}</td>
               <td className="py-2 sm:px-4">
