@@ -112,7 +112,7 @@ export default function Tilgungstabelle({
             <th className="md:py-5 py-3 pl-2 sm:pr-2 sm:pl-4">Jahr</th>
             <th className="md:py-5 py-3 sm:pl-4">Zins</th>
             <th className="md:py-5 py-3 sm:px-4">Tilgung</th>
-            <th className="md:py-5 py-3 sm:px-4">
+            <th className="hidden md:block md:py-5 py-3 sm:px-4">
               {screenWidthMobile() ? "Jhl. Rate" : "Jährliche Rate"}
             </th>
             <th className="md:py-5 py-3 sm:px-4">
@@ -138,7 +138,7 @@ export default function Tilgungstabelle({
                 {Math.round(x.principal).toLocaleString("de")}
               </td>
               <td
-                className={`${x.tilgungswechsel > 0 && "text-sky-500"} md:py-5 py-3 sm:px-4`}
+                className={`${x.tilgungswechsel > 0 && "text-sky-500"} hidden md:block md:py-5 py-3 sm:px-4`}
               >
                 {x.yearlyRate.toLocaleString("de")}
                 {x.tilgungswechsel > 0 && (
