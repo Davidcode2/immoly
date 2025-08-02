@@ -21,6 +21,13 @@ export default function FinanzierungsForm({
 
   const [showExtended, setShowExtended] = useState<boolean>(false);
 
+  const monthlyRateInPercent = () => {
+    const kreditSumme = Number(principalValue) - Number(downPayment);
+    const yearlyRate = Number(monthlyRate) * 12;
+    const monthlyRateInPercent = (100 / kreditSumme) * yearlyRate;
+    return monthlyRateInPercent.toFixed(2) + " %";
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     switch (name) {
@@ -84,7 +91,7 @@ export default function FinanzierungsForm({
   return (
     <Form action={storeInDb} className="mx-auto">
       <div className="rounded-lg border border-purple-500/30 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-2 shadow backdrop-blur-2xl">
-        <div className="grid gap-2 md:gap-6 mb-4">
+        <div className="mb-4 grid gap-2 md:gap-6">
           {/* Eigenkapital */}
           <SliderInput
             min={0}
@@ -105,7 +112,11 @@ export default function FinanzierungsForm({
             label={"Monatsrate"}
             htmlFor={"monthlyRate"}
             handleChange={handleInputChange}
-          />
+          >
+            <div className="w-36 border-b border-stone-700 bg-transparent pb-1 text-xl text-neutral-500 transition-colors duration-200 focus:border-slate-500 focus:outline-none md:text-base">
+              {monthlyRateInPercent()}
+            </div>
+          </SliderInput>
           <SliderInput
             min={0.1}
             max={6}
@@ -125,7 +136,16 @@ export default function FinanzierungsForm({
             label={"Kaufsumme"}
             htmlFor={"creditSum"}
             handleChange={handleInputChange}
-          />
+          >
+            <div>
+              <div className="text-xl text-pink-500 font-bold">
+                {(Number(principalValue) - Number(downPayment)).toLocaleString(
+                  "de",
+                )}
+              </div>
+              <span className="relative -top-2 text-xs">Kreditsumme</span>
+            </div>
+          </SliderInput>
         </div>
       </div>
       <button
@@ -133,9 +153,11 @@ export default function FinanzierungsForm({
         type="button"
         onClick={() => setShowExtended(!showExtended)}
       >
-      { showExtended ? "Weniger Optionen" : "Mehr Optionen" }
+        {showExtended ? "Weniger Optionen" : "Mehr Optionen"}
       </button>
-      <div className={`${showExtended ? "block" : "hidden" } rounded-lg border border-purple-500/30 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-2 shadow backdrop-blur-2xl mb-2`}>
+      <div
+        className={`${showExtended ? "block" : "hidden"} mb-2 rounded-lg border border-purple-500/30 bg-gradient-to-tl from-sky-900/10 to-purple-800/10 p-2 shadow backdrop-blur-2xl`}
+      >
         <OptionalParameters
           cashRoi={cashRoi}
           handleInputChange={handleInputChange}

@@ -11,6 +11,7 @@ type SliderInputProps = {
   htmlFor: string;
   sign?: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  children?: React.ReactNode;
 };
 
 const SliderInput: React.FC<SliderInputProps> = ({
@@ -23,13 +24,8 @@ const SliderInput: React.FC<SliderInputProps> = ({
   htmlFor,
   sign = "€",
   handleChange,
+  children
 }) => {
-  const monthlyRateInPercent = () => {
-    if (inputName !== "monthly_rate") return "";
-    const monthlyRate = (value / 100) * 12;
-    return monthlyRate.toFixed(2) + "%";
-  };
-
   return (
     <div>
       <label
@@ -57,11 +53,7 @@ const SliderInput: React.FC<SliderInputProps> = ({
           <div className="relative -left-6 text-stone-600">
             {inputName === "interest_rate" ? "%" : sign}
           </div>
-          {inputName === "monthly_rate" && (
-            <div className="text-xs text-stone-400">
-              {monthlyRateInPercent()}
-            </div>
-          )}
+          { children }
         </div>
       </div>
     </div>
