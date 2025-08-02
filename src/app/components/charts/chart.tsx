@@ -94,13 +94,6 @@ export default function PlotlyChart({
         animationDuration={1000}
         dot={false}
       />
-      <Line
-        type="monotone"
-        dataKey="Sparen"
-        stroke="#a87908"
-        animationDuration={1000}
-        dot={false}
-      />
     </LineChart>
   );
 }
