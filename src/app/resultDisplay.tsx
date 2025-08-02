@@ -39,14 +39,15 @@ export default function ResultDisplay() {
       async function loadData() {
         if (!input) return;
 
+        input.sondertilgungen = await getSondertilgungen(calculationId!);
         const tilgungsTabelle = calcTilgung(input);
-        const sondertilgungen = await getSondertilgungen(calculationId!);
-        const tableWithSondertilgungen = await recalcForAllSondertilgungen(
-          sondertilgungen,
-          tilgungsTabelle,
-          input,
-        );
-        setTable(tableWithSondertilgungen);
+        setTable(tilgungsTabelle);
+//        const tableWithSondertilgungen = await recalcForAllSondertilgungen(
+//          sondertilgungen,
+//          tilgungsTabelle,
+//          input,
+//        );
+//        setTable(tableWithSondertilgungen);
       }
 
       loadData();
@@ -67,6 +68,7 @@ export default function ResultDisplay() {
           if (!result) {
             return;
           }
+          console.log(result);
           setInput(result[0]);
           const tilgungungsTabelle = calcTilgung(result[0]);
           setTable(tilgungungsTabelle);
