@@ -127,7 +127,7 @@ export default function Tilgungstabelle({
           {temporaryTable.map((x) => (
             <tr
               key={x.year}
-              className="border-t border-gray-950 even:bg-[#0f0f0f]/40 hover:bg-purple-700"
+              className="border-t border-slate-950 even:bg-[#0f0f0f]/40 hover:bg-purple-700"
               onClick={(e) => openModal(e, x)}
             >
               <td className="px-4 py-2">{x.year}</td>
