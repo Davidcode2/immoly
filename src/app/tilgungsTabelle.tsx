@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 import CashRoiModel from "./lib/models/cashRoiModel";
-import {
-  updateSondertilgungInDb,
-} from "./lib/sondertilgungDatabaseService";
+import { updateSondertilgungInDb } from "./lib/sondertilgungDatabaseService";
 import SondertilgungInput from "./components/sondertilgungInput";
 import { screenWidthMobile } from "./utils/screenWidth";
 import CenteredModal from "./components/centeredModal";
@@ -68,7 +66,9 @@ export default function Tilgungstabelle({
   ) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
-    const newTilgung = form.elements.namedItem("newTilgung") as HTMLInputElement;
+    const newTilgung = form.elements.namedItem(
+      "newTilgung",
+    ) as HTMLInputElement;
     storeTilgungsWechselInDb(Number(newTilgung.value), year, calculationId!);
     sendChangeNotification();
     setShowModal(false);
@@ -136,16 +136,23 @@ export default function Tilgungstabelle({
               <td className="py-2 sm:px-4">
                 {Math.round(x.principal).toLocaleString("de")}
               </td>
-              <td className="py-2 sm:px-4">
+              <td
+                className={`${x.tilgungswechsel > 0 && "text-sky-500"} py-2 sm:px-4`}
+              >
                 {x.yearlyRate.toLocaleString("de")}
+                {x.tilgungswechsel > 0 && (
+                  <div className="text-xs text-green-600">
+                    {x.tilgungswechsel.toLocaleString("de")} mntl.
+                  </div>
+                )}
               </td>
               <td className="py-2 sm:px-4">
                 {Math.round(x.remainingPrincipal).toLocaleString("de")}
               </td>
-              <td className="w-24 py-2 sm:px-4 sondertilgungInput">
+              <td className="sondertilgungInput w-24 py-2 sm:px-4">
                 <form
                   onSubmit={(e) => handleSondertilgungSubmit(e, x.year)}
-                  className="justify-fit flex sm:gap-4 sondertilgungInput"
+                  className="justify-fit sondertilgungInput flex sm:gap-4"
                 >
                   <SondertilgungInput
                     year={x.year}
