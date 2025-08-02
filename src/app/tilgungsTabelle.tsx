@@ -71,6 +71,7 @@ export default function Tilgungstabelle({
     const newTilgung = form.elements.namedItem("newTilgung") as HTMLInputElement;
     storeTilgungsWechselInDb(Number(newTilgung.value), year, calculationId!);
     sendChangeNotification();
+    setShowModal(false);
   };
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
