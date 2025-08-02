@@ -2,10 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 import CashRoiModel from "./lib/models/cashRoiModel";
 import {
-  getSondertilgungen,
   updateSondertilgungInDb,
 } from "./lib/sondertilgungDatabaseService";
-import { Sondertilgung } from "./lib/models/sondertilgung";
 import SondertilgungInput from "./components/sondertilgungInput";
 import { screenWidthMobile } from "./utils/screenWidth";
 import CenteredModal from "./components/centeredModal";
@@ -30,13 +28,9 @@ export default function Tilgungstabelle({
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedYear, setSelectedYear] = useState<number>(0);
   const tilgungsWechselModalRef = useRef<HTMLDivElement>(null);
-  const [sonderTilgungen, setSonderTilgungen] = useState<Sondertilgung[]>(
-    table.map((x) => ({ year: x.year, amount: x.sondertilgung })),
-  );
 
   useEffect(() => {
     setTemporaryTable(table);
-    getSondertilgungAndSet();
   }, [table]);
 
   const getSondertilgungFromForm = (
@@ -54,14 +48,6 @@ export default function Tilgungstabelle({
     return amount.toLocaleString("de");
   };
 
-  const getSondertilgungAndSet = async () => {
-    const sondertilgungen = await getSondertilgungen(calculationId!);
-    if (sondertilgungen) {
-      setSonderTilgungen(sondertilgungen);
-      return sondertilgungen;
-    }
-  };
-
   const handleSondertilgungSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
     year: number,
@@ -73,7 +59,6 @@ export default function Tilgungstabelle({
       year,
       Number(updatedSondertilgungAmount),
     );
-    await getSondertilgungAndSet();
     sendChangeNotification();
   };
 
