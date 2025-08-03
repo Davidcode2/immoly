@@ -107,7 +107,7 @@ export default function ResultDisplay() {
             <>
               <div className="flex gap-4 justify-start">
                 <Scenario calculationId={selectedScenario} data={table} />
-                <NebenkostenDisplay/>
+                <NebenkostenDisplay calculationData={input}/>
                 <div className="ml-auto hidden md:block">
                   <IconsHeader />
                 </div>
