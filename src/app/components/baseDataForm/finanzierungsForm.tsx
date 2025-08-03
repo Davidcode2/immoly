@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import SliderInput from "app/components/slider/sliderInput";
 import OptionalParameters from "app/components/baseDataForm/optionalParameters";
-import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
-import KreditSummeTextComponent from "../kreditSummeTextComponent";
 
 export default function FinanzierungsForm({
   values,

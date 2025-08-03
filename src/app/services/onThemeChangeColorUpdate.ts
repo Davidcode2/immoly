@@ -2,7 +2,6 @@ export const onThemeChangeColorUpdate = (
   setColor: (color: string) => void,
   lightColor: string,
   darkColor: string,
-
 ): MutationObserver => {
   const updateGridColor = () => {
     console.log(

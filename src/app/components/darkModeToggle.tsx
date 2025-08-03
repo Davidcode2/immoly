@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function DarkModeToggle() {
   const [theme, setTheme] = useState(() => { return "system"; });
-  const [useSystem, setUseSystem] = useState<any>();
+  const [useSystem, setUseSystem] = useState<boolean>();
 
   const handleToggleDarkMode = () => {
     setUseSystem(false);
@@ -18,7 +18,7 @@ export default function DarkModeToggle() {
         ? "dark"
         : "light";
     }
-    return "light"; // Default if media query is not supported
+    return "light";
   });
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function DarkModeToggle() {
   }, [theme, useSystem, systemPreference]);
 
   useEffect(() => {
-    const handleSystemChange = (event: any) => {
+    const handleSystemChange = (event: MediaQueryListEvent) => {
       setSystemPreference(event.matches ? "dark" : "light");
     };
 
