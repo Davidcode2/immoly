@@ -13,6 +13,7 @@ import ChartDataItem from "app/lib/models/ChartDataItem";
 import InterestEarnedModel from "app/lib/models/interestEarnedModel";
 import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
 import { customToolTip, renderThousandIndicator } from "./chartHelper";
+import { onThemeChangeColorUpdate } from "app/services/onThemeChangeColorUpdate";
 
 export default function DevelopmentChart({
   data,
@@ -26,6 +27,7 @@ export default function DevelopmentChart({
   const [debouncedChartData, setDebouncedChartData] = useState<
     ChartDataItem[] | null
   >(null);
+  const [gridColor, setGridColor] = useState<string>("hsl(10, 10%, 10%)");
 
   const calcInterest = () => {
     const interestCalculations = data.reduce(
@@ -53,6 +55,11 @@ export default function DevelopmentChart({
     );
     return interestCalculations;
   };
+
+  useEffect(() => {
+    const observer = onThemeChangeColorUpdate(setGridColor, "hsl(10, 10%, 80%)", "hsl(10, 10%, 10%)");
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!data) {
@@ -107,7 +114,7 @@ export default function DevelopmentChart({
         label={{ value: "€", position: "insideTopLeft" }}
       />
       <Tooltip content={customToolTip} />
-      <CartesianGrid stroke="hsl(10, 10%, 10%)" />
+      <CartesianGrid stroke={gridColor} />
       <Legend />
       <Line type="monotone" dataKey="Sparen" stroke="#a87908" dot={false} />
       <Line type="monotone" dataKey="Tilgung" stroke="#2d7d15" dot={false} />

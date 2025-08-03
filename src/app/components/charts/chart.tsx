@@ -11,6 +11,7 @@ import {
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
 import { customToolTip, renderThousandIndicator } from "./chartHelper";
+import { onThemeChangeColorUpdate } from "app/services/onThemeChangeColorUpdate";
 
 interface ChartDataItem {
   name: string;
@@ -29,6 +30,12 @@ export default function PlotlyChart({
   const [debouncedChartData, setDebouncedChartData] = useState<
     ChartDataItem[] | null
   >(null);
+  const [gridColor, setGridColor] = useState<string>("hsl(10, 10%, 10%)");
+
+  useEffect(() => {
+    const observer = onThemeChangeColorUpdate(setGridColor, "hsl(10, 10%, 80%)", "hsl(10, 10%, 10%)");
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!data) {
@@ -78,7 +85,7 @@ export default function PlotlyChart({
         label={{ value: "€", position: "insideTopLeft" }}
       />
       <Tooltip content={customToolTip} />
-      <CartesianGrid stroke="hsl(10, 10%, 10%)" />
+      <CartesianGrid stroke={gridColor} />
       <Legend />
       <Line
         type="monotone"
