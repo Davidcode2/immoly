@@ -106,7 +106,7 @@ export default function ResultDisplay() {
             <NoData />
           ) : (
             <>
-              <div className="grid lg:grid-cols-[1fr_1fr_100px] 2xl:grid-cols-5 justify-stretch md:gap-4 gap-y-14 mt-14 md:m-0">
+              <div className="grid lg:grid-cols-[1fr_1fr_100px] 2xl:grid-cols-[repeat(4,1fr)_100px] justify-stretch md:gap-4 gap-y-14 my-24 md:m-0">
                 <KreditSummeTextComponent
                   principal={Number(input?.principal)}
                   downPayment={Number(input?.down_payment)}
@@ -128,7 +128,7 @@ export default function ResultDisplay() {
                   />
                 </div>
                 <ChartsContainer input={input} table={table} />
-                <div className="md:hidden">
+                <div className="md:hidden my-24">
                   <FinanzierungsForm values={input} setInput={setInput} />
                 </div>
                 <div className="mx-4 md:hidden">
