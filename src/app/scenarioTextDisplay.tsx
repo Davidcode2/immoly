@@ -8,7 +8,7 @@ export default function ScenarioTextDisplay({
   sumZinsen: number;
 }) {
   return (
-    <div className="flex md:flex-col items-center md:items-start h-24 md:max-h-none md:w-fit md:max-w-58 md:h-48 gap-x-4 gap-y-2 rounded-lg p-3 md:p-8 shadow backdrop-blur-2xl">
+    <div className="my-8 flex flex-col text-center md:text-start items-center md:items-start gap-x-4 gap-y-2 rounded-lg p-3 backdrop-blur-2xl md:my-0 md:h-48 md:max-h-none md:p-8 md:shadow">
       {paidAfter === -1 ? (
         <div className="font-bold text-red-500">Das wird nichts</div>
       ) : (

@@ -13,7 +13,7 @@ export default function KreditSummeTextComponent({
   const kreditSumme = principal + nebenkosten - downPayment;
 
   return (
-    <div className="grid grid-cols-2 items-baseline gap-x-2 rounded-lg px-6 pt-6 shadow backdrop-blur-2xl z-20">
+    <div className="grid grid-cols-2 items-baseline gap-x-2 rounded-lg p-3 md:p-8 md:shadow backdrop-blur-2xl z-20">
       <span className="text-end text-lg">{principal.toLocaleString("de")}</span>
       <span className="">Kaufpreis</span>
       <span className="text-end">+ {nebenkosten.toLocaleString("de")}</span>

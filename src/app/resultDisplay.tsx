@@ -106,7 +106,7 @@ export default function ResultDisplay() {
             <NoData />
           ) : (
             <>
-              <div className="flex justify-start gap-4">
+              <div className="grid md:grid-cols-[1.3fr_1fr_2fr_1fr] justify-stretch gap-4">
                 <KreditSummeTextComponent
                   principal={Number(input?.principal)}
                   downPayment={Number(input?.down_payment)}
