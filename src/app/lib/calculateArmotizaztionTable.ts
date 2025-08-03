@@ -1,3 +1,4 @@
+import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 import ArmotizationEntry from "./models/ArmotizationEntry";
 import CashRoiModel from "./models/cashRoiModel";
 
@@ -9,7 +10,8 @@ export default function calcTilgung(
     return [];
   }
 
-  const kreditsumme = calculation.principal - calculation.down_payment;
+  const nebenkosten = new NebenkostenCalculator(calculation.principal).calcSumme();
+  const kreditsumme = (calculation.principal + nebenkosten) - calculation.down_payment;
   const annuitaet = calculation.monthly_rate * 12;
 
   const armotizationTable = calculateArmotizationTable(kreditsumme, annuitaet, calculation);
