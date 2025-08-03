@@ -29,7 +29,7 @@ export default function KreditSummeTextComponent({
               width={24}
               height={24}
             />
-            <span className="bg-white dark:bg-black left-28 w-60 p-4 rounded-lg shadow-lg absolute opacity-0 text-base text-violet-400 group-hover:opacity-100">
+            <span className="bg-white dark:bg-black left-28 w-60 p-4 rounded-lg shadow-lg absolute invisible text-base text-violet-400 group-hover:visible">
               Eigenkapital deckt Nebenkosten nicht.<br/>
               Könnte schwierig werden.
             </span>
