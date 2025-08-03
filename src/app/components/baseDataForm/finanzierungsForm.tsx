@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import SliderInput from "app/components/slider/sliderInput";
 import OptionalParameters from "app/components/baseDataForm/optionalParameters";
+import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
+import KreditSummeTextComponent from "../kreditSummeTextComponent";
 
 export default function FinanzierungsForm({
   values,
@@ -139,19 +141,12 @@ export default function FinanzierungsForm({
             htmlFor={"creditSum"}
             handleChange={handleInputChange}
           >
-            <div>
-              <div className="text-xl text-pink-500 font-bold">
-                {(Number(principalValue) - Number(downPayment)).toLocaleString(
-                  "de",
-                )}
-              </div>
-              <span className="relative -top-2 text-xs">Kreditsumme</span>
-            </div>
+            <KreditSummeTextComponent principal={Number(principalValue)} downPayment={Number(downPayment)} />
           </SliderInput>
         </div>
       </div>
       <button
-        className="mr-auto rounded-lg px-2 pb-4 text-xs text-gray-400 dark:hover:text-gray-200 hover:text-slate-800"
+        className="mr-auto rounded-lg px-2 pb-4 text-xs text-gray-400 hover:text-slate-800 dark:hover:text-gray-200"
         type="button"
         onClick={() => setShowExtended(!showExtended)}
       >
