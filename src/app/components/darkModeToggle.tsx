@@ -4,13 +4,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function DarkModeToggle() {
-  const [theme, setTheme] = useState(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme) {
-      return storedTheme;
-    }
-    return "system"; // Default to system
-  });
+  const [theme, setTheme] = useState(() => { return "system"; });
+  const [useSystem, setUseSystem] = useState<any>();
 
   const handleToggleDarkMode = () => {
     setUseSystem(false);
@@ -26,15 +21,9 @@ export default function DarkModeToggle() {
     return "light"; // Default if media query is not supported
   });
 
-  const [useSystem, setUseSystem] = useState(
-    () =>
-      localStorage.getItem("useSystem") === "true" ||
-      localStorage.getItem("useSystem") === null,
-  );
-
   useEffect(() => {
     localStorage.setItem("theme", theme);
-    localStorage.setItem("useSystem", useSystem.valueOf() ? "true" : "false");
+    localStorage.setItem("useSystem", useSystem ? useSystem.valueOf() ? "true" : "false" : "false");
     document.documentElement.setAttribute(
       "data-theme",
       useSystem ? systemPreference : theme,
