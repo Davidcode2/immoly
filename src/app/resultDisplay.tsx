@@ -16,6 +16,7 @@ import ChartsContainer from "app/components/charts/chartsContainer";
 import Hero from "./components/hero";
 import FinanzierungsForm from "./components/baseDataForm/finanzierungsForm";
 import { getTilgungsWechsel } from "./lib/tilgungswechselDatabaseService";
+import NebenkostenDisplay from "./components/nebenkostenDisplay";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -96,7 +97,7 @@ export default function ResultDisplay() {
         <div className="hidden md:block">
           <FinanzierungsFormContainer formValues={input} setInput={setInput} />
         </div>
-        <div className="rounded-lg bg-gradient-to-tl from-purple-800/10 to-neutral-900/20 p-4 shadow backdrop-blur-2xl md:hidden md:p-8">
+        <div className="rounded-lg p-4 shadow backdrop-blur-2xl md:hidden md:p-8">
           <Hero />
         </div>
         <div className="grid h-full gap-y-4">
@@ -104,8 +105,9 @@ export default function ResultDisplay() {
             <NoData />
           ) : (
             <>
-              <div className="grid md:grid-cols-2">
+              <div className="flex gap-4 justify-start">
                 <Scenario calculationId={selectedScenario} data={table} />
+                <NebenkostenDisplay/>
                 <div className="ml-auto hidden md:block">
                   <IconsHeader />
                 </div>
