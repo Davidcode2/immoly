@@ -1,21 +1,22 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@custom-variant slate (&:where([data-theme=slate], [data-theme=slate] *));
 
-[data-theme='light'] {
-  @apply bg-white;
-  :root {
-    --background: #ededed;
-    --foreground: #0a0a0a;
-  }
+[data-theme="light"] {
+  --background: hsl(1, 0%, 100%);
+  --foreground: #0a0a0a;
 }
 
-[data-theme='dark'] {
-  @apply bg-gray-900 text-slate-100;
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+[data-theme="slate"] {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+[data-theme="dark"] {
+  @apply text-slate-100;
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 @theme inline {
