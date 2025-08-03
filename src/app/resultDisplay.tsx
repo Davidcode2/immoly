@@ -106,14 +106,14 @@ export default function ResultDisplay() {
             <NoData />
           ) : (
             <>
-              <div className="grid md:grid-cols-[1.3fr_1fr_2fr_1fr] justify-stretch gap-4">
+              <div className="grid lg:grid-cols-[1fr_1fr_100px] 2xl:grid-cols-5 justify-stretch md:gap-4 gap-y-14 mt-14 md:m-0">
                 <KreditSummeTextComponent
                   principal={Number(input?.principal)}
                   downPayment={Number(input?.down_payment)}
                 />
                 <Scenario calculationId={selectedScenario} data={table} />
                 <NebenkostenDisplay calculationData={input} />
-                <div className="ml-auto hidden md:block">
+                <div className="ml-auto hidden lg:block lg:row-start-1 lg:-col-start-2">
                   <IconsHeader />
                 </div>
               </div>

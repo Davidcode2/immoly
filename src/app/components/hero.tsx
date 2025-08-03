@@ -9,9 +9,9 @@ export default function Hero() {
         width={200}
         height={10}
         alt="Logo"
-        className="mx-auto md:mb-16 dark:invert-0 invert"
+        className="mx-auto lg:mb-16 dark:invert-0 invert"
       />
-      <div className="mx-auto p-4 md:hidden">
+      <div className="mx-auto p-4 lg:hidden">
         <IconsHeader />
       </div>
       <div className="mb-10 p-4 text-center font-bold md:hidden">
