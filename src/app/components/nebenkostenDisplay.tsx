@@ -1,108 +1,80 @@
 import CashRoiModel from "app/lib/models/cashRoiModel";
+import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
+import { useState } from "react";
 import { Cell, Pie, PieChart } from "recharts";
 
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 type PropTypes = {
   calculationData: CashRoiModel;
-}
+};
 
 export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
+  const nebenkostenCalculator = new NebenkostenCalculator(calculationData.principal);
+
   const handleMouseEnter = (index: number) => setActiveIndex(index);
   const handleMouseLeave = () => setActiveIndex(null);
 
-  const calcNotarkosten = () => {
-    return calculationData.principal * 0.015;
-  }
-
-  const calcGrundbuchkosten = () => {
-    return calculationData.principal * 0.005;
-  }
-
-  const calcMaklergebuehr = () => {
-    return calculationData.principal * 0.0357;
-  }
-
-  const calcGrunderwerbsteuer = (bundesland: string) => {
-    switch (bundesland) {
-      case "Baden-Württemberg":
-        return calculationData.principal * 0.05;
-      case "Bayern":
-        return calculationData.principal * 0.03;
-      case "Berlin":
-        return calculationData.principal * 0.06;
-      case "Brandenburg":
-        return calculationData.principal * 0.06;
-      case "Bremen":
-        return calculationData.principal * 0.05;
-      case "Hamburg":
-        return calculationData.principal * 0.04;
-      case "Hessen":
-        return calculationData.principal * 0.06;
-      case "Mecklenburg-Vorpommern":
-        return calculationData.principal * 0.06;
-      case "Niedersachsen":
-        return calculationData.principal * 0.05;
-      case "Nordrhein-Westfalen":
-        return calculationData.principal * 0.06;
-      case "Rheinland-Pfalz":
-        return calculationData.principal * 0.05;
-      case "Saarland":
-        return calculationData.principal * 0.06;
-      case "Sachsen":
-        return calculationData.principal * 0.03;
-      case "Sachsen-Anhalt":
-        return calculationData.principal * 0.02;
-      case "Schleswig-Holstein":
-        return calculationData.principal * 0.05;
-      case "Thüringen":
-        return calculationData.principal * 0.03;
-      default:
-        return calculationData.principal * 0.04;
-    }
-  }
-
-  const graphData = () => {
-    const data = [
-      { name: "Notarkosten", value: calcNotarkosten() },
-      { name: "Grundbuchkosten", value: calcGrundbuchkosten() },
-      { name: "Grunderwerbsteuer", value: calcGrunderwerbsteuer("Baden-Württemberg") },
-      { name: "Maklergebühr", value: calcMaklergebuehr() },
+  const calcGraphData = () => {
+    const graphData = [
+      { name: "Notarkosten", value: nebenkostenCalculator.calcNotarkosten() },
+      { name: "Grundbuchkosten", value: nebenkostenCalculator.calcGrundbuchkosten() },
+      {
+        name: "Grunderwerbsteuer",
+        value: nebenkostenCalculator.calcGrunderwerbsteuer("Baden-Württemberg"),
+      },
+      { name: "Maklergebühr", value: nebenkostenCalculator.calcMaklergebuehr() },
     ];
-    return data;
-  }
+    return graphData;
+  };
+
+  const data = calcGraphData();
+
   return (
-    <>
-      <div className="flex md:flex-col items-center text-xs md:items-start h-24 md:max-h-none md:w-fit md:max-w-58 md:h-48 gap-x-4 gap-y-2 rounded-lg p-3 md:p-8 shadow backdrop-blur-2xl">
-        <PieChart width={200} height={400}>
-          <Pie
-            data={graphData()}
-            cx={60}
-            cy={60}
-            innerRadius={40}
-            outerRadius={50}
-            fill="#8884d8"
-            paddingAngle={5}
-            dataKey="value"
-            label={({ name, value }) => `${name}: €${value.toLocaleString()}`}
+    <div className="flex items-center gap-6 rounded-lg py-4 px-6 shadow backdrop-blur-2xl">
+      <PieChart width={130} height={130}>
+        <Pie
+          data={data}
+          cx={60}
+          cy={60}
+          innerRadius={40}
+          outerRadius={60}
+          paddingAngle={3}
+          dataKey="value"
+          onMouseLeave={handleMouseLeave}
+        >
+          {data.map((entry, index) => (
+            <Cell
+              key={entry.name}
+              fill={COLORS[index % COLORS.length]}
+              stroke={activeIndex === index ? COLORS[index % COLORS.length] : "none"}
+              strokeWidth={activeIndex === index ? 3 : 0}
+              onMouseEnter={() => handleMouseEnter(index)}
+            />
+          ))}
+        </Pie>
+      </PieChart>
+
+      <div className="flex flex-col gap-2">
+        {data.map((entry, index) => (
+          <div
+            key={entry.name}
+            onMouseEnter={() => handleMouseEnter(index)}
+            onMouseLeave={handleMouseLeave}
+            className={`cursor-pointer transition-opacity ${
+              activeIndex === index ? "font-semibold opacity-100" : "opacity-70"
+            }`}
           >
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${entry.name}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-        </PieChart>
+            <span
+              className="mr-2 inline-block h-3 w-3 rounded-sm"
+              style={{ backgroundColor: COLORS[index % COLORS.length] }}
+            />
+            {entry.name}: €{entry.value.toLocaleString("de")}
+          </div>
+        ))}
       </div>
-    </>
+    </div>
   );
 }
