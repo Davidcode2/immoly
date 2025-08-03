@@ -92,7 +92,7 @@ export default function FinanzierungsForm({
 
   return (
     <Form action={storeInDb} className="mx-auto">
-      <div className="rounded-lg p-2 shadow backdrop-blur-2xl">
+      <div className="p-2">
         <div className="mb-2 grid gap-2 md:gap-8">
           {/* Eigenkapital */}
           <SliderInput
@@ -151,14 +151,14 @@ export default function FinanzierungsForm({
         </div>
       </div>
       <button
-        className="mr-auto rounded-lg px-2 pb-4 text-xs text-gray-400 hover:text-gray-200"
+        className="mr-auto rounded-lg px-2 pb-4 text-xs text-gray-400 dark:hover:text-gray-200 hover:text-slate-800"
         type="button"
         onClick={() => setShowExtended(!showExtended)}
       >
         {showExtended ? "Weniger Optionen" : "Mehr Optionen"}
       </button>
       <div
-        className={`${showExtended ? "block" : "hidden"} mb-2 rounded-lg p-2 shadow backdrop-blur-2xl`}
+        className={`${showExtended ? "block" : "hidden"} mb-2 rounded-lg p-2 backdrop-blur-2xl`}
       >
         <OptionalParameters
           cashRoi={cashRoi}
@@ -169,7 +169,7 @@ export default function FinanzierungsForm({
 
       <button
         type="submit"
-        className="mt-1 w-full rounded-lg bg-purple-900/60 px-4 py-2 font-bold text-white shadow-md backdrop-blur-md transition-colors duration-200 hover:bg-purple-700/80"
+        className="mt-1 w-full rounded-lg bg-purple-900/60 px-4 py-2 font-bold text-white shadow backdrop-blur-md transition-colors duration-200 hover:bg-purple-700/80"
       >
         Berechnung speichern
       </button>

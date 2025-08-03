@@ -18,7 +18,7 @@ export default function SingleGraph({
   };
 
   return (
-    <div className="flex min-w-64 flex-col justify-between bg-neutral-800/20 rounded-md text-xs backdrop-blur-lg">
+    <div className="flex min-w-64 flex-col justify-between dark:bg-neutral-800/30 shadow rounded-md text-xs backdrop-blur-lg">
       <button
         className="ml-auto px-2 text-red-300"
         onClick={deleteSelectedItem}
