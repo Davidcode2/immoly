@@ -17,6 +17,7 @@ import Hero from "./components/hero";
 import FinanzierungsForm from "./components/baseDataForm/finanzierungsForm";
 import { getTilgungsWechsel } from "./lib/tilgungswechselDatabaseService";
 import NebenkostenDisplay from "./components/nebenkostenDisplay";
+import KreditSummeTextComponent from "./components/kreditSummeTextComponent";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -105,9 +106,13 @@ export default function ResultDisplay() {
             <NoData />
           ) : (
             <>
-              <div className="flex gap-4 justify-start">
+              <div className="flex justify-start gap-4">
+                <KreditSummeTextComponent
+                  principal={Number(input?.principal)}
+                  downPayment={Number(input?.down_payment)}
+                />
                 <Scenario calculationId={selectedScenario} data={table} />
-                <NebenkostenDisplay calculationData={input}/>
+                <NebenkostenDisplay calculationData={input} />
                 <div className="ml-auto hidden md:block">
                   <IconsHeader />
                 </div>

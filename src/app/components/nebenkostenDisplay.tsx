@@ -6,13 +6,13 @@ import { Cell, Pie, PieChart } from "recharts";
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 type PropTypes = {
-  calculationData: CashRoiModel;
+  calculationData: CashRoiModel | null;
 };
 
 export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const nebenkostenCalculator = new NebenkostenCalculator(calculationData.principal);
+  const nebenkostenCalculator = new NebenkostenCalculator(calculationData!.principal);
 
   const handleMouseEnter = (index: number) => setActiveIndex(index);
   const handleMouseLeave = () => setActiveIndex(null);

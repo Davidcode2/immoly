@@ -141,7 +141,6 @@ export default function FinanzierungsForm({
             htmlFor={"creditSum"}
             handleChange={handleInputChange}
           >
-            <KreditSummeTextComponent principal={Number(principalValue)} downPayment={Number(downPayment)} />
           </SliderInput>
         </div>
       </div>
