@@ -29,6 +29,12 @@ export default function Scenario({
 
   const kreditSumme = data![0].remainingPrincipal + data![0].principal;
 
+  const sumTilgung = data
+    ? data.reduce(
+        (acc: number, row: ArmotizationEntry) => acc + row.principal,
+        0,
+      )
+    : 0;
   const sumZinsen = data
     ? data.reduce(
         (acc: number, row: ArmotizationEntry) => acc + row.interest,
@@ -42,10 +48,11 @@ export default function Scenario({
     <div className="flex flex-col items-center gap-x-4 gap-y-2 rounded-lg p-3 text-center backdrop-blur-2xl md:my-0 md:h-48 md:max-h-none md:items-start md:p-8 md:text-start md:shadow">
       <ScenarioTextDisplay
         sumZinsen={sumZinsen}
+        sumTilgung={sumTilgung}
         paidAfter={paidAfter}
         paidInYear={paidInYear}
       />
-      <div className="absolute left-32 top-12">
+      <div className="absolute top-16 left-32">
         <BarChartInterestVsTilgung
           sumZinsen={sumZinsen}
           kreditSumme={kreditSumme}

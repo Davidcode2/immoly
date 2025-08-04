@@ -2,13 +2,15 @@ export default function ScenarioTextDisplay({
   paidAfter,
   paidInYear,
   sumZinsen,
+  sumTilgung,
 }: {
   paidAfter: number;
   paidInYear: number;
   sumZinsen: number;
+  sumTilgung: number;
 }) {
   return (
-    <div className="flex flex-col text-center md:text-start items-center md:items-start gap-x-4 gap-y-2">
+    <div className="flex flex-col items-center gap-x-4 gap-y-2 text-center md:items-start md:text-start">
       {paidAfter === -1 ? (
         <div className="font-bold text-red-500">Das wird nichts</div>
       ) : (
@@ -19,10 +21,22 @@ export default function ScenarioTextDisplay({
           Im Jahr {paidInYear}
         </div>
       )}
-      <div>
-        Summe Zinsen {paidAfter === -1 && "nach 120 Jahren"}
-        <div className="font-bold text-amber-500">
-          {Math.round(sumZinsen).toLocaleString()}
+      <div className="flex">
+        {paidAfter !== -1 && (
+          <div className="leading-none">
+            <span className="text-sm">Summe Tilgung</span>
+            <div className="mt-1 font-bold text-lime-500">
+              {Math.round(sumTilgung).toLocaleString()}
+            </div>
+          </div>
+        )}
+        <div className="leading-none">
+          <span className="text-sm">
+            Summe Zinsen {paidAfter === -1 && "nach 120 Jahren"}
+          </span>
+          <div className="font-bold mt-1 text-amber-500">
+            {Math.round(sumZinsen).toLocaleString()}
+          </div>
         </div>
       </div>
     </div>

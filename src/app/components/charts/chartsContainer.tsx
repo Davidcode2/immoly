@@ -18,7 +18,7 @@ export default function ChartsContainer({ input, table }: PropTypes) {
           </div>
           <div className="hidden md:grid min-h-[200px] justify-around rounded-lg shadow backdrop-blur-lg md:min-h-[300px]">
             <DevelopmentChart
-              data={table}
+              tilgungsTabelle={table}
               rent={input.rent}
               interest={input.cash_roi || 0}
             />

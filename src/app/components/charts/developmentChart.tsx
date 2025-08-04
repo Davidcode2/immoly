@@ -16,11 +16,11 @@ import { customToolTip, renderThousandIndicator } from "./chartHelper";
 import { onThemeChangeColorUpdate } from "app/services/onThemeChangeColorUpdate";
 
 export default function DevelopmentChart({
-  data,
+  tilgungsTabelle,
   rent,
   interest = 4,
 }: {
-  data: ArmotizationEntry[];
+  tilgungsTabelle: ArmotizationEntry[];
   rent: number;
   interest: number;
 }) {
@@ -30,7 +30,7 @@ export default function DevelopmentChart({
   const [gridColor, setGridColor] = useState<string>("hsl(10, 10%, 10%)");
 
   const calcInterest = () => {
-    const interestCalculations = data.reduce(
+    const interestCalculations = tilgungsTabelle.reduce(
       (acc: InterestEarnedModel[], currentYearData: ArmotizationEntry) => {
         const previousYearBalance =
           acc.length > 0 ? acc[acc.length - 1].endBalance : 0;
@@ -56,24 +56,43 @@ export default function DevelopmentChart({
     return interestCalculations;
   };
 
+  const calcTilgung = () => {
+    return tilgungsTabelle.reduce(
+      (acc: { year: number; tilgung: number }[], x) => {
+        if (acc.length === 0) {
+          acc.push({ year: x.year, tilgung: x.principal });
+        } else {
+          acc.push({
+            year: x.year,
+            tilgung: acc[acc.length - 1].tilgung + x.principal,
+          });
+        }
+        return acc;
+      },
+      [],
+    );
+  };
+
   useEffect(() => {
-    const observer = onThemeChangeColorUpdate(setGridColor, "hsl(10, 10%, 80%)", "hsl(10, 10%, 10%)");
+    const observer = onThemeChangeColorUpdate(
+      setGridColor,
+      "hsl(10, 10%, 80%)",
+      "hsl(10, 10%, 10%)",
+    );
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    if (!data) {
+    if (!tilgungsTabelle) {
       setDebouncedChartData(null);
       return;
     }
 
     const interestRes = calcInterest();
+    const accumulatedTilgung = calcTilgung();
 
     const timeoutId = setTimeout(() => {
-      const validEntries = data.filter(
-        (x: ArmotizationEntry) => x.year !== data.length,
-      );
-      const transformedData: ChartDataItem[] = validEntries.map(
+      const transformedData: ChartDataItem[] = tilgungsTabelle.map(
         (x: ArmotizationEntry) => {
           return {
             name: x.year.toString(),
@@ -82,7 +101,9 @@ export default function DevelopmentChart({
                 (item: InterestEarnedModel) => item.year === x.year,
               )?.endBalance || 0,
             ),
-            Tilgung: Math.floor(x.principal * x.year),
+            Tilgung: Math.floor(
+              accumulatedTilgung.find((y) => y.year === x.year)!.tilgung,
+            ),
           };
         },
       );
@@ -94,7 +115,7 @@ export default function DevelopmentChart({
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [data]);
+  }, [tilgungsTabelle]);
 
   if (!debouncedChartData) {
     return null;
@@ -106,7 +127,8 @@ export default function DevelopmentChart({
       height={screenWidthMobile() ? 200 : 300}
       data={debouncedChartData}
     >
-      <XAxis dataKey="name"
+      <XAxis
+        dataKey="name"
         label={{ value: "Jahr", position: "insideBottomRight" }}
       />
       <YAxis
