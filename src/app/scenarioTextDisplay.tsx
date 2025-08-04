@@ -18,10 +18,10 @@ export default function ScenarioTextDisplay({
           Abgezahlt nach
           <br />
           <span className="font-bold text-green-500">{paidAfter}</span> Jahren
-          Im Jahr {paidInYear}
+          in {paidInYear}
         </div>
       )}
-      <div className="flex">
+      <div className="flex gap-x-2">
         {paidAfter !== -1 && (
           <div className="leading-none">
             <span className="text-sm">Summe Gesamt</span>
