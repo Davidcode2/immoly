@@ -23,8 +23,8 @@ export default function BarChartInterestVsTilgung({
         data={data}
         margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
       >
-        <Bar dataKey="pv" stackId="a" fill="#8884d8" barSize={8} />
-        <Bar dataKey="uv" stackId="a" fill="#82ca9d" barSize={8} />
+        <Bar dataKey="pv" stackId="a" fill={"hsl(120, 50%, 60%)"} barSize={8} />
+        <Bar dataKey="uv" stackId="a" fill={"hsl(40, 80%, 60%)"} barSize={8} />
       </BarChart>
     </div>
   );
