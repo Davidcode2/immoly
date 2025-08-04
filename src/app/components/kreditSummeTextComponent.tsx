@@ -1,5 +1,6 @@
 import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 import Image from "next/image";
+import LineChartGesamtBetrag from "./lineChartGesamtbetrag";
 
 type PropTypes = {
   principal: number;
@@ -13,13 +14,16 @@ export default function KreditSummeTextComponent({
   const kreditSumme = principal + nebenkosten - downPayment;
 
   return (
-    <div className="grid grid-cols-2 items-baseline gap-x-2 rounded-lg p-3 md:p-8 md:shadow backdrop-blur-2xl z-20">
+    <div className="z-20 grid grid-cols-2 items-baseline gap-x-2 rounded-lg p-3 backdrop-blur-2xl md:p-8 md:shadow">
+      <div className="absolute left-4 top-2">
+        <LineChartGesamtBetrag kreditSumme={kreditSumme} nebenkosten={nebenkosten} downPayment={downPayment} kaufSumme={principal} />
+      </div>
       <span className="text-end text-lg">{principal.toLocaleString("de")}</span>
       <span className="">Kaufpreis</span>
       <span className="text-end">+ {nebenkosten.toLocaleString("de")}</span>
       <span className="text-xs">Nebenkosten</span>
       <span className="text-end">- {downPayment.toLocaleString("de")}</span>
-      <span className="group flex items-center gap-x-2 text-xs relative">
+      <span className="group relative flex items-center gap-x-2 text-xs">
         Eigenkapital
         {nebenkosten > downPayment && (
           <>
@@ -29,8 +33,9 @@ export default function KreditSummeTextComponent({
               width={24}
               height={24}
             />
-            <span className="bg-white dark:bg-black left-28 w-60 p-4 rounded-lg shadow-lg absolute invisible text-base text-violet-400 group-hover:visible">
-              Eigenkapital deckt Nebenkosten nicht.<br/>
+            <span className="invisible absolute left-28 w-60 rounded-lg bg-white p-4 text-base text-violet-400 shadow-lg group-hover:visible dark:bg-black">
+              Eigenkapital deckt Nebenkosten nicht.
+              <br />
               Könnte schwierig werden.
             </span>
           </>
