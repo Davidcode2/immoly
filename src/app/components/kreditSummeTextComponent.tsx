@@ -15,8 +15,8 @@ export default function KreditSummeTextComponent({
 
   return (
     <div className="z-20 grid grid-cols-2 items-baseline gap-x-2 rounded-lg p-3 backdrop-blur-2xl md:p-8 md:shadow">
-      <div className="absolute left-4 top-2">
-        <LineChartGesamtBetrag kreditSumme={kreditSumme} nebenkosten={nebenkosten} downPayment={downPayment} kaufSumme={principal} />
+      <div className="absolute left-4 top-8">
+        <LineChartGesamtBetrag kreditSumme={kreditSumme} downPayment={downPayment} kaufSumme={principal} />
       </div>
       <span className="text-end text-lg">{principal.toLocaleString("de")}</span>
       <span className="">Kaufpreis</span>

@@ -3,27 +3,25 @@ import { BarChart, Bar } from "recharts";
 type PropTypes = {
   kreditSumme: number,
   downPayment: number
-  nebenkosten: number,
   kaufSumme: number,
 }
 
-export default function LineChartGesamtBetrag({ kreditSumme, downPayment, nebenkosten, kaufSumme }: PropTypes) {
+export default function LineChartGesamtBetrag({ kreditSumme, downPayment, kaufSumme }: PropTypes) {
 
-  const calcBarData = (kreditSumme: number, nebenkosten: number, downPayment: number, kaufSumme: number) => {
+  const calcBarData = (kreditSumme: number, nebenkosten: number, kaufSumme: number) => {
     const percentageNebenkosten = (kreditSumme / 100) * nebenkosten; 
-    const percentageDownPayment = (kreditSumme / 100) * downPayment;
     const percentageKaufSumme = (kreditSumme / 100) * kaufSumme;
     return [
-      { name: "Kaufpreis", pv: percentageKaufSumme, uv: percentageNebenkosten, xv: percentageDownPayment },
+      { name: "Kaufpreis", pv: percentageKaufSumme, uv: percentageNebenkosten },
     ];
   }
 
-  const data = calcBarData(kreditSumme, nebenkosten, downPayment, kaufSumme);
+  const data = calcBarData(kreditSumme, downPayment, kaufSumme);
 
   return (
       <BarChart
         width={12}
-        height={160}
+        height={120}
         data={data}
         margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
       >
