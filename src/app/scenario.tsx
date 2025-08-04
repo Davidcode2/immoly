@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getCalculation } from "./lib/calculationAccessor";
-import calcTilgung from "./lib/calculateArmotizaztionTable";
 import ScenarioTextDisplay from "./scenarioTextDisplay";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
+import BarChartInterestVsTilgung from "./components/barChartInterestVsTilgung";
 
 export default function Scenario({
   calculationId,
@@ -11,12 +11,6 @@ export default function Scenario({
   calculationId: string | null;
   data: ArmotizationEntry[] | null;
 }) {
-  const [_data, setData] = useState<ArmotizationEntry[] | null>(null);
-
-  if (!data) {
-    data = _data;
-  }
-
   useEffect(() => {
     async function loadData() {
       if (calculationId) {
@@ -25,8 +19,6 @@ export default function Scenario({
           if (!result) {
             return;
           }
-          const tilgungungsTabelle = calcTilgung(result[0]);
-          setData(tilgungungsTabelle);
         } catch (e) {
           console.error(e);
         }
@@ -34,6 +26,8 @@ export default function Scenario({
     }
     loadData();
   }, [calculationId]);
+
+  const kreditSumme = data![0].remainingPrincipal + data![0].principal;
 
   const sumZinsen = data
     ? data.reduce(
@@ -45,10 +39,18 @@ export default function Scenario({
   const paidInYear = new Date().getFullYear() + paidAfter;
 
   return (
-    <ScenarioTextDisplay
-      sumZinsen={sumZinsen}
-      paidAfter={paidAfter}
-      paidInYear={paidInYear}
-    />
+    <div className="flex flex-col items-center gap-x-4 gap-y-2 rounded-lg p-3 text-center backdrop-blur-2xl md:my-0 md:h-48 md:max-h-none md:items-start md:p-8 md:text-start md:shadow">
+      <ScenarioTextDisplay
+        sumZinsen={sumZinsen}
+        paidAfter={paidAfter}
+        paidInYear={paidInYear}
+      />
+      <div className="absolute left-32 top-12">
+        <BarChartInterestVsTilgung
+          sumZinsen={sumZinsen}
+          kreditSumme={kreditSumme}
+        />
+      </div>
+    </div>
   );
 }
