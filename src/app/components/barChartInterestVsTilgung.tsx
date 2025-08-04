@@ -19,7 +19,7 @@ export default function BarChartInterestVsTilgung({
     <div className="rotate-90">
       <BarChart
         width={12}
-        height={205}
+        height={180}
         data={data}
         margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
       >

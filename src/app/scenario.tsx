@@ -28,19 +28,14 @@ export default function Scenario({
   }, [calculationId]);
 
   const kreditSumme = data![0].remainingPrincipal + data![0].principal;
-
-  const sumTilgung = data
-    ? data.reduce(
-        (acc: number, row: ArmotizationEntry) => acc + row.principal,
-        0,
-      )
-    : 0;
   const sumZinsen = data
     ? data.reduce(
         (acc: number, row: ArmotizationEntry) => acc + row.interest,
         0,
       )
     : 0;
+  const totalSum  = kreditSumme + sumZinsen;
+
   const paidAfter = data ? (data.length >= 120 ? -1 : data.length) : 0;
   const paidInYear = new Date().getFullYear() + paidAfter;
 
@@ -48,11 +43,11 @@ export default function Scenario({
     <div className="flex flex-col items-center gap-x-4 gap-y-2 rounded-lg p-3 text-center backdrop-blur-2xl md:my-0 md:h-48 md:max-h-none md:items-start md:p-8 md:text-start md:shadow">
       <ScenarioTextDisplay
         sumZinsen={sumZinsen}
-        sumTilgung={sumTilgung}
+        totalSum={totalSum}
         paidAfter={paidAfter}
         paidInYear={paidInYear}
       />
-      <div className="absolute top-16 left-32">
+      <div className="absolute top-18 left-29">
         <BarChartInterestVsTilgung
           sumZinsen={sumZinsen}
           kreditSumme={kreditSumme}
