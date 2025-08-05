@@ -11,18 +11,19 @@ export default function KreditSummeTextComponent({
   downPayment,
 }: PropTypes) {
   const nebenkosten = new NebenkostenCalculator(principal).calcSumme();
-  const kreditSumme = principal + nebenkosten - downPayment;
+  const kreditSummeRaw = principal + nebenkosten - downPayment;
+  const kreditSumme = kreditSummeRaw < 0 ? 0 : kreditSummeRaw;
 
   return (
     <div className="z-20 grid grid-cols-[20px_1fr_1fr] items-baseline gap-x-2 rounded-lg p-3 backdrop-blur-2xl md:p-8 md:shadow">
-      <div className="w-4 h-full row-span-4">
+      <div className="w-4 max-h-58 h-full relative sm:block left-16 sm:left-0 row-span-4">
         <LineChartGesamtBetrag kreditSumme={kreditSumme} downPayment={downPayment} kaufSumme={principal} />
       </div>
       <span className="text-end text-lg">{principal.toLocaleString("de")}</span>
       <span className="">Kaufpreis</span>
-      <span className="text-end">+ {nebenkosten.toLocaleString("de")}</span>
+      <span className="text-end">+&nbsp;{nebenkosten.toLocaleString("de")}</span>
       <span className="text-xs">Nebenkosten</span>
-      <span className="text-end">- {downPayment.toLocaleString("de")}</span>
+      <span className="text-end">-&nbsp;{downPayment.toLocaleString("de")}</span>
       <span className="group relative flex items-center gap-x-2 text-xs">
         Eigenkapital
         {nebenkosten > downPayment && (

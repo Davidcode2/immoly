@@ -27,7 +27,8 @@ export default function Scenario({
     loadData();
   }, [calculationId]);
 
-  const kreditSumme = data![0].remainingPrincipal + data![0].principal;
+  const kreditSummeRaw = data && data.length ? (data[0].remainingPrincipal + data[0].principal) : 0;
+  const kreditSumme = kreditSummeRaw < 0 ? 0 : kreditSummeRaw;
   const sumZinsen = data
     ? data.reduce(
         (acc: number, row: ArmotizationEntry) => acc + row.interest,
