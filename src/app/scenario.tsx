@@ -40,17 +40,19 @@ export default function Scenario({
   const paidInYear = new Date().getFullYear() + paidAfter;
 
   return (
-    <div className="grid grid-rows-[1fr_20px] overflow-y-clip items-center justify-center justify-items-center gap-4 rounded-lg p-3 text-center backdrop-blur-2xl md:my-0 md:h-48 md:max-h-none md:items-start md:p-8 md:text-start md:shadow">
-      <ScenarioTextDisplay
-        sumZinsen={sumZinsen}
-        totalSum={totalSum}
-        paidAfter={paidAfter}
-        paidInYear={paidInYear}
-      />
-      <BarChartInterestVsTilgung
-        sumZinsen={sumZinsen}
-        kreditSumme={kreditSumme}
-      />
+    <div className="flex mx-auto h-48 max-w-56 md:mx-0 rounded-lg p-3 backdrop-blur-2xl md:my-0 md:max-w-none sm:h-none md:w-fit md:p-8 md:text-start md:shadow">
+      <div>
+        <ScenarioTextDisplay
+          sumZinsen={sumZinsen}
+          totalSum={totalSum}
+          paidAfter={paidAfter}
+          paidInYear={paidInYear}
+        />
+        <BarChartInterestVsTilgung
+          sumZinsen={sumZinsen}
+          kreditSumme={kreditSumme}
+        />
+      </div>
     </div>
   );
 }
