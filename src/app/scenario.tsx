@@ -34,25 +34,23 @@ export default function Scenario({
         0,
       )
     : 0;
-  const totalSum  = kreditSumme + sumZinsen;
+  const totalSum = kreditSumme + sumZinsen;
 
   const paidAfter = data ? (data.length >= 120 ? -1 : data.length) : 0;
   const paidInYear = new Date().getFullYear() + paidAfter;
 
   return (
-    <div className="flex flex-col items-center gap-x-4 gap-y-2 rounded-lg p-3 text-center backdrop-blur-2xl md:my-0 md:h-48 md:max-h-none md:items-start md:p-8 md:text-start md:shadow">
+    <div className="grid grid-rows-[1fr_20px] overflow-y-clip items-center justify-center justify-items-center gap-4 rounded-lg p-3 text-center backdrop-blur-2xl md:my-0 md:h-48 md:max-h-none md:items-start md:p-8 md:text-start md:shadow">
       <ScenarioTextDisplay
         sumZinsen={sumZinsen}
         totalSum={totalSum}
         paidAfter={paidAfter}
         paidInYear={paidInYear}
       />
-      <div className="absolute top-18 left-29">
-        <BarChartInterestVsTilgung
-          sumZinsen={sumZinsen}
-          kreditSumme={kreditSumme}
-        />
-      </div>
+      <BarChartInterestVsTilgung
+        sumZinsen={sumZinsen}
+        kreditSumme={kreditSumme}
+      />
     </div>
   );
 }

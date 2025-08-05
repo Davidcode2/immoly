@@ -1,4 +1,4 @@
-import { BarChart, Bar, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, ResponsiveContainer, YAxis } from "recharts";
 
 type PropTypes = {
   kreditSumme: number;
@@ -33,6 +33,7 @@ export default function LineChartGesamtBetrag({
         data={data}
         margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
       >
+        <YAxis domain={[0, "dataMax"]} hide />
         <Bar dataKey="uv" stackId="a" fill={"hsl(35, 100%, 50%)"} barSize={8} />
         <Bar dataKey="pv" stackId="a" fill={"hsl(70, 70%, 50%)"} barSize={8} />
       </BarChart>
