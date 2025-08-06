@@ -3,9 +3,24 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 @custom-variant slate (&:where([data-theme=slate], [data-theme=slate] *));
 
+:root {
+  --background: hsl(1, 0%, 100%);
+  --foreground: hsl(194, 33%, 12%);
+  --dark-accent: hsl(194, 33%, 18%);
+  --accent: hsl(195, 37%, 40%);
+  --light-accent: hsl(172, 25%, 55%);
+  --primary: hsl(129, 22%, 69%);
+  --secondary: hsl(95, 32%, 82%);
+}
+
 [data-theme="light"] {
   --background: hsl(1, 0%, 100%);
-  --foreground: #0a0a0a;
+  --foreground: hsl(194, 33%, 12%);
+  --dark-accent: hsl(194, 33%, 18%);
+  --accent: hsl(195, 37%, 40%);
+  --light-accent: hsl(172, 25%, 55%);
+  --primary: hsl(129, 22%, 69%);
+  --secondary: hsl(95, 32%, 82%);
 }
 
 [data-theme="slate"] {
@@ -30,4 +45,5 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  font-weight: 200;
 }

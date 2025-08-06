@@ -61,11 +61,11 @@ input[type="range"]::-webkit-slider-runnable-track {
   height: 4.4px;
   cursor: pointer;
   border-radius: 3px;
-  background: #8e30c9;
+  background: var(--accent);
 }
 
 input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: #8e30c9;
+  background: var(--accent);
 }
 
 input[type="range"]::-moz-range-track {
@@ -73,7 +73,7 @@ input[type="range"]::-moz-range-track {
   height: 4.4px;
   cursor: pointer;
   border-radius: 3px;
-  background: #8e30c9;
+  background: var(--accent);
 }
 
 input[type="range"]::-ms-track {
@@ -86,16 +86,16 @@ input[type="range"]::-ms-track {
   color: transparent;
 }
 input[type="range"]::-ms-fill-lower {
-  background: #8e30c9;
+  background: var(--accent);
 }
 input[type="range"]:focus::-ms-fill-lower {
-  background: #8e30c9;
+  background: var(--accent);
 }
 input[type="range"]::-ms-fill-upper {
-  background: #8e30c9;
+  background: var(--accent);
 }
 input[type="range"]:focus::-ms-fill-upper {
-  background: #8e30c9;
+  background: var(--accent);
 }
 
 /*****************************************/

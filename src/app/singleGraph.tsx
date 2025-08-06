@@ -38,7 +38,7 @@ export default function SingleGraph({
           </p>
         </div>
         <button
-          className="mt-4 rounded-lg bg-purple-700 p-2"
+          className="mt-4 rounded-lg bg-[var(--secondary)] p-2"
           onClick={setCalcId}
         >
           Tilgungstabelle

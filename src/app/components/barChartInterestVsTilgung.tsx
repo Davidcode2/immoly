@@ -35,13 +35,13 @@ export default function BarChartInterestVsTilgung({
           dataKey="uv"
           stackId="c"
           radius={[10, 0, 0, 10]}
-          fill={"hsl(120, 50%, 50%)"}
+          fill={"hsl(172, 25%, 55%)"}
           barSize={10}
         />
         <Bar
           dataKey="pv"
           stackId="c"
-          fill={"hsl(35, 80%, 60%)"}
+          fill={"hsl(95, 32%, 82%)"}
           radius={[0, 10, 10, 0]}
           barSize={10}
         />

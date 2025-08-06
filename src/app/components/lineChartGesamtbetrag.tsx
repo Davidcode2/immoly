@@ -34,8 +34,8 @@ export default function LineChartGesamtBetrag({
         margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
       >
         <YAxis domain={[0, "dataMax"]} hide />
-        <Bar dataKey="uv" stackId="a" fill={"hsl(35, 100%, 50%)"} barSize={10} radius={[0, 0, 10, 10]} />
-        <Bar dataKey="pv" stackId="a" fill={"hsl(70, 70%, 50%)"} barSize={10} radius={[10, 10, 0, 0]} />
+        <Bar dataKey="uv" stackId="a" fill={"hsl(194, 33%, 18%)"} barSize={10} radius={[0, 0, 10, 10]} />
+        <Bar dataKey="pv" stackId="a" fill={"hsl(195, 37%, 40%)"} barSize={10} radius={[10, 10, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
   );

@@ -138,8 +138,8 @@ export default function DevelopmentChart({
       <Tooltip content={customToolTip} />
       <CartesianGrid stroke={gridColor} />
       <Legend />
-      <Line type="monotone" dataKey="Sparen" stroke="#a87908" dot={false} />
-      <Line type="monotone" dataKey="Tilgung" stroke="#2d7d15" dot={false} />
+      <Line type="monotone" dataKey="Sparen" stroke="hsl(172, 25%, 55%)" dot={false} />
+      <Line type="monotone" dataKey="Tilgung" stroke="hsl(194, 33%, 18%)" dot={false} />
     </LineChart>
   );
 }

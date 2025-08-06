@@ -90,14 +90,14 @@ export default function PlotlyChart({
       <Line
         type="monotone"
         dataKey="Zins"
-        stroke="#ff7300 "
+        stroke="hsl(195, 37%, 40%)"
         animationDuration={1000}
         dot={false}
       />
       <Line
         type="monotone"
         dataKey="Tilgung"
-        stroke="#387908"
+        stroke="hsl(194, 33%, 18%)"
         animationDuration={1000}
         dot={false}
       />

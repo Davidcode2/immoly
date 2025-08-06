@@ -95,7 +95,7 @@ export default function Tilgungstabelle({
   return (
     <div
       ref={tilgungsWechselModalRef}
-      className="grid h-[600px] justify-stretch rounded-lg text-xs lg:text-base"
+      className="grid h-fit justify-stretch rounded-lg text-xs lg:text-base"
     >
       {showModal && (
         <CenteredModal>
@@ -109,16 +109,16 @@ export default function Tilgungstabelle({
       <table className="table-fixed overflow-auto dark:bg-neutral-700/20 backdrop-blur-lg">
         <thead>
           <tr className="sticky top-0 bg-neutral-100 dark:bg-black/90 text-left">
-            <th className="md:py-5 py-3 pl-2 sm:pr-2 sm:pl-4">Jahr</th>
-            <th className="md:py-5 py-3 sm:pl-4">Zins</th>
-            <th className="md:py-5 py-3 sm:px-4">Tilgung</th>
-            <th className="hidden md:block md:py-5 py-3 sm:px-4">
+            <th className="md:py-5 py-3 pl-2 sm:pr-2 sm:pl-4 font-thin">Jahr</th>
+            <th className="md:py-5 py-3 sm:pl-4 font-thin">Zins</th>
+            <th className="md:py-5 py-3 sm:px-4 font-thin">Tilgung</th>
+            <th className="hidden md:block md:py-5 py-3 sm:px-4 font-thin">
               {screenWidthMobile() ? "Jhl. Rate" : "Jährliche Rate"}
             </th>
-            <th className="md:py-5 py-3 sm:px-4">
+            <th className="md:py-5 py-3 sm:px-4 font-thin">
               {screenWidthMobile() ? "Rest" : "Restschuld"}
             </th>
-            <th className="md:py-5 py-3 sm:px-4">
+            <th className="md:py-5 py-3 sm:px-4 font-thin">
               {screenWidthMobile() ? "S.Tilgung" : "Sondertilgung"}
             </th>
           </tr>
@@ -127,7 +127,7 @@ export default function Tilgungstabelle({
           {temporaryTable.map((x) => (
             <tr
               key={x.year}
-              className="hover:bg-purple-500/40 hover:cursor-pointer hover:shadow"
+              className="hover:bg-[var(--light-accent)]/40 hover:cursor-pointer hover:shadow"
               onClick={(e) => openModal(e, x)}
             >
               <td className="px-4 md:py-5 py-3">{x.year}</td>

@@ -42,7 +42,7 @@ export default function KreditSummeTextComponent({
           </>
         )}
       </span>
-      <div className="col-start-2 text-end text-xl font-bold text-pink-500">
+      <div className="col-start-2 text-end text-xl text-[var(--primary)">
         {kreditSumme.toLocaleString("de")}
       </div>
       <span className="col-start-3">Kreditsumme</span>

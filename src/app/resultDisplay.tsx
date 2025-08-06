@@ -40,7 +40,7 @@ export default function ResultDisplay() {
 
   useEffect(() => {
     setInput({
-      monthly_rate: 1400,
+      monthly_rate: 1800,
       principal: 480000,
       down_payment: 70000,
       interest_rate: 3.8,
@@ -93,31 +93,28 @@ export default function ResultDisplay() {
   return (
     <div className="px-3 pt-3">
       <div
-        className={`grid gap-y-4 md:grid-cols-[1fr_5fr] md:gap-x-4 md:gap-y-16 ${table && "items-start"}`}
+        className={`grid gap-y-6 md:grid-cols-[1fr_5fr] md:gap-x-6 md:gap-y-16 ${table && "items-start"}`}
       >
         <div className="hidden md:block">
           <FinanzierungsFormContainer formValues={input} setInput={setInput} />
         </div>
-        <div className="rounded-lg p-4 shadow backdrop-blur-2xl md:hidden md:p-8">
+        <div className="rounded-lg p-4 backdrop-blur-2xl mt-12 md:hidden md:p-8">
           <Hero />
         </div>
-        <div className="grid h-full gap-y-4">
+        <div className="grid gap-y-6">
           {!table ? (
             <NoData />
           ) : (
             <>
-              <div className="grid lg:grid-cols-[1fr_1fr_100px] 2xl:grid-cols-[repeat(4,1fr)_100px] justify-stretch md:gap-4 gap-y-14 my-24 md:m-0">
+              <div className="grid lg:grid-cols-[1fr_1fr_100px] 2xl:grid-cols-4 justify-stretch md:h-56 md:gap-6 gap-y-14 mt-0 mb-24 md:m-0">
                 <KreditSummeTextComponent
                   principal={Number(input?.principal)}
                   downPayment={Number(input?.down_payment)}
                 />
                 <Scenario calculationId={selectedScenario} data={table} />
                 <NebenkostenDisplay calculationData={input} />
-                <div className="ml-auto hidden lg:block lg:row-start-1 lg:-col-start-2">
-                  <IconsHeader />
-                </div>
               </div>
-              <div className="grid gap-4 xl:grid-cols-[3fr_2fr]">
+              <div className="grid gap-6 xl:grid-cols-[3fr_2fr]">
                 <div className="hidden md:block">
                   <TilgungstabelleContainer
                     table={table}

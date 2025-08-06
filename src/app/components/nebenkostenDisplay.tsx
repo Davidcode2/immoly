@@ -3,7 +3,7 @@ import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 import { useState } from "react";
 import { Cell, Pie, PieChart } from "recharts";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["hsl(194, 33%, 22%)", "hsl(194, 33%, 18%)", "hsl(195, 37%, 40%)", "hsl(172, 25%, 55%)"];
 
 type PropTypes = {
   calculationData: CashRoiModel | null;
@@ -64,7 +64,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
             className={`cursor-pointer transition-opacity ${
-              activeIndex === index ? "font-semibold opacity-100" : "opacity-70"
+              activeIndex === index ? "font-semibold opacity-100" : "opacity-90"
             }`}
           >
             <span

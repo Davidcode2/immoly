@@ -93,7 +93,7 @@ export default function FinanzierungsForm({
   return (
     <Form action={storeInDb} className="mx-auto">
       <div className="p-2">
-        <div className="mb-2 grid gap-2 md:gap-8">
+        <div className="mb-2 grid gap-8 md:gap-8">
           {/* Eigenkapital */}
           <SliderInput
             min={0}
@@ -161,7 +161,7 @@ export default function FinanzierungsForm({
 
       <button
         type="submit"
-        className="mt-1 w-full rounded-lg bg-purple-900/60 px-4 py-2 font-bold text-white shadow backdrop-blur-md transition-colors duration-200 hover:bg-purple-700/80"
+        className="mt-1 w-full rounded-lg bg-[var(--primary)]/60 px-4 py-2 font-bold text-white shadow backdrop-blur-md transition-colors duration-200 hover:bg-[var(--primary)]"
       >
         Berechnung speichern
       </button>

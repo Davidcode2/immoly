@@ -41,7 +41,7 @@ export default function Scenario({
   const paidInYear = new Date().getFullYear() + paidAfter;
 
   return (
-    <div className="flex mx-auto h-48 max-w-56 md:mx-0 rounded-lg p-3 backdrop-blur-2xl md:my-0 md:max-w-none sm:h-none md:w-fit md:p-8 md:text-start md:shadow">
+    <div className="flex mx-auto max-h-56 max-w-56 md:mx-0 rounded-lg p-3 backdrop-blur-2xl md:my-0 md:max-w-none sm:h-none md:w-fit md:p-8 md:text-start md:shadow">
       <div>
         <ScenarioTextDisplay
           sumZinsen={sumZinsen}

@@ -9,12 +9,12 @@ export default function Hero() {
         width={200}
         height={10}
         alt="Logo"
-        className="mx-auto lg:mb-16 dark:invert-0 invert"
+        className="mx-auto dark:invert-0 mb-4 invert"
       />
-      <div className="mx-auto p-4 lg:hidden">
+      <div className="mx-auto p-4">
         <IconsHeader />
       </div>
-      <div className="mb-10 p-4 text-center font-bold md:hidden">
+      <div className="mb-10 p-4 text-center font-thin">
         Die Plattform für Immobilienkredite. Kalkulieren Sie was möglich ist.
       </div>
     </>
