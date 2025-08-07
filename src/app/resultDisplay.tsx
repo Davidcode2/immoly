@@ -115,10 +115,10 @@ export default function ResultDisplay() {
                   />
                 </div>
                 <ChartsContainer input={input} table={table} />
-                <div className="my-24 md:hidden">
+                <div className="my-14 md:hidden">
                   <FinanzierungsForm values={input} setInput={setInput} />
                 </div>
-                <div className="mx-4 md:hidden">
+                <div className="mx-4 my-14 md:hidden">
                   <TilgungstabelleContainer
                     table={table}
                     calculationId={calculationId}

@@ -91,7 +91,7 @@ export default function FinanzierungsForm({
   }, [values]);
 
   return (
-    <Form action={storeInDb} className="mx-auto">
+    <Form action={storeInDb} className="mx-8 md:mx-auto">
       <div className="p-2">
         <div className="mb-2 grid gap-8 md:gap-8">
           {/* Eigenkapital */}
@@ -115,7 +115,7 @@ export default function FinanzierungsForm({
             htmlFor={"monthlyRate"}
             handleChange={handleInputChange}
           >
-            <div className="w-36 border-b border-stone-700 bg-transparent pb-1 text-xl text-neutral-500 transition-colors duration-200 focus:border-slate-500 focus:outline-none md:text-base">
+            <div className="md:w-36 border-b border-stone-700 bg-transparent pb-1 text-xl text-neutral-500 transition-colors duration-200 focus:border-slate-500 focus:outline-none md:text-base">
               {monthlyRateInPercent()}
             </div>
           </SliderInput>
