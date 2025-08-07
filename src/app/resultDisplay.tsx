@@ -18,6 +18,7 @@ import FinanzierungsForm from "./components/baseDataForm/finanzierungsForm";
 import { getTilgungsWechsel } from "./lib/tilgungswechselDatabaseService";
 import NebenkostenDisplay from "./components/nebenkostenDisplay";
 import KreditSummeTextComponent from "./components/kreditSummeTextComponent";
+import MainStatsSection from "./components/mainStatsSection";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -98,7 +99,7 @@ export default function ResultDisplay() {
         <div className="hidden md:block">
           <FinanzierungsFormContainer formValues={input} setInput={setInput} />
         </div>
-        <div className="rounded-lg p-4 backdrop-blur-2xl mt-12 md:hidden md:p-8">
+        <div className="mt-12 rounded-lg p-4 backdrop-blur-2xl md:hidden md:p-8">
           <Hero />
         </div>
         <div className="grid gap-y-6">
@@ -106,14 +107,7 @@ export default function ResultDisplay() {
             <NoData />
           ) : (
             <>
-              <div className="grid lg:grid-cols-[1fr_1fr_100px] 2xl:grid-cols-4 justify-stretch md:h-56 md:gap-6 gap-y-14 mt-0 mb-24 md:m-0">
-                <KreditSummeTextComponent
-                  principal={Number(input?.principal)}
-                  downPayment={Number(input?.down_payment)}
-                />
-                <Scenario calculationId={selectedScenario} data={table} />
-                <NebenkostenDisplay calculationData={input} />
-              </div>
+              <MainStatsSection userInput={input} selectedScenario={selectedScenario} table={table} />
               <div className="grid gap-6 xl:grid-cols-[3fr_2fr]">
                 <div className="hidden md:block">
                   <TilgungstabelleContainer
@@ -125,7 +119,7 @@ export default function ResultDisplay() {
                   />
                 </div>
                 <ChartsContainer input={input} table={table} />
-                <div className="md:hidden my-24">
+                <div className="my-24 md:hidden">
                   <FinanzierungsForm values={input} setInput={setInput} />
                 </div>
                 <div className="mx-4 md:hidden">
