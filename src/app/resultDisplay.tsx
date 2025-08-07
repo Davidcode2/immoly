@@ -4,10 +4,8 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getCalculation } from "app/lib/calculationAccessor";
 import calcTilgung from "app/lib/calculateArmotizaztionTable";
-import Scenario from "app/scenario";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import CashRoiModel from "app/lib/models/cashRoiModel";
-import IconsHeader from "app/components/iconsHeader";
 import NoData from "app/components/noData";
 import TilgungstabelleContainer from "app/components/tilgungstabelleContainer";
 import { getSondertilgungen } from "app/lib/sondertilgungDatabaseService";
@@ -16,8 +14,6 @@ import ChartsContainer from "app/components/charts/chartsContainer";
 import Hero from "./components/hero";
 import FinanzierungsForm from "./components/baseDataForm/finanzierungsForm";
 import { getTilgungsWechsel } from "./lib/tilgungswechselDatabaseService";
-import NebenkostenDisplay from "./components/nebenkostenDisplay";
-import KreditSummeTextComponent from "./components/kreditSummeTextComponent";
 import MainStatsSection from "./components/mainStatsSection";
 
 export default function ResultDisplay() {
