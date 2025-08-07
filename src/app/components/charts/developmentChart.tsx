@@ -126,20 +126,47 @@ export default function DevelopmentChart({
       width={calcWidth()}
       height={screenWidthMobile() ? 200 : 300}
       data={debouncedChartData}
+      margin={{
+        top: 30,
+        right: 0,
+        left: 10,
+        bottom: 15,
+      }}
     >
       <XAxis
         dataKey="name"
-        label={{ value: "Jahr", position: "insideBottomRight" }}
+        minTickGap={50}
+        axisLine={false}
+        tick={{ fill: "hsl(200, 80%, 10%)", fontSize: 12, dy: 5 }}
+        tickLine={false}
+        label={{ value: "Jahr", position: "insideBottomRight", dy: 20, dx: 4 }}
       />
       <YAxis
         tick={renderThousandIndicator}
-        label={{ value: "€", position: "insideTopLeft" }}
+        label={{ value: "EUR", position: "insideTopLeft", dx: -16, dy: -4, fontSize: 12 }}
+        tickCount={4}
+        axisLine={false}
+        tickLine={false}
       />
       <Tooltip content={customToolTip} />
-      <CartesianGrid stroke={gridColor} />
+      <CartesianGrid
+        vertical={false}
+        stroke={gridColor}
+        strokeDasharray="3 3"
+      />
       <Legend />
-      <Line type="monotone" dataKey="Sparen" stroke="hsl(172, 25%, 55%)" dot={false} />
-      <Line type="monotone" dataKey="Tilgung" stroke="hsl(194, 33%, 18%)" dot={false} />
+      <Line
+        type="monotone"
+        dataKey="Sparen"
+        stroke="hsl(172, 25%, 55%)"
+        dot={false}
+      />
+      <Line
+        type="monotone"
+        dataKey="Tilgung"
+        stroke="hsl(194, 33%, 18%)"
+        dot={false}
+      />
     </LineChart>
   );
 }

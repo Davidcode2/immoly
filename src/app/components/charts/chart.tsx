@@ -91,19 +91,24 @@ export default function PlotlyChart({
       margin={{
         top: 30,
         right: 0,
-        left: 0,
+        left: 10,
         bottom: 15,
       }}
     >
       <XAxis
         dataKey="name"
-        label={{ value: "Jahr", position: "insideBottomRight" }}
         minTickGap={50}
+        axisLine={false}
+        tick={{ fill: "hsl(200, 80%, 10%)", fontSize: 12, dy: 5 }}
+        tickLine={false}
+        label={{ value: "Jahr", position: "insideBottomRight", dy: 20, dx: 4 }}
       />
       <YAxis
         tick={renderThousandIndicator}
         tickCount={4}
-        label={{ value: "€", position: "insideTopLeft" }}
+        axisLine={false}
+        tickLine={false}
+        label={{ value: "EUR", position: "insideTopLeft", dx: -16, dy: -4 }}
       />
       <Tooltip content={customToolTip} />
       <Legend />
