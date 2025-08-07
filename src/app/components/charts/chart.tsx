@@ -31,7 +31,6 @@ export default function PlotlyChart({
     ChartDataItem[] | null
   >(null);
   const [gridColor, setGridColor] = useState<string>("hsl(10, 10%, 10%)");
-  const [horizontalTickNumber, setHorizontalTickNumber] = useState<number>(5);
 
   useEffect(() => {
     const observer = onThemeChangeColorUpdate(
@@ -69,14 +68,6 @@ export default function PlotlyChart({
       clearTimeout(timeoutId);
     };
   }, [data]);
-
-  useEffect(() => {
-    if (!debouncedChartData) {
-      setHorizontalTickNumber(4);
-      return;
-    }
-    setHorizontalTickNumber(Math.round(debouncedChartData.length / 4));
-  }, [debouncedChartData]);
 
   if (!debouncedChartData) {
     return null;
