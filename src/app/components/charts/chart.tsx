@@ -31,9 +31,14 @@ export default function PlotlyChart({
     ChartDataItem[] | null
   >(null);
   const [gridColor, setGridColor] = useState<string>("hsl(10, 10%, 10%)");
+  const [horizontalTickNumber, setHorizontalTickNumber] = useState<number>(5);
 
   useEffect(() => {
-    const observer = onThemeChangeColorUpdate(setGridColor, "hsl(10, 10%, 80%)", "hsl(10, 10%, 10%)");
+    const observer = onThemeChangeColorUpdate(
+      setGridColor,
+      "hsl(10, 10%, 80%)",
+      "hsl(10, 10%, 10%)",
+    );
     return () => observer.disconnect();
   }, []);
 
@@ -65,6 +70,14 @@ export default function PlotlyChart({
     };
   }, [data]);
 
+  useEffect(() => {
+    if (!debouncedChartData) {
+      setHorizontalTickNumber(4);
+      return;
+    }
+    setHorizontalTickNumber(Math.round(debouncedChartData.length / 4));
+  }, [debouncedChartData]);
+
   if (!debouncedChartData) {
     return null;
   }
@@ -75,18 +88,30 @@ export default function PlotlyChart({
       width={calcWidth()}
       height={screenWidthMobile() ? 200 : 300}
       data={debouncedChartData}
+      margin={{
+        top: 30,
+        right: 0,
+        left: 0,
+        bottom: 15,
+      }}
     >
       <XAxis
         dataKey="name"
         label={{ value: "Jahr", position: "insideBottomRight" }}
+        minTickGap={50}
       />
       <YAxis
         tick={renderThousandIndicator}
+        tickCount={4}
         label={{ value: "€", position: "insideTopLeft" }}
       />
       <Tooltip content={customToolTip} />
-      <CartesianGrid stroke={gridColor} />
       <Legend />
+      <CartesianGrid
+        vertical={false}
+        stroke={gridColor}
+        strokeDasharray="3 3"
+      />
       <Line
         type="monotone"
         dataKey="Zins"
