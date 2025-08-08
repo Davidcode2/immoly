@@ -103,7 +103,11 @@ export default function ResultDisplay() {
             <NoData />
           ) : (
             <>
-              <MainStatsSection userInput={input} selectedScenario={selectedScenario} table={table} />
+              <MainStatsSection
+                userInput={input}
+                selectedScenario={selectedScenario}
+                table={table}
+              />
               <div className="grid gap-6 xl:grid-cols-[3fr_2fr]">
                 <div className="hidden md:block">
                   <TilgungstabelleContainer
@@ -115,9 +119,6 @@ export default function ResultDisplay() {
                   />
                 </div>
                 <ChartsContainer input={input} table={table} />
-                <div className="my-14 md:hidden">
-                  <FinanzierungsForm values={input} setInput={setInput} />
-                </div>
                 <div className="mx-4 my-14 md:hidden">
                   <TilgungstabelleContainer
                     table={table}
@@ -130,6 +131,11 @@ export default function ResultDisplay() {
               </div>
             </>
           )}
+        </div>
+        <div className="sticky -bottom-2 z-40 overflow-y-auto rounded-2xl border border-[var(--light-accent)]/20 bg-[var(--background)]/70 py-8 shadow backdrop-blur-lg md:hidden">
+          <div className="max-h-[400px]">
+            <FinanzierungsForm values={input} setInput={setInput} />
+          </div>
         </div>
       </div>
     </div>
