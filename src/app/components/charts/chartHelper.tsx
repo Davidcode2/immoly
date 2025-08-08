@@ -1,8 +1,8 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-export const renderThousandIndicator = ({ x, y, payload }: any) => {
+export const renderThousandIndicator = ({ x, y, payload, labelColor }: any) => {
   const formattedValue = formatNumber(payload.value);
   return (
-    <text x={x} y={y} dy={10} textAnchor="end" fill="hsl(200, 80%, 10%)" fontSize="12">
+    <text x={x} y={y} dy={10} textAnchor="end" fill={labelColor} fontSize="12">
       {formattedValue}
     </text>
   );

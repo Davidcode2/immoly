@@ -12,7 +12,7 @@ export default function ScenarioTextDisplay({
   return (
     <div className="flex mb-2 flex-col items-center gap-x-4 gap-y-3 text-center md:items-start md:text-start">
       {paidAfter === -1 ? (
-        <div className="font-bold text-red-500">Das wird nichts</div>
+        <div className="font-bold text-[var(--alert)]">Das wird nichts</div>
       ) : (
         <div>
           Abgezahlt nach

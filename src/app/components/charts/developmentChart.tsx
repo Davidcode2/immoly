@@ -28,6 +28,7 @@ export default function DevelopmentChart({
     ChartDataItem[] | null
   >(null);
   const [gridColor, setGridColor] = useState<string>("hsl(10, 10%, 10%)");
+  const [labelColor, setLabelColor] = useState<string>("hsl(200, 80%, 10%)");
 
   const calcInterest = () => {
     const interestCalculations = tilgungsTabelle.reduce(
@@ -74,12 +75,20 @@ export default function DevelopmentChart({
   };
 
   useEffect(() => {
-    const observer = onThemeChangeColorUpdate(
+    const observerLabels = onThemeChangeColorUpdate(
+      setLabelColor,
+      "hsl(200, 80%, 10%)",
+      "hsl(172, 15%, 35%)",
+    );
+    const observerGrid = onThemeChangeColorUpdate(
       setGridColor,
       "hsl(10, 10%, 80%)",
       "hsl(10, 10%, 10%)",
     );
-    return () => observer.disconnect();
+    return () => {
+      observerLabels.disconnect();
+      observerGrid.disconnect();
+    }
   }, []);
 
   useEffect(() => {
@@ -137,12 +146,12 @@ export default function DevelopmentChart({
         dataKey="name"
         minTickGap={50}
         axisLine={false}
-        tick={{ fill: "hsl(200, 80%, 10%)", fontSize: 12, dy: 5 }}
+        tick={{ fill: labelColor, fontSize: 12, dy: 5 }}
         tickLine={false}
         label={{ value: "Jahr", position: "insideBottomRight", dy: 20, dx: 4 }}
       />
       <YAxis
-        tick={renderThousandIndicator}
+        tick={(props) => renderThousandIndicator({...props, labelColor})}
         label={{ value: "EUR", position: "insideTopLeft", dx: -16, dy: -4, fontSize: 12 }}
         tickCount={4}
         axisLine={false}

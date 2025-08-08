@@ -31,14 +31,23 @@ export default function PlotlyChart({
     ChartDataItem[] | null
   >(null);
   const [gridColor, setGridColor] = useState<string>("hsl(10, 10%, 10%)");
+  const [labelColor, setLabelColor] = useState<string>("hsl(200, 80%, 10%)");
 
   useEffect(() => {
-    const observer = onThemeChangeColorUpdate(
+    const observerLabels = onThemeChangeColorUpdate(
+      setLabelColor,
+      "hsl(200, 80%, 10%)",
+      "hsl(172, 15%, 35%)",
+    );
+    const observerGrid = onThemeChangeColorUpdate(
       setGridColor,
       "hsl(10, 10%, 80%)",
       "hsl(10, 10%, 10%)",
     );
-    return () => observer.disconnect();
+    return () => {
+      observerLabels.disconnect();
+      observerGrid.disconnect();
+    }
   }, []);
 
   useEffect(() => {
@@ -90,12 +99,12 @@ export default function PlotlyChart({
         dataKey="name"
         minTickGap={50}
         axisLine={false}
-        tick={{ fill: "hsl(200, 80%, 10%)", fontSize: 12, dy: 5 }}
+        tick={{ fill: labelColor, fontSize: 12, dy: 5 }}
         tickLine={false}
         label={{ value: "Jahr", position: "insideBottomRight", dy: 20, dx: 4 }}
       />
       <YAxis
-        tick={renderThousandIndicator}
+        tick={(props) => renderThousandIndicator({...props, labelColor})}
         tickCount={4}
         axisLine={false}
         tickLine={false}

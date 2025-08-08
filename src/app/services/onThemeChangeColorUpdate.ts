@@ -3,7 +3,7 @@ export const onThemeChangeColorUpdate = (
   lightColor: string,
   darkColor: string,
 ): MutationObserver => {
-  const updateGridColor = () => {
+  const updateColor = () => {
     console.log(
       "Updating grid color based on theme",
       document.documentElement.getAttribute("data-theme"),
@@ -12,7 +12,7 @@ export const onThemeChangeColorUpdate = (
     setColor(theme === "dark" ? darkColor : lightColor);
   };
 
-  updateGridColor();
+  updateColor();
 
   const observer = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
@@ -20,7 +20,7 @@ export const onThemeChangeColorUpdate = (
         mutation.type === "attributes" &&
         mutation.attributeName === "data-theme"
       ) {
-        updateGridColor();
+        updateColor();
       }
     }
   });
