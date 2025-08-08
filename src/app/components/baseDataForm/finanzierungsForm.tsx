@@ -91,7 +91,7 @@ export default function FinanzierungsForm({
   }, [values]);
 
   return (
-    <Form action={storeInDb} className="mx-8 pb-8 sm:pb-0 md:mx-auto">
+    <Form action={storeInDb} className="mx-8 pb-8 md:pb-0 md:mx-auto">
       <div className="p-2">
         <div className="mb-2 grid gap-8 md:gap-8">
           {/* Eigenkapital */}

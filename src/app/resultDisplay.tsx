@@ -119,7 +119,7 @@ export default function ResultDisplay() {
                   />
                 </div>
                 <ChartsContainer input={input} table={table} />
-                <div className="mx-4 my-14 md:hidden">
+                <div className="mx-4 sm:mx-0 my-14 md:hidden">
                   <TilgungstabelleContainer
                     table={table}
                     calculationId={calculationId}
