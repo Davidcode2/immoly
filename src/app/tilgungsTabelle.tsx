@@ -138,7 +138,7 @@ export default function Tilgungstabelle({
                 {Math.round(x.principal).toLocaleString("de")}
               </td>
               <td
-                className={`${x.tilgungswechsel > 0 && "text-sky-500"} hidden md:block md:py-5 py-3 sm:px-4`}
+                className={`${x.tilgungswechsel > 0 && "text-[var(--success)]"} hidden md:block md:py-5 py-3 sm:px-4`}
               >
                 {x.yearlyRate.toLocaleString("de")}
                 {x.tilgungswechsel > 0 && (

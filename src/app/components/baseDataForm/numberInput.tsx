@@ -87,7 +87,7 @@ export default function NumberInput({
       name={inputName}
       onChange={localHandleChange}
       placeholder="Zahl eingeben"
-      className="w-36 border-b border-stone-700 bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-slate-500 focus:outline-none lg:text-base"
+      className="w-36 border-b border-[var(--secondary)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--accent)] focus:outline-none lg:text-base"
     />
   );
 }

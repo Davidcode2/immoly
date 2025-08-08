@@ -45,10 +45,10 @@ export default function SondertilgungInput({ sondertilgung }: PropTypes) {
         name="sonderTilgungAmount"
         value={amount!}
         onChange={onChange}
-        className={`${amount ? "text-green-400" : "text-gray-800"} md:w-20 rounded-md p-[3px] text-xs md:text-sm active:text-gray-200 sondertilgungInput`}
+        className={`${amount ? "text-[var(--success)]" : "text-gray-800"} md:w-20 p-[3px] text-xs md:text-sm active:text-gray-200 sondertilgungInput border-b border-[var(--secondary)] pb-1 text-xl transition-colors duration-200 focus:border-[var(--accent)] focus:outline-none lg:text-base`}
       />
       <button
-        className={`${valueChanged ? "text-green-600 text-2xl" : "text-gray-800" } hover:cursor-pointer hover:text-gray-200`}
+        className={`${valueChanged ? "text-[var(--success)] text-2xl" : "text-gray-800" } hover:cursor-pointer hover:text-gray-200`}
       >
         +
       </button>
