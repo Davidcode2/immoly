@@ -8,18 +8,28 @@ import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import NoData from "app/components/noData";
 import TilgungstabelleContainer from "app/components/tilgungstabelleContainer";
-import { getSondertilgungen } from "app/lib/sondertilgungDatabaseService";
 import FinanzierungsFormContainer from "app/components/baseDataForm/finanzierungsFormContainer";
 import ChartsContainer from "app/components/charts/chartsContainer";
 import Hero from "./components/hero";
 import FinanzierungsForm from "./components/baseDataForm/finanzierungsForm";
-import { getTilgungsWechsel } from "./lib/tilgungswechselDatabaseService";
 import MainStatsSection from "./components/mainStatsSection";
+import { Sondertilgung } from "./lib/models/sondertilgung";
+import { Tilgungswechsel } from "./lib/models/tilgungswechsel";
+import {
+  getSondertilgungenCacheHelper,
+  getTilgungswechselCacheHelper,
+} from "./services/sonderCalculationsHelper";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
   const [input, setInput] = useState<CashRoiModel | null>(null);
   const [selectedScenario, setSelectedScenario] = useState<string | null>("18");
+  const [sondertilgungenCache, setSondertilgungenCache] = useState<
+    Sondertilgung[]
+  >([]);
+  const [tilgungswechselCache, setTilgungswechselCache] = useState<
+    Tilgungswechsel[]
+  >([]);
 
   const searchParams = useSearchParams();
   const calculationId = searchParams.get("calculationId");
@@ -29,10 +39,42 @@ export default function ResultDisplay() {
     if (!input) {
       return;
     }
-    input.sondertilgungen = await getSondertilgungen(calculationId!);
-    input.tilgungswechsel = await getTilgungsWechsel(calculationId!);
+    input.sondertilgungen = await getSondertilgungFromCache(
+      calculationId!,
+      true,
+    );
+    input.tilgungswechsel = await getTilgungswechselFromCache(
+      calculationId!,
+      true,
+    );
     const tilgungungsTabelle = calcTilgung(input);
     setTable(tilgungungsTabelle);
+  };
+
+  const getSondertilgungFromCache = async (
+    calculationId: string,
+    update: boolean = false,
+  ) => {
+    const sondertilgungen = await getSondertilgungenCacheHelper(
+      calculationId,
+      sondertilgungenCache,
+      update,
+    );
+    setSondertilgungenCache(sondertilgungen!);
+    return sondertilgungen!;
+  };
+
+  const getTilgungswechselFromCache = async (
+    calculationId: string,
+    update: boolean = false,
+  ) => {
+    const tilgungswechsel = await getTilgungswechselCacheHelper(
+      calculationId,
+      tilgungswechselCache,
+      update,
+    );
+    setTilgungswechselCache(tilgungswechsel!);
+    return tilgungswechsel!;
   };
 
   useEffect(() => {
@@ -49,9 +91,10 @@ export default function ResultDisplay() {
       async function loadData() {
         if (!input) return;
 
-        // store this in state
-        input.sondertilgungen = await getSondertilgungen(calculationId!);
-        input.tilgungswechsel = await getTilgungsWechsel(calculationId!);
+        input.sondertilgungen = await getSondertilgungFromCache(calculationId!);
+        input.tilgungswechsel = await getTilgungswechselFromCache(
+          calculationId!,
+        );
         const tilgungsTabelle = calcTilgung(input);
         setTable(tilgungsTabelle);
       }
@@ -90,7 +133,7 @@ export default function ResultDisplay() {
   return (
     <div className="px-3 pt-3">
       <div
-        className={`grid gap-y-6 lg:grid-cols-[1fr_5fr] md:gap-x-6 md:gap-y-16 ${table && "items-start"}`}
+        className={`grid gap-y-6 md:gap-x-6 md:gap-y-16 lg:grid-cols-[1fr_5fr] ${table && "items-start"}`}
       >
         <div className="hidden md:block">
           <FinanzierungsFormContainer formValues={input} setInput={setInput} />
@@ -119,7 +162,7 @@ export default function ResultDisplay() {
                   />
                 </div>
                 <ChartsContainer input={input} table={table} />
-                <div className="mx-4 sm:mx-0 my-14 md:hidden">
+                <div className="mx-4 my-14 sm:mx-0 md:hidden">
                   <TilgungstabelleContainer
                     table={table}
                     calculationId={calculationId}
