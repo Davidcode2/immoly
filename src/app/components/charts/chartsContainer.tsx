@@ -10,7 +10,7 @@ type PropTypes = {
 
 export default function ChartsContainer({ input, table }: PropTypes) {
   return (
-    <div className="xl:col-start-2">
+    <div className="2xl:col-start-2">
       {input && (
         <div className="grid gap-y-20 md:gap-4">
           <div className="grid min-h-[200px] justify-around rounded-lg md:shadow backdrop-blur-lg md:min-h-[300px]">

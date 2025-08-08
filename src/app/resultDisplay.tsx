@@ -90,7 +90,7 @@ export default function ResultDisplay() {
   return (
     <div className="px-3 pt-3">
       <div
-        className={`grid gap-y-6 md:grid-cols-[1fr_5fr] md:gap-x-6 md:gap-y-16 ${table && "items-start"}`}
+        className={`grid gap-y-6 lg:grid-cols-[1fr_5fr] md:gap-x-6 md:gap-y-16 ${table && "items-start"}`}
       >
         <div className="hidden md:block">
           <FinanzierungsFormContainer formValues={input} setInput={setInput} />
@@ -108,7 +108,7 @@ export default function ResultDisplay() {
                 selectedScenario={selectedScenario}
                 table={table}
               />
-              <div className="grid gap-6 xl:grid-cols-[3fr_2fr]">
+              <div className="grid gap-6 2xl:grid-cols-[3fr_2fr]">
                 <div className="hidden md:block">
                   <TilgungstabelleContainer
                     table={table}
