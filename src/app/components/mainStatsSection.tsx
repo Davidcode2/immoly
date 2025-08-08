@@ -16,7 +16,7 @@ export default function MainStatsSection({
   table,
 }: PropTypes) {
   return (
-    <div className="top-10 z-20 mt-0 mb-10 grid justify-stretch gap-y-14 md:m-0 2xl:h-56 md:gap-6 sm:grid-cols-2 2xl:sticky 2xl:grid-cols-4">
+    <div className="top-10 z-20 mt-0 mb-10 grid justify-stretch gap-y-14 md:m-0 2xl:h-56 md:gap-6 md:grid-cols-2 2xl:sticky 2xl:grid-cols-4">
       <KreditSummeTextComponent
         principal={Number(userInput?.principal)}
         downPayment={Number(userInput?.down_payment)}

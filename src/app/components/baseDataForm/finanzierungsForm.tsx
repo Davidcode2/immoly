@@ -93,7 +93,7 @@ export default function FinanzierungsForm({
   return (
     <Form action={storeInDb} className="mx-8 pb-8 md:pb-0 md:mx-auto">
       <div className="p-2">
-        <div className="mb-2 grid gap-8 md:gap-8">
+        <div className="mb-2 grid gap-8 md:gap-8 md:justify-center lg:justify-none">
           {/* Eigenkapital */}
           <SliderInput
             min={0}

@@ -102,7 +102,7 @@ input[type="range"]:focus::-ms-fill-upper {
 /******* Adjust for small screens ********/
 /*****************************************/
 
-@media (max-width: 600px) {
+@media (max-width: 1024px) {
   /**********************/
   /******* thumb ********/
   /**********************/
