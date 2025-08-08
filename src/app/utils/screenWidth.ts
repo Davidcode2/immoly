@@ -5,13 +5,17 @@ export function calcWidth() {
   }
   const tabletScreen = window.innerWidth < 765;
   if (tabletScreen) {
-    return window.innerWidth - 100;
+    return window.innerWidth - 150;
   }
-  const regularScreen = window.innerWidth < 1280;
-  if (regularScreen) {
+  const laptopScreen = window.innerWidth < 1024;
+  if (laptopScreen) {
     return window.innerWidth - 400;
   }
-  const bigScreen = window.innerWidth >= 1280 && window.innerWidth < 2000;
+  const regularScreen = window.innerWidth >= 1024 && window.innerWidth < 1535;
+  if (regularScreen) {
+    return window.innerWidth - 600;
+  }
+  const bigScreen = window.innerWidth >= 1535 && window.innerWidth < 2000;
   if (bigScreen) {
     return 400;
   }
