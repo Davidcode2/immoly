@@ -32,9 +32,6 @@ services:
 
   immoly-app:
     container_name: immoly-app
-    depends_on:
-      migrations:
-        condition: service_completed_successfully
     image: ghcr.io/davidcode2/immoly:${IMAGE_TAG:-latest}
     restart: unless-stopped
     networks:
