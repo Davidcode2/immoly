@@ -24,17 +24,17 @@ const SliderInput: React.FC<SliderInputProps> = ({
   htmlFor,
   sign = "€",
   handleChange,
-  children
+  children,
 }) => {
   return (
     <div>
       <label
         htmlFor={htmlFor}
-        className="mb-1 text-[var(--light-accent)] uppercase"
+        className="mb-4 block text-[var(--light-accent)] uppercase sm:mb-1"
       >
         {label}
       </label>
-      <div className="flex flex-col gap-y-6 md:w-68 md:gap-y-4">
+      <div className="order-2 flex flex-col gap-y-6 md:w-68 md:gap-y-4">
         <Slider
           value={value}
           min={min}
@@ -43,7 +43,7 @@ const SliderInput: React.FC<SliderInputProps> = ({
           inputName={inputName}
           onChange={handleChange}
         />
-        <div className="flex items-center gap-x-2">
+        <div className="order-first flex items-center gap-x-2 sm:order-2">
           <NumberInput
             handleChange={handleChange}
             id={htmlFor}
@@ -53,7 +53,7 @@ const SliderInput: React.FC<SliderInputProps> = ({
           <div className="relative -left-6 text-stone-600">
             {inputName === "interest_rate" ? "%" : sign}
           </div>
-          { children }
+          {children}
         </div>
       </div>
     </div>
