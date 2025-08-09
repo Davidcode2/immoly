@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import SliderInput from "app/components/slider/sliderInput";
 import OptionalParameters from "app/components/baseDataForm/optionalParameters";
+import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 
 export default function FinanzierungsForm({
   values,
@@ -22,7 +23,9 @@ export default function FinanzierungsForm({
   const [showExtended, setShowExtended] = useState<boolean>(false);
 
   const monthlyRateInPercent = () => {
-    const kreditSumme = Number(principalValue) - Number(downPayment);
+    const nebenkosten = new NebenkostenCalculator(Number(principalValue)).calcSumme();
+    const kreditSumme = Number(principalValue) + nebenkosten - Number(downPayment);
+    console.log("KreditSumme: ", kreditSumme);
     const yearlyRate = Number(monthlyRate) * 12;
     const zins = (Number(interestRate) * kreditSumme) / 100;
     const tilgung = yearlyRate - zins;
