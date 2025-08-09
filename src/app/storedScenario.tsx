@@ -2,7 +2,7 @@
 import CalculationResult from "./lib/models/CalculationResult";
 import { deleteItem } from "./lib/calculationAccessor";
 
-export default function SingleGraph({
+export default function StoredScenario({
   calculation,
 }: {
   calculation: CalculationResult;
