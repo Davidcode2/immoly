@@ -22,7 +22,7 @@ export default async function GraphPage() {
         </div>
       </div>
       <div className="bg-[var(--secondary)]">
-        <div className="flex justify-center gap-x-2 p-8">
+        <div className="flex text-[var(--dark-accent)]/50 justify-center gap-x-2 p-8">
           Gebaut auf der{" "}
           <Image
             src="/images/icons/icons8-couch-85.png"
