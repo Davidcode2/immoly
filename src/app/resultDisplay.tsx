@@ -175,7 +175,7 @@ export default function ResultDisplay() {
             </>
           )}
         </div>
-        <div className="sticky -bottom-2 z-40 overflow-y-auto rounded-2xl border border-[var(--light-accent)]/20 bg-[var(--background)]/70 py-8 shadow backdrop-blur-lg md:hidden">
+        <div className="sticky -bottom-2 z-30 overflow-y-auto rounded-2xl border border-[var(--light-accent)]/20 bg-[var(--background)]/70 py-8 shadow backdrop-blur-lg md:hidden">
           <div className="max-h-[400px]">
             <FinanzierungsForm values={input} setInput={setInput} />
           </div>

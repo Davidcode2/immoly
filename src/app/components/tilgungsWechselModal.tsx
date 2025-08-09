@@ -9,10 +9,10 @@ export default function TilgungsWechselModal({
   tilgungswechsel,
 }: PropTypes) {
   return (
-    <div className="tilgungsWechselModal rounded-xl mt-80 border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl md:w-[400px]">
+    <div className="z-40 tilgungsWechselModal rounded-xl mt-40 mx-10 sm:mx-0 sm:mt-80 border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl md:w-[400px]">
       <div className="tilgungsWechselModal">
         <label
-          className="tilgungsWechselModal flex rounded-t-lg bg-[var(--primary)]/40 text-base md:px-10 md:py-10"
+          className="tilgungsWechselModal flex rounded-t-lg bg-[var(--primary)]/40 text-base px-10 py-10"
           htmlFor="newTilgung"
         >
           Wählen Sie eine neue monatliche Rate nach{" "}
