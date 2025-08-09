@@ -9,14 +9,38 @@ export default function Hero() {
         width={200}
         height={10}
         alt="Logo"
-        className="mx-auto dark:invert-0 mb-4 invert"
+        className="mx-auto mb-4 invert dark:invert-0"
       />
       <div className="mx-auto p-4">
         <IconsHeader />
       </div>
       <div className="mb-10 p-4 text-center font-thin">
         Die Plattform für Immobilienkredite. Kalkulieren Sie was möglich ist.
+        <ScrollIndicator />
       </div>
     </>
   );
 }
+
+const ScrollIndicator = () => {
+  return (
+    <div className="flex w-full justify-center">
+      <div className="mt-4 sm:hidden mb-4 h-6 w-6 animate-bounce">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          className="opacity-50"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1.5}
+            d="M19 14l-7 7m0 0l-7-7m7 7V3"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+};
