@@ -1,7 +1,7 @@
 import SingleGraph from "./singleGraph";
 import getCalculations from "./lib/calculationAccessor";
 
-export default async function Graphs() {
+export default async function StoredCalculations() {
   const calculationData = await getCalculations();
 
   return (

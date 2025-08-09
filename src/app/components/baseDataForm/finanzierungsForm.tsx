@@ -150,7 +150,7 @@ export default function FinanzierungsForm({
         {showExtended ? "Weniger Optionen" : "Mehr Optionen"}
       </button>
       <div
-        className={`${showExtended ? "block" : "hidden"} mb-2 rounded-lg p-2 backdrop-blur-2xl`}
+        className={`${showExtended ? "block" : "hidden"} mb-2 rounded-lg p-2`}
       >
         <OptionalParameters
           cashRoi={cashRoi}

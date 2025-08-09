@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import Graphs from "app/graphs";
+import StoredCalculations from "app/storedCalculations";
 import ResultDisplay from "app/resultDisplay";
 import { Suspense } from "react";
 import Loading from "app/loading";
@@ -17,7 +17,7 @@ export default async function GraphPage() {
           <Suspense fallback={<Loading />}>
             <ResultDisplay />
           </Suspense>
-          <Graphs />
+          <StoredCalculations />
         </div>
       </div>
     </div>
