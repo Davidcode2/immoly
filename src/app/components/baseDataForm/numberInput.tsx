@@ -1,7 +1,4 @@
-import {
-  formatGerman,
-  parseDecimal,
-} from "app/services/numberFormatService";
+import { formatGerman, parseDecimal } from "app/services/numberFormatService";
 import { useEffect, useRef, useState } from "react";
 
 type PropTypes = {
@@ -19,6 +16,7 @@ export default function NumberInput({
 }: PropTypes) {
   const [displayValue, setDisplayValue] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const [prevValue, setPrevValue] = useState<string>("");
 
   useEffect(() => {
     if (value !== undefined) {
@@ -40,26 +38,76 @@ export default function NumberInput({
     const input = e.target;
     const selectionStart = input.selectionStart ?? 0;
     const unformatted = input.value.replace(/\./g, "");
-
-    // Format the value
-    const formatted = formatGerman(unformatted);
-    setDisplayValue(formatted);
+    const dotsInInput = (input.value.match(/\./g) || []).length;
+    console.log(dotsInInput, "dots in input");
+    const digitChangedBeforeDot =
+      selectionStart < input.value.indexOf("."); 
 
     // Restore caret position after formatting
     requestAnimationFrame(() => {
       const newLength = formatted.length;
-      const diff = newLength - unformatted.length;
-      const newPosition = selectionStart + diff;
-      input.setSelectionRange(newPosition, newPosition);
+      // user added a digit
+      if (prevValue.length < unformatted.length) {
+        let newPosition = selectionStart;
+        if (selectionStart === input.value.length) {
+          newPosition = selectionStart + 1;
+        } 
+        else if (dotsInInput > 0) {
+          if (digitChangedBeforeDot) {
+            // handles 1|.357 -> 12|.357
+            // but 1.|357 -> 12.|357
+            // this means if the input is added before a dot the caret moves one up which is correct
+            // if the input is added after a dot the caret also moves one up which is incorrect
+            // while this is somewhat fine when the digit is added right after the dot this
+            // will become a problem when the digit is added not near a dot
+            // 1.35|7 -> 13.567|
+          } else {
+            console.log("moving caret up by number of dots");
+            newPosition = selectionStart + dotsInInput;
+          }
+        } else {
+          console.log("moving caret up one"); 
+          newPosition = selectionStart + 1;
+        }
+        input.setSelectionRange(newPosition, newPosition);
+        // user removed a digit
+      } else if (prevValue.length > unformatted.length) {
+        if (formatted.length === unformatted.length && dotsInInput > 0) {
+          // handles 1.234 -> 124
+          input.setSelectionRange(selectionStart - 1, selectionStart - 1);
+        } else {
+          console.log(formatted.length, formatted);
+          console.log(unformatted.length, unformatted);
+          const diff = newLength - unformatted.length;
+          const newPosition = selectionStart + diff;
+          console.log("Setting selection Start:", selectionStart);
+          input.setSelectionRange(newPosition - diff, newPosition - diff);
+        }
+      }
     });
-    handleChange(e);
+
+    // Format the value
+    const formatted = formatGerman(unformatted);
+    setDisplayValue(formatted);
+    //handleChange(e);
+    setPrevValue(unformatted);
   };
+
+  /*
+  12
+  123
+  1234 => 1.234
+  */
+
+  /*
+   * 1.23|4
+   * 1.2|4 => 124|
+   */
 
   return (
     <input
       ref={inputRef}
       type="text"
-      inputMode="decimal"
       id={id}
       value={displayValue}
       name={inputName}
