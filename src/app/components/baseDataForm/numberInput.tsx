@@ -56,17 +56,20 @@ export default function NumberInput({
       } else if (prevValue.length > unformatted.length) {
         // user removed a digit
         if (prevNumberOfDots > dotsInFormattedInput) {
-          // handles e.g. 1.234 -> 124
-          newPosition = selectionStart - 1;
-          input.setSelectionRange(newPosition, newPosition);
+          if (selectionStart !== 0) {
+            // handles e.g. 1.234 -> 124
+            newPosition = selectionStart - 1;
+            input.setSelectionRange(newPosition, newPosition);
+          }
         } else {
           input.setSelectionRange(newPosition, newPosition);
         }
       }
+      input.setSelectionRange(newPosition, newPosition);
     });
 
     setDisplayValue(formatted);
-    //handleChange(e);
+    handleChange(e);
     setPrevValue(unformatted);
   };
 
