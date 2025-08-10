@@ -1,24 +1,5 @@
+import { formatGerman, parseDecimal, parseGerman } from "app/services/numberFormatService";
 import { useEffect, useRef, useState } from "react";
-
-function formatGerman(value: string): string {
-  if (!value) return "";
-
-  // Remove all non-digit and non-comma characters
-  const sanitized = value.replace(/\./g, "").replace(",", ".");
-
-  const number = Number(sanitized);
-  if (isNaN(number)) return "";
-
-  return new Intl.NumberFormat("de-DE").format(number);
-}
-
-function parseGerman(value: string): number {
-  return Number(value.replace(/\./g, "").replace(",", "."));
-}
-
-function parseDecimal(value: string) {
-  return parseFloat(value.replace(",", "."));
-}
 
 type PropTypes = {
   value?: number;
