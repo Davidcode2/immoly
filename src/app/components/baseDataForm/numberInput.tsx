@@ -41,21 +41,13 @@ export default function NumberInput({
     const unformatted = input.value.replace(/\./g, "");
     const formatted = formatGerman(unformatted);
     const dotsInFormattedInput = (formatted.match(/\./g) || []).length;
-    console.log(
-      "Formatted Input: ",
-      formatted,
-      "Dots in formatted input: ",
-      dotsInFormattedInput,
-    );
     setPrevNumberOfDots(dotsInFormattedInput);
-    const digitChangedBeforeDot = selectionStart < input.value.indexOf(".");
 
     // Restore caret position after formatting
     requestAnimationFrame(() => {
-      const newLength = formatted.length;
+      let newPosition = selectionStart;
       if (prevValue.length < unformatted.length) {
         // user added a digit
-        let newPosition = selectionStart;
         if (prevNumberOfDots < dotsInFormattedInput) {
           // dot was added when formatting value
           newPosition = selectionStart + 1;
@@ -63,24 +55,16 @@ export default function NumberInput({
         input.setSelectionRange(newPosition, newPosition);
       } else if (prevValue.length > unformatted.length) {
         // user removed a digit
-        if (
-          formatted.length === unformatted.length &&
-          dotsInFormattedInput > 0
-        ) {
-          // handles 1.234 -> 124
-          input.setSelectionRange(selectionStart - 1, selectionStart - 1);
+        if (prevNumberOfDots > dotsInFormattedInput) {
+          // handles e.g. 1.234 -> 124
+          newPosition = selectionStart - 1;
+          input.setSelectionRange(newPosition, newPosition);
         } else {
-          console.log(formatted.length, formatted);
-          console.log(unformatted.length, unformatted);
-          const diff = newLength - unformatted.length;
-          const newPosition = selectionStart + diff;
-          console.log("Setting selection Start:", selectionStart);
-          input.setSelectionRange(newPosition - diff, newPosition - diff);
+          input.setSelectionRange(newPosition, newPosition);
         }
       }
     });
 
-    // Format the value
     setDisplayValue(formatted);
     //handleChange(e);
     setPrevValue(unformatted);
