@@ -1,5 +1,5 @@
 type PropTypes = {
-  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange: (name: string, value: number) => void;
   cashRoi: number | string;
   rent: number | string;
 };
@@ -30,7 +30,7 @@ export default function OptionalParameters({
           min="0.0"
           maxLength={2}
           value={cashRoi}
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e.target.name, Number(e.target.value))}
         />
       </div>
       <div className="mb-4 grid">
@@ -49,7 +49,7 @@ export default function OptionalParameters({
           id="rent"
           name="rent"
           value={rent}
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e.target.name, Number(e.target.value))}
         />
       </div>
     </div>
