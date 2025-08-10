@@ -1,4 +1,4 @@
-import { formatGerman, parseDecimal } from "app/services/numberFormatService";
+import { calcCursorPosition, formatGerman, parseDecimal } from "app/services/numberFormatService";
 import { useEffect, useRef, useState } from "react";
 
 type PropTypes = {
@@ -45,44 +45,14 @@ export default function NumberInput({
 
     // Restore caret position after formatting
     requestAnimationFrame(() => {
-      let newPosition = selectionStart;
-      if (prevValue.length < unformatted.length) {
-        // user added a digit
-        if (prevNumberOfDots < dotsInFormattedInput) {
-          // dot was added when formatting value
-          newPosition = selectionStart + 1;
-        }
-        input.setSelectionRange(newPosition, newPosition);
-      } else if (prevValue.length > unformatted.length) {
-        // user removed a digit
-        if (prevNumberOfDots > dotsInFormattedInput) {
-          if (selectionStart !== 0) {
-            // handles e.g. 1.234 -> 124
-            newPosition = selectionStart - 1;
-            input.setSelectionRange(newPosition, newPosition);
-          }
-        } else {
-          input.setSelectionRange(newPosition, newPosition);
-        }
-      }
+      const newPosition = calcCursorPosition(selectionStart, unformatted, dotsInFormattedInput, prevValue, prevNumberOfDots)
       input.setSelectionRange(newPosition, newPosition);
     });
 
     setDisplayValue(formatted);
-    handleChange(e);
     setPrevValue(unformatted);
+    handleChange(e);
   };
-
-  /*
-  12
-  123
-  1234 => 1.234
-  */
-
-  /*
-   * 1.23|4
-   * 1.2|4 => 124|
-   */
 
   return (
     <input

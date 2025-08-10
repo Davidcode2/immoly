@@ -18,3 +18,32 @@ export function parseDecimal(value: string) {
   return parseFloat(value.replace(",", "."));
 }
 
+export function calcCursorPosition(
+  selectionStart: number,
+  unformatted: string,
+  dotsInFormattedInput: number,
+  prevValue: string,
+  prevNumberOfDots: number,
+) {
+  let newPosition = selectionStart;
+  if (prevValue.length < unformatted.length) {
+    // user added a digit
+    if (prevNumberOfDots < dotsInFormattedInput) {
+      // dot was added when formatting value
+      newPosition = selectionStart + 1;
+    }
+    return newPosition;
+  } else if (prevValue.length > unformatted.length) {
+    // user removed a digit
+    if (prevNumberOfDots > dotsInFormattedInput) {
+      if (selectionStart !== 0) {
+        // handles e.g. 1.234 -> 124
+        newPosition = selectionStart - 1;
+        return newPosition;
+      }
+    } else {
+      return newPosition;
+    }
+  }
+  return newPosition;
+}
