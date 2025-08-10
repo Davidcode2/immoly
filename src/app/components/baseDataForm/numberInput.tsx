@@ -1,4 +1,7 @@
-import { formatGerman, parseDecimal, parseGerman } from "app/services/numberFormatService";
+import {
+  formatGerman,
+  parseDecimal,
+} from "app/services/numberFormatService";
 import { useEffect, useRef, useState } from "react";
 
 type PropTypes = {
@@ -15,7 +18,6 @@ export default function NumberInput({
   value,
 }: PropTypes) {
   const [displayValue, setDisplayValue] = useState<string>("");
-  const [, setRawValue] = useState(value);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -27,7 +29,6 @@ export default function NumberInput({
         setDisplayValue(interestRate.toFixed(2).replace(".", ","));
       } else {
         setDisplayValue(formattedValue);
-        setRawValue(value);
         if (inputRef.current) {
           inputRef.current.value = formattedValue;
         }
@@ -39,10 +40,6 @@ export default function NumberInput({
     const input = e.target;
     const selectionStart = input.selectionStart ?? 0;
     const unformatted = input.value.replace(/\./g, "");
-
-    // Update raw value
-    const numericValue = parseGerman(unformatted);
-    setRawValue(numericValue);
 
     // Format the value
     const formatted = formatGerman(unformatted);
