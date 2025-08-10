@@ -25,7 +25,6 @@ export default function FinanzierungsForm({
   const monthlyRateInPercent = () => {
     const nebenkosten = new NebenkostenCalculator(Number(principalValue)).calcSumme();
     const kreditSumme = Number(principalValue) + nebenkosten - Number(downPayment);
-    console.log("KreditSumme: ", kreditSumme);
     const yearlyRate = Number(monthlyRate) * 12;
     const zins = (Number(interestRate) * kreditSumme) / 100;
     const tilgung = yearlyRate - zins;
@@ -33,8 +32,7 @@ export default function FinanzierungsForm({
     return monthlyRateInPercent.toFixed(2) + " %";
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleInputChange = (name: string, value: number) => {
     switch (name) {
       case "down_payment":
         setDownPayment(value);

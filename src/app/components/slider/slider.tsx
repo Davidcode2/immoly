@@ -7,7 +7,7 @@ type SliderProps = {
   max: number;
   step?: number;
   inputName: string,
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (name: string, value: string) => void;
 };
 
 const Slider: React.FC<SliderProps> = ({ value, min, max, step = 1, inputName, onChange }) => {
@@ -16,7 +16,7 @@ const Slider: React.FC<SliderProps> = ({ value, min, max, step = 1, inputName, o
   const localChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
     setInputValue(newValue);
-    onChange(e);
+    onChange(e.target.name, e.target.value);
   }
 
   useEffect(() => {

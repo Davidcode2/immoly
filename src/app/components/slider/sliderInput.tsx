@@ -10,7 +10,7 @@ type SliderInputProps = {
   inputName: string;
   htmlFor: string;
   sign?: string;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (name: string, value: string) => void;
   children?: React.ReactNode;
 };
 

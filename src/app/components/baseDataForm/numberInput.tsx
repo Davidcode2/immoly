@@ -5,7 +5,7 @@ type PropTypes = {
   value?: number;
   id: string;
   inputName: string;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (name: string, value: number) => void;
 };
 
 export default function NumberInput({
@@ -51,7 +51,7 @@ export default function NumberInput({
 
     setDisplayValue(formatted);
     setPrevValue(unformatted);
-    handleChange(e);
+    handleChange(e.target.name, parseDecimal(unformatted) || 0);
   };
 
   return (
