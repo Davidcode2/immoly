@@ -48,6 +48,7 @@ export default function ResultDisplay() {
       true,
     );
     const tilgungungsTabelle = calcTilgung(input);
+    console.log("change update");
     setTable(tilgungungsTabelle);
   };
 
@@ -96,6 +97,7 @@ export default function ResultDisplay() {
           calculationId!,
         );
         const tilgungsTabelle = calcTilgung(input);
+        console.log("Debounced input change:", input);
         setTable(tilgungsTabelle);
       }
 
@@ -157,7 +159,6 @@ export default function ResultDisplay() {
                     table={table}
                     calculationId={calculationId}
                     input={input}
-                    setTable={setTable}
                     sendChangeNotification={changeHandler}
                   />
                 </div>
@@ -167,7 +168,6 @@ export default function ResultDisplay() {
                     table={table}
                     calculationId={calculationId}
                     input={input}
-                    setTable={setTable}
                     sendChangeNotification={changeHandler}
                   />
                 </div>

@@ -7,14 +7,12 @@ type PropTypes = {
   table: ArmotizationEntry[] | null;
   input: CashRoiModel | null;
   sendChangeNotification: () => void;
-  setTable: (tilgungsTabelle: ArmotizationEntry[]) => void;
 };
 
 export default function TilgungstabelleContainer({
   calculationId,
   table,
   input,
-  setTable,
   sendChangeNotification,
 }: PropTypes) {
   return (
@@ -23,7 +21,6 @@ export default function TilgungstabelleContainer({
         <Tilgungstabelle
           table={table as ArmotizationEntry[]}
           formInput={input}
-          setTable={setTable}
           calculationId={calculationId}
           sendChangeNotification={sendChangeNotification}
         />

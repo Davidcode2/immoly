@@ -11,7 +11,6 @@ import storeTilgungsWechselInDb from "./lib/tilgungswechselDatabaseService";
 type PropTypes = {
   table: ArmotizationEntry[];
   formInput: CashRoiModel | null;
-  setTable: (tilgungstabelle: ArmotizationEntry[]) => void;
   sendChangeNotification: () => void;
   calculationId: string | null;
 };
@@ -28,6 +27,7 @@ export default function Tilgungstabelle({
   const tilgungsWechselModalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    console.log("Tilgungstabelle useEffect", table);
     setTemporaryTable(table);
   }, [table]);
 
