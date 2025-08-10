@@ -23,7 +23,6 @@ export default function SondertilgungInput({ sondertilgung }: PropTypes) {
     if (newValueNumber <= 0) {
       return false;
     }
-    console.log(res);
     return res;
   };
 

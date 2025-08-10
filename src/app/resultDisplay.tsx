@@ -35,7 +35,6 @@ export default function ResultDisplay() {
   const calculationId = searchParams.get("calculationId");
 
   const changeHandler = async () => {
-    console.log("input: ", input);
     if (!input) {
       return;
     }
@@ -48,7 +47,6 @@ export default function ResultDisplay() {
       true,
     );
     const tilgungungsTabelle = calcTilgung(input);
-    console.log("change update");
     setTable(tilgungungsTabelle);
   };
 
@@ -97,7 +95,6 @@ export default function ResultDisplay() {
           calculationId!,
         );
         const tilgungsTabelle = calcTilgung(input);
-        console.log("Debounced input change:", input);
         setTable(tilgungsTabelle);
       }
 
@@ -119,7 +116,6 @@ export default function ResultDisplay() {
           if (!result) {
             return;
           }
-          console.log(result);
           setInput(result[0]);
           const tilgungungsTabelle = calcTilgung(result[0]);
           setTable(tilgungungsTabelle);
@@ -129,6 +125,9 @@ export default function ResultDisplay() {
       }
     }
 
+    // reset cache
+    getSondertilgungFromCache(calculationId!, true);
+    getTilgungswechselFromCache(calculationId!, true);
     loadData();
   }, [calculationId]);
 

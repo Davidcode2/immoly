@@ -27,7 +27,6 @@ export default function Tilgungstabelle({
   const tilgungsWechselModalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    console.log("Tilgungstabelle useEffect", table);
     setTemporaryTable(table);
   }, [table]);
 
