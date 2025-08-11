@@ -12,6 +12,7 @@ import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
 import { customToolTip, renderThousandIndicator } from "./chartHelper";
 import { onThemeChangeColorUpdate } from "app/services/onThemeChangeColorUpdate";
+import { ContentType } from "recharts/types/component/DefaultLegendContent";
 
 interface ChartDataItem {
   name: string;
@@ -47,7 +48,7 @@ export default function PlotlyChart({
     return () => {
       observerLabels.disconnect();
       observerGrid.disconnect();
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -82,11 +83,27 @@ export default function PlotlyChart({
     return null;
   }
 
+  const renderLegend = (props: any) => {
+    const { payload } = props;
+    return (
+      <ul className="text-xl flex gap-x-4">
+        {payload.map((entry: any, index: number) => (
+          <li
+            className={`${entry.value === "Tilgung" ? "text-[var(--dark-accent)]" : "text-[var(--light-accent)]"}`}
+            key={`item-${index}`}
+          >
+            &mdash; {entry.value}
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <LineChart
       className="grid justify-stretch"
       width={calcWidth()}
-      height={screenWidthMobile() ? 200 : 300}
+      height={screenWidthMobile() ? 400 : 300}
       data={debouncedChartData}
       margin={{
         top: 30,
@@ -104,14 +121,14 @@ export default function PlotlyChart({
         label={{ value: "Jahr", position: "insideBottomRight", dy: 20, dx: 4 }}
       />
       <YAxis
-        tick={(props) => renderThousandIndicator({...props, labelColor})}
+        tick={(props) => renderThousandIndicator({ ...props, labelColor })}
         tickCount={4}
         axisLine={false}
         tickLine={false}
         label={{ value: "EUR", position: "insideTopLeft", dx: -16, dy: -4 }}
       />
       <Tooltip content={customToolTip} />
-      <Legend />
+      <Legend content={renderLegend} />
       <CartesianGrid
         vertical={false}
         stroke={gridColor}
