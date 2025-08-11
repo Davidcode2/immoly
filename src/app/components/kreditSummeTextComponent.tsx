@@ -24,7 +24,7 @@ export default function KreditSummeTextComponent({
       <span className="text-end">+&nbsp;{nebenkosten.toLocaleString("de")}</span>
       <span className="text-xs text-end md:text-start">Nebenkosten</span>
       <span className="text-end">-&nbsp;{downPayment.toLocaleString("de")}</span>
-      <span className="col-start-1 md:col-start-3 group relative gap-x-2 text-xs text-end md:text-start">
+      <span className="col-start-1 md:col-start-3 group relative items-center flex justify-end md:justify-start gap-x-2 text-xs text-end md:text-start">
         Eigenkapital
         {nebenkosten > downPayment && (
           <>

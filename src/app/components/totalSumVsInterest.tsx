@@ -12,7 +12,7 @@ export default function TotalSumVsInterest({
   kreditSumme: number;
 }) {
   return (
-    <div className="h-42 grow flex flex-col gap-4 md:flex-row md:gap-x-2">
+    <div className="h-42 md:h-fit grow flex flex-col gap-4 md:flex-row md:gap-x-2">
       {paidAfter !== -1 && (
         <div className="">
           <div className="text-xs">Summe Gesamt</div>

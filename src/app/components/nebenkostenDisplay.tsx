@@ -46,7 +46,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const data = calcGraphData();
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center gap-6 rounded-lg px-6 pt-4 md:py-4 text-xs shadow backdrop-blur-2xl sm:col-span-2 md:justify-start md:text-base">
+    <div className="flex flex-col sm:flex-row items-center justify-center gap-6 rounded-lg px-6 pt-4 md:py-4 text-xs shadow backdrop-blur-2xl sm:col-span-2 md:justify-start md:text-base">
       <PieChart width={130} height={window.innerWidth < 768 ? 70 : 130}>
         <Pie
           data={data}
