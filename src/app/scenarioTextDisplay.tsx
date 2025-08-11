@@ -1,3 +1,5 @@
+import TotalSumVsInterest from "./components/totalSumVsInterest";
+
 export default function ScenarioTextDisplay({
   paidAfter,
   paidInYear,
@@ -10,34 +12,27 @@ export default function ScenarioTextDisplay({
   totalSum: number;
 }) {
   return (
-    <div className="flex mb-2 flex-col items-center gap-x-4 gap-y-3 text-center md:items-start md:text-start">
+    <div className="mb-2 flex flex-col gap-x-4 gap-y-3 md:items-start md:text-start">
       {paidAfter === -1 ? (
         <div className="font-bold text-[var(--alert)]">Das wird nichts</div>
       ) : (
-        <div>
-          Abgezahlt nach
-          <br />
-          <span className="font-bold text-[var(--primary)]">{paidAfter}</span> Jahren
-          in {paidInYear}
+        <div className="">
+          <span className="text-5xl font-bold text-[var(--primary)] md:text-base">
+            {paidAfter}
+          </span>
+          <div className="text-xs">
+            Jahre bis Volltilgung
+            <br />
+            in {paidInYear}
+          </div>
         </div>
       )}
-      <div className="flex gap-x-2">
-        {paidAfter !== -1 && (
-          <div className="">
-            <div className="text-sm mb-2">Summe Gesamt</div>
-            <div className="font-bold text-[var(--light-accent)]">
-              {Math.round(totalSum).toLocaleString()}
-            </div>
-          </div>
-        )}
-        <div className="">
-          <div className="text-sm mb-2">
-            Summe Zinsen {paidAfter === -1 && "nach 120 Jahren"}
-          </div>
-          <div className="font-bold text-[var(--primary)]">
-            {Math.round(sumZinsen).toLocaleString()}
-          </div>
-        </div>
+      <div className="hidden md:block">
+        <TotalSumVsInterest
+          paidAfter={paidAfter}
+          sumZinsen={sumZinsen}
+          totalSum={totalSum}
+        />
       </div>
     </div>
   );

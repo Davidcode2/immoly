@@ -15,16 +15,16 @@ export default function KreditSummeTextComponent({
   const kreditSumme = kreditSummeRaw < 0 ? 0 : kreditSummeRaw;
 
   return (
-    <div className="z-20 grid grid-cols-[20px_1fr_1fr] items-baseline gap-x-2 rounded-lg p-3 backdrop-blur-2xl md:p-8 md:shadow">
-      <div className="w-4 max-h-58 h-full relative sm:block left-16 sm:left-0 row-span-4">
+    <div className="z-20 grid grid-cols-1 md:grid-cols-[20px_1fr_1fr] items-baseline gap-x-2 rounded-lg p-5 backdrop-blur-2xl md:p-8 shadow">
+      <div className="hidden w-4 max-h-58 h-full md:block left-16 md:left-0 row-span-4">
         <LineChartGesamtBetrag kreditSumme={kreditSumme} downPayment={downPayment} kaufSumme={principal} />
       </div>
-      <span className="text-end text-lg">{principal.toLocaleString("de")}</span>
-      <span className="">Kaufpreis</span>
+      <span className="hidden md:block text-end text-lg">{principal.toLocaleString("de")}</span>
+      <span className="hidden md:block">Kaufpreis</span>
       <span className="text-end">+&nbsp;{nebenkosten.toLocaleString("de")}</span>
-      <span className="text-xs">Nebenkosten</span>
+      <span className="text-xs text-end md:text-start">Nebenkosten</span>
       <span className="text-end">-&nbsp;{downPayment.toLocaleString("de")}</span>
-      <span className="group relative flex items-center gap-x-2 text-xs">
+      <span className="col-start-1 md:col-start-3 group relative gap-x-2 text-xs text-end md:text-start">
         Eigenkapital
         {nebenkosten > downPayment && (
           <>
@@ -42,10 +42,10 @@ export default function KreditSummeTextComponent({
           </>
         )}
       </span>
-      <div className="col-start-2 text-end text-xl text-[var(--primary)">
+      <div className="md:col-start-2 text-end text-3xl md:text-xl text-[var(--primary)">
         {kreditSumme.toLocaleString("de")}
       </div>
-      <span className="col-start-3">Kreditsumme</span>
+      <span className="col-start-1 md:col-start-3 text-end text-xs md:text-base md:text-start">Kreditsumme</span>
     </div>
   );
 }

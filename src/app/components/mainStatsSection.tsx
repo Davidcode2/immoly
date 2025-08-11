@@ -3,25 +3,75 @@ import NebenkostenDisplay from "./nebenkostenDisplay";
 import KreditSummeTextComponent from "./kreditSummeTextComponent";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
+import TotalSumVsInterest from "./totalSumVsInterest";
+import { useEffect } from "react";
+import { getCalculation } from "app/lib/calculationAccessor";
 
 type PropTypes = {
   userInput: CashRoiModel | null;
   selectedScenario: string | null;
   table: ArmotizationEntry[];
+  calculationId: string | null;
 };
 
 export default function MainStatsSection({
   userInput,
-  selectedScenario,
+  calculationId,
   table,
 }: PropTypes) {
+  useEffect(() => {
+    async function loadData() {
+      if (calculationId) {
+        try {
+          const result = await getCalculation(calculationId);
+          if (!result) {
+            return;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    }
+    loadData();
+  }, [calculationId]);
+
+  const kreditSummeRaw =
+    table && table.length
+      ? table[0].remainingPrincipal + table[0].principal
+      : 0;
+  const kreditSumme = kreditSummeRaw < 0 ? 0 : kreditSummeRaw;
+  const sumZinsen = table
+    ? table.reduce(
+        (acc: number, row: ArmotizationEntry) => acc + row.interest,
+        0,
+      )
+    : 0;
+  const totalSum = kreditSumme + sumZinsen;
+
+  const paidAfter = table ? (table.length >= 120 ? -1 : table.length) : 0;
+  const paidInYear = new Date().getFullYear() + paidAfter;
+
   return (
-    <div className="top-10 z-20 mt-0 mb-10 grid justify-stretch gap-y-14 md:m-0 2xl:h-56 md:gap-6 md:grid-cols-2 2xl:sticky 2xl:grid-cols-4">
+    <div className="top-10 z-20 mt-0 mb-10 grid grid-cols-2 justify-stretch gap-4 md:m-0 md:grid-cols-2 md:gap-6 2xl:sticky 2xl:h-56 2xl:grid-cols-4">
       <KreditSummeTextComponent
         principal={Number(userInput?.principal)}
         downPayment={Number(userInput?.down_payment)}
       />
-      <Scenario calculationId={selectedScenario} data={table} />
+      <Scenario
+        sumZinsen={sumZinsen}
+        totalSum={totalSum}
+        paidAfter={paidAfter}
+        paidInYear={paidInYear}
+        kreditSumme={kreditSumme}
+      />
+      <div className="md:hidden shadow rounded-lg p-5">
+        <TotalSumVsInterest
+          sumZinsen={sumZinsen}
+          totalSum={totalSum}
+          paidAfter={paidAfter}
+          kreditSumme={kreditSumme}
+        />
+      </div>
       <NebenkostenDisplay calculationData={userInput} />
     </div>
   );
