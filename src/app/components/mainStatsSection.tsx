@@ -52,7 +52,7 @@ export default function MainStatsSection({
   const paidInYear = new Date().getFullYear() + paidAfter;
 
   return (
-    <div className="top-10 z-20 mt-0 mb-10 grid grid-cols-2 justify-stretch gap-4 md:m-0 md:grid-cols-2 md:gap-6 2xl:sticky 2xl:h-56 2xl:grid-cols-4">
+    <div className="top-10 z-20 mt-0 grid grid-cols-2 justify-stretch gap-4 md:m-0 md:grid-cols-2 md:gap-6 2xl:sticky 2xl:h-56 2xl:grid-cols-4">
       <KreditSummeTextComponent
         principal={Number(userInput?.principal)}
         downPayment={Number(userInput?.down_payment)}

@@ -3,7 +3,12 @@ import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 import { useState } from "react";
 import { Cell, Pie, PieChart } from "recharts";
 
-const COLORS = ["hsl(194, 33%, 22%)", "hsl(194, 33%, 18%)", "hsl(195, 37%, 40%)", "hsl(172, 25%, 55%)"];
+const COLORS = [
+  "hsl(194, 33%, 22%)",
+  "hsl(194, 33%, 18%)",
+  "hsl(195, 37%, 40%)",
+  "hsl(172, 25%, 55%)",
+];
 
 type PropTypes = {
   calculationData: CashRoiModel | null;
@@ -12,7 +17,9 @@ type PropTypes = {
 export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const nebenkostenCalculator = new NebenkostenCalculator(calculationData!.principal);
+  const nebenkostenCalculator = new NebenkostenCalculator(
+    calculationData!.principal,
+  );
 
   const handleMouseEnter = (index: number) => setActiveIndex(index);
   const handleMouseLeave = () => setActiveIndex(null);
@@ -20,12 +27,18 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const calcGraphData = () => {
     const graphData = [
       { name: "Notarkosten", value: nebenkostenCalculator.calcNotarkosten() },
-      { name: "Grundbuchkosten", value: nebenkostenCalculator.calcGrundbuchkosten() },
+      {
+        name: "Grundbuchkosten",
+        value: nebenkostenCalculator.calcGrundbuchkosten(),
+      },
       {
         name: "Grunderwerbsteuer",
         value: nebenkostenCalculator.calcGrunderwerbsteuer("Baden-Württemberg"),
       },
-      { name: "Maklergebühr", value: nebenkostenCalculator.calcMaklergebuehr() },
+      {
+        name: "Maklergebühr",
+        value: nebenkostenCalculator.calcMaklergebuehr(),
+      },
     ];
     return graphData;
   };
@@ -33,8 +46,8 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const data = calcGraphData();
 
   return (
-    <div className="flex text-xs md:text-base sm:col-span-2 justify-center md:justify-start items-center gap-6 rounded-lg py-4 px-6 shadow backdrop-blur-2xl">
-      <PieChart width={130} height={130}>
+    <div className="flex flex-col md:flex-row items-center justify-center gap-6 rounded-lg px-6 pt-4 md:py-4 text-xs shadow backdrop-blur-2xl sm:col-span-2 md:justify-start md:text-base">
+      <PieChart width={130} height={70}>
         <Pie
           data={data}
           cx={60}
@@ -43,13 +56,17 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
           outerRadius={60}
           paddingAngle={3}
           dataKey="value"
+          startAngle={180}
+          endAngle={0}
           onMouseLeave={handleMouseLeave}
         >
           {data.map((entry, index) => (
             <Cell
               key={entry.name}
               fill={COLORS[index % COLORS.length]}
-              stroke={activeIndex === index ? COLORS[index % COLORS.length] : "none"}
+              stroke={
+                activeIndex === index ? COLORS[index % COLORS.length] : "none"
+              }
               strokeWidth={activeIndex === index ? 3 : 0}
               onMouseEnter={() => handleMouseEnter(index)}
             />
@@ -57,7 +74,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
         </Pie>
       </PieChart>
 
-      <div className="hidden md:flex flex-col gap-2">
+      <div className="h-20 md:h-none overflow-y-scroll flex-col gap-2 md:flex order-first">
         {data.map((entry, index) => (
           <div
             key={entry.name}
