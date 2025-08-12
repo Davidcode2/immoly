@@ -8,7 +8,7 @@ type PropTypes = {
   paidInYear: number;
   kreditSumme: number;
 };
-export default function Scenario({
+export default function TimeUntilTilgung({
   sumZinsen,
   totalSum,
   paidAfter,
