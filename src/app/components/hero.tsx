@@ -5,11 +5,11 @@ export default function Hero() {
   return (
     <>
       <Image
-        src="/immoly_logo_square_transparent_text.webp"
+        src="/immoly_logo_square_transparent_text_gradient.webp"
         width={200}
         height={10}
         alt="Logo"
-        className="mx-auto mb-4 invert dark:invert-0"
+        className="mx-auto mb-4"
       />
       <div className="mx-auto p-4">
         <IconsHeader />

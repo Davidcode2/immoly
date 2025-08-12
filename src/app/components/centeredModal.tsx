@@ -16,7 +16,7 @@ export default function CenteredModal({
     <div
       className={`fixed inset-0 z-40 backdrop-blur-sm transition-all ${isShown ? "opacity-100" : "opacity-0"}`}
     >
-      <div className="sticky top-72 z-50 flex content-center justify-center">
+      <div className="sticky top-32 md:top-72 z-50 flex content-center justify-center">
         {children}
       </div>
     </div>
