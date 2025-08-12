@@ -1,4 +1,4 @@
-import Scenario from "app/scenario";
+import TimeUntilTilgung from "app/scenario";
 import NebenkostenDisplay from "./nebenkostenDisplay";
 import KreditSummeTextComponent from "./kreditSummeTextComponent";
 import CashRoiModel from "app/lib/models/cashRoiModel";
@@ -9,7 +9,6 @@ import { getCalculation } from "app/lib/calculationAccessor";
 
 type PropTypes = {
   userInput: CashRoiModel | null;
-  selectedScenario: string | null;
   table: ArmotizationEntry[];
   calculationId: string | null;
 };
@@ -57,7 +56,7 @@ export default function MainStatsSection({
         principal={Number(userInput?.principal)}
         downPayment={Number(userInput?.down_payment)}
       />
-      <Scenario
+      <TimeUntilTilgung
         sumZinsen={sumZinsen}
         totalSum={totalSum}
         paidAfter={paidAfter}
@@ -69,7 +68,6 @@ export default function MainStatsSection({
           sumZinsen={sumZinsen}
           totalSum={totalSum}
           paidAfter={paidAfter}
-          kreditSumme={kreditSumme}
         />
       </div>
       <NebenkostenDisplay calculationData={userInput} />

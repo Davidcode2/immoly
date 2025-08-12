@@ -19,6 +19,7 @@ import {
   getSondertilgungenCacheHelper,
   getTilgungswechselCacheHelper,
 } from "./services/sonderCalculationsHelper";
+import MobileFormContainer from "./components/mobileFormContainer";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -151,7 +152,6 @@ export default function ResultDisplay() {
                 userInput={input}
                 calculationId={selectedScenario}
                 table={table}
-                calculationId={calculationId}
               />
               <div className="grid gap-6 2xl:grid-cols-[3fr_2fr]">
                 <div className="hidden md:block">
@@ -175,11 +175,7 @@ export default function ResultDisplay() {
             </>
           )}
         </div>
-        <div className="sticky -bottom-2 z-30 overflow-y-auto rounded-2xl border border-[var(--light-accent)]/20 bg-[var(--background)]/70 py-8 shadow backdrop-blur-lg md:hidden">
-          <div className="max-h-[400px]">
-            <FinanzierungsForm values={input} setInput={setInput} />
-          </div>
-        </div>
+        <MobileFormContainer input={input} setInput={setInput}/>
       </div>
     </div>
   );
