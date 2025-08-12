@@ -16,7 +16,7 @@ export default function MobileFormContainer({ input, setInput }: PropTypes) {
     <div className="sticky -bottom-2 z-30 rounded-2xl border border-[var(--light-accent)]/20 bg-[var(--background)]/70 shadow backdrop-blur-lg md:hidden">
       {expandAndCollapseButton(setIsExpanded, isExpanded)}
       <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`overflow-scroll transition-all duration-300 ease-in-out ${
           isExpanded ? "max-h-[400px] py-8" : "max-h-[52px]"
         }`}
       >
