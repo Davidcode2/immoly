@@ -14,17 +14,7 @@ export default function MobileFormContainer({ input, setInput }: PropTypes) {
 
   return (
     <div className="sticky -bottom-2 z-30 rounded-2xl border border-[var(--light-accent)]/20 bg-[var(--background)]/70 shadow backdrop-blur-lg md:hidden">
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full p-2"
-      >
-        {isExpanded ? (
-          <Image src={ChevronIcon} alt="Chevron pointing downward" className="mx-auto rotate-270 h-9 w-9" />
-        ) : (
-          <Image src={ChevronIcon}  alt="Chevron pointing upward" className="mx-auto rotate-90 h-9 w-9" />
-        )}
-      </button>
-      
+      {expandAndCollapseButton(setIsExpanded, isExpanded)}
       <div
         className={`overflow-hidden transition-all duration-300 ease-in-out ${
           isExpanded ? "max-h-[400px] py-8" : "max-h-[48px]"
@@ -35,3 +25,22 @@ export default function MobileFormContainer({ input, setInput }: PropTypes) {
     </div>
   );
 }
+const expandAndCollapseButton = (setIsExpanded: (arg1: boolean) => void, isExpanded: boolean) => {
+  return (
+    <button onClick={() => setIsExpanded(!isExpanded)} className="w-full p-2">
+      {isExpanded ? (
+        <Image
+          src={ChevronIcon}
+          alt="Chevron pointing downward"
+          className="mx-auto h-9 w-9 rotate-270"
+        />
+      ) : (
+        <Image
+          src={ChevronIcon}
+          alt="Chevron pointing upward"
+          className="mx-auto h-9 w-9 rotate-90"
+        />
+      )}
+    </button>
+  );
+};
