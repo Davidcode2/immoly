@@ -52,7 +52,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
       <PieChart width={180} height={window.innerWidth < 768 ? 90 : 130}>
         <Pie
           data={data}
-          cx={84}
+          cx={85}
           cy={window.innerWidth < 768 ? 85 : 60}
           innerRadius={40}
           outerRadius={window.innerWidth < 768 ? 80 : 60}

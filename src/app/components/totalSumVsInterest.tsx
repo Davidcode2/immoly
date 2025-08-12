@@ -16,7 +16,7 @@ export default function TotalSumVsInterest({
           {paidAfter !== -1 && (
             <div className="">
               <div className="text-xs">Summe Gesamt</div>
-              <div className="text-3xl font-bold text-[var(--light-accent)] md:text-base">
+              <div className={`${totalSum >= 1000000 ? "text-2xl" : "text-3xl"} font-bold text-[var(--light-accent)] md:text-base`}>
                 {Math.round(totalSum).toLocaleString()}
               </div>
             </div>
