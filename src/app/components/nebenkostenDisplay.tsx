@@ -24,6 +24,8 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const handleMouseEnter = (index: number) => setActiveIndex(index);
   const handleMouseLeave = () => setActiveIndex(null);
 
+  const sumNebenkosten = nebenkostenCalculator.calcSumme();
+
   const calcGraphData = () => {
     const graphData = [
       { name: "Notarkosten", value: nebenkostenCalculator.calcNotarkosten() },
@@ -46,14 +48,14 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const data = calcGraphData();
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between md:gap-6 rounded-lg px-6 pt-4 md:py-4 text-xs shadow backdrop-blur-2xl sm:col-span-2 md:justify-start md:text-base">
+    <div className="flex flex-col items-center justify-between rounded-lg px-6 pt-6 text-xs shadow backdrop-blur-2xl md:col-span-2 md:flex-row md:justify-start md:gap-6 md:py-4 md:text-base">
       <PieChart width={180} height={window.innerWidth < 768 ? 90 : 130}>
         <Pie
           data={data}
           cx={84}
           cy={window.innerWidth < 768 ? 85 : 60}
           innerRadius={40}
-          outerRadius={window.innerWidth < 768 ? 80 : 60 }
+          outerRadius={window.innerWidth < 768 ? 80 : 60}
           paddingAngle={3}
           dataKey="value"
           startAngle={window.innerWidth < 768 ? 180 : 0}
@@ -74,21 +76,28 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
         </Pie>
       </PieChart>
 
-      <div className="h-20 md:h-fit overflow-y-scroll flex-col md:gap-2 md:flex order-first md:order-2">
+      <div className="order-first flex h-20 w-full flex-col gap-12 overflow-y-scroll md:grid md:grid-cols-2 md:order-2 md:h-fit md:gap-2">
+        <div className="md:hidden">
+          <div className="inline-block text-lg">Summe Nebenkosten:</div>
+          <div className="text-2xl">{sumNebenkosten.toLocaleString("de")}</div>
+        </div>
         {data.map((entry, index) => (
           <div
             key={entry.name}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
             className={`cursor-pointer transition-opacity ${
-              activeIndex === index ? "font-semibold opacity-100" : "opacity-90"
+              activeIndex === index
+                ? "text-[var(--accent)] opacity-100"
+                : "opacity-90"
             }`}
           >
             <span
               className="mr-2 inline-block h-3 w-3 rounded-sm"
               style={{ backgroundColor: COLORS[index % COLORS.length] }}
             />
-            {entry.name}: €{entry.value.toLocaleString("de")}
+            <div className="inline-block text-lg md:text-base">{entry.name}:</div>
+            <div className="text-2xl">€{entry.value.toLocaleString("de")}</div>
           </div>
         ))}
       </div>
