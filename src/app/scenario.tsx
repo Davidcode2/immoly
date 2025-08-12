@@ -27,7 +27,7 @@ export default function TimeUntilTilgung({
         <BarChartInterestVsTilgung
           sumZinsen={sumZinsen}
           kreditSumme={kreditSumme}
-          show={screen.width >= 768}
+          show={screen.width < 768}
         />
       </div>
     </div>

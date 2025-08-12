@@ -14,7 +14,7 @@ export default function BarChartInterestVsTilgung({
   const calcBarData = (sumZinsen: number, kreditSumme: number) => {
     return [
       { name: "Summen", uv: kreditSumme, pv: sumZinsen },
-      { name: "somethign", uv: 2, pv: 90 },
+      { name: "somethign", uv: 8, pv: 90 },
     ];
   };
 

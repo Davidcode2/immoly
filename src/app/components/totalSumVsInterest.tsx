@@ -25,7 +25,7 @@ export default function TotalSumVsInterest({
             <div className="text-xs">
               Summe Zinsen {paidAfter === -1 && "nach 120 Jahren"}
             </div>
-            <div className="font-bold text-[var(--primary)]">
+            <div className="font-bold text-[var(--primary)] md:mb-0 mb-4">
               {Math.round(sumZinsen).toLocaleString()}
             </div>
           </div>
@@ -34,7 +34,7 @@ export default function TotalSumVsInterest({
           <BarChartInterestVsTilgung
             sumZinsen={sumZinsen}
             kreditSumme={totalSum}
-            show={true}
+            show={screen.width >= 768}
           />
         </div>
       </div>
