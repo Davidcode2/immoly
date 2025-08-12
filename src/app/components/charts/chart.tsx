@@ -10,9 +10,8 @@ import {
 } from "recharts";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
-import { customToolTip, renderThousandIndicator } from "./chartHelper";
+import { customToolTip, renderLegend, renderThousandIndicator } from "./chartHelper";
 import { onThemeChangeColorUpdate } from "app/services/onThemeChangeColorUpdate";
-import { ContentType } from "recharts/types/component/DefaultLegendContent";
 
 interface ChartDataItem {
   name: string;
@@ -82,22 +81,6 @@ export default function PlotlyChart({
   if (!debouncedChartData) {
     return null;
   }
-
-  const renderLegend = (props: any) => {
-    const { payload } = props;
-    return (
-      <ul className="text-xl flex gap-x-4">
-        {payload.map((entry: any, index: number) => (
-          <li
-            className={`${entry.value === "Tilgung" ? "text-[var(--dark-accent)]" : "text-[var(--light-accent)]"}`}
-            key={`item-${index}`}
-          >
-            &mdash; {entry.value}
-          </li>
-        ))}
-      </ul>
-    );
-  };
 
   return (
     <LineChart

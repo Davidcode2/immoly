@@ -12,7 +12,7 @@ import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import ChartDataItem from "app/lib/models/ChartDataItem";
 import InterestEarnedModel from "app/lib/models/interestEarnedModel";
 import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
-import { customToolTip, renderThousandIndicator } from "./chartHelper";
+import { customToolTip, renderLegend, renderThousandIndicator } from "./chartHelper";
 import { onThemeChangeColorUpdate } from "app/services/onThemeChangeColorUpdate";
 
 export default function DevelopmentChart({
@@ -142,6 +142,7 @@ export default function DevelopmentChart({
         bottom: 15,
       }}
     >
+    <Legend content={renderLegend} />
       <XAxis
         dataKey="name"
         minTickGap={50}

@@ -11,7 +11,6 @@ import TilgungstabelleContainer from "app/components/tilgungstabelleContainer";
 import FinanzierungsFormContainer from "app/components/baseDataForm/finanzierungsFormContainer";
 import ChartsContainer from "app/components/charts/chartsContainer";
 import Hero from "./components/hero";
-import FinanzierungsForm from "./components/baseDataForm/finanzierungsForm";
 import MainStatsSection from "./components/mainStatsSection";
 import { Sondertilgung } from "./lib/models/sondertilgung";
 import { Tilgungswechsel } from "./lib/models/tilgungswechsel";
