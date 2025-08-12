@@ -15,7 +15,7 @@ export default function KreditSummeTextComponent({
   const kreditSumme = kreditSummeRaw < 0 ? 0 : kreditSummeRaw;
 
   return (
-    <div className="z-20 grid grid-cols-[40px_1fr] md:grid-cols-[20px_1fr_1fr] items-baseline gap-x-2 rounded-lg p-5 backdrop-blur-2xl md:p-8 shadow">
+    <div className="z-20 grid grid-cols-[20px_1fr] md:grid-cols-[20px_1fr_1fr] items-baseline gap-x-2 rounded-lg p-5 backdrop-blur-2xl md:p-8 shadow">
       <div className="w-4 h-full row-span-4">
         <LineChartGesamtBetrag kreditSumme={kreditSumme} downPayment={downPayment} kaufSumme={principal} />
       </div>
@@ -42,7 +42,7 @@ export default function KreditSummeTextComponent({
           </>
         )}
       </span>
-      <div className="col-start-2 text-end text-3xl md:text-xl text-[var(--primary)">
+      <div className="col-start-2 text-end text-3xl md:text-xl text-[var(--accent)] font-bold">
         {kreditSumme.toLocaleString("de")}
       </div>
       <span className="col-start-2 md:col-start-3 text-end text-xs md:text-base md:text-start">Kreditsumme</span>
