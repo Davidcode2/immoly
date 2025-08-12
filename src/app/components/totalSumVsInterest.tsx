@@ -10,7 +10,7 @@ export default function TotalSumVsInterest({
   paidAfter: number;
 }) {
   return (
-    <div className="h-42 md:h-fit">
+    <div className="h-38 md:h-fit">
       <div>
         <div className="flex flex-col gap-4 md:flex-row md:gap-x-3">
           {paidAfter !== -1 && (

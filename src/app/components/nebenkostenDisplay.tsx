@@ -46,14 +46,14 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const data = calcGraphData();
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-center gap-6 rounded-lg px-6 pt-4 md:py-4 text-xs shadow backdrop-blur-2xl sm:col-span-2 md:justify-start md:text-base">
-      <PieChart width={130} height={window.innerWidth < 768 ? 70 : 130}>
+    <div className="flex flex-col sm:flex-row items-center justify-between md:gap-6 rounded-lg px-6 pt-4 md:py-4 text-xs shadow backdrop-blur-2xl sm:col-span-2 md:justify-start md:text-base">
+      <PieChart width={180} height={window.innerWidth < 768 ? 90 : 130}>
         <Pie
           data={data}
-          cx={60}
-          cy={60}
+          cx={84}
+          cy={window.innerWidth < 768 ? 85 : 60}
           innerRadius={40}
-          outerRadius={60}
+          outerRadius={window.innerWidth < 768 ? 80 : 60 }
           paddingAngle={3}
           dataKey="value"
           startAngle={window.innerWidth < 768 ? 180 : 0}
@@ -74,7 +74,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
         </Pie>
       </PieChart>
 
-      <div className="h-20 md:h-fit overflow-y-scroll flex-col gap-2 md:flex order-first md:order-2">
+      <div className="h-20 md:h-fit overflow-y-scroll flex-col md:gap-2 md:flex order-first md:order-2">
         {data.map((entry, index) => (
           <div
             key={entry.name}
