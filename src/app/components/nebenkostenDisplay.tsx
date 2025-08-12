@@ -76,9 +76,9 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
         </Pie>
       </PieChart>
 
-      <div className="order-first flex h-20 w-full flex-col gap-12 overflow-y-scroll md:grid md:grid-cols-2 md:order-2 md:h-fit md:gap-2">
+      <div className="order-first flex h-20 w-full flex-col gap-12 overflow-y-scroll md:order-2 md:grid md:h-fit md:grid-cols-2 md:gap-2 pb-4 md:p-0 ">
         <div className="md:hidden">
-          <div className="inline-block text-lg">Summe Nebenkosten:</div>
+          <div className="inline-block text-base">Summe Nebenkosten:</div>
           <div className="text-2xl">{sumNebenkosten.toLocaleString("de")}</div>
         </div>
         {data.map((entry, index) => (
@@ -86,17 +86,21 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
             key={entry.name}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
-            className={`cursor-pointer transition-opacity ${
+            className={`flex cursor-pointer flex-col transition-opacity ${
               activeIndex === index
                 ? "text-[var(--accent)] opacity-100"
                 : "opacity-90"
             }`}
           >
-            <span
-              className="mr-2 inline-block h-3 w-3 rounded-sm"
-              style={{ backgroundColor: COLORS[index % COLORS.length] }}
-            />
-            <div className="inline-block text-lg md:text-base">{entry.name}:</div>
+            <div className="flex items-center">
+              <span
+                className="mr-2 inline-block h-3 min-w-3 rounded-sm"
+                style={{ backgroundColor: COLORS[index % COLORS.length] }}
+              />
+              <div className="inline-block overflow-hidden text-lg overflow-ellipsis md:text-base">
+                {entry.name}:
+              </div>
+            </div>
             <div className="text-2xl">€{entry.value.toLocaleString("de")}</div>
           </div>
         ))}
