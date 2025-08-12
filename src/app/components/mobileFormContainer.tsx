@@ -17,7 +17,7 @@ export default function MobileFormContainer({ input, setInput }: PropTypes) {
       {expandAndCollapseButton(setIsExpanded, isExpanded)}
       <div
         className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          isExpanded ? "max-h-[400px] py-8" : "max-h-[48px]"
+          isExpanded ? "max-h-[400px] py-8" : "max-h-[52px]"
         }`}
       >
         <FinanzierungsForm values={input} setInput={setInput} />
@@ -32,13 +32,13 @@ const expandAndCollapseButton = (setIsExpanded: (arg1: boolean) => void, isExpan
         <Image
           src={ChevronIcon}
           alt="Chevron pointing downward"
-          className="mx-auto h-9 w-9 rotate-270"
+          className="mx-auto h-6 w-6 rotate-270"
         />
       ) : (
         <Image
           src={ChevronIcon}
           alt="Chevron pointing upward"
-          className="mx-auto h-9 w-9 rotate-90"
+          className="mx-auto h-6 w-6 rotate-90"
         />
       )}
     </button>
