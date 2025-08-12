@@ -16,7 +16,7 @@ export default function TimeUntilTilgung({
   kreditSumme,
 }: PropTypes) {
   return (
-    <div className="sm:h-none flex max-h-42 rounded-lg p-5 shadow backdrop-blur-2xl md:mx-0 md:my-0 md:max-h-56 md:max-w-none md:p-8 md:text-start">
+    <div className="sm:h-none flex max-h-48 rounded-lg p-5 shadow backdrop-blur-2xl md:mx-0 md:my-0 md:max-h-56 md:max-w-none md:p-8 md:text-start">
       <div>
         <ScenarioTextDisplay
           sumZinsen={sumZinsen}
