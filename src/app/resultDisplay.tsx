@@ -19,6 +19,7 @@ import {
   getTilgungswechselCacheHelper,
 } from "./services/sonderCalculationsHelper";
 import MobileFormContainer from "./components/mobileFormContainer";
+import MobileTilgungsTabelleContainer from "./components/mobileTilgungsTabelleContainer";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -162,19 +163,17 @@ export default function ResultDisplay() {
                   />
                 </div>
                 <ChartsContainer input={input} table={table} />
-                <div className="mx-4 my-14 sm:mx-0 md:hidden">
-                  <TilgungstabelleContainer
-                    table={table}
-                    calculationId={calculationId}
-                    input={input}
-                    sendChangeNotification={changeHandler}
-                  />
-                </div>
+                <MobileTilgungsTabelleContainer
+                  input={input}
+                  table={table}
+                  calculationId={calculationId}
+                  changeHandler={changeHandler}
+                />
               </div>
             </>
           )}
         </div>
-        <MobileFormContainer input={input} setInput={setInput}/>
+        <MobileFormContainer input={input} setInput={setInput} />
       </div>
     </div>
   );

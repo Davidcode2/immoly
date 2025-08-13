@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <>
       <Image
-        src="/immoly_logo_square_transparent_text_gradient.webp"
+        src="/immoly_logo_square_transparent_text_primary.webp"
         width={200}
         height={10}
         alt="Logo"
@@ -25,7 +25,7 @@ export default function Hero() {
 const ScrollIndicator = () => {
   return (
     <div className="flex w-full justify-center">
-      <div className="mt-4 sm:hidden mb-4 h-6 w-6 animate-bounce" onClick={ () => window.scroll({ top: 280, behavior: "smooth"})}>
+      <div className="mt-8 sm:hidden mb-4 h-6 w-6 animate-bounce" onClick={ () => window.scroll({ top: 280, behavior: "smooth"})}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
