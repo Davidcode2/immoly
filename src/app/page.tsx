@@ -5,6 +5,7 @@ import ResultDisplay from "app/resultDisplay";
 import { Suspense } from "react";
 import Loading from "app/loading";
 import Image from "next/image";
+import BankLinkList from "./components/bankLinkList";
 
 export default async function GraphPage() {
   if (process.env.SKIP_BUILD_STATIC_GENERATION === "true") {
@@ -19,6 +20,7 @@ export default async function GraphPage() {
             <ResultDisplay />
           </Suspense>
           <StoredCalculations />
+          <BankLinkList/>
         </div>
       </div>
       <div className="bg-[var(--secondary)]">
