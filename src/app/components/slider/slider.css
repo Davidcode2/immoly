@@ -32,11 +32,12 @@ input[type="range"]::-ms-track {
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   background: #f0e9f5;
-  height: 14px;
-  width: 14px;
+  height: 20px;
+  width: 20px;
   cursor: pointer;
   border-radius: 20px;
-  margin-top: -5px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  border: 1px solid var(--primary);
+  margin-top: -8px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
 }
 
 /* Firefox */
