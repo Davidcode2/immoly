@@ -4,10 +4,6 @@ export const onThemeChangeColorUpdate = (
   darkColor: string,
 ): MutationObserver => {
   const updateColor = () => {
-    console.log(
-      "Updating grid color based on theme",
-      document.documentElement.getAttribute("data-theme"),
-    );
     const theme = document.documentElement.getAttribute("data-theme");
     setColor(theme === "dark" ? darkColor : lightColor);
   };
