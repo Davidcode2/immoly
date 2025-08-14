@@ -20,6 +20,7 @@ export default function NumberInput({
   const [prevNumberOfDots, setPrevNumberOfDots] = useState<number>(0);
 
   useEffect(() => {
+    const debouncedChange = setTimeout(() => {
     if (value !== undefined) {
       const formattedValue = formatGerman(String(value));
       if (inputName === "interest_rate") {
@@ -33,6 +34,11 @@ export default function NumberInput({
         }
       }
     }
+    },30);
+
+    return () => {
+      clearTimeout(debouncedChange);
+    };
   }, [value]);
 
   const localHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
