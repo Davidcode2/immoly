@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <>
       <Image
-        src="/immoly_logo_square_transparent_text_primary.webp"
+        src="/immoly_logo_square_transparent_cut_gradient.webp"
         width={200}
         height={10}
         alt="Logo"
