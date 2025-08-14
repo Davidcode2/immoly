@@ -4,8 +4,8 @@ import StoredCalculations from "app/storedCalculations";
 import ResultDisplay from "app/resultDisplay";
 import { Suspense } from "react";
 import Loading from "app/loading";
-import Image from "next/image";
 import BankLinkList from "./components/bankLinkList";
+import Footer from "./components/footer/footer";
 
 export default async function GraphPage() {
   if (process.env.SKIP_BUILD_STATIC_GENERATION === "true") {
@@ -20,20 +20,10 @@ export default async function GraphPage() {
             <ResultDisplay />
           </Suspense>
           <StoredCalculations />
-          <BankLinkList/>
+          <BankLinkList />
         </div>
       </div>
-      <div className="bg-[var(--secondary)]">
-        <div className="flex text-[var(--dark-accent)]/50 justify-center gap-x-2 p-8">
-          Gebaut auf der{" "}
-          <Image
-            src="/images/icons/icons8-couch-85.png"
-            width="25"
-            height="25"
-            alt="Sofa"
-          />
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 }
