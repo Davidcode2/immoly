@@ -3,13 +3,13 @@ import { BarChart, Bar, XAxis, ResponsiveContainer } from "recharts";
 type PropTypes = {
   sumZinsen: number;
   kreditSumme: number;
-  show: boolean;
+  show?: boolean;
 };
 
 export default function BarChartInterestVsTilgung({
   sumZinsen,
   kreditSumme,
-  show,
+  show = true,
 }: PropTypes) {
   const calcBarData = (sumZinsen: number, kreditSumme: number) => {
     return [
@@ -20,8 +20,12 @@ export default function BarChartInterestVsTilgung({
 
   const mydata = calcBarData(sumZinsen, kreditSumme);
 
+  if (!show) {
+    return <div/>;
+  }
+
   return (
-    <ResponsiveContainer className={`${show ? "block" : "hidden"}`}>
+    <ResponsiveContainer>
       <BarChart
         data={mydata}
         layout="vertical"

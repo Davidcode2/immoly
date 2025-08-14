@@ -15,6 +15,9 @@ export default function TimeUntilTilgung({
   paidInYear,
   kreditSumme,
 }: PropTypes) {
+
+  const show = window.innerWidth >= 768
+  console.log("show in scenario: ", show);
   return (
     <div className="sm:h-none flex max-h-48 rounded-lg p-5 shadow backdrop-blur-2xl md:mx-0 md:my-0 md:max-h-56 md:max-w-none md:p-8 md:text-start">
       <div>
@@ -27,7 +30,7 @@ export default function TimeUntilTilgung({
         <BarChartInterestVsTilgung
           sumZinsen={sumZinsen}
           kreditSumme={kreditSumme}
-          show={screen.width < 768}
+          show={show}
         />
       </div>
     </div>

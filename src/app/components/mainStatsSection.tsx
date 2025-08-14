@@ -6,6 +6,7 @@ import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import TotalSumVsInterest from "./totalSumVsInterest";
 import { useEffect } from "react";
 import { getCalculation } from "app/lib/calculationAccessor";
+import BarChartInterestVsTilgung from "./barChartInterestVsTilgung";
 
 type PropTypes = {
   userInput: CashRoiModel | null;
@@ -63,12 +64,18 @@ export default function MainStatsSection({
         paidInYear={paidInYear}
         kreditSumme={kreditSumme}
       />
-      <div className="md:hidden shadow rounded-lg p-5">
+      <div className="md:hidden max-h-48 shadow rounded-lg p-5">
         <TotalSumVsInterest
           sumZinsen={sumZinsen}
           totalSum={totalSum}
           paidAfter={paidAfter}
         />
+        <div className="h-20 w-1/2">
+          <BarChartInterestVsTilgung
+            sumZinsen={sumZinsen}
+            kreditSumme={totalSum}
+          />
+        </div>
       </div>
       <NebenkostenDisplay calculationData={userInput} />
     </div>
