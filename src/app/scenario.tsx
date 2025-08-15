@@ -19,10 +19,10 @@ export default function TimeUntilTilgung({
 }: PropTypes) {
   const show = window.innerWidth >= 768;
   return (
-    <div className="sm:h-none overflow-clip flex max-h-48 rounded-lg p-5 shadow backdrop-blur-2xl md:mx-0 md:my-0 md:max-h-56 md:max-w-none md:p-8 md:text-start">
+    <div className="sm:h-none flex max-h-48 overflow-clip rounded-lg p-5 shadow backdrop-blur-2xl md:mx-0 md:my-0 md:max-h-56 md:max-w-none md:p-8 md:text-start">
       <div>
         <Image
-          className={`${paidAfter === -1 ? "block" : "hidden"} opacity-20 absolute md:top-12 md:left-28 left-12`}
+          className={`${paidAfter === -1 ? "block" : "hidden"} absolute left-12 opacity-20 md:top-12 md:left-28`}
           src={AttentionIcon}
           height="200"
           width="200"
@@ -34,11 +34,15 @@ export default function TimeUntilTilgung({
           paidAfter={paidAfter}
           paidInYear={paidInYear}
         />
-        <BarChartInterestVsTilgung
-          sumZinsen={sumZinsen}
-          kreditSumme={kreditSumme}
-          show={show}
-        />
+        <div className="h-20 w-40">
+          {paidAfter !== -1 && (
+            <BarChartInterestVsTilgung
+              sumZinsen={sumZinsen}
+              kreditSumme={kreditSumme}
+              show={show}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
