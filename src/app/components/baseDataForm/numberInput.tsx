@@ -1,4 +1,8 @@
-import { calcCursorPosition, formatGerman, parseDecimal } from "app/services/numberFormatService";
+import {
+  calcCursorPosition,
+  formatGerman,
+  parseDecimal,
+} from "app/services/numberFormatService";
 import { useEffect, useRef, useState } from "react";
 
 type PropTypes = {
@@ -18,23 +22,27 @@ export default function NumberInput({
   const inputRef = useRef<HTMLInputElement>(null);
   const [prevValue, setPrevValue] = useState<string>("");
   const [prevNumberOfDots, setPrevNumberOfDots] = useState<number>(0);
+  const isLocalChange = useRef<boolean>(false);
 
   useEffect(() => {
     const debouncedChange = setTimeout(() => {
-    if (value !== undefined) {
-      const formattedValue = formatGerman(String(value));
-      if (inputName === "interest_rate") {
-        // Special handling for interest_rate input
-        const interestRate = parseDecimal(String(value));
-        setDisplayValue(interestRate.toFixed(2).replace(".", ","));
-      } else {
-        setDisplayValue(formattedValue);
-        if (inputRef.current) {
-          inputRef.current.value = formattedValue;
+      if (value !== undefined) {
+        const formattedValue = formatGerman(String(value));
+        if (inputName === "interest_rate" && isLocalChange.current) {
+          isLocalChange.current = false;
+          return;
+        }
+        if (inputName === "interest_rate") {
+          const interestRate = parseDecimal(String(value));
+          setDisplayValue(interestRate.toFixed(2).replace(".", ","));
+        } else {
+          setDisplayValue(formattedValue);
+          if (inputRef.current) {
+            inputRef.current.value = formattedValue;
+          }
         }
       }
-    }
-    },30);
+    }, 30);
 
     return () => {
       clearTimeout(debouncedChange);
@@ -44,6 +52,12 @@ export default function NumberInput({
   const localHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target;
     const selectionStart = input.selectionStart ?? 0;
+    if (input.name === "interest_rate") {
+      setDisplayValue(input.value);
+      handleChange(input.name, parseDecimal(input.value) || 0);
+      isLocalChange.current = true;
+      return;
+    }
     const unformatted = input.value.replace(/\./g, "");
     const formatted = formatGerman(unformatted);
     const dotsInFormattedInput = (formatted.match(/\./g) || []).length;
@@ -51,7 +65,13 @@ export default function NumberInput({
 
     // Restore caret position after formatting
     requestAnimationFrame(() => {
-      const newPosition = calcCursorPosition(selectionStart, unformatted, dotsInFormattedInput, prevValue, prevNumberOfDots)
+      const newPosition = calcCursorPosition(
+        selectionStart,
+        unformatted,
+        dotsInFormattedInput,
+        prevValue,
+        prevNumberOfDots,
+      );
       input.setSelectionRange(newPosition, newPosition);
     });
 

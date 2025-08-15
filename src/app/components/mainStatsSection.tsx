@@ -73,7 +73,7 @@ export default function MainStatsSection({
         <div className="h-20">
           <BarChartInterestVsTilgung
             sumZinsen={sumZinsen}
-            kreditSumme={totalSum}
+            kreditSumme={kreditSumme}
           />
         </div>
       </div>
