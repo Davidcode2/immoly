@@ -52,13 +52,20 @@ export default function NumberInput({
   const localHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target;
     const selectionStart = input.selectionStart ?? 0;
+    const unformatted = input.value.replace(/\./g, "");
+
+    const isValid = validationPattern().test(unformatted);
+    if (!isValid) {
+      return;
+    }
+
     if (input.name === "interest_rate") {
       setDisplayValue(input.value);
       handleChange(input.name, parseDecimal(input.value) || 0);
       isLocalChange.current = true;
       return;
     }
-    const unformatted = input.value.replace(/\./g, "");
+
     const formatted = formatGerman(unformatted);
     const dotsInFormattedInput = (formatted.match(/\./g) || []).length;
     setPrevNumberOfDots(dotsInFormattedInput);
@@ -80,6 +87,26 @@ export default function NumberInput({
     handleChange(e.target.name, parseDecimal(unformatted) || 0);
   };
 
+  const validationPattern = () => {
+    if (inputName === "principal" || inputName === "down_payment") {
+      return /^[0-9]{0,8}$/;
+    }
+    if (inputName === "interest_rate") {
+      return /^[0-9]{0,2}(,[0-9]{0,3})?$/;
+    }
+    return /^[0-9]{0,5}$/;
+  };
+
+  const formattedValidationPattern = () => {
+    if (inputName === "principal" || inputName === "down_payment") {
+      return /^[0-9]{0,8}(\.[0-9]{0,3})?$/;
+    }
+    if (inputName === "interest_rate") {
+      return /^[0-9]{0,2}(,[0-9]{0,3})?$/;
+    }
+    return /^[0-9]{0,2}(\.[0-9]{0,3})?$/;
+  }
+
   return (
     <input
       ref={inputRef}
@@ -87,9 +114,10 @@ export default function NumberInput({
       id={id}
       value={displayValue}
       name={inputName}
+      pattern={formattedValidationPattern().source}
       onChange={localHandleChange}
       placeholder="Zahl eingeben"
-      className="w-36 border-b border-[var(--secondary)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--accent)] focus:outline-none lg:text-base"
+      className="w-36 border-b invalid:text-green-900 border-[var(--secondary)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--accent)] focus:outline-none lg:text-base"
     />
   );
 }
