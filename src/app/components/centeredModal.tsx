@@ -1,4 +1,5 @@
 import { ReactNode, useState, type JSX } from "react";
+import { createPortal } from "react-dom";
 
 type PropTypes = {
   children: ReactNode;
@@ -13,12 +14,19 @@ export default function CenteredModal({
   }, 100);
 
   return (
-    <div
-      className={`fixed inset-0 z-40 backdrop-blur-sm transition-all ${isShown ? "opacity-100" : "opacity-0"}`}
-    >
-      <div className="sticky top-32 md:top-72 z-50 flex content-center justify-center">
-        {children}
-      </div>
-    </div>
+    <>
+      {
+        (createPortal(
+          <div
+            className={`fixed inset-0 z-40 backdrop-blur-sm transition-all ${isShown ? "opacity-100" : "opacity-0"}`}
+          >
+            <div className="flex h-full w-full items-center justify-center">
+              {children}
+            </div>
+          </div>,
+          document.body
+        ))
+      }
+    </>
   );
 }

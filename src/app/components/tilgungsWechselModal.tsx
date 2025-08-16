@@ -9,7 +9,7 @@ export default function TilgungsWechselModal({
   tilgungswechsel,
 }: PropTypes) {
   return (
-    <div className="z-40 tilgungsWechselModal rounded-xl mt-40 mx-10 sm:mx-0 sm:mt-80 border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl md:w-[400px]">
+    <div className="z-40 tilgungsWechselModal rounded-xl mx-10 sm:mx-0 border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl md:w-[400px]">
       <div className="tilgungsWechselModal">
         <label
           className="tilgungsWechselModal flex rounded-t-lg bg-[var(--primary)]/40 text-base px-10 py-10"

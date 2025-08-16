@@ -82,12 +82,12 @@ export default function Tilgungstabelle({
   };
 
   document.body.addEventListener("click", (e: MouseEvent) => {
-    const contextMenu = tilgungsWechselModalRef.current;
+    const modal = tilgungsWechselModalRef.current;
     const target = e.target as HTMLElement;
     if (target.classList.contains("tilgungsWechselModal")) return;
     if (showModal) {
       setShowModal(false);
-      contextMenu?.classList.remove("open");
+      modal?.classList.remove("open");
     }
   });
 
