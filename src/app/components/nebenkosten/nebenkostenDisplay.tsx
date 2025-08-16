@@ -1,7 +1,8 @@
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 import { useState } from "react";
-import { Cell, Pie, PieChart } from "recharts";
+import CenteredModal from "../centeredModal";
+import PieChartNebenkosten from "./pieChartNebenkosten";
 
 const COLORS = [
   "hsl(194, 33%, 22%)",
@@ -16,6 +17,7 @@ type PropTypes = {
 
 export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const nebenkostenCalculator = new NebenkostenCalculator(
     calculationData!.principal,
@@ -49,34 +51,14 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
 
   return (
     <div className="flex flex-col items-center justify-between rounded-lg px-6 pt-6 text-xs shadow backdrop-blur-2xl md:col-span-2 md:flex-row md:justify-start md:gap-6 md:py-4 md:text-base">
-      <PieChart width={180} height={window.innerWidth < 768 ? 90 : 130}>
-        <Pie
-          data={data}
-          cx={85}
-          cy={window.innerWidth < 768 ? 85 : 60}
-          innerRadius={window.innerWidth < 768 ? 40 : 70}
-          outerRadius={window.innerWidth < 768 ? 80 : 90}
-          paddingAngle={3}
-          dataKey="value"
-          startAngle={window.innerWidth < 768 ? 180 : 0}
-          endAngle={window.innerWidth < 768 ? 0 : 360}
-          onMouseLeave={handleMouseLeave}
-        >
-          {data.map((entry, index) => (
-            <Cell
-              key={entry.name}
-              fill={COLORS[index % COLORS.length]}
-              stroke={
-                activeIndex === index ? COLORS[index % COLORS.length] : "none"
-              }
-              strokeWidth={activeIndex === index ? 3 : 0}
-              onMouseEnter={() => handleMouseEnter(index)}
-            />
-          ))}
-        </Pie>
-      </PieChart>
-
-      <div className="order-first flex h-20 w-full flex-col gap-12 overflow-y-scroll md:order-2 md:grid md:h-fit md:grid-cols-2 md:gap-2 pb-4 md:p-0 ">
+      {showModal && <CenteredModal>mytext</CenteredModal>}
+      <PieChartNebenkosten
+        data={data}
+        activeIndex={activeIndex}
+        handleMouseEnter={handleMouseEnter}
+        handleMouseLeave={handleMouseLeave}
+      />
+      <div className="order-first flex h-20 w-full flex-col gap-12 overflow-y-scroll pb-4 md:order-2 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
         <div className="md:hidden">
           <div className="inline-block text-base">Summe Nebenkosten:</div>
           <div className="text-2xl">{sumNebenkosten.toLocaleString("de")}</div>

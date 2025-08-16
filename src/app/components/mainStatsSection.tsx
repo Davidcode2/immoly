@@ -1,5 +1,5 @@
 import TimeUntilTilgung from "app/scenario";
-import NebenkostenDisplay from "./nebenkostenDisplay";
+import NebenkostenDisplay from "./nebenkosten/nebenkostenDisplay";
 import KreditSummeTextComponent from "./kreditSummeTextComponent";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
