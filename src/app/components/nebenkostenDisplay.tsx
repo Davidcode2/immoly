@@ -54,8 +54,8 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
           data={data}
           cx={85}
           cy={window.innerWidth < 768 ? 85 : 60}
-          innerRadius={40}
-          outerRadius={window.innerWidth < 768 ? 80 : 60}
+          innerRadius={window.innerWidth < 768 ? 40 : 70}
+          outerRadius={window.innerWidth < 768 ? 80 : 90}
           paddingAngle={3}
           dataKey="value"
           startAngle={window.innerWidth < 768 ? 180 : 0}
