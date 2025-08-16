@@ -1,8 +1,11 @@
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import CenteredModal from "../centeredModal";
 import PieChartNebenkosten from "./pieChartNebenkosten";
+import EditIcon from "/public/images/icons/icons8-edit-48.png";
+import Image from "next/image";
+import NebenkostenModal from "./nebenkostenModal";
 
 const COLORS = [
   "hsl(194, 33%, 22%)",
@@ -18,6 +21,7 @@ type PropTypes = {
 export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const nebenkostenModalRef = useRef<HTMLDivElement>(null);
 
   const nebenkostenCalculator = new NebenkostenCalculator(
     calculationData!.principal,
@@ -49,9 +53,35 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
 
   const data = calcGraphData();
 
+  document.body.addEventListener("click", (e: MouseEvent) => {
+    const modal = nebenkostenModalRef.current;
+    const target = e.target as HTMLElement;
+    if (target.classList.contains("tilgungsWechselModal")) return;
+    if (showModal) {
+      setShowModal(false);
+      modal?.classList.remove("open");
+    }
+  });
+
   return (
     <div className="flex flex-col items-center justify-between rounded-lg px-6 pt-6 text-xs shadow backdrop-blur-2xl md:col-span-2 md:flex-row md:justify-start md:gap-6 md:py-4 md:text-base">
-      {showModal && <CenteredModal>mytext</CenteredModal>}
+      {showModal && (
+        <CenteredModal>
+          <NebenkostenModal
+            nebenkosten={data}
+            sumNebenkosten={sumNebenkosten}
+            activeIndex={activeIndex}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
+          />
+        </CenteredModal>
+      )}
+      <div
+        className="absolute top-5 right-4 opacity-50"
+        onClick={() => setShowModal(true)}
+      >
+        <Image src={EditIcon} width={14} height={14} alt="Bearbeiten" />
+      </div>
       <PieChartNebenkosten
         data={data}
         activeIndex={activeIndex}
