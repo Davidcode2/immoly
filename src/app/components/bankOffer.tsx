@@ -26,17 +26,17 @@ export default function BankOffer({
       </div>
       <div className="h-60 w-full overflow-scroll p-4">
         <div className="pb-4 text-2xl">{title}</div>
-        <div className="grid gap-4 md:grid-cols-[repeat(4,180px)]">
-          <div className="rounded-lg bg-[var(--secondary)]/50 p-3 shadow">
+        <div className="flex md:grid gap-4 md:grid-cols-[repeat(4,180px)]">
+          <div className="rounded-2xl w-fit md:w-full bg-[var(--secondary)]/50 p-3 shadow">
             <div className="text-xs">Zins</div>
             <div>{interest} %</div>
           </div>
-          <div className="rounded-lg bg-[var(--secondary)]/50 p-3 shadow">
+          <div className="rounded-2xl bg-[var(--secondary)]/50 p-3 shadow">
             <div className="text-xs">Zinsbindung</div>
             <div>{zinsbindung} Jahre</div>
           </div>
           {sondertilgungen && (
-            <div className="rounded-xl bg-[var(--alert)]/50 p-3 shadow">
+            <div className="rounded-2xl bg-[var(--alert)]/50 p-3 shadow">
               <div className="text-xs">Sondertilgung</div>
               <div>{sondertilgungen} %</div>
             </div>
