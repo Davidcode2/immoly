@@ -1,5 +1,4 @@
 "use server";
-import { redirect } from "next/navigation";
 import { getPool } from "./db/db";
 import BaseModel from "./models/baseModel";
 
@@ -20,7 +19,7 @@ export async function storeInDb(formData: FormData) {
 
   if (result !== 0) {
     const calculationId = result;
-    redirect(`/?calculationId=${calculationId}`);
+    return { success: true, result: calculationId };
   }
 }
 

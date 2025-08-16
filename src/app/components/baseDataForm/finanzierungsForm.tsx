@@ -5,6 +5,7 @@ import CashRoiModel from "app/lib/models/cashRoiModel";
 import SliderInput from "app/components/slider/sliderInput";
 import OptionalParameters from "app/components/baseDataForm/optionalParameters";
 import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function FinanzierungsForm({
   values,
@@ -19,6 +20,8 @@ export default function FinanzierungsForm({
   const [cashRoi, setCashRoi] = useState<number | string>("");
   const [rent, setRent] = useState<number | string>("");
   const [monthlyRate, setMonthlyRate] = useState<number | string>("");
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const [showExtended, setShowExtended] = useState<boolean>(false);
 
@@ -91,8 +94,17 @@ export default function FinanzierungsForm({
     }
   }, [values]);
 
+  const handleSubmit = async (formData: FormData) => {
+    const res = await storeInDb(formData);
+    if (res?.success) {
+      const params = new URLSearchParams(searchParams);
+      params.set('calculationId', res.result.toString());
+      router.push(`/?${params.toString()}`, { scroll: false });
+    }
+  }
+
   return (
-    <Form action={storeInDb} className="mx-8 pb-8 md:pb-0 md:mx-auto">
+    <Form action={handleSubmit} className="mx-8 pb-8 md:pb-0 md:mx-auto">
       <div className="p-2">
         <div className="mb-2 grid gap-8 md:gap-8 md:justify-center lg:justify-none">
           {/* Eigenkapital */}
