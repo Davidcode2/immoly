@@ -7,13 +7,6 @@ import EditIcon from "/public/images/icons/icons8-edit-48.png";
 import Image from "next/image";
 import NebenkostenModal from "./nebenkostenModal";
 
-const COLORS = [
-  "hsl(194, 33%, 22%)",
-  "hsl(194, 33%, 18%)",
-  "hsl(195, 37%, 40%)",
-  "hsl(172, 25%, 55%)",
-];
-
 type PropTypes = {
   calculationData: CashRoiModel | null;
 };
@@ -107,7 +100,9 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
             <div className="flex items-center">
               <span
                 className="mr-2 inline-block h-3 min-w-3 rounded-sm"
-                style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                  style={{
+                    backgroundColor: `var(--${index === 0 ? "dark-accent" : index === 1 ? "neutral-accent" : index === 2 ? "accent" : "light-accent"})`,
+                  }}
               />
               <div className="inline-block overflow-hidden text-lg overflow-ellipsis md:text-base">
                 {entry.name}:

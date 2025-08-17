@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
 
 type PropTypes = {
@@ -24,8 +25,19 @@ export default function LineChartGesamtBetrag({
     ];
   };
 
+  const [colors, setColors] = useState<string[]>([]);
+
+  useEffect(() => {
+    const root = document.querySelector(':root') as HTMLElement;
+    const styles = getComputedStyle(root);
+    const chartColors = [
+      styles.getPropertyValue('--accent'),
+      styles.getPropertyValue('--dark-accent'),
+    ];
+    setColors(chartColors);
+  }, []);
+
   const data = calcPieData(kreditSumme, downPayment, kaufSumme);
-  const COLORS = ["hsl(195, 37%, 40%)", "hsl(194, 33%, 18%)"];
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -39,8 +51,8 @@ export default function LineChartGesamtBetrag({
           paddingAngle={0}
           dataKey="value"
         >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          {data.map((_, index) => (
+            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
           ))}
         </Pie>
       </PieChart>

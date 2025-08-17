@@ -1,11 +1,5 @@
+import { useEffect, useState } from "react";
 import { Cell, Pie, PieChart } from "recharts";
-
-const COLORS = [
-  "hsl(194, 33%, 22%)",
-  "hsl(194, 33%, 18%)",
-  "hsl(195, 37%, 40%)",
-  "hsl(172, 25%, 55%)",
-];
 
 type PropTypes = {
   data: { name: string; value: number }[];
@@ -15,6 +9,19 @@ type PropTypes = {
 };
 
 export default function PieChartNebenkosten({ data, activeIndex, handleMouseEnter, handleMouseLeave }: PropTypes) {
+  const [colors, setColors] = useState<string[]>([]);
+
+  useEffect(() => {
+    const root = document.querySelector(':root') as HTMLElement;
+    const styles = getComputedStyle(root);
+    const chartColors = [
+      styles.getPropertyValue('--dark-accent'),
+      styles.getPropertyValue('--neutral-accent'),
+      styles.getPropertyValue('--accent'),
+      styles.getPropertyValue('--light-accent'),
+    ];
+    setColors(chartColors);
+  }, []);
 
   return (
     <PieChart width={180} height={window.innerWidth < 768 ? 90 : 130}>
@@ -33,10 +40,8 @@ export default function PieChartNebenkosten({ data, activeIndex, handleMouseEnte
         {data.map((entry, index) => (
           <Cell
             key={entry.name}
-            fill={COLORS[index % COLORS.length]}
-            stroke={
-              activeIndex === index ? COLORS[index % COLORS.length] : "none"
-            }
+            fill={colors[index % colors.length]}
+            stroke={activeIndex === index ? colors[index % colors.length] : "none"}
             strokeWidth={activeIndex === index ? 3 : 0}
             onMouseEnter={() => handleMouseEnter(index)}
           />
