@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GermanyMap from "../germanyMap";
 import PieChartNebenkosten from "./pieChartNebenkosten";
 
@@ -6,12 +6,14 @@ type PropTypes = {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   nebenkosten: any;
   sumNebenkosten: number;
+  setBundesland: (bundesland: string) => void;
   activeIndex: number | null;
   handleMouseEnter: (index: number) => void;
   handleMouseLeave: () => void;
 };
 export default function NebenkostenModal({
   nebenkosten,
+  setBundesland,
   sumNebenkosten,
   activeIndex,
   handleMouseEnter,
@@ -19,6 +21,10 @@ export default function NebenkostenModal({
 }: PropTypes) {
   const [showMap, setShowMap] = useState<boolean>(false);
   const [selectedBundesland, setSelectedBundesland] = useState<string>("Baden-Württemberg");
+
+  useEffect(() => {
+    setBundesland(selectedBundesland);
+  }, [selectedBundesland]);
 
   return (
     <div className="z-40 mx-4 rounded-xl border backdrop-blur-xl border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl md:mx-auto md:max-w-xl">
