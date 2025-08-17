@@ -4,21 +4,32 @@ import CashRoiModel from "./models/cashRoiModel";
 
 export default function calcTilgung(
   calculation: CashRoiModel,
+  nebenkosten?: number,
 ): ArmotizationEntry[] {
-
   if (!calculation) {
     return [];
   }
 
-  const nebenkosten = new NebenkostenCalculator(calculation.principal).calcSumme();
-  const kreditsumme = (calculation.principal + nebenkosten) - calculation.down_payment;
+  if (!nebenkosten) {
+    nebenkosten = new NebenkostenCalculator(calculation.principal).calcSumme();
+  }
+  const kreditsumme =
+    calculation.principal + nebenkosten - calculation.down_payment;
   const annuitaet = calculation.monthly_rate * 12;
 
-  const armotizationTable = calculateArmotizationTable(kreditsumme, annuitaet, calculation);
+  const armotizationTable = calculateArmotizationTable(
+    kreditsumme,
+    annuitaet,
+    calculation,
+  );
   return armotizationTable;
 }
 
-const calculateArmotizationTable = (restSumme: number, annuitaet: number, calculation: CashRoiModel) => {
+const calculateArmotizationTable = (
+  restSumme: number,
+  annuitaet: number,
+  calculation: CashRoiModel,
+) => {
   const MAX_ITERATIONS = 120;
   let counter = 0;
   const armotizationTable = [];
@@ -35,13 +46,17 @@ const calculateArmotizationTable = (restSumme: number, annuitaet: number, calcul
     const interestForYear = calcInterest(restSumme, calculation.interest_rate);
 
     if (tilgungswechsel > 0) {
-      console.log(`Tilgungswechsel for year ${currentYear}: ${tilgungswechsel}`);
+      console.log(
+        `Tilgungswechsel for year ${currentYear}: ${tilgungswechsel}`,
+      );
       annuitaet = tilgungswechsel * 12;
     }
     let tilgung = annuitaet - interestForYear;
 
     if (sondertilgung > 0) {
-      console.log(`Year: ${currentYear}, Remaining Principal: ${restSumme}, Sondertilgung: ${sondertilgung}`);
+      console.log(
+        `Year: ${currentYear}, Remaining Principal: ${restSumme}, Sondertilgung: ${sondertilgung}`,
+      );
       restSumme -= sondertilgung;
     }
 
@@ -68,10 +83,7 @@ const calculateArmotizationTable = (restSumme: number, annuitaet: number, calcul
   return armotizationTable;
 };
 
-const findSondertilgung = (
-  calculation: CashRoiModel,
-  year: number
-) => {
+const findSondertilgung = (calculation: CashRoiModel, year: number) => {
   if (calculation.sondertilgungen) {
     const sondertilgungForYear = calculation.sondertilgungen.find(
       (x) => x.year === year,
@@ -102,4 +114,4 @@ const findTilgungswechsel = (calculation: CashRoiModel, year: number) => {
     return tilgungswechselForYear?.amount || 0;
   }
   return 0;
-}
+};

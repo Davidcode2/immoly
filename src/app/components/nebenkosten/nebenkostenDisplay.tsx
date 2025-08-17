@@ -7,6 +7,7 @@ import EditIcon from "/public/images/icons/icons8-edit-48.png";
 import Image from "next/image";
 import NebenkostenModal from "./nebenkostenModal";
 import { screenWidthMobile } from "app/utils/screenWidth";
+import { useStore } from "app/store";
 
 type PropTypes = {
   calculationData: CashRoiModel | null;
@@ -29,12 +30,15 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const handleMouseEnter = (index: number) => setActiveIndex(index);
   const handleMouseLeave = () => setActiveIndex(null);
 
+  const updateNebenkosten = useStore((state: any) => state.updateNebenkosten)
+
   useEffect(() => {
     nebenkostenCalculator.bundesland = bundesland;
     nebenkostenCalculator.maklergebuehrPercentage = maklergebuehr;
     const nebenkostenResult = calcGraphData();
     sumNebenkosten.current = nebenkostenCalculator.calcSumme();
     setNebenkosten(nebenkostenResult);
+    updateNebenkosten(sumNebenkosten.current);
   }, [bundesland, maklergebuehr]);
 
   const calcGraphData = () => {
@@ -86,7 +90,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
         className="absolute top-5 right-4 cursor-pointer"
         onClick={() => setShowModal(true)}
       >
-        <div className="inline-block rounded-xl group border border-[var(--dark-accent)] p-1 px-2 transition-colors text-xs hover:bg-[var(--dark-accent)] hover:text-[var(--secondary)]">
+        <div className="group inline-block rounded-xl border border-[var(--dark-accent)] p-1 px-2 text-xs transition-colors hover:bg-[var(--dark-accent)] hover:text-[var(--secondary)]">
           Mehr
           <Image
             className="inline-block opacity-50 group-hover:opacity-60 group-hover:invert"

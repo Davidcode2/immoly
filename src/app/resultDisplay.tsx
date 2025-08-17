@@ -20,6 +20,7 @@ import {
 } from "./services/sonderCalculationsHelper";
 import MobileFormContainer from "./components/mobileFormContainer";
 import MobileTilgungsTabelleContainer from "./components/mobileTilgungsTabelleContainer";
+import { useStore } from "app/store";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -34,6 +35,7 @@ export default function ResultDisplay() {
 
   const searchParams = useSearchParams();
   const calculationId = searchParams.get("calculationId");
+  const nebenkosten = useStore((state) => state.nebenkosten)
 
   const changeHandler = async () => {
     if (!input) {
@@ -47,7 +49,7 @@ export default function ResultDisplay() {
       calculationId!,
       true,
     );
-    const tilgungungsTabelle = calcTilgung(input);
+    const tilgungungsTabelle = calcTilgung(input, nebenkosten);
     setTable(tilgungungsTabelle);
   };
 
@@ -95,7 +97,7 @@ export default function ResultDisplay() {
         input.tilgungswechsel = await getTilgungswechselFromCache(
           calculationId!,
         );
-        const tilgungsTabelle = calcTilgung(input);
+        const tilgungsTabelle = calcTilgung(input, nebenkosten);
         setTable(tilgungsTabelle);
       }
 
@@ -105,7 +107,7 @@ export default function ResultDisplay() {
     return () => {
       clearTimeout(debounceTimeout);
     };
-  }, [input]);
+  }, [input, nebenkosten]);
 
   useEffect(() => {
     setSelectedScenario((Number(calculationId) - 1).toString());
@@ -118,7 +120,7 @@ export default function ResultDisplay() {
             return;
           }
           setInput(result[0]);
-          const tilgungungsTabelle = calcTilgung(result[0]);
+          const tilgungungsTabelle = calcTilgung(result[0], nebenkosten);
           setTable(tilgungungsTabelle);
         } catch (e) {
           console.error(e);
