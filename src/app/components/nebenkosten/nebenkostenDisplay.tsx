@@ -30,7 +30,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const handleMouseEnter = (index: number) => setActiveIndex(index);
   const handleMouseLeave = () => setActiveIndex(null);
 
-  const updateNebenkosten = useStore((state: any) => state.updateNebenkosten)
+  const updateNebenkosten = useStore((state) => state.updateNebenkosten)
 
   useEffect(() => {
     nebenkostenCalculator.bundesland = bundesland;
