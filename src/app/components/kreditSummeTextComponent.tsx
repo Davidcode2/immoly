@@ -1,6 +1,6 @@
 import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 import Image from "next/image";
-import LineChartGesamtBetrag from "./lineChartGesamtbetrag";
+import PieChartGesamtBetrag from "./lineChartGesamtbetrag";
 
 type PropTypes = {
   principal: number;
@@ -23,7 +23,7 @@ export default function KreditSummeTextComponent({
         <span className="hidden md:block">Kaufpreis</span>
         <span className="flex justify-end gap-x-2 md:max-h-6 text-center grow-0">
           <div className="h-10 w-10 self-center -rotate-22">
-            <LineChartGesamtBetrag
+            <PieChartGesamtBetrag
               kreditSumme={kreditSumme}
               downPayment={downPayment}
               kaufSumme={principal}

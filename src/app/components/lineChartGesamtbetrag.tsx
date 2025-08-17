@@ -7,7 +7,7 @@ type PropTypes = {
   kaufSumme: number;
 };
 
-export default function LineChartGesamtBetrag({
+export default function PieChartGesamtBetrag({
   kreditSumme,
   downPayment,
   kaufSumme,

@@ -1,5 +1,4 @@
 import { getGrundsteuer } from "app/services/nebenkostenGrundsteuer";
-import { useState } from "react";
 
 type PropTypes = {
   entry: { name: string; value: number };
@@ -23,7 +22,6 @@ export default function NebenkostenEntry({
   index,
   activeIndex,
 }: PropTypes) {
-  const [showDropdown, setShowDropdown] = useState<boolean>(true);
 
   return (
     <div
@@ -65,7 +63,7 @@ export default function NebenkostenEntry({
         )}
         {entry.name === "Maklergebühr" && (
           <div className="w-fit rounded-xl bg-[var(--dark-accent)] p-1 px-2 text-xs text-[var(--secondary)]">
-          {showDropdown && entry.name === "Maklergebühr" && (
+          { entry.name === "Maklergebühr" && (
             <select value={maklergebuehr} name="maklergebuehr" onChange={(e) => setMaklergebuehr(Number(e.target.value))}>
               <option value={3.57}>3,57 %</option>
               <option value={2.98}>2,98 %</option>
