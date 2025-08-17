@@ -30,11 +30,11 @@ export default function NebenkostenModal({
   }, [bundesland]);
 
   return (
-    <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl backdrop-blur-xl md:mx-auto md:max-w-xl">
+    <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl backdrop-blur-xl md:mx-auto md:max-w-2xl">
       <div className="grid md:grid-cols-2">
         { (!screenWidthMobile() || showMap) && (
           <div
-            className={`fixed md:static z-40 w-full rounded-t-xl md:rounded-none md:rounded-l-xl bg-radial-[at_50%_50%] from-[var(--background)] to-[var(--secondary)]`}
+            className={`fixed md:static z-40 w-full h-full rounded-xl md:rounded-none md:rounded-l-xl bg-radial-[at_50%_50%] from-[var(--background)] to-[var(--secondary)]`}
           >
             <GermanyMap
               setBundesland={setBundesland}
@@ -43,7 +43,7 @@ export default function NebenkostenModal({
           </div>
         )}
         <div>
-          <div className="p-6 w-40 h-40">
+          <div className="relative bottom-10 md:static p-6 w-full h-50 md:w-40 md:h-40">
             <PieChartNebenkosten
               data={nebenkosten}
               activeIndex={activeIndex}
