@@ -1,7 +1,6 @@
+import { useState } from "react";
 import GermanyMap from "../germanyMap";
 import PieChartNebenkosten from "./pieChartNebenkosten";
-//import GermanyMap from "/public/images/germany-outline-borders.svg"
-import Image from "next/image";
 
 type PropTypes = {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -18,10 +17,17 @@ export default function NebenkostenModal({
   handleMouseEnter,
   handleMouseLeave,
 }: PropTypes) {
+  const [showMap, setShowMap] = useState<boolean>(false);
+
   return (
-    <div className="z-40 mx-auto max-w-xl rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl">
-      <div className="grid grid-cols-2">
-        <GermanyMap/>
+    <div className="z-40 mx-4 md:mx-auto md:max-w-xl rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl">
+    <button onClick={() => setShowMap(true)}>Bundesland auswählen</button>
+      <div className="grid md:grid-cols-2">
+      { showMap && 
+        <div className={`w-20`}>
+          <GermanyMap />
+        </div>
+      }
         <div>
           <div className="p-6">
             <PieChartNebenkosten

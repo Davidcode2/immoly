@@ -81,23 +81,13 @@ export default function Tilgungstabelle({
     setShowModal(true);
   };
 
-  document.body.addEventListener("click", (e: MouseEvent) => {
-    const modal = tilgungsWechselModalRef.current;
-    const target = e.target as HTMLElement;
-    if (target.classList.contains("tilgungsWechselModal")) return;
-    if (showModal) {
-      setShowModal(false);
-      modal?.classList.remove("open");
-    }
-  });
-
   return (
     <div
       ref={tilgungsWechselModalRef}
       className="grid h-fit justify-stretch rounded-lg text-xs lg:text-base"
     >
       {showModal && (
-        <CenteredModal>
+        <CenteredModal onClose={() => setShowModal(false)}>
           <TilgungsWechselModal
             handleSubmit={handleTilgungsWechsel}
             year={selectedEntry!.year!}
