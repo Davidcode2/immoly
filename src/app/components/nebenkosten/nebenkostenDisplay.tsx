@@ -6,6 +6,7 @@ import PieChartNebenkosten from "./pieChartNebenkosten";
 import EditIcon from "/public/images/icons/icons8-edit-48.png";
 import Image from "next/image";
 import NebenkostenModal from "./nebenkostenModal";
+import { screenWidthMobile } from "app/utils/screenWidth";
 
 type PropTypes = {
   calculationData: CashRoiModel | null;
@@ -15,6 +16,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [bundesland, setBundesland] = useState<string>("Baden-Wuerttemberg");
+  const [maklergebuehr, setMaklergebuehr] = useState<number>(3.57);
   const [nebenkosten, setNebenkosten] = useState<
     { name: string; value: number }[]
   >([]);
@@ -29,10 +31,11 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
 
   useEffect(() => {
     nebenkostenCalculator.bundesland = bundesland;
+    nebenkostenCalculator.maklergebuehrPercentage = maklergebuehr;
     const nebenkostenResult = calcGraphData();
     sumNebenkosten.current = nebenkostenCalculator.calcSumme();
     setNebenkosten(nebenkostenResult);
-  }, [bundesland]);
+  }, [bundesland, maklergebuehr]);
 
   const calcGraphData = () => {
     const graphData = [
@@ -53,11 +56,22 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
     return graphData;
   };
 
+  const openModalOnMobile = () => {
+    if (screenWidthMobile() && !showModal) {
+      setShowModal(true);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center justify-between rounded-lg px-6 pt-6 text-xs shadow backdrop-blur-2xl md:col-span-2 md:flex-row md:justify-start md:gap-6 md:py-4 md:text-base">
+    <div
+      className="flex flex-col items-center justify-between rounded-lg px-6 pt-6 text-xs shadow backdrop-blur-2xl md:col-span-2 md:flex-row md:justify-start md:gap-6 md:py-4 md:text-base"
+      onClick={openModalOnMobile}
+    >
       {showModal && (
         <CenteredModal onClose={() => setShowModal(false)}>
           <NebenkostenModal
+            setMaklergebuehr={setMaklergebuehr}
+            maklergebuehr={maklergebuehr}
             setBundesland={setBundesland}
             bundesland={bundesland}
             nebenkosten={nebenkosten}
@@ -69,12 +83,21 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
         </CenteredModal>
       )}
       <div
-        className="absolute top-5 right-4 opacity-50"
+        className="absolute top-5 right-4 cursor-pointer"
         onClick={() => setShowModal(true)}
       >
-        <Image src={EditIcon} width={14} height={14} alt="Bearbeiten" />
+        <div className="inline-block rounded-xl group border border-[var(--dark-accent)] p-1 px-2 transition-colors text-xs hover:bg-[var(--dark-accent)] hover:text-[var(--secondary)]">
+          Mehr
+          <Image
+            className="inline-block opacity-50 group-hover:opacity-60 group-hover:invert"
+            src={EditIcon}
+            width={14}
+            height={14}
+            alt="Bearbeiten"
+          />
+        </div>
       </div>
-      <div className="absolute md:static -bottom-[5px] h-40 w-40 md:w-48 md:h-48">
+      <div className="absolute -bottom-[5px] h-40 w-40 md:static md:h-48 md:w-48">
         <PieChartNebenkosten
           data={nebenkosten}
           activeIndex={activeIndex}

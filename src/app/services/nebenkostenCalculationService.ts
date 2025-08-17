@@ -8,6 +8,7 @@ export default class NebenkostenCalculator {
   private maklergebuehr: number = 0;
   private grunderwerbsteuer: number = 0;
   private summe: number = 0;
+  maklergebuehrPercentage: number = 3.57;
   bundesland = "Baden-Wuerttemberg";
 
   constructor(principal: number) {
@@ -46,7 +47,7 @@ export default class NebenkostenCalculator {
     if (this.maklergebuehr > 0) {
       return this.maklergebuehr;
     }
-    this.maklergebuehr = this.principal * 0.0357;
+    this.maklergebuehr = this.principal * (this.maklergebuehrPercentage / 100);
     return this.maklergebuehr;
   };
 
