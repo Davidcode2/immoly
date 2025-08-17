@@ -13,7 +13,7 @@ export default async function GraphPage() {
     return <div>Skipped at build time</div>;
   }
   return (
-    <div className="font-[family-name:var(--font-geist-sans)] dark:bg-[url(/images/black_rainbow_low_saturation.jpg)] dark:bg-cover dark:bg-bottom">
+    <div className="dark:bg-[url(/images/black_rainbow_low_saturation.jpg)] dark:bg-cover dark:bg-bottom">
       <div className="mx-auto min-h-screen max-w-[2000px] pb-20 sm:p-10">
         <div className="flex flex-col gap-12 md:gap-6">
           <Suspense fallback={<Loading />}>
