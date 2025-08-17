@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import GermanyMap from "../germanyMap";
 import PieChartNebenkosten from "./pieChartNebenkosten";
+import { getGrundsteuer } from "app/services/nebenkostenGrundsteuer";
 
 type PropTypes = {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   nebenkosten: any;
   sumNebenkosten: number;
   setBundesland: (bundesland: string) => void;
+  bundesland: string;
   activeIndex: number | null;
   handleMouseEnter: (index: number) => void;
   handleMouseLeave: () => void;
@@ -14,24 +16,29 @@ type PropTypes = {
 export default function NebenkostenModal({
   nebenkosten,
   setBundesland,
+  bundesland,
   sumNebenkosten,
   activeIndex,
   handleMouseEnter,
   handleMouseLeave,
 }: PropTypes) {
   const [showMap, setShowMap] = useState<boolean>(false);
-  const [selectedBundesland, setSelectedBundesland] = useState<string>("Baden-Württemberg");
 
   useEffect(() => {
-    setBundesland(selectedBundesland);
-  }, [selectedBundesland]);
+    setBundesland(bundesland);
+  }, [bundesland]);
 
   return (
-    <div className="z-40 mx-4 rounded-xl border backdrop-blur-xl border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl md:mx-auto md:max-w-xl">
+    <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl backdrop-blur-xl md:mx-auto md:max-w-xl">
       <div className="grid md:grid-cols-2">
         {showMap && (
-          <div className={`fixed w-full bg-[var(--background)] rounded-t-xl z-40`}>
-            <GermanyMap setBundesland={setSelectedBundesland} onClose={() => setShowMap(false)}/>
+          <div
+            className={`fixed z-40 w-full rounded-t-xl bg-[var(--background)]`}
+          >
+            <GermanyMap
+              setBundesland={setBundesland}
+              onClose={() => setShowMap(false)}
+            />
           </div>
         )}
         <div>
@@ -65,16 +72,24 @@ export default function NebenkostenModal({
                       }}
                     />
                     <div>
-                      <div className="text-lg md:text-base">{entry.name}</div>
+                      <div className="text-base">{entry.name}</div>
                       {entry.name === "Grunderwerbsteuer" && (
-                        <button className="text-xs" onClick={() => setShowMap(true)}>
-                        { selectedBundesland }
+                        <button
+                          className="text-xs border border-[var(--dark-accent)] hover:bg-[var(--dark-accent)] hover:text-[var(--secondary)] px-2 w-fit rounded-xl p-1"
+                          onClick={() => setShowMap(true)}
+                        >
+                          {bundesland}
                         </button>
                       )}
                     </div>
                   </div>
-                  <div className="text-xl md:text-lg">
-                    €{entry.value.toLocaleString("de")}
+                  <div>
+                    <div className="text-xl md:text-lg">
+                      €{entry.value.toLocaleString("de")}
+                    </div>
+                    {entry.name === "Grunderwerbsteuer" && (
+                      <div className="text-xs bg-[var(--dark-accent)] px-2 w-fit text-[var(--secondary)] rounded-xl p-1">{getGrundsteuer(bundesland)} %</div>
+                    )}
                   </div>
                 </div>
               ),

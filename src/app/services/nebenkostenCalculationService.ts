@@ -1,11 +1,14 @@
+import { getGrundsteuer } from "./nebenkostenGrundsteuer";
+
 export default class NebenkostenCalculator {
   private principal: number;
 
-  notarkosten: number = 0;
-  grundbuchkosten: number = 0;
-  maklergebuehr: number = 0;
-  grunderwerbsteuer: number = 0;
-  summe: number = 0;
+  private notarkosten: number = 0;
+  private grundbuchkosten: number = 0;
+  private maklergebuehr: number = 0;
+  private grunderwerbsteuer: number = 0;
+  private summe: number = 0;
+  bundesland = "Baden-Wuerttemberg";
 
   constructor(principal: number) {
     this.principal = principal;
@@ -19,7 +22,7 @@ export default class NebenkostenCalculator {
       this.calcNotarkosten() +
       this.calcGrundbuchkosten() +
       this.calcMaklergebuehr() +
-      this.calcGrunderwerbsteuer("Baden-Württemberg");
+      this.calcGrunderwerbsteuer(this.bundesland);
     return this.summe;
   };
 
@@ -47,42 +50,44 @@ export default class NebenkostenCalculator {
     return this.maklergebuehr;
   };
 
-  calcGrunderwerbsteuer = (bundesland: string) => {
+  calcGrunderwerbsteuer = (bundesland?: string) => {
+    bundesland = bundesland ? bundesland : this.bundesland;
+    const tax = getGrundsteuer(bundesland) / 100;
     switch (bundesland) {
-      case "Baden-Württemberg":
-        return this.principal * 0.05;
+      case "Baden-Wuerttemberg":
+        return this.principal * tax;
       case "Bayern":
-        return this.principal * 0.03;
+        return this.principal * tax;
       case "Berlin":
-        return this.principal * 0.06;
+        return this.principal * tax;
       case "Brandenburg":
-        return this.principal * 0.06;
+        return this.principal * tax;
       case "Bremen":
-        return this.principal * 0.05;
+        return this.principal * tax;
       case "Hamburg":
-        return this.principal * 0.04;
+        return this.principal * tax;
       case "Hessen":
-        return this.principal * 0.06;
+        return this.principal * tax;
       case "Mecklenburg-Vorpommern":
-        return this.principal * 0.06;
+        return this.principal * tax;
       case "Niedersachsen":
-        return this.principal * 0.05;
+        return this.principal * tax;
       case "Nordrhein-Westfalen":
-        return this.principal * 0.06;
+        return this.principal * tax;
       case "Rheinland-Pfalz":
-        return this.principal * 0.05;
+        return this.principal * tax;
       case "Saarland":
-        return this.principal * 0.06;
+        return this.principal * tax;
       case "Sachsen":
-        return this.principal * 0.03;
+        return this.principal * tax;
       case "Sachsen-Anhalt":
-        return this.principal * 0.02;
+        return this.principal * tax;
       case "Schleswig-Holstein":
-        return this.principal * 0.05;
-      case "Thüringen":
-        return this.principal * 0.03;
+        return this.principal * tax;
+      case "Thueringen":
+        return this.principal * tax;
       default:
-        return this.principal * 0.04;
+        return this.principal * tax;
     }
   };
 }
