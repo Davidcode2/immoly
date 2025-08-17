@@ -74,16 +74,20 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
       >
         <Image src={EditIcon} width={14} height={14} alt="Bearbeiten" />
       </div>
-      <PieChartNebenkosten
-        data={nebenkosten}
-        activeIndex={activeIndex}
-        handleMouseEnter={handleMouseEnter}
-        handleMouseLeave={handleMouseLeave}
-      />
+      <div className="absolute md:static -bottom-[5px] h-40 w-40 md:w-48 md:h-48">
+        <PieChartNebenkosten
+          data={nebenkosten}
+          activeIndex={activeIndex}
+          handleMouseEnter={handleMouseEnter}
+          handleMouseLeave={handleMouseLeave}
+        />
+      </div>
       <div className="order-first flex h-20 w-full flex-col gap-12 overflow-y-scroll pb-4 md:order-2 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
         <div className="md:hidden">
           <div className="inline-block text-base">Summe Nebenkosten:</div>
-          <div className="text-2xl">{sumNebenkosten.current.toLocaleString("de")}</div>
+          <div className="text-2xl">
+            {sumNebenkosten.current.toLocaleString("de")}
+          </div>
         </div>
         {nebenkosten.map((entry, index) => (
           <div
