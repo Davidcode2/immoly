@@ -1,6 +1,6 @@
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import CenteredModal from "../centeredModal";
 import PieChartNebenkosten from "./pieChartNebenkosten";
 import EditIcon from "/public/images/icons/icons8-edit-48.png";
@@ -14,7 +14,6 @@ type PropTypes = {
 export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const nebenkostenModalRef = useRef<HTMLDivElement>(null);
 
   const nebenkostenCalculator = new NebenkostenCalculator(
     calculationData!.principal,

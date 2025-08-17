@@ -18,16 +18,16 @@ export default function NebenkostenModal({
   handleMouseLeave,
 }: PropTypes) {
   const [showMap, setShowMap] = useState<boolean>(false);
+  const [selectedBundesland, setSelectedBundesland] = useState<string>("Baden-Württemberg");
 
   return (
-    <div className="z-40 mx-4 md:mx-auto md:max-w-xl rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl">
-    <button onClick={() => setShowMap(true)}>Bundesland auswählen</button>
+    <div className="z-40 mx-4 rounded-xl border backdrop-blur-xl border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl md:mx-auto md:max-w-xl">
       <div className="grid md:grid-cols-2">
-      { showMap && 
-        <div className={`w-20`}>
-          <GermanyMap />
-        </div>
-      }
+        {showMap && (
+          <div className={`fixed w-full bg-[var(--background)] rounded-t-xl z-40`}>
+            <GermanyMap setBundesland={setSelectedBundesland} onClose={() => setShowMap(false)}/>
+          </div>
+        )}
         <div>
           <div className="p-6">
             <PieChartNebenkosten
@@ -58,7 +58,14 @@ export default function NebenkostenModal({
                         backgroundColor: `var(--${index === 0 ? "dark-accent" : index === 1 ? "neutral-accent" : index === 2 ? "accent" : "light-accent"})`,
                       }}
                     />
-                    <div className="text-lg md:text-base">{entry.name}</div>
+                    <div>
+                      <div className="text-lg md:text-base">{entry.name}</div>
+                      {entry.name === "Grunderwerbsteuer" && (
+                        <button className="text-xs" onClick={() => setShowMap(true)}>
+                        { selectedBundesland }
+                        </button>
+                      )}
+                    </div>
                   </div>
                   <div className="text-xl md:text-lg">
                     €{entry.value.toLocaleString("de")}

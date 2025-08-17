@@ -1,4 +1,18 @@
-export default function GermanyMap() {
+type PropTypes = {
+  setBundesland: (bundesland: string) => void;
+  onClose: () => void;
+};
+export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
+
+  const handleClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    const splitName = target.id.split("-");
+    const firstNamePart = splitName[0].charAt(0).toUpperCase() + splitName[0].slice(1);
+    const secondNamePart = splitName[1] ? splitName[1].charAt(0).toUpperCase() + splitName[1].slice(1) : '';
+    const PascalCaseId = secondNamePart ? `${firstNamePart}-${secondNamePart}` : firstNamePart;
+    setBundesland(PascalCaseId);
+    onClose();
+  };
 
   return (
     <svg
@@ -9,12 +23,11 @@ export default function GermanyMap() {
       xmlns="http://www.w3.org/2000/svg"
     >
       <style id="style1">
-        #rheinland-pfalz {}
-        #baden-wuerttemberg,#path54 {}
       </style>
       <defs id="defs1" />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -29,6 +42,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -43,6 +57,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -57,6 +72,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -71,6 +87,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -85,6 +102,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -99,6 +117,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -113,6 +132,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -127,6 +147,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -141,6 +162,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -155,6 +177,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -169,6 +192,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -183,6 +207,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -197,6 +222,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -211,6 +237,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
@@ -225,6 +252,7 @@ export default function GermanyMap() {
       />
       <path
         className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        onClick={handleClick}
         style={{
           stroke: "#000000",
           strokeWidth: "2",
