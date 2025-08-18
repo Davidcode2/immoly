@@ -7,7 +7,7 @@ import EditIcon from "/public/images/icons/icons8-edit-48.png";
 import Image from "next/image";
 import NebenkostenModal from "./nebenkostenModal";
 import { screenWidthMobile } from "app/utils/screenWidth";
-import { useStore } from "app/store";
+import { useBundeslandStore, useMaklergebuehrStore, useNebenkostenStore } from "app/store";
 
 type PropTypes = {
   calculationData: CashRoiModel | null;
@@ -30,16 +30,21 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const handleMouseEnter = (index: number) => setActiveIndex(index);
   const handleMouseLeave = () => setActiveIndex(null);
 
-  const updateNebenkosten = useStore((state) => state.updateNebenkosten)
+  const updateNebenkosten = useNebenkostenStore((state) => state.updateValue)
+  const updateMaklergebuehr = useMaklergebuehrStore((state) => state.updateValue)
+  const updateBundesland = useBundeslandStore((state) => state.updateValue)
+
 
   useEffect(() => {
     nebenkostenCalculator.bundesland = bundesland;
     nebenkostenCalculator.maklergebuehrPercentage = maklergebuehr;
     const nebenkostenResult = calcGraphData();
     sumNebenkosten.current = nebenkostenCalculator.calcSumme();
+    updateMaklergebuehr(maklergebuehr);
+    updateBundesland(bundesland);
     setNebenkosten(nebenkostenResult);
     updateNebenkosten(sumNebenkosten.current);
-  }, [bundesland, maklergebuehr]);
+  }, [bundesland, maklergebuehr, calculationData]);
 
   const calcGraphData = () => {
     const graphData = [

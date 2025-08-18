@@ -20,7 +20,12 @@ import {
 } from "./services/sonderCalculationsHelper";
 import MobileFormContainer from "./components/mobileFormContainer";
 import MobileTilgungsTabelleContainer from "./components/mobileTilgungsTabelleContainer";
-import { useStore } from "app/store";
+import {
+  useBundeslandStore,
+  useMaklergebuehrStore,
+  useNebenkostenStore,
+} from "app/store";
+import NebenkostenCalculator from "./services/nebenkostenCalculationService";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -35,7 +40,10 @@ export default function ResultDisplay() {
 
   const searchParams = useSearchParams();
   const calculationId = searchParams.get("calculationId");
-  const nebenkosten = useStore((state) => state.nebenkosten)
+  const updateNebenkosten = useNebenkostenStore((state) => state.updateValue);
+  const nebenkosten = useNebenkostenStore((state) => state.value);
+  const bundesland = useBundeslandStore((state) => state.value);
+  const maklergebuehr = useMaklergebuehrStore((state) => state.value);
 
   const changeHandler = async () => {
     if (!input) {
@@ -120,6 +128,13 @@ export default function ResultDisplay() {
             return;
           }
           setInput(result[0]);
+
+          const nebenkosten = new NebenkostenCalculator(
+            result[0].principal,
+            maklergebuehr,
+            bundesland,
+          ).calcSumme()
+          updateNebenkosten(Math.round(nebenkosten));
           const tilgungungsTabelle = calcTilgung(result[0], nebenkosten);
           setTable(tilgungungsTabelle);
         } catch (e) {

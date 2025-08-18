@@ -11,8 +11,10 @@ export default class NebenkostenCalculator {
   maklergebuehrPercentage: number = 3.57;
   bundesland = "Baden-Wuerttemberg";
 
-  constructor(principal: number) {
+  constructor(principal: number, maklergebuehr?: number, bundesland?: string) {
     this.principal = principal;
+    this.maklergebuehr = maklergebuehr || 0;
+    this.bundesland = bundesland || "Baden-Wuerttemberg";
   }
 
   calcSumme = () => {
@@ -29,7 +31,7 @@ export default class NebenkostenCalculator {
 
   calcNotarkosten = () => {
     if (this.notarkosten > 0) {
-      return this.notarkosten
+      return this.notarkosten;
     }
     this.notarkosten = this.principal * 0.015;
     return this.notarkosten;

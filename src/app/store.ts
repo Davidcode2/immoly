@@ -1,12 +1,27 @@
 import { create } from 'zustand'
 
-interface NebenkostenState {
-  nebenkosten: number
-  updateNebenkosten: (newValue: number) => void;
+interface NumberState {
+  value: number
+  updateValue: (newValue: number) => void;
 }
 
-export const useStore = create<NebenkostenState>((set) => ({
-  nebenkosten: 0,
-  updateNebenkosten: (newNebenkosten: number) => set({ nebenkosten: newNebenkosten }),
+interface StringState {
+  value: string
+  updateValue: (newValue: string) => void;
+}
+
+export const useNebenkostenStore = create<NumberState>((set) => ({
+  value: 0,
+  updateValue: (newValue: number) => set({ value: newValue }),
+}))
+
+export const useBundeslandStore = create<StringState>((set) => ({
+  value: "",
+  updateValue: (newValue: string) => set({ value: newValue }),
+}))
+
+export const useMaklergebuehrStore = create<NumberState>((set) => ({
+  value: 0,
+  updateValue: (newValue: number) => set({ value: newValue }),
 }))
 

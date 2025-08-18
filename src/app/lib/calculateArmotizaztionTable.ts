@@ -13,6 +13,7 @@ export default function calcTilgung(
   if (!nebenkosten) {
     nebenkosten = new NebenkostenCalculator(calculation.principal).calcSumme();
   }
+
   const kreditsumme =
     calculation.principal + nebenkosten - calculation.down_payment;
   const annuitaet = calculation.monthly_rate * 12;
