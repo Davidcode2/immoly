@@ -64,7 +64,7 @@ export default function MainStatsSection({
         paidInYear={paidInYear}
         kreditSumme={kreditSumme}
       />
-      <div className="md:hidden max-h-48 shadow rounded-lg p-5">
+      <div className="md:hidden h-46 max-h-48 shadow rounded-lg p-5">
         <TotalSumVsInterest
           sumZinsen={sumZinsen}
           totalSum={totalSum}

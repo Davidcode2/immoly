@@ -17,7 +17,7 @@ export default function KreditSummeTextComponent({
   const kreditSumme = kreditSummeRaw < 0 ? 0 : kreditSummeRaw;
 
   return (
-    <div className="z-20 rounded-lg bg-[var(--light-accent)]/20 shadow backdrop-blur-2xl">
+    <div className="z-20 max-h-56 rounded-lg bg-[var(--light-accent)]/20 shadow backdrop-blur-2xl">
       <div className="bg-[var(--background)] p-5 pb-3 md:p-8 md:pb-8">
         <div className="flex justify-between">
           <p className="pb-2 text-xs">Kreditsumme</p>

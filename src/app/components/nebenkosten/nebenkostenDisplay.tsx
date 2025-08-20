@@ -73,7 +73,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
 
   return (
     <div
-      className="flex flex-col items-center justify-between rounded-lg px-6 pt-6 text-xs shadow backdrop-blur-2xl md:col-span-2 md:flex-row md:justify-start md:gap-6 md:py-4 md:text-base"
+      className="flex flex-col items-center justify-between rounded-lg px-6 pt-6 text-xs shadow backdrop-blur-2xl md:col-span-2 md:flex-row md:justify-start md:gap-6 md:py-4 md:text-base max-h-56"
       onClick={openModalOnMobile}
     >
       {showModal && (

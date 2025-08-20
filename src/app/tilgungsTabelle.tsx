@@ -120,14 +120,14 @@ export default function Tilgungstabelle({
               onClick={(e) => openModal(e, x)}
             >
               <td className="px-4 md:py-5 py-3">{x.year}</td>
-              <td className="md:py-5 py-3 sm:px-4">
+              <td className="max-w-12 md:max-w-22 md:py-5 py-3 sm:px-4">
                 {Math.round(x.interest).toLocaleString("de")}
               </td>
-              <td className="md:py-5 py-3 sm:px-4">
+              <td className="max-w-12 md:max-w-22 md:py-5 py-3 sm:px-4">
                 {Math.round(x.principal).toLocaleString("de")}
               </td>
               <td
-                className={`${x.tilgungswechsel > 0 && "text-[var(--success)]"} hidden md:block md:py-5 py-3 sm:px-4`}
+                className={`${x.tilgungswechsel > 0 && "text-[var(--success)]"} hidden md:block content-center h-18 md:py-5 py-3 sm:px-4`}
               >
                 {x.yearlyRate.toLocaleString("de")}
                 {x.tilgungswechsel > 0 && (
@@ -136,7 +136,7 @@ export default function Tilgungstabelle({
                   </div>
                 )}
               </td>
-              <td className="md:py-5 py-3 sm:px-4">
+              <td className="md:py-5 py-3 sm:px-4 max-w-12 md:max-w-22">
                 {Math.round(x.remainingPrincipal).toLocaleString("de")}
               </td>
               <td className="sondertilgungInput w-16 md:w-24 md:py-5 py-3 sm:px-4">

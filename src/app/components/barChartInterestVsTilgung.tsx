@@ -20,7 +20,7 @@ export default function BarChartInterestVsTilgung({
 
   const mydata = calcBarData(sumZinsen, kreditSumme);
 
-  if (!show) {
+  if (!show || sumZinsen === 0 || kreditSumme === 0) {
     return <div/>;
   }
 
