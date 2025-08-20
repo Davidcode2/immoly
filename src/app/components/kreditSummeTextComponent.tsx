@@ -19,20 +19,20 @@ export default function KreditSummeTextComponent({
   return (
     <div className="z-20 max-h-56 rounded-lg bg-[var(--light-accent)]/20 shadow backdrop-blur-2xl">
       <div className="bg-[var(--background)] p-5 pb-3 md:p-8 md:pb-8">
-        <div className="flex justify-between">
-          <p className="pb-2 text-xs">Kreditsumme</p>
-          <div className="absolute top-2 right-4 h-10 w-10 rotate-180 self-center">
+        <p className="text-xs">Kreditsumme</p>
+        <div className="flex items-center justify-between">
+          <div
+            className={`${kreditSumme >= 10000000 ? "text-xl" : kreditSumme >= 1000000 ? "text-2xl" : kreditSumme >= 100000 ? "text-(length:--text-2_5xl)" : "text-3xl"} h-12 flex items-center text-[var(--accent)] md:text-xl`}
+          >
+            <div>{Math.round(kreditSumme).toLocaleString("de")}</div>
+          </div>
+          <div className="h-10 w-10 rotate-180 self-center">
             <PieChartGesamtBetrag
               kreditSumme={kreditSumme}
               downPayment={downPayment}
               kaufSumme={principal}
             />
           </div>
-        </div>
-        <div
-          className={`${kreditSumme >= 10000000 ? "text-xl" : kreditSumme >= 1000000 ? "text-2xl" : kreditSumme >= 100000 ? "text-(length:--text-2_5xl)" : "text-3xl"} h-12 pt-2 text-end text-[var(--accent)] md:text-xl`}
-        >
-          € {Math.round(kreditSumme).toLocaleString("de")}
         </div>
       </div>
       <div className="grid h-fit grid-cols-[1fr_1fr] items-baseline gap-x-2 rounded-b-lg p-5 pt-2 md:p-8 md:pt-4">
