@@ -11,14 +11,22 @@ export default function Footer() {
           alt="Sofa"
         />
       </div>
-      <div className="grid p-8">
+      <div className="text-xs grid p-8 text-[var(--dark-accent)]/50">
+        <span>
+          Icons by{" "}
+          <a href="https://www.icons8.de" title="Flaticon">
+            Icons8
+          </a>
+        </span>
         <a
           href="https://www.flaticon.com/free-icons/attention"
           title="attention icons"
         >
-          Attention icons created by Good Ware - Flaticon
+          Attention icon created by Good Ware - Flaticon
         </a>
-        <span>Icons by <a href="https://www.icons8.de" title="Flaticon">Icons8</a></span> 
+        <a href="https://www.flaticon.com/free-icons/maps" title="maps icons">
+          House icon created by Rahman Haryanto - Flaticon
+        </a>
       </div>
     </div>
   );
