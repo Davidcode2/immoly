@@ -10,7 +10,6 @@ import NoData from "app/components/noData";
 import TilgungstabelleContainer from "app/components/tilgungstabelleContainer";
 import FinanzierungsFormContainer from "app/components/baseDataForm/finanzierungsFormContainer";
 import ChartsContainer from "app/components/charts/chartsContainer";
-import Hero from "./components/hero";
 import MainStatsSection from "./components/mainStatsSection";
 import { Sondertilgung } from "./lib/models/sondertilgung";
 import { Tilgungswechsel } from "./lib/models/tilgungswechsel";
@@ -26,8 +25,7 @@ import {
   useNebenkostenStore,
 } from "app/store";
 import NebenkostenCalculator from "./services/nebenkostenCalculationService";
-import ScrollIndicator from "./components/scrollIndicator";
-import Image from "next/image";
+import SloganHero from "./components/hero/sloganHero";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -160,23 +158,7 @@ export default function ResultDisplay() {
           <FinanzierungsFormContainer formValues={input} setInput={setInput} />
         </div>
         <div className="rounded-lg backdrop-blur-2xl md:mt-12 md:hidden md:p-8">
-          <div className="rounded-lg border border-slate-200 p-4 shadow">
-            <Hero />
-            <div className="my-10 flex flex-col gap-4 text-7xl">
-              <div className="flex">
-                <p>Got</p>
-                <Image
-                  src="/images/icons/flaticon_house.png"
-                  alt="Haus Strichzeichnung"
-                  height="40"
-                  width="80"
-                />
-              </div>
-                <p className="text-7xl">Immo?</p>
-              <p className="text-base">Kalkulieren Sie was möglich ist</p>
-            </div>
-            <ScrollIndicator />
-          </div>
+          <SloganHero />
         </div>
         <div className="grid gap-y-6">
           {!table ? (

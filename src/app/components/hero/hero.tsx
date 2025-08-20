@@ -1,5 +1,5 @@
 import Image from "next/image";
-import IconsHeader from "./iconsHeader";
+import IconsHeader from "../iconsHeader";
 
 export default function Hero() {
   return (
