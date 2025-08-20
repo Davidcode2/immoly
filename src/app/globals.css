@@ -14,6 +14,8 @@
   --secondary: hsl(95, 32%, 82%);
   --success: hsl(120, 40%, 60%);
   --alert: hsl(20, 70%, 60%);
+
+  --text-2xs: 0.70rem;
 }
 
 [data-theme="light"] {
