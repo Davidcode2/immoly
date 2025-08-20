@@ -26,6 +26,7 @@ import {
   useNebenkostenStore,
 } from "app/store";
 import NebenkostenCalculator from "./services/nebenkostenCalculationService";
+import ScrollIndicator from "./components/scrollIndicator";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -133,7 +134,7 @@ export default function ResultDisplay() {
             result[0].principal,
             maklergebuehr,
             bundesland,
-          ).calcSumme()
+          ).calcSumme();
           updateNebenkosten(Math.round(nebenkosten));
           const tilgungungsTabelle = calcTilgung(result[0], nebenkosten);
           setTable(tilgungungsTabelle);
@@ -158,7 +159,14 @@ export default function ResultDisplay() {
           <FinanzierungsFormContainer formValues={input} setInput={setInput} />
         </div>
         <div className="mt-12 rounded-lg backdrop-blur-2xl md:hidden md:p-8">
-          <Hero />
+          <div className="rounded-lg border border-slate-200 p-4 shadow">
+            <Hero />
+            <div className="my-10 flex flex-col justify-center text-center gap-4">
+              <p>Die Plattform für Immobilienkredite</p>
+              <p>Kalkulieren Sie was möglich ist</p>
+            </div>
+            <ScrollIndicator />
+          </div>
         </div>
         <div className="grid gap-y-6">
           {!table ? (
