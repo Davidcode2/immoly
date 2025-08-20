@@ -16,6 +16,7 @@
   --alert: hsl(20, 70%, 60%);
 
   --text-2xs: 0.70rem;
+  --text-2_5xl: 1.75rem;
 }
 
 [data-theme="light"] {
