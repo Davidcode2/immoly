@@ -172,7 +172,7 @@ export default function ResultDisplay() {
                   width="80"
                 />
               </div>
-                <p className="text-7xl">Immos?</p>
+                <p className="text-7xl">Immo?</p>
               <p className="text-base">Kalkulieren Sie was möglich ist</p>
             </div>
             <ScrollIndicator />

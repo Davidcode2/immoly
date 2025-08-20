@@ -13,7 +13,7 @@ export default function FinanzierungsFormContainer({
 }: PropTypes) {
   return (
     <div className="md:p-8 rounded-lg from-neutral-400/10 to-neutral-950/20 shadow backdrop-blur-2xl dark:bg-gradient-to-tl">
-      <div className="bg-cover bg-[url('/images/background/green_wavy.jpg')] rounded-lg">
+      <div className="pb-4">
         <Hero />
       </div>
       <div className="p-4">
