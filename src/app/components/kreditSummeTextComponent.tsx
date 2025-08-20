@@ -17,7 +17,7 @@ export default function KreditSummeTextComponent({
   const kreditSumme = kreditSummeRaw < 0 ? 0 : kreditSummeRaw;
 
   return (
-    <div className="z-20 max-h-56 rounded-lg bg-[var(--light-accent)]/20 shadow backdrop-blur-2xl">
+    <div className="z-20 max-h-56 rounded-lg bg-[var(--light-accent)]/10 shadow backdrop-blur-2xl">
       <div className="bg-[var(--background)] p-5 pb-3 md:p-8 md:pb-8">
         <p className="text-xs">Kreditsumme</p>
         <div className="flex items-center justify-between">
@@ -26,7 +26,7 @@ export default function KreditSummeTextComponent({
           >
             <div>{Math.round(kreditSumme).toLocaleString("de")}</div>
           </div>
-          <div className="h-10 w-10 rotate-180 self-center">
+          <div className="h-10 w-10 rotate-180 self-center relative left-1">
             <PieChartGesamtBetrag
               kreditSumme={kreditSumme}
               downPayment={downPayment}
@@ -61,13 +61,13 @@ export default function KreditSummeTextComponent({
             </>
           )}
         </span>
-        <span className="text-end text-xs">
+        <span className="text-end text-[var(--strong-accent)] text-xs">
           -&nbsp;{downPayment.toLocaleString("de")}
         </span>
         <span className="self-center text-(length:--text-2xs) text-[var(--dark-accent)]/90">
           Nebenkosten
         </span>
-        <div className="text-end text-xs">
+        <div className="text-end text-xs text-[var(--dark-accent)]/80">
           +&nbsp;{nebenkosten.toLocaleString("de")}
         </div>
       </div>
