@@ -1,8 +1,9 @@
 type PropTypes = {
+  bundesland: string;
   setBundesland: (bundesland: string) => void;
   onClose: () => void;
 };
-export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
+export default function GermanyMap({ bundesland, setBundesland, onClose }: PropTypes) {
 
   const handleClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
@@ -26,7 +27,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
       </style>
       <defs id="defs1" />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "berlin" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -41,7 +42,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="berlin"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "baden-wuerttemberg" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -56,7 +57,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="baden-wuerttemberg"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "bayern" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -71,7 +72,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="bayern"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "rheinland-pfalz" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -86,7 +87,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="rheinland-pfalz"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "saarland" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -101,7 +102,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="saarland"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "hessen" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -116,7 +117,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="hessen"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "thueringen" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -131,7 +132,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="thueringen"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "sachsen" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -146,7 +147,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="sachsen"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "nordrhein-westfalen" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -161,7 +162,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="nordrhein-westfalen"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "schleswig-holstein" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -176,7 +177,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="schleswig-holstein"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "niedersachsen" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -191,7 +192,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="niedersachsen"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "mecklenburg-vorpommern" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -206,7 +207,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="mecklenburg-vorpommern"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "brandenburg" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -221,7 +222,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="brandenburg"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "bremen" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -236,7 +237,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="bremen"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "hamburg" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
@@ -251,7 +252,7 @@ export default function GermanyMap({ setBundesland, onClose }: PropTypes) {
         id="hamburg"
       />
       <path
-        className="fill-[var(--background)]/10 hover:fill-[var(--primary)]"
+        className={`fill-[var(--background)]/10 hover:fill-[var(--primary)] ${bundesland.toLowerCase() === "sachsen-anhalt" && "fill-[var(--light-accent)]"}`}
         onClick={handleClick}
         style={{
           stroke: "#000000",
