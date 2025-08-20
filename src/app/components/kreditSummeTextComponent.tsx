@@ -22,7 +22,7 @@ export default function KreditSummeTextComponent({
         <p className="text-xs">Kreditsumme</p>
         <div className="flex items-center justify-between">
           <div
-            className={`${kreditSumme >= 10000000 ? "text-xl" : kreditSumme >= 1000000 ? "text-2xl" : kreditSumme >= 100000 ? "text-(length:--text-2_5xl)" : "text-3xl"} h-12 flex items-center text-[var(--accent)] md:text-xl`}
+            className={`${kreditSumme >= 10000000 ? "text-xl md:text-2xl" : kreditSumme >= 1000000 ? "text-2xl md:text-3xl" : kreditSumme >= 100000 ? "text-(length:--text-2_5xl) md:text-4xl" : "text-3xl md:text-4xl"} h-12 flex items-center text-[var(--accent)]`}
           >
             <div>{Math.round(kreditSumme).toLocaleString("de")}</div>
           </div>
