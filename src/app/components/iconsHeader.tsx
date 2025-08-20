@@ -3,11 +3,11 @@ import DarkModeToggle from "./darkModeToggle";
 export default function IconsHeader() {
 
   return (
-    <div className="flex justify-center gap-2">
+    <div className="flex gap-2">
       <a href="https://github.com/davidcode2">
         <svg
           viewBox="0 0 100 100"
-          className="mt-[3px] h-5 w-5 dark:fill-white fill-black"
+          className="mt-[3px] h-5 w-5 fill-white fill-black"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -20,7 +20,7 @@ export default function IconsHeader() {
       <svg
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
-        className="ml-[4px] h-6 w-[22px] dark:fill-white fill-black"
+        className="ml-[4px] h-6 w-[22px] fill-white fill-black"
       >
         <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
         <g

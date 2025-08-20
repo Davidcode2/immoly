@@ -157,7 +157,7 @@ export default function ResultDisplay() {
         <div className="hidden md:block">
           <FinanzierungsFormContainer formValues={input} setInput={setInput} />
         </div>
-        <div className="mt-12 rounded-lg p-4 backdrop-blur-2xl md:hidden md:p-8">
+        <div className="mt-12 rounded-lg backdrop-blur-2xl md:hidden md:p-8">
           <Hero />
         </div>
         <div className="grid gap-y-6">
