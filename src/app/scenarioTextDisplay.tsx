@@ -14,17 +14,17 @@ export default function ScenarioTextDisplay({
   return (
     <div className="mb-2 flex flex-col gap-x-4 gap-y-3 md:items-start md:text-start">
       {paidAfter === -1 ? (
-        <div className="font-bold text-[var(--accent)]">Das wird nichts</div>
+        <div className="text-[var(--accent)]">Das wird nichts</div>
       ) : (
         <div className="md:flex md:gap-4">
-          <span className="text-6xl font-bold text-[var(--primary)]">
-            {paidAfter}
-          </span>
           <div className="text-xs md:text-sm">
             Jahre bis Volltilgung
             <br />
             in {paidInYear}
           </div>
+          <span className="text-8xl text-[var(--primary)]">
+            {paidAfter}
+          </span>
         </div>
       )}
       <div className="hidden md:block">
