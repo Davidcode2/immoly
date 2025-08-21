@@ -79,8 +79,8 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   return (
     <div className="max-h-56 rounded-lg px-6 pt-6 text-xs shadow backdrop-blur-2xl md:col-span-2 md:pt-8 md:text-base">
       <div className="hidden text-xs md:block">Nebenkosten</div>
-      <div className="relative">
-        <div className="absolute top-1 hidden text-3xl md:block">
+      <div className="relative mb-5">
+        <div className="hidden absolute text-3xl md:block">
           {sumNebenkosten.current.toLocaleString("de")}
         </div>
       </div>
@@ -107,7 +107,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
           className="absolute top-5 right-4 cursor-pointer"
           onClick={() => setShowModal(true)}
         >
-          <div className="group inline-block rounded-xl border border-[var(--dark-accent)] p-1 px-2 text-xs transition-colors hover:bg-[var(--dark-accent)] hover:text-[var(--secondary)]">
+          <div className="z-30 group inline-block rounded-xl border border-[var(--dark-accent)] p-1 px-2 text-xs transition-colors hover:bg-[var(--dark-accent)] hover:text-[var(--secondary)]">
             Mehr
             <Image
               className="inline-block opacity-50 group-hover:opacity-60 group-hover:invert"
@@ -163,7 +163,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
             </div>
           ))}
         </div>
-        <div className="hidden h-40 w-40 md:block relative bottom-4 md:h-48 md:w-48">
+        <div className="hidden z-20 h-40 w-40 md:block relative bottom-4 md:h-38 md:w-48">
           <PieChartNebenkosten
             data={nebenkosten}
             activeIndex={activeIndex}
