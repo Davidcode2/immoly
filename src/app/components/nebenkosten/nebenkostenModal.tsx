@@ -42,10 +42,10 @@ export default function NebenkostenModal({
             className={`fixed z-40 h-full w-full rounded-xl bg-radial-[at_50%_50%] from-[var(--background)] to-[var(--secondary)] md:static md:rounded-none md:rounded-l-xl`}
           >
             <div className="mx-10 mt-4 rounded-full bg-[var(--foreground)] p-2 text-sm text-[var(--background)] shadow-lg">
-              <select className="px-2 w-full" onChange={(e) => setBundesland(e.target.value.toLowerCase())}>
+              <select value={bundesland} className="px-2 w-full" onChange={(e) => setBundesland(e.target.value)}>
                 Wählen Sie Ihr Bundesland
-                {bundeslaender.map((bundesland: string) => (
-                  <option key={bundesland} value="">{bundesland}</option>
+                {bundeslaender.map((_bundesland: string) => (
+                  <option key={_bundesland} value={_bundesland} defaultValue={bundesland}>{_bundesland}</option>
                 ))}
               </select>
             </div>
