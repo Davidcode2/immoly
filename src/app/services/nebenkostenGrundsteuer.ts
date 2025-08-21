@@ -36,3 +36,22 @@ export function getGrundsteuer(bundesland: string) {
       throw new Error("Unknown state: " + bundesland);
   }
 }
+
+export const bundeslaender = [
+  "Baden-Wuerttemberg",
+  "Bayern",
+  "Berlin",
+  "Brandenburg",
+  "Bremen",
+  "Hamburg",
+  "Hessen",
+  "Mecklenburg-Vorpommern",
+  "Niedersachsen",
+  "Nordrhein-Westfalen",
+  "Rheinland-Pfalz",
+  "Saarland",
+  "Sachsen",
+  "Sachsen-Anhalt",
+  "Schleswig-Holstein",
+  "Thueringen",
+];

@@ -3,6 +3,7 @@ import GermanyMap from "../germanyMap";
 import PieChartNebenkosten from "./pieChartNebenkosten";
 import { screenWidthMobile } from "app/utils/screenWidth";
 import NebenkostenEntry from "./nebenkostenEntry";
+import { bundeslaender } from "app/services/nebenkostenGrundsteuer";
 
 type PropTypes = {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -40,8 +41,13 @@ export default function NebenkostenModal({
           <div
             className={`fixed z-40 h-full w-full rounded-xl bg-radial-[at_50%_50%] from-[var(--background)] to-[var(--secondary)] md:static md:rounded-none md:rounded-l-xl`}
           >
-            <div className="shadow-lg mx-10 mt-4 text-sm rounded-full bg-[var(--foreground)] p-2 text-[var(--background)]">
-              <div className="px-2">Wählen Sie Ihr Bundesland</div>
+            <div className="mx-10 mt-4 rounded-full bg-[var(--foreground)] p-2 text-sm text-[var(--background)] shadow-lg">
+              <select className="px-2 w-full" onChange={(e) => setBundesland(e.target.value.toLowerCase())}>
+                Wählen Sie Ihr Bundesland
+                {bundeslaender.map((bundesland: string) => (
+                  <option key={bundesland} value="">{bundesland}</option>
+                ))}
+              </select>
             </div>
             <GermanyMap
               bundesland={bundesland}
