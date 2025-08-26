@@ -78,9 +78,9 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
 
   return (
     <div className="max-h-56 rounded-lg px-6 pt-6 text-xs shadow backdrop-blur-2xl md:col-span-2 md:pt-8 md:text-base">
-      <div className="hidden text-xs md:block">Nebenkosten</div>
-      <div className="relative mb-5">
-        <div className="hidden absolute text-3xl md:block">
+      <div className="text-xs mb-2 md:mb-0">Nebenkosten</div>
+      <div className="md:relative mb-5">
+        <div className="md:absolute text-3xl">
           {sumNebenkosten.current.toLocaleString("de")}
         </div>
       </div>
@@ -126,15 +126,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
             handleMouseLeave={handleMouseLeave}
           />
         </div>
-        <div className="order-first flex h-20 w-full flex-col gap-12 overflow-y-scroll pb-4 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
-          <div className="md:hidden">
-            <div className="inline-block text-xs">
-              Nebenkosten
-            </div>
-            <div className="text-2xl">
-              {sumNebenkosten.current.toLocaleString("de")}
-            </div>
-          </div>
+        <div className="hidden order-first flex h-20 w-full flex-col gap-12 overflow-y-scroll pb-4 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
           {nebenkosten.map((entry, index) => (
             <div
               key={entry.name}
