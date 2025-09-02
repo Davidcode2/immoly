@@ -3,8 +3,6 @@ import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 import { useEffect, useRef, useState } from "react";
 import CenteredModal from "../centeredModal";
 import PieChartNebenkosten from "./pieChartNebenkosten";
-import EditIcon from "/public/images/icons/icons8-edit-48.png";
-import Image from "next/image";
 import NebenkostenModal from "./nebenkostenModal";
 import { screenWidthMobile } from "app/utils/screenWidth";
 import {
