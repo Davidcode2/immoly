@@ -10,7 +10,7 @@ export default function EditIconComponent({ setShowModal }: PropTypes) {
       className="absolute top-5 right-4 cursor-pointer"
       onClick={() => setShowModal(true)}
     >
-      <div className="group z-30 inline-block rounded-xl border-[var(--dark-accent)] p-1 px-2 text-xs transition-colors hover:bg-[var(--dark-accent)] hover:text-[var(--secondary)] md:border">
+      <div className="group z-30 inline-block rounded-xl border-[var(--dark-accent)] md:p-1 md:px-2 text-xs transition-colors hover:bg-[var(--dark-accent)] hover:text-[var(--secondary)] md:border">
         <div className="hidden pr-1 md:inline-block">Mehr</div>
         <Image
           className="hidden opacity-50 group-hover:opacity-60 group-hover:invert md:inline-block"
