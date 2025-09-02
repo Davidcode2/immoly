@@ -163,7 +163,7 @@ export default function ResultDisplay() {
   }, [calculationId]);
 
   return (
-    <div className="sm:px-10 px-3 pt-3">
+    <div className="sm:px-10 p-3 pb-10">
       <div
         className={`grid gap-y-6 md:gap-x-6 md:gap-y-16 lg:grid-cols-[1fr_5fr] ${table && "items-start"}`}
       >
