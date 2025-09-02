@@ -87,7 +87,7 @@ export default function NebenkostenModal({
             <div className="mt-6 border-t border-slate-500/20 pt-4">
               <div className="flex items-center justify-between gap-x-8">
                 <h2 className="text-lg">Summe Nebenkosten</h2>
-                <p className="text-2xl text-[var(--accent)]">
+                <p className="text-2xl text-[var(--accent)] w-32 text-end">
                   €{sumNebenkosten.toLocaleString("de-DE")}
                 </p>
               </div>
