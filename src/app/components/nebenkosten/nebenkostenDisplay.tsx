@@ -27,7 +27,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const sumNebenkosten = useRef<number>(0);
 
   const nebenkostenCalculator = new NebenkostenCalculator(
-    calculationData!.principal,
+    calculationData?.principal || 0,
   );
 
   const handleMouseEnter = (index: number) => setActiveIndex(index);
