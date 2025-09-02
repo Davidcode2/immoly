@@ -18,7 +18,7 @@ export default function StoredScenario({
   };
 
   return (
-    <div className="flex min-w-[320px] flex-col justify-between rounded-lg bg-gradient-to-br from-[var(--background)] to-[var(--light-accent)]/5 p-6 shadow backdrop-blur-lg dark:bg-neutral-800/30">
+    <div className="flex min-w-[320px] flex-col h-fit rounded-lg bg-gradient-to-br from-[var(--background)] to-[var(--light-accent)]/5 p-6 shadow backdrop-blur-lg dark:bg-neutral-800/30">
       <div className="flex justify-between items-start mb-4">
         <span className="text-xs text-[var(--accent)] opacity-75">
           {new Date(calculation.created_at).toLocaleDateString()}
