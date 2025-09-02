@@ -29,7 +29,7 @@ export default function BankOffer({
         <div className="flex md:grid gap-4 md:grid-cols-[repeat(4,180px)]">
           <div className="rounded-2xl w-fit md:w-full bg-[var(--secondary)]/50 p-3 shadow">
             <div className="text-xs">Zins</div>
-            <div>{interest} %</div>
+            <div>{interest.toLocaleString("de")} %</div>
           </div>
           <div className="rounded-2xl bg-[var(--secondary)]/50 p-3 shadow">
             <div className="text-xs">Zinsbindung</div>

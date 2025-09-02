@@ -18,7 +18,7 @@ export default function TotalSumVsInterest({
               <div
                 className={`${totalSum >= 1000000 ? "text-2xl" : "text-3xl"} md:text-base`}
               >
-                {Math.round(totalSum).toLocaleString()}
+                {Math.round(totalSum).toLocaleString("de")}
               </div>
             </div>
           )}
@@ -27,7 +27,7 @@ export default function TotalSumVsInterest({
             { canBePaidOfInTime && "davon" } Zinsen { !canBePaidOfInTime && "nach 120 Jahren"}
             </div>
             <div className="mb-4 text-lg font-bold text-[var(--primary)] md:mb-0">
-              {Math.round(sumZinsen).toLocaleString()}
+              {Math.round(sumZinsen).toLocaleString("de")}
             </div>
           </div>
         </div>

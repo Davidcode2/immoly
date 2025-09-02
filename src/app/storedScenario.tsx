@@ -38,17 +38,17 @@ export default function StoredScenario({
           <div className="space-y-3">
             <div>
               <p className="text-xs text-[var(--accent)] mb-1">Investitionssumme</p>
-              <p className="text-lg">{calculation.principal.toLocaleString()} €</p>
+              <p className="text-lg">{calculation.principal.toLocaleString("de")} €</p>
             </div>
             <div>
               <p className="text-xs text-[var(--accent)] mb-1">Eigenkapital</p>
-              <p className="text-lg">{calculation.down_payment.toLocaleString()} €</p>
+              <p className="text-lg">{calculation.down_payment.toLocaleString("de")} €</p>
             </div>
           </div>
           <div className="space-y-3">
             <div>
               <p className="text-xs text-[var(--accent)] mb-1">Monatliche Rate</p>
-              <p className="text-lg">{calculation.monthly_rate.toLocaleString()} €</p>
+              <p className="text-lg">{calculation.monthly_rate.toLocaleString("de")} €</p>
             </div>
             <div>
               <p className="text-xs text-[var(--accent)] mb-1">Miete</p>
@@ -59,7 +59,7 @@ export default function StoredScenario({
         
         <div className="bg-[var(--accent)]/10 rounded-lg p-3 inline-block">
           <p className="text-xs text-[var(--accent)] mb-1">Zins</p>
-          <p className="text-lg">{Number(calculation.interest_rate).toFixed(2)}%</p>
+          <p className="text-lg">{Number(calculation.interest_rate).toLocaleString("de")}%</p>
         </div>
       </div>
 
