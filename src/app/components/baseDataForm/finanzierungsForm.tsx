@@ -6,7 +6,7 @@ import SliderInput from "app/components/slider/sliderInput";
 import OptionalParameters from "app/components/baseDataForm/optionalParameters";
 import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 import { useRouter, useSearchParams } from "next/navigation";
-import { saveCalculationToLocalStorage } from "app/services/calculationClientStorage";
+import { calculationsLocalStorageSetter } from "app/services/calculationsLocalStorageSetter";
 
 export default function FinanzierungsForm({
   values,
@@ -97,7 +97,7 @@ export default function FinanzierungsForm({
 
   const handleSubmit = async (formData: FormData) => {
     const res = await storeInDb(formData);
-    saveCalculationToLocalStorage(formData);
+    calculationsLocalStorageSetter(formData);
     if (res?.success) {
       const params = new URLSearchParams(searchParams);
       params.set('calculationId', res.result.toString());
