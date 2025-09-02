@@ -61,7 +61,7 @@ export default function KreditSummeTextComponent({
             </>
           )}
         </span>
-        <span className="text-end text-[var(--strong-accent)] text-xs">
+        <span className={`${downPayment > 10000000 ? "w-18" : downPayment > 1000000 ? "w-16" : "w-13" } text-end sm:w-auto justify-self-end text-[var(--strong-accent)] text-xs`}>
           -&nbsp;{downPayment.toLocaleString("de")}
         </span>
         <span className="self-center text-(length:--text-2xs) text-[var(--dark-accent)]/90">
