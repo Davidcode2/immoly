@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 import CashRoiModel from "./lib/models/cashRoiModel";
-import { updateSondertilgungInDb } from "./lib/sondertilgungDatabaseService";
 import SondertilgungInput from "./components/sondertilgungInput";
 import { screenWidthMobile } from "./utils/screenWidth";
 import CenteredModal from "./components/centeredModal";
 import TilgungsWechselModal from "./components/tilgungsWechselModal";
-import storeTilgungsWechselInDb from "./lib/tilgungswechselDatabaseService";
+import { updateSonderAmountInBrowserStorage } from "./services/sonderAmountBrowserUpdater";
 
 type PropTypes = {
   table: ArmotizationEntry[];
@@ -51,10 +50,11 @@ export default function Tilgungstabelle({
   ) => {
     event.preventDefault();
     const updatedSondertilgungAmount = getSondertilgungFromForm(event);
-    await updateSondertilgungInDb(
-      Number(calculationId),
-      year,
-      Number(updatedSondertilgungAmount),
+    updateSonderAmountInBrowserStorage(
+      "sondertilgungen",
+      String(year),
+      updatedSondertilgungAmount,
+      calculationId!
     );
     sendChangeNotification();
   };
@@ -68,7 +68,12 @@ export default function Tilgungstabelle({
     const newTilgung = form.elements.namedItem(
       "newTilgung",
     ) as HTMLInputElement;
-    storeTilgungsWechselInDb(Number(newTilgung.value), year, calculationId!);
+    updateSonderAmountInBrowserStorage(
+      "tilgungswechsel",
+      String(year),
+      newTilgung.value,
+      calculationId!
+    );
     sendChangeNotification();
     setShowModal(false);
   };
@@ -91,23 +96,27 @@ export default function Tilgungstabelle({
           <TilgungsWechselModal
             handleSubmit={handleTilgungsWechsel}
             year={selectedEntry!.year!}
-            tilgungswechsel={selectedEntry!.tilgungswechsel || selectedEntry!.yearlyRate / 12}
+            tilgungswechsel={
+              selectedEntry!.tilgungswechsel || selectedEntry!.yearlyRate / 12
+            }
           />
         </CenteredModal>
       )}
-      <table className="table-fixed overflow-auto dark:bg-neutral-700/20 backdrop-blur-lg">
+      <table className="table-fixed overflow-auto backdrop-blur-lg dark:bg-neutral-700/20">
         <thead>
-          <tr className="sticky top-0 bg-neutral-100 dark:bg-black/90 text-left">
-            <th className="md:py-5 py-3 pl-2 sm:pr-2 sm:pl-4 font-thin">Jahr</th>
-            <th className="md:py-5 py-3 sm:pl-4 font-thin">Zins</th>
-            <th className="md:py-5 py-3 sm:px-4 font-thin">Tilgung</th>
-            <th className="hidden md:block md:py-5 py-3 sm:px-4 font-thin">
+          <tr className="sticky top-0 bg-neutral-100 text-left dark:bg-black/90">
+            <th className="py-3 pl-2 font-thin sm:pr-2 sm:pl-4 md:py-5">
+              Jahr
+            </th>
+            <th className="py-3 font-thin sm:pl-4 md:py-5">Zins</th>
+            <th className="py-3 font-thin sm:px-4 md:py-5">Tilgung</th>
+            <th className="hidden py-3 font-thin sm:px-4 md:block md:py-5">
               {screenWidthMobile() ? "Jhl. Rate" : "Jährliche Rate"}
             </th>
-            <th className="md:py-5 py-3 sm:px-4 font-thin">
+            <th className="py-3 font-thin sm:px-4 md:py-5">
               {screenWidthMobile() ? "Rest" : "Restschuld"}
             </th>
-            <th className="md:py-5 py-3 sm:px-4 font-thin">
+            <th className="py-3 font-thin sm:px-4 md:py-5">
               {screenWidthMobile() ? "S.Tilgung" : "Sondertilgung"}
             </th>
           </tr>
@@ -116,18 +125,18 @@ export default function Tilgungstabelle({
           {temporaryTable.map((x) => (
             <tr
               key={x.year}
-              className="hover:bg-[var(--light-accent)]/40 hover:cursor-pointer hover:shadow"
+              className="hover:cursor-pointer hover:bg-[var(--light-accent)]/40 hover:shadow"
               onClick={(e) => openModal(e, x)}
             >
-              <td className="px-4 md:py-5 py-3">{x.year}</td>
-              <td className="max-w-12 md:max-w-22 md:py-5 py-3 sm:px-4">
+              <td className="px-4 py-3 md:py-5">{x.year}</td>
+              <td className="max-w-12 py-3 sm:px-4 md:max-w-22 md:py-5">
                 {Math.round(x.interest).toLocaleString("de")}
               </td>
-              <td className="max-w-12 md:max-w-22 md:py-5 py-3 sm:px-4">
+              <td className="max-w-12 py-3 sm:px-4 md:max-w-22 md:py-5">
                 {Math.round(x.principal).toLocaleString("de")}
               </td>
               <td
-                className={`${x.tilgungswechsel > 0 && "text-[var(--success)]"} hidden md:block content-center h-18 md:py-5 py-3 sm:px-4`}
+                className={`${x.tilgungswechsel > 0 && "text-[var(--success)]"} hidden h-18 content-center py-3 sm:px-4 md:block md:py-5`}
               >
                 {x.yearlyRate.toLocaleString("de")}
                 {x.tilgungswechsel > 0 && (
@@ -136,10 +145,10 @@ export default function Tilgungstabelle({
                   </div>
                 )}
               </td>
-              <td className="md:py-5 py-3 sm:px-4 max-w-12 md:max-w-22">
+              <td className="max-w-12 py-3 sm:px-4 md:max-w-22 md:py-5">
                 {Math.round(x.remainingPrincipal).toLocaleString("de")}
               </td>
-              <td className="sondertilgungInput w-16 md:w-24 md:py-5 py-3 sm:px-4">
+              <td className="sondertilgungInput w-16 py-3 sm:px-4 md:w-24 md:py-5">
                 <form
                   onSubmit={(e) => handleSondertilgungSubmit(e, x.year)}
                   className="justify-fit sondertilgungInput flex sm:gap-4"

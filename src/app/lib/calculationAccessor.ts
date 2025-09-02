@@ -30,6 +30,10 @@ export default async function getCalculations() {
 export async function getCalculation(
   id: string,
 ): Promise<CalculationWithSondertilgung[] | null> {
+  return getCalculationFromDB(id);
+}
+
+const getCalculationFromDB = async (id: string) => {
   const pool = await getPool();
   if (process.env.SKIP_BUILD_STATIC_GENERATION === "true") {
     console.warn(
@@ -83,7 +87,7 @@ export async function getCalculation(
     console.error("Error fetching calculations:", error);
     return null;
   }
-}
+};
 
 export async function deleteItem(id: string) {
   try {

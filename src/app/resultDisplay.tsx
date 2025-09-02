@@ -2,7 +2,6 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getCalculation } from "app/lib/calculationAccessor";
 import calcTilgung from "app/lib/calculateArmotizaztionTable";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import CashRoiModel from "app/lib/models/cashRoiModel";
@@ -26,6 +25,9 @@ import {
 } from "app/store";
 import NebenkostenCalculator from "./services/nebenkostenCalculationService";
 import SloganHero from "./components/hero/sloganHero";
+import { sondertilgungenAccessor } from "./services/sondertilgungAccessor";
+import { tilgungswechselAccessor } from "./services/tilgungswechselAccessor";
+import { calculationAccessor } from "./services/calculationsAccessor";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -100,7 +102,6 @@ export default function ResultDisplay() {
     const debounceTimeout = setTimeout(() => {
       async function loadData() {
         if (!input) return;
-
         input.sondertilgungen = await getSondertilgungFromCache(calculationId!);
         input.tilgungswechsel = await getTilgungswechselFromCache(
           calculationId!,
@@ -117,25 +118,40 @@ export default function ResultDisplay() {
     };
   }, [input, nebenkosten]);
 
+  const getFromBrowserStorage = (id: string) => {
+    const calculation = calculationAccessor(id);
+    const sondertilgungen = sondertilgungenAccessor(id);
+    const tilgungswechsel = tilgungswechselAccessor(id);
+    console.log("before adding tilgungswechsel:", calculation);
+    calculation.sondertilgungen = sondertilgungen;
+    calculation.tilgungswechsel = tilgungswechsel;
+    console.log("Fetched calculation from storage:", calculation);
+    return calculation;
+  };
+
   useEffect(() => {
     setSelectedScenario((Number(calculationId) - 1).toString());
     async function loadData() {
       console.log("Loading data for calculationId:", calculationId);
       if (calculationId) {
         try {
-          const result = await getCalculation(calculationId);
+          const result = getFromBrowserStorage(calculationId);
           if (!result) {
+            console.warn("No result found for calculationId:", calculationId);
             return;
           }
-          setInput(result[0]);
+          setInput(result);
 
           const nebenkosten = new NebenkostenCalculator(
-            result[0].principal,
+            result.principal,
             maklergebuehr,
             bundesland,
           ).calcSumme();
+          // reset cache
+          await getSondertilgungFromCache(calculationId!, true);
+          await getTilgungswechselFromCache(calculationId!, true);
           updateNebenkosten(Math.round(nebenkosten));
-          const tilgungungsTabelle = calcTilgung(result[0], nebenkosten);
+          const tilgungungsTabelle = calcTilgung(result, nebenkosten);
           setTable(tilgungungsTabelle);
         } catch (e) {
           console.error(e);
@@ -143,9 +159,6 @@ export default function ResultDisplay() {
       }
     }
 
-    // reset cache
-    getSondertilgungFromCache(calculationId!, true);
-    getTilgungswechselFromCache(calculationId!, true);
     loadData();
   }, [calculationId]);
 

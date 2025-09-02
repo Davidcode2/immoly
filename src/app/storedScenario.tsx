@@ -1,11 +1,11 @@
 "use client";
-import CalculationResult from "./lib/models/CalculationResult";
 import { deleteItem } from "./lib/calculationAccessor";
+import { CalculationDbo } from "./lib/models/calculationDbo";
 
 export default function StoredScenario({
   calculation,
 }: {
-  calculation: CalculationResult;
+  calculation: CalculationDbo;
 }) {
   const setCalcId = () => {
     const url = new URL(window.location.href);

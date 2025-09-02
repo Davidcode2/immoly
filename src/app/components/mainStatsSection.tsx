@@ -4,8 +4,6 @@ import KreditSummeTextComponent from "./kreditSummeTextComponent";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import TotalSumVsInterest from "./totalSumVsInterest";
-import { useEffect } from "react";
-import { getCalculation } from "app/lib/calculationAccessor";
 import BarChartInterestVsTilgung from "./barChartInterestVsTilgung";
 
 type PropTypes = {
@@ -16,24 +14,8 @@ type PropTypes = {
 
 export default function MainStatsSection({
   userInput,
-  calculationId,
   table,
 }: PropTypes) {
-  useEffect(() => {
-    async function loadData() {
-      if (calculationId) {
-        try {
-          const result = await getCalculation(calculationId);
-          if (!result) {
-            return;
-          }
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    }
-    loadData();
-  }, [calculationId]);
 
   const kreditSummeRaw =
     table && table.length

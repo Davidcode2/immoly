@@ -1,7 +1,7 @@
 import { Sondertilgung } from "app/lib/models/sondertilgung";
 import { Tilgungswechsel } from "app/lib/models/tilgungswechsel";
-import { getSondertilgungen } from "app/lib/sondertilgungDatabaseService";
-import { getTilgungsWechsel } from "app/lib/tilgungswechselDatabaseService";
+import { tilgungswechselAccessor } from "./tilgungswechselAccessor";
+import { sondertilgungenAccessor } from "./sondertilgungAccessor";
 
 export const getTilgungswechselCacheHelper = async (
   calculationId: string,
@@ -11,7 +11,7 @@ export const getTilgungswechselCacheHelper = async (
   if (tilgungswechselCache.length && !update) {
     return tilgungswechselCache;
   } else {
-    const tilgungswechsel = await getTilgungsWechsel(calculationId!);
+    const tilgungswechsel = tilgungswechselAccessor(calculationId);
     if (!tilgungswechsel) {
       console.error(
         "No tilgungswechsel found for calculationId:",
@@ -28,10 +28,10 @@ export const getSondertilgungenCacheHelper = async (
   sondertilgungenCache: Sondertilgung[],
   update: boolean,
 ): Promise<Sondertilgung[] | null> => {
-  if (sondertilgungenCache.length && !update) {
+  if (sondertilgungenCache && sondertilgungenCache.length && !update) {
     return sondertilgungenCache;
   } else {
-    const sondertilgungen = await getSondertilgungen(calculationId);
+    const sondertilgungen = sondertilgungenAccessor(calculationId);
     if (!sondertilgungen) {
       console.error(
         "No sondertilgungen found for calculationId:",
