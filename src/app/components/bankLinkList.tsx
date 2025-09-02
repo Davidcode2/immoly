@@ -2,8 +2,8 @@ import BankOffer from "./bankOffer";
 
 export default function BankLinkList() {
   return (
-    <div className="px-3">
-      <div className="flex flex-col gap-6">
+    <div className="px-3 py-[100px] max-w-[1000px] mx-auto">
+      <div className="flex flex-col gap-20">
         <BankOffer
           title="MSB SparDarlehen"
           interest={3.8}
