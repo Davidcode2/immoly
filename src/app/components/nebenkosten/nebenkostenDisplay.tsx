@@ -12,6 +12,7 @@ import {
   useMaklergebuehrStore,
   useNebenkostenStore,
 } from "app/store";
+import EditIconComponent from "./editIconComponent";
 
 type PropTypes = {
   calculationData: CashRoiModel | null;
@@ -78,9 +79,9 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
 
   return (
     <div className="max-h-56 rounded-lg px-6 pt-6 text-xs shadow backdrop-blur-2xl md:col-span-2 md:pt-8 md:text-base">
-      <div className="text-xs mb-2 md:mb-0">Nebenkosten</div>
-      <div className="md:relative mb-5">
-        <div className="md:absolute text-3xl">
+      <div className="mb-0 text-xs md:mb-0">Nebenkosten</div>
+      <div className="mb-5 md:relative">
+        <div className="text-3xl md:absolute">
           {sumNebenkosten.current.toLocaleString("de")}
         </div>
       </div>
@@ -103,21 +104,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
             />
           </CenteredModal>
         )}
-        <div
-          className="absolute top-5 right-4 cursor-pointer"
-          onClick={() => setShowModal(true)}
-        >
-          <div className="z-30 group inline-block rounded-xl border border-[var(--dark-accent)] p-1 px-2 text-xs transition-colors hover:bg-[var(--dark-accent)] hover:text-[var(--secondary)]">
-            Mehr
-            <Image
-              className="inline-block opacity-50 group-hover:opacity-60 group-hover:invert"
-              src={EditIcon}
-              width={14}
-              height={14}
-              alt="Bearbeiten"
-            />
-          </div>
-        </div>
+        <EditIconComponent setShowModal={setShowModal} />
         <div className="absolute -bottom-[5px] h-40 w-40 md:static md:hidden md:h-48 md:w-48">
           <PieChartNebenkosten
             data={nebenkosten}
@@ -126,7 +113,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
             handleMouseLeave={handleMouseLeave}
           />
         </div>
-        <div className="hidden order-first flex h-20 w-full flex-col gap-12 overflow-y-scroll pb-4 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
+        <div className="order-first flex hidden h-20 w-full flex-col gap-12 overflow-y-scroll pb-4 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
           {nebenkosten.map((entry, index) => (
             <div
               key={entry.name}
@@ -155,7 +142,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
             </div>
           ))}
         </div>
-        <div className="hidden z-20 h-40 w-40 md:block relative bottom-4 md:h-38 md:w-48">
+        <div className="relative bottom-4 z-20 hidden h-40 w-40 md:block md:h-38 md:w-48">
           <PieChartNebenkosten
             data={nebenkosten}
             activeIndex={activeIndex}
