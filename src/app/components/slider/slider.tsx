@@ -31,12 +31,7 @@ const Slider: React.FC<SliderProps> = ({
   };
 
   useEffect(() => {
-    const debouncedChange = setTimeout(() => {
-      setInputValue(value);
-    }, 30);
-    return () => {
-      clearTimeout(debouncedChange);
-    };
+    setInputValue(value);
   }, [value]);
 
   const stepChange = (upOrDown: number) => {

@@ -42,7 +42,7 @@ export default function NumberInput({
           }
         }
       }
-    }, 30);
+    }, 10);
 
     return () => {
       clearTimeout(debouncedChange);
