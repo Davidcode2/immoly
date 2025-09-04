@@ -16,7 +16,6 @@ export default function CenteredModal({
   }, 100);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
-    console.log("Backdrop clicked");
     const target = e.target as HTMLElement;
     if (target.classList.contains("modal")) {
       onClose();

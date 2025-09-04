@@ -1,7 +1,8 @@
 import BaseModel from "app/lib/models/baseModel";
 import { CalculationDbo } from "app/lib/models/calculationDbo";
+import NebenKostenModel from "app/lib/models/nebenkostenModel";
 
-export function calculationsLocalStorageSetter(formData: FormData) {
+export function calculationsLocalStorageSetter(formData: FormData, nebenkosten: NebenKostenModel) {
   const model = {
     down_payment: Number(formData.get("down_payment")),
     principal: Number(formData.get("principal")),
@@ -21,6 +22,9 @@ export function calculationsLocalStorageSetter(formData: FormData) {
   }
   const withDate = calculationsJson as CalculationDbo[];
   withDate[calculationsJson.length - 1].created_at = new Date().toISOString();
+  withDate[calculationsJson.length - 1].maklerguehrPercentage = nebenkosten.maklergebuehrPercentage;
+  withDate[calculationsJson.length - 1].bundesland = nebenkosten.bundesland;
   const newCalculationsString = JSON.stringify(calculationsJson);
   localStorage.setItem("calculations", newCalculationsString);
+  return uuid;
 }

@@ -6,7 +6,6 @@ export default class NebenkostenCalculator {
   private notarkosten: number = 0;
   private grundbuchkosten: number = 0;
   private maklergebuehr: number = 0;
-  private grunderwerbsteuer: number = 0;
   private summe: number = 0;
   maklergebuehrPercentage: number = 3.57;
   bundesland = "Baden-Wuerttemberg";

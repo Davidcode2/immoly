@@ -19,7 +19,7 @@ type PropTypes = {
 export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [bundesland, setBundesland] = useState<string>("Baden-Wuerttemberg");
+  const bundesland = useBundeslandStore((state) => state.value) ?? "Baden-Württemberg";
   const [maklergebuehr, setMaklergebuehr] = useState<number>(3.57);
   const [nebenkosten, setNebenkosten] = useState<
     { name: string; value: number }[]
@@ -92,7 +92,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
             <NebenkostenModal
               setMaklergebuehr={setMaklergebuehr}
               maklergebuehr={maklergebuehr}
-              setBundesland={setBundesland}
+              setBundesland={updateBundesland}
               bundesland={bundesland}
               nebenkosten={nebenkosten}
               sumNebenkosten={sumNebenkosten.current}

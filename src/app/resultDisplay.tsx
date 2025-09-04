@@ -28,6 +28,7 @@ import SloganHero from "./components/hero/sloganHero";
 import { sondertilgungenAccessor } from "./services/sondertilgungAccessor";
 import { tilgungswechselAccessor } from "./services/tilgungswechselAccessor";
 import { calculationAccessor } from "./services/calculationsAccessor";
+import { CalculationDbo } from "./lib/models/calculationDbo";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -43,6 +44,8 @@ export default function ResultDisplay() {
   const searchParams = useSearchParams();
   const calculationId = searchParams.get("calculationId");
   const updateNebenkosten = useNebenkostenStore((state) => state.updateValue);
+  const updateMaklergebuehr = useMaklergebuehrStore((state) => state.updateValue);
+  const updateBundesland = useBundeslandStore((state) => state.updateValue);
   const nebenkosten = useNebenkostenStore((state) => state.value);
   const bundesland = useBundeslandStore((state) => state.value);
   const maklergebuehr = useMaklergebuehrStore((state) => state.value);
@@ -122,17 +125,14 @@ export default function ResultDisplay() {
     const calculation = calculationAccessor(id);
     const sondertilgungen = sondertilgungenAccessor(id);
     const tilgungswechsel = tilgungswechselAccessor(id);
-    console.log("before adding tilgungswechsel:", calculation);
     calculation.sondertilgungen = sondertilgungen;
     calculation.tilgungswechsel = tilgungswechsel;
-    console.log("Fetched calculation from storage:", calculation);
     return calculation;
   };
 
   useEffect(() => {
     setSelectedScenario((Number(calculationId) - 1).toString());
     async function loadData() {
-      console.log("Loading data for calculationId:", calculationId);
       if (calculationId) {
         try {
           const result = getFromBrowserStorage(calculationId);
@@ -142,15 +142,19 @@ export default function ResultDisplay() {
           }
           setInput(result);
 
+          updateMaklergebuehr((result as CalculationDbo).maklerguehrPercentage);
+          updateBundesland((result as CalculationDbo).bundesland);
           const nebenkosten = new NebenkostenCalculator(
             result.principal,
-            maklergebuehr,
-            bundesland,
+            (result as CalculationDbo).maklerguehrPercentage ?? maklergebuehr,
+            (result as CalculationDbo).bundesland ?? bundesland,
           ).calcSumme();
+
+          updateNebenkosten(Math.round(nebenkosten));
+
           // reset cache
           await getSondertilgungFromCache(calculationId!, true);
           await getTilgungswechselFromCache(calculationId!, true);
-          updateNebenkosten(Math.round(nebenkosten));
           const tilgungungsTabelle = calcTilgung(result, nebenkosten);
           setTable(tilgungungsTabelle);
         } catch (e) {

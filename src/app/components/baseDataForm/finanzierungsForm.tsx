@@ -1,5 +1,4 @@
 import Form from "next/form";
-import { storeInDb } from "app/lib/calculationDatabaseService";
 import { useEffect, useState } from "react";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import SliderInput from "app/components/slider/sliderInput";
@@ -7,6 +6,8 @@ import OptionalParameters from "app/components/baseDataForm/optionalParameters";
 import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 import { useRouter, useSearchParams } from "next/navigation";
 import { calculationsLocalStorageSetter } from "app/services/calculationsLocalStorageSetter";
+import { useBundeslandStore, useMaklergebuehrStore } from "app/store";
+import NebenKostenModel from "app/lib/models/nebenkostenModel";
 
 export default function FinanzierungsForm({
   values,
@@ -23,11 +24,13 @@ export default function FinanzierungsForm({
   const [monthlyRate, setMonthlyRate] = useState<number | string>("");
   const searchParams = useSearchParams();
   const router = useRouter();
+  const maklergebuehrPercentage = useMaklergebuehrStore.getState().value;
+  const bundesland = useBundeslandStore.getState().value;
 
   const [showExtended, setShowExtended] = useState<boolean>(false);
 
   const monthlyRateInPercent = () => {
-    const nebenkosten = new NebenkostenCalculator(Number(principalValue)).calcSumme();
+    const nebenkosten = new NebenkostenCalculator(Number(principalValue), maklergebuehrPercentage, bundesland).calcSumme();
     const kreditSumme = Number(principalValue) + nebenkosten - Number(downPayment);
     const yearlyRate = Number(monthlyRate) * 12;
     const zins = (Number(interestRate) * kreditSumme) / 100;
@@ -96,11 +99,14 @@ export default function FinanzierungsForm({
   }, [values]);
 
   const handleSubmit = async (formData: FormData) => {
-    const res = await storeInDb(formData);
-    calculationsLocalStorageSetter(formData);
-    if (res?.success) {
+    const nebenkosten: NebenKostenModel = {
+      bundesland: bundesland,
+      maklergebuehrPercentage: maklergebuehrPercentage,
+    };
+    const uuid = calculationsLocalStorageSetter(formData, nebenkosten);
+    if (uuid) {
       const params = new URLSearchParams(searchParams);
-      params.set('calculationId', res.result.toString());
+      params.set('calculationId', uuid);
       router.push(`/?${params.toString()}`, { scroll: false });
     }
   }
