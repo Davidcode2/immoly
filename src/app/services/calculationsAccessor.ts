@@ -1,5 +1,5 @@
 import { CalculationDbo } from "app/lib/models/calculationDbo";
-import CashRoiModel from "app/lib/models/cashRoiModel";
+import { dispatchLocalStorageEvent } from "./calculationsLocalStorageSetter";
 
 export const calculationAccessor = (id: string) => {
     const storedData = localStorage.getItem(`calculations`);
@@ -22,5 +22,6 @@ export const deleteCalculation = (id: string) => {
     return false;
   }
   localStorage.setItem("calculations", JSON.stringify(filtered));
+  dispatchLocalStorageEvent();
   return true;
 }

@@ -8,22 +8,36 @@ export default function StoredCalculations() {
   const [calculations, setCalculations] = useState<CalculationDbo[]>([]);
 
   useEffect(() => {
-    const calculations = calculationsAccessor();
-    setCalculations(calculations);
-    window.addEventListener("storage", () => {
-      setCalculations(calculationsAccessor());
-    });
+    const updateCalculations = () => {
+      const calculations = calculationsAccessor();
+      setCalculations(calculations);
+    };
+
+    updateCalculations();
+
+    // storage event handler (fires for changes from other tabs/windows)
+    const onStorage = (e: StorageEvent) => {
+      updateCalculations();
+    };
+
+    // custom event handler for same-window updates
+    const onLocalStorage = (e: Event) => {
+      updateCalculations();
+    };
+
+    window.addEventListener("storage", onStorage);
+    window.addEventListener("local-storage", onLocalStorage);
+
     return () => {
-      window.removeEventListener("storage", () => {
-        setCalculations(calculationsAccessor());
-      });
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener("local-storage", onLocalStorage);
     };
   }, []);
 
   return (
     <div className="grid h-[800px] grid-rows-[1fr_auto_1fr] bg-[var(--light-accent)]/50">
-      <div className="row-start-2 flex max-w-screen items-stretch gap-16 overflow-auto px-3 pb-3">
-        {calculations ? (
+      <div className="row-start-2 mx-auto flex max-w-screen items-stretch gap-16 overflow-auto px-3 pb-3">
+        {calculations && calculations.length > 0 ? (
           calculations.map((calcResult) => (
             <StoredScenario key={calcResult.id} calculation={calcResult} />
           ))

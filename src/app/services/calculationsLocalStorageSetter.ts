@@ -2,7 +2,10 @@ import BaseModel from "app/lib/models/baseModel";
 import { CalculationDbo } from "app/lib/models/calculationDbo";
 import NebenKostenModel from "app/lib/models/nebenkostenModel";
 
-export function calculationsLocalStorageSetter(formData: FormData, nebenkosten: NebenKostenModel) {
+export function calculationsLocalStorageSetter(
+  formData: FormData,
+  nebenkosten: NebenKostenModel,
+) {
   const model = {
     down_payment: Number(formData.get("down_payment")),
     principal: Number(formData.get("principal")),
@@ -13,7 +16,7 @@ export function calculationsLocalStorageSetter(formData: FormData, nebenkosten: 
   const uuid = crypto.randomUUID();
   const calculation = { id: uuid, ...model };
   const currentCalculations = localStorage.getItem("calculations");
-  let calculationsJson: BaseModel[] = []
+  let calculationsJson: BaseModel[] = [];
   if (currentCalculations) {
     calculationsJson = JSON.parse(currentCalculations);
     calculationsJson.push(calculation);
@@ -22,9 +25,16 @@ export function calculationsLocalStorageSetter(formData: FormData, nebenkosten: 
   }
   const withDate = calculationsJson as CalculationDbo[];
   withDate[calculationsJson.length - 1].created_at = new Date().toISOString();
-  withDate[calculationsJson.length - 1].maklerguehrPercentage = nebenkosten.maklergebuehrPercentage;
+  withDate[calculationsJson.length - 1].maklerguehrPercentage =
+    nebenkosten.maklergebuehrPercentage;
   withDate[calculationsJson.length - 1].bundesland = nebenkosten.bundesland;
   const newCalculationsString = JSON.stringify(calculationsJson);
   localStorage.setItem("calculations", newCalculationsString);
+  dispatchLocalStorageEvent();
   return uuid;
+}
+
+export function dispatchLocalStorageEvent() {
+  const event = new CustomEvent("local-storage");
+  window.dispatchEvent(event);
 }
