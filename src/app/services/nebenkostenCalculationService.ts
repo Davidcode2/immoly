@@ -54,14 +54,7 @@ export default class NebenkostenCalculator {
 
   calcGrunderwerbsteuer = (bundesland?: string) => {
     bundesland = bundesland ? bundesland : this.bundesland;
-    let tax = 0.05;
-    try {
-      tax = getGrundsteuer(bundesland) / 100;
-    } catch (error) {
-      console.error(error);
-      tax = 0.05;
-    }
-
+    const tax = getGrundsteuer(bundesland) / 100;
     return this.principal * tax;
   };
 }

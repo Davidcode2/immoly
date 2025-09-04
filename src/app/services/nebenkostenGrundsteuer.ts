@@ -33,7 +33,8 @@ export function getGrundsteuer(bundesland: string) {
     case "Thueringen":
       return 5.0;
     default:
-      throw new Error("Unknown state: " + bundesland);
+      console.error("Unknown bundesland:", bundesland);
+      return 5.0;
   }
 }
 

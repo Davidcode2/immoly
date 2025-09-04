@@ -41,7 +41,7 @@ export default function Tilgungstabelle({
 
   const getSondertilgung = (entry: ArmotizationEntry) => {
     const amount = entry.sondertilgung || "";
-    return amount.toLocaleString("de");
+    return amount;
   };
 
   const handleSondertilgungSubmit = async (
