@@ -54,42 +54,14 @@ export default class NebenkostenCalculator {
 
   calcGrunderwerbsteuer = (bundesland?: string) => {
     bundesland = bundesland ? bundesland : this.bundesland;
-    const tax = getGrundsteuer(bundesland) / 100;
-    switch (bundesland) {
-      case "Baden-Wuerttemberg":
-        return this.principal * tax;
-      case "Bayern":
-        return this.principal * tax;
-      case "Berlin":
-        return this.principal * tax;
-      case "Brandenburg":
-        return this.principal * tax;
-      case "Bremen":
-        return this.principal * tax;
-      case "Hamburg":
-        return this.principal * tax;
-      case "Hessen":
-        return this.principal * tax;
-      case "Mecklenburg-Vorpommern":
-        return this.principal * tax;
-      case "Niedersachsen":
-        return this.principal * tax;
-      case "Nordrhein-Westfalen":
-        return this.principal * tax;
-      case "Rheinland-Pfalz":
-        return this.principal * tax;
-      case "Saarland":
-        return this.principal * tax;
-      case "Sachsen":
-        return this.principal * tax;
-      case "Sachsen-Anhalt":
-        return this.principal * tax;
-      case "Schleswig-Holstein":
-        return this.principal * tax;
-      case "Thueringen":
-        return this.principal * tax;
-      default:
-        return this.principal * tax;
+    let tax = 0.05;
+    try {
+      tax = getGrundsteuer(bundesland) / 100;
+    } catch (error) {
+      console.error(error);
+      tax = 0.05;
     }
+
+    return this.principal * tax;
   };
 }

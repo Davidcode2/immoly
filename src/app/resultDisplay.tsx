@@ -123,6 +123,9 @@ export default function ResultDisplay() {
 
   const getFromBrowserStorage = (id: string) => {
     const calculation = calculationAccessor(id);
+    if (!calculation) {
+      return null;
+    }
     const sondertilgungen = sondertilgungenAccessor(id);
     const tilgungswechsel = tilgungswechselAccessor(id);
     calculation.sondertilgungen = sondertilgungen;

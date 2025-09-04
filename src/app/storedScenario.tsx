@@ -1,6 +1,6 @@
 "use client";
-import { deleteItem } from "./lib/calculationAccessor";
 import { CalculationDbo } from "./lib/models/calculationDbo";
+import { deleteCalculation } from "./services/calculationsAccessor";
 
 export default function StoredScenario({
   calculation,
@@ -14,7 +14,10 @@ export default function StoredScenario({
   };
 
   const deleteSelectedItem = async () => {
-    deleteItem(String(calculation.id));
+    const res = deleteCalculation(calculation.id);
+    if (!res) {
+      alert("Fehler beim Löschen des Szenarios");
+    }
   };
 
   return (

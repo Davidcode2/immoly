@@ -10,6 +10,14 @@ export default function StoredCalculations() {
   useEffect(() => {
     const calculations = calculationsAccessor();
     setCalculations(calculations);
+    window.addEventListener("storage", () => {
+      setCalculations(calculationsAccessor());
+    });
+    return () => {
+      window.removeEventListener("storage", () => {
+        setCalculations(calculationsAccessor());
+      });
+    };
   }, []);
 
   return (

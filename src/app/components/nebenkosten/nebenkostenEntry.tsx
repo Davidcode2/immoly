@@ -58,7 +58,7 @@ export default function NebenkostenEntry({
         </div>
         {entry.name === "Grunderwerbsteuer" && (
           <div className="w-fit rounded-xl bg-[var(--dark-accent)] p-1 px-2 text-xs text-[var(--secondary)]">
-            {getGrundsteuer(bundesland)} %
+            {bundesland ? getGrundsteuer(bundesland) : 0.05 } %
           </div>
         )}
         {entry.name === "Maklergebühr" && (
