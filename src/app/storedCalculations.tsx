@@ -16,12 +16,12 @@ export default function StoredCalculations() {
     updateCalculations();
 
     // storage event handler (fires for changes from other tabs/windows)
-    const onStorage = (e: StorageEvent) => {
+    const onStorage = () => {
       updateCalculations();
     };
 
     // custom event handler for same-window updates
-    const onLocalStorage = (e: Event) => {
+    const onLocalStorage = () => {
       updateCalculations();
     };
 
