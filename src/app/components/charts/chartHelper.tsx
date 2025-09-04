@@ -21,6 +21,7 @@ const formatNumber = (value: number) => {
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 export const customToolTip = ({ payload, label, active }: any) => {
   if (active) {
+    if (!payload || payload.length < 2) return <div>Fehler, bitte neu laden</div>;
     return (
       <div className="rounded-md bg-white/95 p-2 shadow-lg dark:bg-black/95">
         <p>{`Jahr: ${label}`}</p>
