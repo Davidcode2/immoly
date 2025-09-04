@@ -143,8 +143,6 @@ export default function ResultDisplay() {
             console.warn("No result found for calculationId:", calculationId);
             return;
           }
-          setInput(result);
-
           updateMaklergebuehr((result as CalculationDbo).maklerguehrPercentage);
           updateBundesland((result as CalculationDbo).bundesland);
           const nebenkosten = new NebenkostenCalculator(
@@ -156,8 +154,12 @@ export default function ResultDisplay() {
           updateNebenkosten(Math.round(nebenkosten));
 
           // reset cache
-          await getSondertilgungFromCache(calculationId!, true);
-          await getTilgungswechselFromCache(calculationId!, true);
+          const sondertilgungen = await getSondertilgungFromCache(calculationId!, true);
+          const tilgungswechsel = await getTilgungswechselFromCache(calculationId!, true);
+          result.sondertilgungen = sondertilgungen;
+          result.tilgungswechsel = tilgungswechsel;
+          setInput(result);
+
           const tilgungungsTabelle = calcTilgung(result, nebenkosten);
           setTable(tilgungungsTabelle);
         } catch (e) {
