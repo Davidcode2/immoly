@@ -47,17 +47,11 @@ const calculateArmotizationTable = (
     const interestForYear = calcInterest(restSumme, calculation.interest_rate);
 
     if (tilgungswechsel > 0) {
-      console.log(
-        `Tilgungswechsel for year ${currentYear}: ${tilgungswechsel}`,
-      );
       annuitaet = tilgungswechsel * 12;
     }
     let tilgung = annuitaet - interestForYear;
 
     if (sondertilgung > 0) {
-      console.log(
-        `Year: ${currentYear}, Remaining Principal: ${restSumme}, Sondertilgung: ${sondertilgung}`,
-      );
       restSumme -= sondertilgung;
     }
 
