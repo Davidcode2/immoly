@@ -13,7 +13,7 @@ export default class NebenkostenCalculator {
   constructor(principal: number, maklergebuehr?: number, bundesland?: string) {
     this.principal = principal;
     this.maklergebuehr = maklergebuehr || 0;
-    this.bundesland = bundesland || "Baden-Wuerttemberg";
+    this.bundesland = (bundesland && bundesland != "") ? bundesland : "Baden-Wuerttemberg";
   }
 
   calcSumme = () => {
@@ -53,8 +53,8 @@ export default class NebenkostenCalculator {
   };
 
   calcGrunderwerbsteuer = (bundesland?: string) => {
-    bundesland = bundesland ? bundesland : this.bundesland;
-    const tax = getGrundsteuer(bundesland) / 100;
+    const _bundesland = (bundesland && bundesland != "") ? bundesland : this.bundesland;
+    const tax = getGrundsteuer(_bundesland) / 100;
     return this.principal * tax;
   };
 }

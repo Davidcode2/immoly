@@ -81,7 +81,7 @@ export default function Tilgungstabelle({
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   const openModal = (e: any, entry: ArmotizationEntry) => {
     const target = e.target as HTMLElement;
-    if (target.classList.contains("sondertilgungInput")) return;
+    if (target.closest(".sondertilgungInput")) return;
     setSelectedEntry(entry);
     setShowModal(true);
   };
