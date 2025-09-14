@@ -18,7 +18,7 @@ export default function KreditSummeTextComponent({
 
   return (
     <div className="z-20 max-h-56 rounded-lg bg-[var(--light-accent)]/10 shadow backdrop-blur-2xl">
-      <div className="bg-[var(--background)] p-5 pb-3 md:p-8 md:pb-8">
+      <div className="bg-[var(--background)] rounded-t-lg p-5 pb-3 md:p-8 md:pb-8">
         <p className="text-xs">Kreditsumme</p>
         <div className="flex items-center justify-between">
           <div
