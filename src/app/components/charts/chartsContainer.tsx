@@ -1,14 +1,15 @@
 import PlotlyChart from "./chart";
-import DevelopmentChart from "./developmentChart";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import CashRoiModel from "app/lib/models/cashRoiModel";
+import SaveOrBuyContainer from "./saveOrBuyContainer";
 
 type PropTypes = {
   table: ArmotizationEntry[];
   input: CashRoiModel | null;
+  setInput: (arg1: CashRoiModel) => void;
 };
 
-export default function ChartsContainer({ input, table }: PropTypes) {
+export default function ChartsContainer({ input, setInput, table }: PropTypes) {
   return (
     <div className="2xl:col-start-2">
       {input && (
@@ -16,12 +17,8 @@ export default function ChartsContainer({ input, table }: PropTypes) {
           <div className="grid min-h-[200px] justify-around rounded-lg shadow backdrop-blur-lg md:min-h-[300px]">
             <PlotlyChart data={table} rent={input.rent} />
           </div>
-          <div className="hidden md:grid min-h-[200px] justify-around rounded-lg md:shadow backdrop-blur-lg md:min-h-[300px]">
-            <DevelopmentChart
-              tilgungsTabelle={table}
-              rent={input.rent}
-              interest={input.cash_roi || 0}
-            />
+          <div className="hidden min-h-[200px] justify-around rounded-lg backdrop-blur-lg md:grid md:min-h-[300px] md:shadow">
+            <SaveOrBuyContainer table={table} setInput={setInput} input={input} />
           </div>
         </div>
       )}

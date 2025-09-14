@@ -26,6 +26,9 @@ const SliderInput: React.FC<SliderInputProps> = ({
   handleChange,
   children,
 }) => {
+
+  const percentageInputs = ["interest_rate", "cash_roi"];
+
   return (
     <div>
       <label
@@ -51,7 +54,7 @@ const SliderInput: React.FC<SliderInputProps> = ({
             value={value}
           />
           <div className="relative -left-6 text-stone-600">
-            {inputName === "interest_rate" ? "%" : sign}
+            { percentageInputs.includes(inputName) ? "%" : sign}
           </div>
           {children}
         </div>

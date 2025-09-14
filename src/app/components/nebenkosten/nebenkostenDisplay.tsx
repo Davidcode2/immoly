@@ -111,7 +111,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
             handleMouseLeave={handleMouseLeave}
           />
         </div>
-        <div className="order-first flex hidden h-20 w-full flex-col gap-12 overflow-y-scroll pb-4 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
+        <div className="order-first hidden h-20 w-full flex-col gap-12 overflow-y-scroll pb-4 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
           {nebenkosten.map((entry, index) => (
             <div
               key={entry.name}

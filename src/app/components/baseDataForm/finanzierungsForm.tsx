@@ -2,7 +2,6 @@ import Form from "next/form";
 import { useEffect, useState } from "react";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import SliderInput from "app/components/slider/sliderInput";
-import OptionalParameters from "app/components/baseDataForm/optionalParameters";
 import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 import { useRouter, useSearchParams } from "next/navigation";
 import { calculationsLocalStorageSetter } from "app/services/calculationsLocalStorageSetter";
@@ -26,8 +25,6 @@ export default function FinanzierungsForm({
   const router = useRouter();
   const maklergebuehrPercentage = useMaklergebuehrStore.getState().value;
   const bundesland = useBundeslandStore.getState().value;
-
-  const [showExtended, setShowExtended] = useState<boolean>(false);
 
   const monthlyRateInPercent = () => {
     const nebenkosten = new NebenkostenCalculator(Number(principalValue), maklergebuehrPercentage, bundesland).calcSumme();
@@ -164,25 +161,8 @@ export default function FinanzierungsForm({
         </div>
       </div>
       <button
-        className="mr-auto rounded-lg px-2 pb-4 text-xs text-gray-400 hover:text-slate-800 dark:hover:text-gray-200"
-        type="button"
-        onClick={() => setShowExtended(!showExtended)}
-      >
-        {showExtended ? "Weniger Optionen" : "Mehr Optionen"}
-      </button>
-      <div
-        className={`${showExtended ? "block" : "hidden"} mb-2 rounded-lg p-2`}
-      >
-        <OptionalParameters
-          cashRoi={cashRoi}
-          handleInputChange={handleInputChange}
-          rent={rent}
-        />
-      </div>
-
-      <button
         type="submit"
-        className="mt-1 w-full rounded-lg bg-[var(--primary)]/60 px-4 py-2 font-bold text-white shadow backdrop-blur-md transition-colors duration-200 hover:bg-[var(--primary)]"
+        className="mt-4 w-full rounded-lg bg-[var(--primary)]/90 px-4 py-2 font-bold text-white shadow backdrop-blur-md transition-colors duration-200 hover:bg-[var(--primary)]"
       >
         Berechnung speichern
       </button>

@@ -12,7 +12,11 @@ import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import ChartDataItem from "app/lib/models/ChartDataItem";
 import InterestEarnedModel from "app/lib/models/interestEarnedModel";
 import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
-import { customToolTip, renderLegend, renderThousandIndicator } from "./chartHelper";
+import {
+  customToolTip,
+  renderLegend,
+  renderThousandIndicator,
+} from "./chartHelper";
 import { onThemeChangeColorUpdate } from "app/services/onThemeChangeColorUpdate";
 
 export default function DevelopmentChart({
@@ -88,7 +92,7 @@ export default function DevelopmentChart({
     return () => {
       observerLabels.disconnect();
       observerGrid.disconnect();
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -133,7 +137,7 @@ export default function DevelopmentChart({
   return (
     <LineChart
       width={calcWidth()}
-      height={screenWidthMobile() ? 200 : 300}
+      height={screenWidthMobile() ? 200 : 260}
       data={debouncedChartData}
       margin={{
         top: 30,
@@ -142,7 +146,7 @@ export default function DevelopmentChart({
         bottom: 15,
       }}
     >
-    <Legend content={renderLegend} />
+      <Legend content={renderLegend} />
       <XAxis
         dataKey="name"
         minTickGap={50}
@@ -152,8 +156,14 @@ export default function DevelopmentChart({
         label={{ value: "Jahr", position: "insideBottomRight", dy: 20, dx: 4 }}
       />
       <YAxis
-        tick={(props) => renderThousandIndicator({...props, labelColor})}
-        label={{ value: "EUR", position: "insideTopLeft", dx: -16, dy: -4, fontSize: 12 }}
+        tick={(props) => renderThousandIndicator({ ...props, labelColor })}
+        label={{
+          value: "EUR",
+          position: "insideTopLeft",
+          dx: -16,
+          dy: -4,
+          fontSize: 12,
+        }}
         tickCount={4}
         axisLine={false}
         tickLine={false}

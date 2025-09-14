@@ -24,17 +24,19 @@ export default function NumberInput({
   const [prevNumberOfDots, setPrevNumberOfDots] = useState<number>(0);
   const isLocalChange = useRef<boolean>(false);
 
+  const percentageInputs = ["interest_rate", "cash_roi"];
+
   useEffect(() => {
     const debouncedChange = setTimeout(() => {
       if (value !== undefined) {
         const formattedValue = formatGerman(String(value));
-        if (inputName === "interest_rate" && isLocalChange.current) {
+        if (percentageInputs.includes(inputName) && isLocalChange.current) {
           isLocalChange.current = false;
           return;
         }
-        if (inputName === "interest_rate") {
-          const interestRate = parseDecimal(String(value));
-          setDisplayValue(interestRate.toFixed(2).replace(".", ","));
+        if (percentageInputs.includes(inputName)) {
+          const percentageValue = parseDecimal(String(value));
+          setDisplayValue(percentageValue.toFixed(2).replace(".", ","));
         } else {
           setDisplayValue(formattedValue);
           if (inputRef.current) {
@@ -59,7 +61,7 @@ export default function NumberInput({
       return;
     }
 
-    if (input.name === "interest_rate") {
+    if (percentageInputs.includes(inputName)) {
       setDisplayValue(input.value);
       handleChange(input.name, parseDecimal(input.value) || 0);
       isLocalChange.current = true;
@@ -91,7 +93,7 @@ export default function NumberInput({
     if (inputName === "principal" || inputName === "down_payment") {
       return /^[0-9]{0,8}$/;
     }
-    if (inputName === "interest_rate") {
+    if (percentageInputs.includes(inputName)) {
       return /^[0-9]{0,2}(,[0-9]{0,3})?$/;
     }
     return /^[0-9]{0,5}$/;
@@ -101,7 +103,7 @@ export default function NumberInput({
     if (inputName === "principal" || inputName === "down_payment") {
       return /^[0-9]{0,8}(\.[0-9]{0,3})?$/;
     }
-    if (inputName === "interest_rate") {
+    if (percentageInputs.includes(inputName)) {
       return /^[0-9]{0,2}(,[0-9]{0,3})?$/;
     }
     return /^[0-9]{0,2}(\.[0-9]{0,3})?$/;

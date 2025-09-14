@@ -1,3 +1,5 @@
+import SliderInput from "../slider/sliderInput";
+
 type PropTypes = {
   handleInputChange: (name: string, value: number) => void;
   cashRoi: number | string;
@@ -10,48 +12,26 @@ export default function OptionalParameters({
 }: PropTypes) {
   return (
     <div className="grid gap-2 md:gap-6">
-      <div className="grid">
-        <label
-          htmlFor="cashRoi"
-          className="mb-1 text-xs font-semibold text-stone-400 uppercase"
-        >
-          Kapitalrendite{" "}
-          <span className="text-xs font-normal text-gray-400 normal-case">
-            (optional)
-          </span>
-        </label>
-        <input
-          type="number"
-          step="0.1"
-          className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
-          id="cashRoi"
-          name="cashRoi"
-          max="20"
-          min="0.0"
-          maxLength={2}
-          value={cashRoi}
-          onChange={(e) => handleInputChange(e.target.name, Number(e.target.value))}
-        />
-      </div>
-      <div className="mb-4 grid">
-        <label
-          htmlFor="rent"
-          className="mb-1 text-xs font-semibold text-stone-400 uppercase"
-        >
-          Miete{" "}
-          <span className="text-xs font-normal text-gray-400 normal-case">
-            (optional)
-          </span>
-        </label>
-        <input
-          type="number"
-          className="border-b border-stone-700 bg-transparent pb-1 transition-colors duration-200 focus:border-slate-500 focus:outline-none"
-          id="rent"
-          name="rent"
-          value={rent}
-          onChange={(e) => handleInputChange(e.target.name, Number(e.target.value))}
-        />
-      </div>
+      <SliderInput
+        min={0.0}
+        max={10}
+        step={0.1}
+        value={Number(cashRoi) || 0}
+        inputName={"cash_roi"}
+        label={"Jährliche Kapitalrendite"}
+        htmlFor={"cashRoi"}
+        handleChange={handleInputChange}
+      />
+      <SliderInput
+        min={0}
+        max={3000}
+        step={10}
+        value={Number(rent) || 0}
+        inputName={"rent"}
+        label={"monatliche Kaltmiete"}
+        htmlFor={"rent"}
+        handleChange={handleInputChange}
+      />
     </div>
   );
 }

@@ -201,7 +201,7 @@ export default function ResultDisplay() {
                     sendChangeNotification={changeHandler}
                   />
                 </div>
-                <ChartsContainer input={input} table={table} />
+                <ChartsContainer setInput={setInput} input={input} table={table} />
                 <MobileTilgungsTabelleContainer
                   input={input}
                   table={table}
