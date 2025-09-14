@@ -1,35 +1,24 @@
 import BaseModel from "app/lib/models/baseModel";
 import { CalculationDbo } from "app/lib/models/calculationDbo";
+import CashRoiModel from "app/lib/models/cashRoiModel";
 import NebenKostenModel from "app/lib/models/nebenkostenModel";
 
 export function calculationsLocalStorageSetter(
-  formData: FormData,
+  input: CashRoiModel,
   nebenkosten: NebenKostenModel,
 ) {
   const model = {
-    down_payment: Number(formData.get("down_payment")),
-    principal: Number(formData.get("principal")),
-    interest_rate: Number(formData.get("interest_rate")),
-    monthly_rate: Number(formData.get("monthly_rate")),
-    rent: Number(formData.get("rent")),
+    down_payment: Number(input.down_payment),
+    principal: Number(input.principal),
+    interest_rate: Number(input.interest_rate),
+    monthly_rate: Number(input.monthly_rate),
+    rent: Number(input.rent),
   } as BaseModel;
   const uuid = crypto.randomUUID();
   const calculation = { id: uuid, ...model };
-  const currentCalculations = localStorage.getItem("calculations");
-  let calculationsJson: BaseModel[] = [];
-  if (currentCalculations) {
-    calculationsJson = JSON.parse(currentCalculations);
-    calculationsJson.push(calculation);
-  } else {
-    calculationsJson = [calculation];
-  }
-  const withDate = calculationsJson as CalculationDbo[];
-  withDate[calculationsJson.length - 1].created_at = new Date().toISOString();
-  withDate[calculationsJson.length - 1].maklerguehrPercentage =
-    nebenkosten.maklergebuehrPercentage;
-  withDate[calculationsJson.length - 1].bundesland = nebenkosten.bundesland;
-  const newCalculationsString = JSON.stringify(calculationsJson);
-  localStorage.setItem("calculations", newCalculationsString);
+
+  const completeCalculationObject = addProperties(calculation, nebenkosten);
+  pushToStoredCalculations(completeCalculationObject);
   dispatchLocalStorageEvent();
   return uuid;
 }
@@ -37,4 +26,26 @@ export function calculationsLocalStorageSetter(
 export function dispatchLocalStorageEvent() {
   const event = new CustomEvent("local-storage");
   window.dispatchEvent(event);
+}
+
+function pushToStoredCalculations(calculation: BaseModel) {
+  const currentCalculations = localStorage.getItem("calculations");
+
+  let calculationsJson: BaseModel[] = [];
+  if (currentCalculations) {
+    calculationsJson = JSON.parse(currentCalculations);
+    calculationsJson.push(calculation);
+  } else {
+    calculationsJson = [calculation];
+  }
+  const newCalculationsString = JSON.stringify(calculationsJson);
+  localStorage.setItem("calculations", newCalculationsString);
+}
+
+function addProperties(calculation: BaseModel, nebenkosten: NebenKostenModel) {
+  const withDate = { ...calculation } as CalculationDbo;
+  withDate.created_at = new Date().toISOString();
+  withDate.maklerguehrPercentage = nebenkosten.maklergebuehrPercentage;
+  withDate.bundesland = nebenkosten.bundesland;
+  return withDate;
 }

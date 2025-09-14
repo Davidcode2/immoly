@@ -95,12 +95,15 @@ export default function FinanzierungsForm({
     }
   }, [values]);
 
-  const handleSubmit = async (formData: FormData) => {
+  const handleSubmit = async () => {
     const nebenkosten: NebenKostenModel = {
       bundesland: bundesland,
       maklergebuehrPercentage: maklergebuehrPercentage,
     };
-    const uuid = calculationsLocalStorageSetter(formData, nebenkosten);
+    if (!values) {
+      return;
+    }
+    const uuid = calculationsLocalStorageSetter(values, nebenkosten);
     if (uuid) {
       const params = new URLSearchParams(searchParams);
       params.set('calculationId', uuid);

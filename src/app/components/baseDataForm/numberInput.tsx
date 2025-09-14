@@ -107,7 +107,7 @@ export default function NumberInput({
       return /^[0-9]{0,2}(,[0-9]{0,3})?$/;
     }
     return /^[0-9]{0,2}(\.[0-9]{0,3})?$/;
-  }
+  };
 
   return (
     <input
@@ -116,10 +116,9 @@ export default function NumberInput({
       id={id}
       value={displayValue}
       name={inputName}
-      pattern={formattedValidationPattern().source}
       onChange={localHandleChange}
       placeholder="Zahl eingeben"
-      className="w-36 border-b invalid:text-green-900 border-[var(--secondary)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--accent)] focus:outline-none lg:text-base"
+      className={` ${!formattedValidationPattern().test(displayValue) ? "text-green-900" : ""} w-36 border-b border-[var(--secondary)] bg-transparent pb-1 text-xl transition-colors duration-200 invalid:text-green-900 focus:border-[var(--accent)] focus:outline-none lg:text-base`}
     />
   );
 }
