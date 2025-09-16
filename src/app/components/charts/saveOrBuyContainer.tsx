@@ -36,7 +36,7 @@ export default function SaveOrBuyContainer({ input, setInput, table }: PropTypes
           </div>
         </CenteredModal>
       )}
-      <div className="group" onClick={() => setShowModal(true)}>
+      <div className="group cursor-pointer" onClick={() => setShowModal(true)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

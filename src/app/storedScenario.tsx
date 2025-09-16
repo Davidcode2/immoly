@@ -89,7 +89,7 @@ export default function StoredScenario({
       </div>
 
       <button
-        className="mt-6 w-full rounded-lg bg-[var(--light-accent)] p-2 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90"
+        className="cursor-pointer mt-6 w-full rounded-lg bg-[var(--light-accent)] p-2 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90"
         onClick={setCalcId}
       >
         Szenario übernehmen
