@@ -1,4 +1,12 @@
 import { Sondertilgung } from "app/lib/models/sondertilgung";
+import {
+  deleteTilgungswechsel,
+  tilgungswechselAccessor,
+} from "./tilgungswechselAccessor";
+import {
+  deleteSondertilgungen,
+  sondertilgungenAccessor,
+} from "./sondertilgungAccessor";
 
 export const updateSonderAmountInBrowserStorage = (
   type: string,
@@ -26,4 +34,28 @@ export const updateSonderAmountInBrowserStorage = (
   }
   const updatedString = JSON.stringify(updated);
   localStorage.setItem(`${calculationId}-${type}`, updatedString);
+};
+
+export const transferSonderAmounts = (uuid: string) => {
+  const unassignedSondertilgung = sondertilgungenAccessor("null");
+  const unassignedTilgungswechsel = tilgungswechselAccessor("null");
+
+  for (const sondertilgung of unassignedSondertilgung) {
+    updateSonderAmountInBrowserStorage(
+      "sondertilgungen",
+      String(sondertilgung.year),
+      String(sondertilgung.amount),
+      uuid,
+    );
+  }
+  for (const tilgungswechsel of unassignedTilgungswechsel) {
+    updateSonderAmountInBrowserStorage(
+      "tilgungswechsel",
+      String(tilgungswechsel.year),
+      String(tilgungswechsel.amount),
+      uuid,
+    );
+  }
+  deleteSondertilgungen("null");
+  deleteTilgungswechsel("null");
 };

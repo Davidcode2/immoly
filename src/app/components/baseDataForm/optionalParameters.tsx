@@ -11,7 +11,7 @@ export default function OptionalParameters({
   cashRoi,
 }: PropTypes) {
   return (
-    <div className="grid gap-2 md:gap-6">
+    <div className="grid justify-center gap-2 md:gap-6">
       <SliderInput
         min={0.0}
         max={10}

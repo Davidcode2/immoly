@@ -26,7 +26,7 @@ export default function SaveOrBuyContainer({ input, setInput, table }: PropTypes
     <div>
       {showModal && (
         <CenteredModal onClose={() => setShowModal(false)}>
-          <div className="rounded-lg bg-[var(--primary)]/40 p-10 shadow-xl">
+          <div className="rounded-lg bg-[var(--primary)]/60 p-10 shadow-xl">
             <OptionalParameters cashRoi={input.cash_roi!} handleInputChange={handleChange} rent={input.rent!} />
             <DevelopmentChart
               tilgungsTabelle={table}

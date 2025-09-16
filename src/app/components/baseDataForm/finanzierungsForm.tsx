@@ -7,6 +7,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { calculationsLocalStorageSetter } from "app/services/calculationsLocalStorageSetter";
 import { useBundeslandStore, useMaklergebuehrStore } from "app/store";
 import NebenKostenModel from "app/lib/models/nebenkostenModel";
+import { deleteSondertilgungen, sondertilgungenAccessor } from "app/services/sondertilgungAccessor";
+import { transferSonderAmounts, updateSonderAmountInBrowserStorage } from "app/services/sonderAmountBrowserUpdater";
+import { deleteTilgungswechsel, tilgungswechselAccessor } from "app/services/tilgungswechselAccessor";
 
 export default function FinanzierungsForm({
   values,
@@ -109,6 +112,7 @@ export default function FinanzierungsForm({
       params.set('calculationId', uuid);
       router.push(`/?${params.toString()}`, { scroll: false });
     }
+    transferSonderAmounts(uuid);
   }
 
   return (
