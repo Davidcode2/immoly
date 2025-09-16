@@ -1,6 +1,8 @@
+"use client";
+
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import FinanzierungsForm from "./baseDataForm/finanzierungsForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChevronIcon from "/public/images/icons/icons8-chevron-24.png";
 import Image from "next/image";
 
@@ -12,20 +14,32 @@ type PropTypes = {
 export default function MobileFormContainer({ input, setInput }: PropTypes) {
   const [isExpanded, setIsExpanded] = useState(true);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY >= 1500) {
+        setIsExpanded(true);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div className="sticky -bottom-2 z-30 rounded-2xl border border-[var(--light-accent)]/20 bg-[var(--background)]/70 shadow backdrop-blur-lg md:hidden">
       {expandAndCollapseButton(setIsExpanded, isExpanded)}
       <div
-        className={`overflow-scroll transition-all duration-300 ease-in-out ${
-          isExpanded ? "max-h-[400px] py-8" : "max-h-[52px]"
-        }`}
+        className={`overflow-scroll transition-all duration-300 ease-in-out ${isExpanded ? "max-h-[400px] py-8" : "max-h-[52px]"
+          }`}
       >
         <FinanzierungsForm values={input} setInput={setInput} />
       </div>
     </div>
   );
 }
-const expandAndCollapseButton = (setIsExpanded: (arg1: boolean) => void, isExpanded: boolean) => {
+const expandAndCollapseButton = (
+  setIsExpanded: (arg1: boolean) => void,
+  isExpanded: boolean,
+) => {
   return (
     <button onClick={() => setIsExpanded(!isExpanded)} className="w-full p-2">
       {isExpanded ? (
