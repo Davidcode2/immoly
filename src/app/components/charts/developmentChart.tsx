@@ -33,6 +33,8 @@ export default function DevelopmentChart({
   >(null);
   const [gridColor, setGridColor] = useState<string>("hsl(10, 10%, 10%)");
   const [labelColor, setLabelColor] = useState<string>("hsl(200, 80%, 10%)");
+  const [sparenLineColor, setSparenLineColor] = useState<string>();
+  const [tilgungLineColor, setTilgungLineColor] = useState<string>();
 
   const calcInterest = () => {
     const interestCalculations = tilgungsTabelle.reduce(
@@ -93,6 +95,13 @@ export default function DevelopmentChart({
       observerLabels.disconnect();
       observerGrid.disconnect();
     };
+  }, []);
+
+  useEffect(() => {
+    const root = document.querySelector(':root') as HTMLElement;
+    const styles = getComputedStyle(root);
+    setSparenLineColor(styles.getPropertyValue('--light-accent'));
+    setTilgungLineColor(styles.getPropertyValue('--accent'));
   }, []);
 
   useEffect(() => {
@@ -178,13 +187,13 @@ export default function DevelopmentChart({
       <Line
         type="monotone"
         dataKey="Sparen"
-        stroke="hsl(172, 25%, 55%)"
+        stroke={sparenLineColor}
         dot={false}
       />
       <Line
         type="monotone"
         dataKey="Tilgung"
-        stroke="hsl(194, 33%, 18%)"
+        stroke={tilgungLineColor}
         dot={false}
       />
     </LineChart>

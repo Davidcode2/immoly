@@ -24,14 +24,14 @@ export const customToolTip = ({ payload, label, active }: any) => {
     if (!payload || payload.length < 2) return <div>Fehler, bitte neu laden</div>;
     return (
       <div className="rounded-md bg-white/95 p-2 shadow-lg dark:bg-black/95">
-        <p>{`Jahr: ${label}`}</p>
+        <p className="text-sm opacity-80">{`Jahr: ${label}`}</p>
         <p>
-          {`${payload[0].dataKey}: `}
-          <span className="text-yellow-300">{`${payload[0].value.toLocaleString("de-DE")}`}</span>
+          <span className="text-sm opacity-80">{`${payload[0].dataKey}: `}</span>
+          <span className="text-[var(--light-accent)]">{`${payload[0].value.toLocaleString("de-DE")}`}</span>
         </p>
         <p>
-          {`${payload[1].dataKey}: `}
-          <span className="text-green-400">{`${payload[1].value.toLocaleString("de-DE")}`}</span>
+          <span className="text-sm opacity-80">{`${payload[1].dataKey}: `}</span>
+          <span className="text-[var(--accent)]">{`${payload[1].value.toLocaleString("de-DE")}`}</span>
         </p>
       </div>
     );
