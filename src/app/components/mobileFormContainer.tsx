@@ -41,7 +41,7 @@ const expandAndCollapseButton = (
   isExpanded: boolean,
 ) => {
   return (
-    <button onClick={() => setIsExpanded(!isExpanded)} className="w-full p-2">
+    <button onClick={() => setIsExpanded(!isExpanded)} className="w-full p-2 opacity-60">
       {isExpanded ? (
         <Image
           src={ChevronIcon}
