@@ -13,11 +13,16 @@ type PropTypes = {
 
 export default function MobileFormContainer({ input, setInput }: PropTypes) {
   const [isExpanded, setIsExpanded] = useState(true);
+  const [showExpandButton, setShowExpandButton] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 1500) {
         setIsExpanded(true);
+        setShowExpandButton(false);
+      }
+      if (window.scrollY < 1500) {
+        setShowExpandButton(true);
       }
     };
     window.addEventListener("scroll", handleScroll);
@@ -26,7 +31,7 @@ export default function MobileFormContainer({ input, setInput }: PropTypes) {
 
   return (
     <div className="sticky -bottom-2 z-30 rounded-2xl border border-[var(--light-accent)]/20 bg-[var(--background)]/70 shadow backdrop-blur-lg md:hidden">
-      {expandAndCollapseButton(setIsExpanded, isExpanded)}
+      <div className={`${showExpandButton ? "block" : "hidden" }`}>{expandAndCollapseButton(setIsExpanded, isExpanded)}</div>
       <div
         className={`overflow-scroll transition-all duration-300 ease-in-out ${isExpanded ? "max-h-[400px] py-8" : "max-h-[52px]"
           }`}
@@ -41,7 +46,10 @@ const expandAndCollapseButton = (
   isExpanded: boolean,
 ) => {
   return (
-    <button onClick={() => setIsExpanded(!isExpanded)} className="w-full p-2 opacity-60">
+    <button
+      onClick={() => setIsExpanded(!isExpanded)}
+      className="w-full p-2 opacity-60"
+    >
       {isExpanded ? (
         <Image
           src={ChevronIcon}
