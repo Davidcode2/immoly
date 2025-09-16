@@ -4,7 +4,7 @@ import Hero from "./hero";
 
 export default function SloganHero() {
   return (
-    <div className="rounded-lg border border-slate-200 p-4 shadow">
+    <div className="rounded-lg border-slate-200 p-4">
       <Hero />
       <div className="my-10 flex flex-col gap-4 text-7xl">
         <div className="flex">
