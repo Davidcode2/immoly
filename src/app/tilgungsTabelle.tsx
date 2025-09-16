@@ -54,7 +54,7 @@ export default function Tilgungstabelle({
       "sondertilgungen",
       String(year),
       updatedSondertilgungAmount,
-      calculationId!
+      calculationId!,
     );
     sendChangeNotification();
   };
@@ -72,7 +72,7 @@ export default function Tilgungstabelle({
       "tilgungswechsel",
       String(year),
       newTilgung.value,
-      calculationId!
+      calculationId!,
     );
     sendChangeNotification();
     setShowModal(false);
@@ -134,6 +134,13 @@ export default function Tilgungstabelle({
               </td>
               <td className="max-w-12 py-3 sm:px-4 md:max-w-22 md:py-5">
                 {Math.round(x.principal).toLocaleString("de")}
+                <div className="md:hidden">
+                  {x.tilgungswechsel > 0 && (
+                    <div className="text-xs text-green-600">
+                      {x.tilgungswechsel.toLocaleString("de")} mntl.
+                    </div>
+                  )}
+                </div>
               </td>
               <td
                 className={`${x.tilgungswechsel > 0 && "text-[var(--success)]"} hidden h-18 content-center py-3 sm:px-4 md:block md:py-5`}
