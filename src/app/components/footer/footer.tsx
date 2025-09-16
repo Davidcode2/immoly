@@ -8,7 +8,7 @@ export default function Footer() {
           src="/images/icons/icons8-couch-85.png"
           width="25"
           height="25"
-          alt="Sofa"
+          alt="Couch"
         />
       </div>
       <div className="text-xs grid p-8 text-[var(--dark-accent)]/50">
