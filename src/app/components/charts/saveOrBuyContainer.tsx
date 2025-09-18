@@ -11,7 +11,11 @@ type PropTypes = {
   setInput: (arg1: CashRoiModel) => void;
 };
 
-export default function SaveOrBuyContainer({ input, setInput, table }: PropTypes) {
+export default function SaveOrBuyContainer({
+  input,
+  setInput,
+  table,
+}: PropTypes) {
   const [showModal, setShowModal] = useState(false);
 
   const handleChange = (name: string, value: number) => {
@@ -20,19 +24,26 @@ export default function SaveOrBuyContainer({ input, setInput, table }: PropTypes
     } else {
       setInput({ ...input, [name]: value });
     }
-  }
+  };
 
   return (
     <div>
       {showModal && (
         <CenteredModal onClose={() => setShowModal(false)}>
           <div className="rounded-lg bg-[var(--primary)]/60 p-10 shadow-xl">
-            <OptionalParameters cashRoi={input.cash_roi!} handleInputChange={handleChange} rent={input.rent!} />
-            <DevelopmentChart
-              tilgungsTabelle={table}
-              rent={input.rent}
-              interest={input.cash_roi || 0}
+            <OptionalParameters
+              cashRoi={input.cash_roi!}
+              handleInputChange={handleChange}
+              rent={input.rent!}
             />
+            <div className="w-[400px]">
+              <DevelopmentChart
+                tilgungsTabelle={table}
+                rent={input.rent}
+                interest={input.cash_roi || 0}
+                timeoutAmount={80}
+              />
+            </div>
           </div>
         </CenteredModal>
       )}

@@ -23,10 +23,12 @@ export default function DevelopmentChart({
   tilgungsTabelle,
   rent,
   interest = 4,
+  timeoutAmount = 1000,
 }: {
   tilgungsTabelle: ArmotizationEntry[];
   rent: number;
   interest: number;
+  timeoutAmount?: number;
 }) {
   const [debouncedChartData, setDebouncedChartData] = useState<
     ChartDataItem[] | null
@@ -130,7 +132,7 @@ export default function DevelopmentChart({
         },
       );
       setDebouncedChartData(transformedData);
-    }, 1000);
+    }, timeoutAmount);
 
     // Cleanup function: This runs if 'data' changes before the timeout,
     // or when the component unmounts. It clears the previous timeout.
