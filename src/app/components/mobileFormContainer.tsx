@@ -2,9 +2,7 @@
 
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import FinanzierungsForm from "./baseDataForm/finanzierungsForm";
-import { useEffect, useState } from "react";
-import ChevronIcon from "/public/images/icons/icons8-chevron-24.png";
-import Image from "next/image";
+import { DraggableContainer } from "./drawer/drawer";
 
 type PropTypes = {
   input: CashRoiModel | null;
@@ -12,57 +10,20 @@ type PropTypes = {
 };
 
 export default function MobileFormContainer({ input, setInput }: PropTypes) {
-  const [isExpanded, setIsExpanded] = useState(true);
-  const [showExpandButton, setShowExpandButton] = useState(true);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY >= 1500) {
-        setIsExpanded(true);
-        setShowExpandButton(false);
-      }
-      if (window.scrollY < 1500) {
-        setShowExpandButton(true);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
-    <div className="sticky -bottom-2 z-30 rounded-2xl border border-[var(--light-accent)]/20 bg-[var(--background)]/70 shadow backdrop-blur-lg md:hidden">
-      <div className={`${showExpandButton ? "block" : "hidden" }`}>{expandAndCollapseButton(setIsExpanded, isExpanded)}</div>
-      <div
-        className={`overflow-scroll transition-all duration-300 ease-in-out ${isExpanded ? "max-h-[400px] py-8" : "max-h-[52px]"
-          }`}
-      >
-        <FinanzierungsForm values={input} setInput={setInput} />
+    <DraggableContainer
+      className={
+        "sticky -bottom-5 z-30 rounded-2xl border border-[var(--light-accent)]/20 w-screen ml-[calc(50%-50vw)] bg-[var(--background)]/70 backdrop-blur-lg md:hidden"
+      }
+    >
+      <div className="rounded-2xl">
+        <div
+          className={`overflow-scroll transition-all duration-300 ease-in-out }`}
+        >
+          <FinanzierungsForm values={input} setInput={setInput} />
+        </div>
       </div>
-    </div>
+    </DraggableContainer>
   );
 }
-const expandAndCollapseButton = (
-  setIsExpanded: (arg1: boolean) => void,
-  isExpanded: boolean,
-) => {
-  return (
-    <button
-      onClick={() => setIsExpanded(!isExpanded)}
-      className="w-full p-2 opacity-60"
-    >
-      {isExpanded ? (
-        <Image
-          src={ChevronIcon}
-          alt="Chevron pointing downward"
-          className="mx-auto h-6 w-6 rotate-270"
-        />
-      ) : (
-        <Image
-          src={ChevronIcon}
-          alt="Chevron pointing upward"
-          className="mx-auto h-6 w-6 rotate-90"
-        />
-      )}
-    </button>
-  );
-};
