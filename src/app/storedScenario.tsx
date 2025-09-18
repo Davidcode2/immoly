@@ -73,10 +73,12 @@ export default function StoredScenario({
                 {calculation.monthly_rate.toLocaleString("de") || 0} €
               </p>
             </div>
-            <div>
-              <p className="mb-1 text-xs text-[var(--accent)]">Miete</p>
-              <p className="text-lg">{calculation.rent || 0} €</p>
-            </div>
+            {calculation.rent != 0 && (
+              <div>
+                <p className="mb-1 text-xs text-[var(--accent)]">Miete</p>
+                <p className="text-lg">{calculation.rent || 0} €</p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -89,7 +91,7 @@ export default function StoredScenario({
       </div>
 
       <button
-        className="cursor-pointer mt-6 w-full rounded-lg bg-[var(--light-accent)] p-2 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90"
+        className="mt-6 w-full cursor-pointer rounded-lg bg-[var(--light-accent)] p-2 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90"
         onClick={setCalcId}
       >
         Szenario übernehmen
