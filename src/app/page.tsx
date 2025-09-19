@@ -15,7 +15,7 @@ export default async function GraphPage() {
   return (
     <div className="dark:bg-[url(/images/black_rainbow_low_saturation.jpg)] dark:bg-cover dark:bg-bottom">
       <div className="mx-auto min-h-screen max-w-[2000px] pb-20 sm:py-10">
-        <div className="flex flex-col gap-12 md:gap-6">
+        <div className="flex flex-col md:gap-6">
           <Suspense fallback={<Loading />}>
             <ResultDisplay />
           </Suspense>
