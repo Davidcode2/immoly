@@ -8,14 +8,19 @@ type DraggableContainerProps = {
   className?: string;
 };
 
-export function DraggableContainer({ children, className = "" }: DraggableContainerProps) {
+export function DraggableContainer({
+  children,
+  className = "",
+}: DraggableContainerProps) {
   const [height, setHeight] = useState<number>(60); // height in vh
   const containerRef = useRef<HTMLDivElement>(null);
   const isDraggingRef = useRef(false);
   const startYRef = useRef(0);
   const startHeightRef = useRef(0);
+  const draggingDirection = useRef<"up" | "down" | null>(null);
 
   const handleTouchStart = (e: TouchEvent) => {
+    e.preventDefault();
     isDraggingRef.current = true;
     startYRef.current = e.touches[0].clientY;
     startHeightRef.current = height;
@@ -23,28 +28,27 @@ export function DraggableContainer({ children, className = "" }: DraggableContai
 
   const handleTouchMove = (e: TouchEvent) => {
     if (!isDraggingRef.current) return;
+    e.preventDefault();
 
     const deltaY = e.touches[0].clientY - startYRef.current;
+    if (deltaY < 0) {
+      draggingDirection.current = "up";
+    } else if (deltaY > 0) {
+      draggingDirection.current = "down";
+    } else {
+      draggingDirection.current = null;
+    }
     const deltaVh = (deltaY / window.innerHeight) * 100;
-    const newHeight = Math.min(100, Math.max(5, startHeightRef.current - deltaVh));
-    
+    const newHeight = Math.min(
+      100,
+      Math.max(5, startHeightRef.current - deltaVh),
+    );
+
     setHeight(newHeight);
   };
 
   const handleTouchEnd = () => {
     isDraggingRef.current = false;
-  };
-
-  const handleQuickGesture = (e: TouchEvent) => {
-    const touchY = e.touches[0].clientY;
-    const screenHeight = window.innerHeight;
-    const threshold = screenHeight * 0.3; // 30% of screen height for gesture detection
-
-    if (touchY < threshold) {
-      setHeight(5); // Collapse
-    } else if (touchY > screenHeight - threshold) {
-      setHeight(60); // Expand to default
-    }
   };
 
   useEffect(() => {
@@ -54,26 +58,22 @@ export function DraggableContainer({ children, className = "" }: DraggableContai
     container.addEventListener("touchstart", handleTouchStart);
     window.addEventListener("touchmove", handleTouchMove);
     window.addEventListener("touchend", handleTouchEnd);
-    window.addEventListener("touchstart", handleQuickGesture);
 
     return () => {
       container.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
-      window.removeEventListener("touchstart", handleQuickGesture);
     };
   }, [height]);
 
   return (
     <div
       ref={containerRef}
-      className={`left-0 right-0 w-full shadow-lg rounded-2xl transition-transform ${className}`}
+      className={`right-0 bottom-0 left-0 w-full rounded-2xl shadow-lg transition-transform ${className}`}
       style={{ height: `${height}vh` }}
     >
       <Handle />
-      <div className="overflow-y-auto h-[calc(100%-2rem)]">
-        {children}
-      </div>
+      <div className="h-[calc(100%-2rem)] overflow-y-auto">{children}</div>
     </div>
   );
 }

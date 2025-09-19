@@ -10,20 +10,19 @@ type PropTypes = {
 };
 
 export default function MobileFormContainer({ input, setInput }: PropTypes) {
-
   return (
-    <DraggableContainer
-      className={
-        "sticky -bottom-5 z-30 rounded-2xl border border-[var(--light-accent)]/20 w-screen ml-[calc(50%-50vw)] bg-[var(--background)]/70 backdrop-blur-lg md:hidden"
-      }
-    >
-      <div className="rounded-2xl">
-        <div
-          className={`overflow-scroll transition-all duration-300 ease-in-out }`}
-        >
-          <FinanzierungsForm values={input} setInput={setInput} />
+      <DraggableContainer
+        className={
+          "sticky -bottom-5 z-30 ml-[calc(50%-50vw)] w-screen rounded-2xl border border-[var(--light-accent)]/20 bg-[var(--background)]/70 backdrop-blur-lg md:hidden"
+        }
+      >
+        <div className="rounded-2xl">
+          <div
+            className={`} overflow-scroll transition-all duration-300 ease-in-out`}
+          >
+            <FinanzierungsForm values={input} setInput={setInput} />
+          </div>
         </div>
-      </div>
-    </DraggableContainer>
+      </DraggableContainer>
   );
 }
