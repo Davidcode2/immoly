@@ -32,8 +32,6 @@ export default function PlotlyChart({
   >(null);
   const [gridColor, setGridColor] = useState<string>("hsl(10, 10%, 10%)");
   const [labelColor, setLabelColor] = useState<string>("hsl(200, 80%, 10%)");
-  const [zinsLineColor, setZinsLineColor] = useState<string>();
-  const [tilgungLineColor, setTilgungLineColor] = useState<string>();
 
 
   useEffect(() => {
@@ -81,12 +79,9 @@ export default function PlotlyChart({
     };
   }, [data]);
 
-  useEffect(() => {
-    const root = document.querySelector(':root') as HTMLElement;
-    const styles = getComputedStyle(root);
-    setZinsLineColor(styles.getPropertyValue('--light-accent'));
-    setTilgungLineColor(styles.getPropertyValue('--accent'));
-  }, []);
+  const zinsLineColor = "var(--light-accent)";
+  const tilgungLineColor = "var(--accent)";
+
 
   if (!debouncedChartData) {
     return null;

@@ -16,7 +16,7 @@ export default function PieChartNebenkosten({
   handleMouseLeave,
 }: PropTypes) {
   const [colors, setColors] = useState<string[]>([]);
-  const { theme, resolvedTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     const root = document.documentElement;

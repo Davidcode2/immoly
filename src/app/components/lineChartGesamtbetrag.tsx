@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
 
 type PropTypes = {
@@ -25,18 +24,7 @@ export default function PieChartGesamtBetrag({
     ];
   };
 
-  const [colors, setColors] = useState<string[]>([]);
-
-  useEffect(() => {
-    const root = document.querySelector(':root') as HTMLElement;
-    const styles = getComputedStyle(root);
-    const chartColors = [
-      styles.getPropertyValue('--accent'),
-      styles.getPropertyValue('--dark-accent'),
-    ];
-    setColors(chartColors);
-  }, []);
-
+  const colors = ["var(--accent)", "var(--dark-accent)"];
   const data = calcPieData(kreditSumme, downPayment, kaufSumme);
 
   return (

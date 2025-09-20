@@ -1,15 +1,11 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import Image from "next/image";
-import { useEffect, useState } from "react";
 
 export default function DarkModeToggle() {
   const { theme, setTheme } = useTheme();
-  const [useSystem, setUseSystem] = useState<boolean>();
 
   const handleToggleDarkMode = () => {
-    setUseSystem(false);
     if (!theme) {
       setTheme("green-mist-light");
     }
