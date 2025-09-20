@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,30 +11,17 @@ import {
   DropdownMenuTrigger,
   DropdownMenuRadioGroup,
 } from "@/components/ui/dropdown-menu";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Header() {
   const [position, setPosition] = useState("bottom");
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("theme") || "light";
-    }
-    return "light";
-  });
+  const { setTheme } = useTheme();
 
   const onValueChange = (value: string) => {
     setPosition(value);
-    setTheme(value)
+    setTheme(value);
     console.log(value);
-  }
-
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-    document.documentElement.setAttribute(
-      "data-theme",
-      theme,
-    );
-  }, [theme]);
+  };
 
   const brushIcon = (
     <svg
@@ -89,14 +77,19 @@ export default function Header() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 bg-[var(--background)]">
-          <DropdownMenuRadioGroup value={position} onValueChange={onValueChange}>
+          <DropdownMenuRadioGroup
+            value={position}
+            onValueChange={onValueChange}
+          >
             {themes.map((theme) => (
               <DropdownMenuRadioItem
                 key={theme.value}
                 value={theme.value}
                 className="capitalize"
               >
-                { theme.icon && <span className="float-right">{theme.icon}</span> }
+                {theme.icon && (
+                  <span className="float-right">{theme.icon}</span>
+                )}
                 {theme.value.replace("-light", "").replace("-", " ")}
               </DropdownMenuRadioItem>
             ))}
