@@ -1,8 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@custom-variant dark (&:where(.dark, .dark *));
 
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-@custom-variant slate (&:where([data-theme=slate], [data-theme=slate] *));
 @custom-variant green-mist-light (&:where([data-theme=green-mist-light], [data-theme=green-mist-light] *));
 @custom-variant red-velvet-light (&:where([data-theme=red-velvet-light], [data-theme=red-velvet-light] *));
 @custom-variant blue-dream-light (&:where([data-theme=blue-dream-light], [data-theme=blue-dream-light] *));
@@ -81,11 +80,6 @@
   --secondary: hsl(95, 32%, 82%);
   --success: hsl(120, 40%, 60%);
   --alert: hsl(20, 70%, 60%);
-}
-
-[data-theme="slate"] {
-  --background: #0a0a0a;
-  --foreground: #ededed;
 }
 
 [data-theme="red-velvet-light"] {
@@ -195,6 +189,7 @@ body {
   font-weight: 250;
 }
 
+/*
 .dark {
   --background: oklch(0.147 0.004 49.25);
   --foreground: oklch(0.985 0.001 106.423);
@@ -228,6 +223,7 @@ body {
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.553 0.013 58.071);
 }
+*/
 
 @layer base {
   * {

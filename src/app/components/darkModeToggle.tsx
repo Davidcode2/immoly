@@ -14,6 +14,12 @@ export default function DarkModeToggle() {
       setTheme("green-mist-light");
     }
     setTheme(theme!.includes("dark") ? theme!.split("dark")[0] + "light" : theme!.split("light")[0] + "dark");
+    // set .dark class if dark theme active for tailwindss dark: utility
+    if (theme!.includes("dark")) 
+      document.documentElement.classList.remove("dark");
+    else {
+      document.documentElement.classList.add("dark");
+    }
   };
 
   const [systemPreference, setSystemPreference] = useState(() => {
