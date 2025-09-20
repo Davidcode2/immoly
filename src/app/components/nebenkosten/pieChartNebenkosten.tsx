@@ -1,5 +1,5 @@
 import { useTheme } from "next-themes";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 type PropTypes = {
