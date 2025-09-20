@@ -145,11 +145,12 @@ export function DraggableContainer({
   return (
     <div
       ref={containerRef}
-      className={`fixed right-0 bottom-0 left-0 w-full rounded-t-2xl bg-white ${className}`}
+      className={`fixed right-0 bottom-0 left-0 w-full rounded-t-2xl ${className}`}
       style={{ height: `${height}vh`, touchAction: 'none' }} // touchAction: 'none' prevents browser from interfering
     >
       <Handle />
-      <div className="h-[calc(100%-2rem)] overflow-y-auto">
+      <div className="absolute h-4 w-full bg-linear-to-b from-[var(--ultralight-accent)] from-10% to-[var(--ultralight-accent)]/10 px-4"></div>
+      <div className={` ${height <= MIN_HEIGHT_VH ? "hidden" : "block" } h-[calc(100%-2rem)] overflow-y-auto`}>
         {children}
       </div>
     </div>

@@ -13,12 +13,12 @@ export default function MobileFormContainer({ input, setInput }: PropTypes) {
   return (
       <DraggableContainer
         className={
-          "sticky -bottom-5 z-30 ml-[calc(50%-50vw)] w-screen rounded-t-2xl border border-[var(--light-accent)]/20 bg-[var(--background)]/70 backdrop-blur-lg md:hidden"
+          "sticky -bottom-5 z-30 ml-[calc(50%-50vw)] w-screen rounded-t-2xl border border-[var(--light-accent)]/20 bg-[var(--ultralight-accent)]/80 backdrop-blur-lg md:hidden"
         }
       >
         <div className="rounded-2xl">
           <div
-            className={`} overflow-scroll transition-all duration-300 ease-in-out`}
+            className={`overflow-scroll transition-all duration-300 ease-in-out `}
           >
             <FinanzierungsForm values={input} setInput={setInput} />
           </div>

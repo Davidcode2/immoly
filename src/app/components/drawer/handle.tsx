@@ -4,8 +4,10 @@ type HandleProps = {
 
 export function Handle({ className = "" }: HandleProps) {
   return (
-    <div className="absolute rounded-t-2xl w-full bg-linear-to-b from-[var(--background)] to-[var(--background)/90 px-4 py-4 cursor-grab active:cursor-grabbing">
-      <div className={`h-2 w-20 mx-auto rounded-full bg-gray-300 ${className}`} />
+    <div className="bg-[var(--ultralight-accent)] z-30 w-full cursor-grab rounded-t-2xl py-4 active:cursor-grabbing">
+      <div
+        className={`mx-auto h-2 w-24 rounded-full bg-gray-300 ${className} px-4`}
+      />
     </div>
   );
 }
