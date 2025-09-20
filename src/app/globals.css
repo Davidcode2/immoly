@@ -87,10 +87,10 @@
   --foreground: #330000;
   --dark-accent: #660000;
   --accent: #ee0000;
-  --light-accent: #ff6666;
+  --light-accent: gray;
   --strong-accent: hsl(10, 85%, 41%);
   --ultralight-accent: #fff0f0;
-  --primary: #ff9999;
+  --primary: gray;
   --secondary: #ffcccc;
   --success: hsl(120, 40%, 60%);
   --alert: #ff6600;
@@ -136,6 +136,35 @@
   --secondary: #cce6ff;
   --success: hsl(120, 40%, 60%);
   --alert: #ff6200;
+}
+
+[data-theme="hearth-stone-light"] {
+  --background: #ffffff;
+  --foreground: #3b2f2f;
+  --dark-accent: #6b4c4c;
+  --accent: #a0522d;
+  --light-accent: #d2b48c;
+  --strong-accent: hsl(30, 85%, 41%);
+  --ultralight-accent: #fffaf0;
+  --primary: #deb887;
+  --secondary: #f5deb3;
+  --success: hsl(120, 40%, 60%);
+  --alert: #ff4500;
+}
+
+[data-theme="hearth-stone-dark"] {
+  --background: #2f2b28;
+  --background: hsl(10, 99%, 1%);
+  --foreground: #f5f5dc;
+  --dark-accent: #6b4c4c;
+  --accent: #a0522d;
+  --light-accent: #d2b48c;
+  --strong-accent: hsl(30, 85%, 41%);
+  --ultralight-accent: #fffaf0;
+  --primary: #deb887;
+  --secondary: #f5deb3;
+  --success: hsl(120, 40%, 60%);
+  --alert: #ff4500;
 }
 
 @theme inline {

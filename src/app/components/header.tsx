@@ -22,7 +22,9 @@ export default function Header() {
     if (!theme) {
       setTheme(value);
     }
-    setTheme(theme!.includes("dark") ? value!.split("light")[0] + "dark" : value);
+    setTheme(
+      theme!.includes("dark") ? value!.split("light")[0] + "dark" : value,
+    );
     console.log(value);
   };
 
@@ -65,10 +67,10 @@ export default function Header() {
     </svg>
   );
   const themes = [
-    { value: "hearth-stone-light", icon: brushIcon },
-    { value: "green-mist-light", icon: brushIconCurvy },
-    { value: "red-velvet-light" },
-    { value: "blue-dream-light" },
+    { value: "hearth-stone-light", color: "#6b4c4c" },
+    { value: "green-mist-light", color: "hsl(172, 25%, 55%)" },
+    { value: "red-velvet-light", color: "#660000" },
+    { value: "blue-dream-light", color: "#0066cc" },
   ];
 
   return (
@@ -79,7 +81,7 @@ export default function Header() {
             <div className="px-5">{brushIcon}</div>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 bg-[var(--background)]">
+        <DropdownMenuContent className="w-56 text-[var(--foreground)] bg-[var(--background)]">
           <DropdownMenuRadioGroup
             value={position}
             onValueChange={onValueChange}
@@ -90,10 +92,13 @@ export default function Header() {
                 value={theme.value}
                 className="capitalize"
               >
-                {theme.icon && (
-                  <span className="float-right">{theme.icon}</span>
-                )}
                 {theme.value.replace("-light", "").replace("-", " ")}
+                {theme.color && (
+                  <span
+                    className="float-right rounded-full p-1"
+                    style={{ color: theme.color }}
+                  >{brushIconCurvy}</span>
+                )}
               </DropdownMenuRadioItem>
             ))}
           </DropdownMenuRadioGroup>
