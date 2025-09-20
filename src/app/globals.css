@@ -2,6 +2,8 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 @custom-variant slate (&:where([data-theme=slate], [data-theme=slate] *));
+@custom-variant sparkasse (&:where([data-theme=sparkasse], [data-theme=sparkasse] *));
+@custom-variant volksbank (&:where([data-theme=volksbank], [data-theme=volksbank] *));
 
 :root {
   --background: hsl(1, 0%, 100%);
@@ -36,6 +38,32 @@
 [data-theme="slate"] {
   --background: #0a0a0a;
   --foreground: #ededed;
+}
+
+[data-theme="sparkasse"] {
+  --background: #fff0f0;
+  --foreground: #330000;
+  --dark-accent: #660000;
+  --accent: #cc0000;
+  --light-accent: #ff6666;
+  --ultralight-accent: #fff0f0;
+  --primary: #ff9999;
+  --secondary: #ffcccc;
+  --success: hsl(120, 40%, 60%);
+  --alert: #ff6600;
+}
+
+[data-theme="volksbank"] {
+  --background: #f0f8ff;
+  --foreground: #001a33;
+  --dark-accent: #003366;
+  --accent: #0066cc;
+  --light-accent: #66b2ff;
+  --ultralight-accent: #f0f8ff;
+  --primary: #99ccff;
+  --secondary: #cce6ff;
+  --success: hsl(120, 40%, 60%);
+  --alert: #ff6600;
 }
 
 [data-theme="dark"] {
