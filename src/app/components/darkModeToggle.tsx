@@ -1,15 +1,19 @@
-'use client';
+"use client";
 
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function DarkModeToggle() {
-  const [theme, setTheme] = useState(() => { return "system"; });
+  const { theme, setTheme } = useTheme();
   const [useSystem, setUseSystem] = useState<boolean>();
 
   const handleToggleDarkMode = () => {
     setUseSystem(false);
-    setTheme(theme === "dark" ? "light" : "dark");
+    if (!theme) {
+      setTheme("green-mist-light");
+    }
+    setTheme(theme!.includes("dark") ? theme!.split("dark")[0] + "light" : theme!.split("light")[0] + "dark");
   };
 
   const [systemPreference, setSystemPreference] = useState(() => {
@@ -23,10 +27,9 @@ export default function DarkModeToggle() {
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
-    localStorage.setItem("useSystem", useSystem ? useSystem.valueOf() ? "true" : "false" : "false");
-    document.documentElement.setAttribute(
-      "data-theme",
-      useSystem ? systemPreference : theme,
+    localStorage.setItem(
+      "useSystem",
+      useSystem ? (useSystem.valueOf() ? "true" : "false") : "false",
     );
   }, [theme, useSystem, systemPreference]);
 
@@ -50,7 +53,7 @@ export default function DarkModeToggle() {
       alt="Globus Icon"
       width={24}
       height={24}
-      className="dark:invert-0 invert"
+      className="invert dark:invert-0"
       onClick={handleToggleDarkMode}
     />
   );

@@ -14,7 +14,7 @@ export default async function GraphPage() {
     return <div>Skipped at build time</div>;
   }
   return (
-    <div className="dark:bg-[url(/images/black_rainbow_low_saturation.jpg)] dark:bg-cover dark:bg-bottom">
+    <div className="">
       <div className="mx-auto min-h-screen max-w-[2000px] pb-20 sm:pb-10">
         <Header />
         <div className="flex flex-col md:gap-6">
