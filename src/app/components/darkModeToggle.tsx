@@ -50,7 +50,7 @@ export default function DarkModeToggle() {
       alt="Globus Icon"
       width={24}
       height={24}
-      className="invert-0 dark:invert"
+      className="dark:invert-0 invert"
       onClick={handleToggleDarkMode}
     />
   );

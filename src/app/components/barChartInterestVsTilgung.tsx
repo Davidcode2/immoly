@@ -41,13 +41,13 @@ export default function BarChartInterestVsTilgung({
           dataKey="uv"
           stackId="c"
           radius={[10, 0, 0, 10]}
-          fill={"hsl(172, 25%, 55%)"}
+          fill={"var(--light-accent)"}
           barSize={10}
         />
         <Bar
           dataKey="pv"
           stackId="c"
-          fill={"hsl(95, 32%, 82%)"}
+          fill={"var(--dark-accent)"}
           radius={[0, 10, 10, 0]}
           barSize={10}
         />

@@ -1,17 +1,14 @@
-import Image from "next/image";
 import IconsHeader from "../iconsHeader";
+import CursorSwarm from "./cursor-swarm";
 
 export default function Hero() {
   return (
-    <div className="md:border border-[var(--accent)] rounded-lg shadow bg-[url('/images/background/green_wavy.jpg')] bg-cover">
-      <div className="rounded-lg backdrop-blur p-4 md:p-8">
-        <Image
-          src="/immoly_logo_square_transparent_text.webp"
-          width={150}
-          height={10}
-          alt="Logo"
-          className="mb-4"
-        />
+    <div className="rounded-lg border-[var(--accent)]">
+      <div className="rounded-lg p-4 backdrop-blur md:p-8">
+        <div className="absolute left-48">
+          <CursorSwarm />
+        </div>
+        <h1 className="text-6xl font-extrabold">Immoly</h1>
         <div className="p-2">
           <IconsHeader />
         </div>
@@ -19,4 +16,3 @@ export default function Hero() {
     </div>
   );
 }
-

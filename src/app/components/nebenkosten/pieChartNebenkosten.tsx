@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 type PropTypes = {
@@ -15,18 +16,25 @@ export default function PieChartNebenkosten({
   handleMouseLeave,
 }: PropTypes) {
   const [colors, setColors] = useState<string[]>([]);
+  const { theme, resolvedTheme } = useTheme();
 
   useEffect(() => {
-    const root = document.querySelector(":root") as HTMLElement;
-    const styles = getComputedStyle(root);
-    const chartColors = [
-      styles.getPropertyValue("--dark-accent"),
-      styles.getPropertyValue("--neutral-accent"),
-      styles.getPropertyValue("--accent"),
-      styles.getPropertyValue("--light-accent"),
-    ];
-    setColors(chartColors);
-  }, []);
+    const root = document.documentElement;
+    const updateColors = () => {
+      const styles = getComputedStyle(root);
+      const chartColors = [
+        styles.getPropertyValue("--dark-accent"),
+        styles.getPropertyValue("--neutral-accent"),
+        styles.getPropertyValue("--accent"),
+        styles.getPropertyValue("--light-accent"),
+      ].map((c) => c.trim());
+      setColors(chartColors);
+    };
+
+    // Defer until after class change has applied
+    const id = setTimeout(updateColors, 0);
+    return () => clearTimeout(id);
+  }, [resolvedTheme]);
 
   return (
     <ResponsiveContainer width="100%" height="100%">

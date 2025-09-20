@@ -10,7 +10,7 @@
 :root {
   --dark-accent: hsl(194, 33%, 18%);
   --neutral-accent: hsl(194, 33%, 22%);
-  --accent: oklch(0.97 0.001 106.424);
+  --accent: hsl(195, 37%, 40%);
   --strong-accent: hsl(180, 55%, 31%);
   --light-accent: hsl(172, 25%, 55%);
   --ultralight-accent: hsl(172, 25%, 95%);
@@ -78,6 +78,7 @@
   --dark-accent: #660000;
   --accent: #ee0000;
   --light-accent: #ff6666;
+  --strong-accent: hsl(10, 85%, 41%);
   --ultralight-accent: #fff0f0;
   --primary: #ff9999;
   --secondary: #ffcccc;
@@ -91,6 +92,7 @@
   --dark-accent: #660000;
   --accent: #ee0000;
   --light-accent: #ff6666;
+  --strong-accent: hsl(10, 85%, 41%);
   --ultralight-accent: #fff0f0;
   --primary: #ff9999;
   --secondary: #ffcccc;
@@ -104,6 +106,7 @@
   --dark-accent: #003366;
   --accent: #0066cc;
   --light-accent: #66b2ff;
+  --strong-accent: hsl(200, 85%, 41%);
   --ultralight-accent: #f0f8ff;
   --primary: #99ccff;
   --secondary: #cce6ff;
