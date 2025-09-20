@@ -3,7 +3,7 @@ import DevelopmentChart from "./developmentChart";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import { useState } from "react";
 import CenteredModal from "../centeredModal";
-import OptionalParameters from "../baseDataForm/optionalParameters";
+import SaveOrBuyModal from "./saveOrBuyModal";
 
 type PropTypes = {
   table: ArmotizationEntry[];
@@ -18,33 +18,11 @@ export default function SaveOrBuyContainer({
 }: PropTypes) {
   const [showModal, setShowModal] = useState(false);
 
-  const handleChange = (name: string, value: number) => {
-    if (name === "cashRoi") {
-      setInput({ ...input, ["cash_roi"]: value });
-    } else {
-      setInput({ ...input, [name]: value });
-    }
-  };
-
   return (
     <div>
       {showModal && (
         <CenteredModal onClose={() => setShowModal(false)}>
-          <div className="rounded-lg bg-[var(--primary)]/60 p-10 shadow-xl">
-            <OptionalParameters
-              cashRoi={input.cash_roi!}
-              handleInputChange={handleChange}
-              rent={input.rent!}
-            />
-            <div className="w-[400px]">
-              <DevelopmentChart
-                tilgungsTabelle={table}
-                rent={input.rent}
-                interest={input.cash_roi || 0}
-                timeoutAmount={80}
-              />
-            </div>
-          </div>
+          <SaveOrBuyModal table={table} input={input} setInput={setInput} />
         </CenteredModal>
       )}
       <div className="group cursor-pointer" onClick={() => setShowModal(true)}>
