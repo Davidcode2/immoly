@@ -15,7 +15,7 @@ export default function BankOffer({
   sondertilgungen,
 }: PropTypes) {
   return (
-    <div className="flex flex-col gap-4 rounded-lg shadow md:flex-row">
+    <div className="flex flex-col gap-4 rounded-lg max-w-full shadow md:flex-row">
       <div className="relative h-40 md:h-auto md:w-96">
         <Image
           className="w-fit rounded-t-lg object-cover object-center md:rounded-l-lg md:rounded-t-none"

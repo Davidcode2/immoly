@@ -2,7 +2,7 @@ import BankOffer from "./bankOffer";
 
 export default function BankLinkList() {
   return (
-    <div className="px-3 py-[100px] max-w-[1000px] mx-auto">
+    <div className="px-3 py-[100px] 2xl:max-w-[1000px] max-w-screen mx-auto">
       <div className="flex flex-col gap-20">
         <BankOffer
           title="MSB SparDarlehen"
