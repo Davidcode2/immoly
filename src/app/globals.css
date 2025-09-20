@@ -138,12 +138,6 @@
   --alert: #ff6200;
 }
 
-[data-theme="dark"] {
-  @apply text-slate-100;
-  --background: #0a0a0a;
-  --foreground: #ededed;
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
