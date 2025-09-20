@@ -15,11 +15,14 @@ import { useState } from "react";
 
 export default function Header() {
   const [position, setPosition] = useState("bottom");
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   const onValueChange = (value: string) => {
     setPosition(value);
-    setTheme(value);
+    if (!theme) {
+      setTheme(value);
+    }
+    setTheme(theme!.includes("dark") ? value!.split("light")[0] + "dark" : value);
     console.log(value);
   };
 
@@ -62,7 +65,7 @@ export default function Header() {
     </svg>
   );
   const themes = [
-    { value: "stone-light", icon: brushIcon },
+    { value: "hearth-stone-light", icon: brushIcon },
     { value: "green-mist-light", icon: brushIconCurvy },
     { value: "red-velvet-light" },
     { value: "blue-dream-light" },
