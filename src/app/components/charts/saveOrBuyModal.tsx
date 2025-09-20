@@ -7,9 +7,8 @@ type PropTypes = {
   setInput: (data: CashRoiModel) => void;
   input: CashRoiModel;
   table: ArmotizationEntry[];
-}
+};
 export default function SaveOrBuyModal({ table, input, setInput }: PropTypes) {
-
   const handleChange = (name: string, value: number) => {
     if (name === "cashRoi") {
       setInput({ ...input, ["cash_roi"]: value });
@@ -20,18 +19,21 @@ export default function SaveOrBuyModal({ table, input, setInput }: PropTypes) {
 
   return (
     <div className="rounded-lg bg-[var(--primary)]/60 p-10 shadow-xl">
-      <OptionalParameters
-        cashRoi={input.cash_roi!}
-        handleInputChange={handleChange}
-        rent={input.rent!}
-      />
-      <div className="w-[400px]">
-        <DevelopmentChart
-          tilgungsTabelle={table}
-          rent={input.rent}
-          interest={input.cash_roi || 0}
-          timeoutAmount={80}
+      <h4 className="mb-8 font-extrabold text-4xl">Kaufen oder Sparen?</h4>
+      <div className="flex flex-col gap-30 lg:flex-row">
+        <OptionalParameters
+          cashRoi={input.cash_roi!}
+          handleInputChange={handleChange}
+          rent={input.rent!}
         />
+        <div className="w-[400px]">
+          <DevelopmentChart
+            tilgungsTabelle={table}
+            rent={input.rent}
+            interest={input.cash_roi || 0}
+            timeoutAmount={80}
+          />
+        </div>
       </div>
     </div>
   );
