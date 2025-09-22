@@ -3,7 +3,7 @@ export default function ScrollIndicator() {
     <div className="flex w-full justify-center">
       <div
         className="mb-4 h-6 w-6 animate-bounce sm:hidden"
-        onClick={() => window.scroll({ top: 280, behavior: "smooth" })}
+        onClick={() => window.scroll({ top: 850, behavior: "smooth" })}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
