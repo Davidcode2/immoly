@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 type PropTypes = {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>, year: number) => void;
   year: number;
@@ -8,6 +10,12 @@ export default function TilgungsWechselModal({
   year,
   tilgungswechsel,
 }: PropTypes) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current!.select();
+    inputRef.current!.focus();
+  },[]);
   return (
     <div className="tilgungsWechselModal z-40 mx-10 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl sm:mx-0 md:w-[400px]">
       <div className="tilgungsWechselModal">
@@ -24,6 +32,7 @@ export default function TilgungsWechselModal({
         >
           <div className="flex justify-center pt-18 pb-8">
             <input
+              ref={inputRef}
               className="tilgungsWechselModal w-36 border-b border-[var(--dark-accent)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--dark-accent)]/60 focus:outline-none md:text-2xl"
               id="newTilgung"
               name="newTilgung"

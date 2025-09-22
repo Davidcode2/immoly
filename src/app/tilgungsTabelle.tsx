@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import ArmotizationEntry from "./lib/models/ArmotizationEntry";
 import CashRoiModel from "./lib/models/cashRoiModel";
-import SondertilgungInput from "./components/sondertilgungInput";
+import SondertilgungDisplay from "./components/sondertilgungDisplay";
 import { screenWidthMobile } from "./utils/screenWidth";
 import CenteredModal from "./components/centeredModal";
 import TilgungsWechselModal from "./components/tilgungsWechselModal";
 import { updateSonderAmountInBrowserStorage } from "./services/sonderAmountBrowserUpdater";
+import SondertilgungModal from "./components/sondertilgungModal";
 
 type PropTypes = {
   table: ArmotizationEntry[];
@@ -21,7 +22,8 @@ export default function Tilgungstabelle({
 }: PropTypes) {
   const [temporaryTable, setTemporaryTable] =
     useState<ArmotizationEntry[]>(table);
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showTilgungswechselModal, setShowTilgungswechselModal] = useState<boolean>(false);
+  const [showSondertilgungModal, setShowSondertilgungModal] = useState<boolean>(false);
   const [selectedEntry, setSelectedEntry] = useState<ArmotizationEntry>();
   const tilgungsWechselModalRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +36,7 @@ export default function Tilgungstabelle({
   ) => {
     const form = event.target as HTMLFormElement;
     const sondertilgungAmount = (
-      form.elements.namedItem("sonderTilgungAmount") as HTMLInputElement
+      form.elements.namedItem("sondertilgungAmount") as HTMLInputElement
     ).value;
     return sondertilgungAmount;
   };
@@ -75,15 +77,21 @@ export default function Tilgungstabelle({
       calculationId!,
     );
     sendChangeNotification();
-    setShowModal(false);
+    setShowTilgungswechselModal(false);
   };
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
-  const openModal = (e: any, entry: ArmotizationEntry) => {
+  const openTilgungswechselModal = (e: any, entry: ArmotizationEntry) => {
     const target = e.target as HTMLElement;
     if (target.closest(".sondertilgungInput")) return;
     setSelectedEntry(entry);
-    setShowModal(true);
+    setShowTilgungswechselModal(true);
+  };
+
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  const openSondertilgungModal = (e: any, entry: ArmotizationEntry) => {
+    setSelectedEntry(entry);
+    setShowSondertilgungModal(true);
   };
 
   return (
@@ -91,13 +99,24 @@ export default function Tilgungstabelle({
       ref={tilgungsWechselModalRef}
       className="grid h-fit justify-stretch rounded-lg text-xs lg:text-base"
     >
-      {showModal && (
-        <CenteredModal onClose={() => setShowModal(false)}>
+      {showTilgungswechselModal && (
+        <CenteredModal onClose={() => setShowTilgungswechselModal(false)}>
           <TilgungsWechselModal
             handleSubmit={handleTilgungsWechsel}
             year={selectedEntry!.year!}
             tilgungswechsel={
               selectedEntry!.tilgungswechsel || selectedEntry!.yearlyRate / 12
+            }
+          />
+        </CenteredModal>
+      )}
+      {showSondertilgungModal && (
+        <CenteredModal onClose={() => setShowSondertilgungModal(false)}>
+          <SondertilgungModal
+            handleSubmit={handleSondertilgungSubmit}
+            year={selectedEntry!.year!}
+            sondertilgung={
+              selectedEntry!.sondertilgung || 0
             }
           />
         </CenteredModal>
@@ -126,7 +145,7 @@ export default function Tilgungstabelle({
             <tr
               key={x.year}
               className="hover:cursor-pointer hover:bg-[var(--light-accent)]/40 hover:shadow"
-              onClick={(e) => openModal(e, x)}
+              onClick={(e) => openTilgungswechselModal(e, x)}
             >
               <td className="px-4 py-3 md:py-5">{x.year}</td>
               <td className="max-w-12 py-3 sm:px-4 md:max-w-22 md:py-5">
@@ -155,12 +174,12 @@ export default function Tilgungstabelle({
               <td className="max-w-12 py-3 sm:px-4 md:max-w-22 md:py-5">
                 {Math.round(x.remainingPrincipal).toLocaleString("de")}
               </td>
-              <td className="sondertilgungInput w-16 py-3 sm:px-4 md:w-24 md:py-5">
+              <td onClick={(e) => openSondertilgungModal(e, x)} className="sondertilgungInput w-16 py-3 sm:px-4 md:w-24 md:py-5">
                 <form
                   onSubmit={(e) => handleSondertilgungSubmit(e, x.year)}
                   className="justify-fit sondertilgungInput flex sm:gap-4"
                 >
-                  <SondertilgungInput
+                  <SondertilgungDisplay
                     year={x.year}
                     sondertilgung={getSondertilgung(x)}
                   />
