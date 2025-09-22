@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { CalculationDbo } from "./lib/models/calculationDbo";
 import { deleteCalculation } from "./services/calculationsAccessor";
 import { useSearchParams } from "next/navigation";
-import { Check } from "lucide-react";
+import { Check, LoaderCircle } from "lucide-react";
 
 export default function StoredScenario({
   calculation,
@@ -12,12 +12,18 @@ export default function StoredScenario({
 }) {
   const [selected, setSelected] = useState(false);
   const searchParams = useSearchParams();
+  const [loading, setLoading] = useState(false);
 
   const setCalcId = () => {
-    const url = new URL(window.location.href);
-    url.searchParams.set("calculationId", calculation.id.toString());
-    setSelected(true);
-    window.history.pushState({}, "", url);
+    if (selected) return;
+    setLoading(true);
+    requestAnimationFrame(() => {
+      // heavy work
+      const url = new URL(window.location.href);
+      url.searchParams.set("calculationId", calculation.id.toString());
+      setSelected(true);
+      window.history.pushState({}, "", url);
+    });
   };
 
   const isSelected = () => {
@@ -34,13 +40,14 @@ export default function StoredScenario({
 
   useEffect(() => {
     setSelected(isSelected());
+    setLoading(false);
   }, [searchParams]);
 
   return (
     <div>
       {selected && (
         <div className="flex rounded-t-lg bg-[var(--primary)] px-6 py-2 text-[var(--dark-accent)]">
-          <div className="text-sm self-center">Gewählt</div>
+          <div className="self-center text-sm">Gewählt</div>
           <Check className="ml-auto inline-block" />
         </div>
       )}
@@ -118,10 +125,13 @@ export default function StoredScenario({
         </div>
 
         <button
-          className="mt-6 w-full cursor-pointer rounded-lg bg-[var(--light-accent)] p-2 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90"
+          className="mt-6 flex w-full cursor-pointer justify-center rounded-lg bg-[var(--light-accent)] p-2 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90"
           onClick={setCalcId}
         >
           Szenario übernehmen
+          {loading && (
+            <LoaderCircle className="absolute right-10 animate-spin" />
+          )}
         </button>
       </div>
     </div>
