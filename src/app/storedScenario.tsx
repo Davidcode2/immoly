@@ -18,7 +18,6 @@ export default function StoredScenario({
     if (selected) return;
     setLoading(true);
     requestAnimationFrame(() => {
-      // heavy work
       const url = new URL(window.location.href);
       url.searchParams.set("calculationId", calculation.id.toString());
       setSelected(true);

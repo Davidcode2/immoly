@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import calcTilgung from "app/lib/calculateArmotizaztionTable";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import CashRoiModel from "app/lib/models/cashRoiModel";
@@ -12,10 +12,6 @@ import ChartsContainer from "app/components/charts/chartsContainer";
 import MainStatsSection from "./components/mainStatsSection";
 import { Sondertilgung } from "./lib/models/sondertilgung";
 import { Tilgungswechsel } from "./lib/models/tilgungswechsel";
-import {
-  getSondertilgungenCacheHelper,
-  getTilgungswechselCacheHelper,
-} from "./services/sonderCalculationsHelper";
 import MobileFormContainer from "./components/mobileFormContainer";
 import MobileTilgungsTabelleContainer from "./components/mobileTilgungsTabelleContainer";
 import {
@@ -29,11 +25,11 @@ import { sondertilgungenAccessor } from "./services/sondertilgungAccessor";
 import { tilgungswechselAccessor } from "./services/tilgungswechselAccessor";
 import { calculationAccessor } from "./services/calculationsAccessor";
 import { CalculationDbo } from "./lib/models/calculationDbo";
+import SonderCacheHelper from "./services/cacheHelper";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
   const [input, setInput] = useState<CashRoiModel | null>(null);
-  const [selectedScenario, setSelectedScenario] = useState<string | null>("18");
   const [sondertilgungenCache, setSondertilgungenCache] = useState<
     Sondertilgung[]
   >([]);
@@ -44,53 +40,38 @@ export default function ResultDisplay() {
   const searchParams = useSearchParams();
   const calculationId = searchParams.get("calculationId");
   const updateNebenkosten = useNebenkostenStore((state) => state.updateValue);
-  const updateMaklergebuehr = useMaklergebuehrStore((state) => state.updateValue);
+  const updateMaklergebuehr = useMaklergebuehrStore(
+    (state) => state.updateValue,
+  );
   const updateBundesland = useBundeslandStore((state) => state.updateValue);
   const nebenkosten = useNebenkostenStore((state) => state.value);
   const bundesland = useBundeslandStore((state) => state.value);
   const maklergebuehr = useMaklergebuehrStore((state) => state.value);
 
+  const skipNextInputEffect = useRef(false);
+
   const changeHandler = async () => {
     if (!input) {
       return;
     }
-    input.sondertilgungen = await getSondertilgungFromCache(
+    input.sondertilgungen = await sonderCacheHelper.getSondertilgungFromCache(
       calculationId!,
+      sondertilgungenCache,
       true,
     );
-    input.tilgungswechsel = await getTilgungswechselFromCache(
+    input.tilgungswechsel = await sonderCacheHelper.getTilgungswechselFromCache(
       calculationId!,
+      tilgungswechselCache,
       true,
     );
     const tilgungungsTabelle = calcTilgung(input, nebenkosten);
     setTable(tilgungungsTabelle);
   };
 
-  const getSondertilgungFromCache = async (
-    calculationId: string,
-    update: boolean = false,
-  ) => {
-    const sondertilgungen = await getSondertilgungenCacheHelper(
-      calculationId,
-      sondertilgungenCache,
-      update,
-    );
-    setSondertilgungenCache(sondertilgungen!);
-    return sondertilgungen!;
-  };
-
-  const getTilgungswechselFromCache = async (
-    calculationId: string,
-    update: boolean = false,
-  ) => {
-    const tilgungswechsel = await getTilgungswechselCacheHelper(
-      calculationId,
-      tilgungswechselCache,
-      update,
-    );
-    setTilgungswechselCache(tilgungswechsel!);
-    return tilgungswechsel!;
-  };
+  const sonderCacheHelper = new SonderCacheHelper(
+    setSondertilgungenCache,
+    setTilgungswechselCache,
+  );
 
   useEffect(() => {
     setInput({
@@ -105,16 +86,26 @@ export default function ResultDisplay() {
     const debounceTimeout = setTimeout(() => {
       async function loadData() {
         if (!input) return;
-        input.sondertilgungen = await getSondertilgungFromCache(calculationId!);
-        input.tilgungswechsel = await getTilgungswechselFromCache(
-          calculationId!,
-        );
+        input.sondertilgungen =
+          await sonderCacheHelper.getSondertilgungFromCache(
+            calculationId!,
+            sondertilgungenCache,
+          );
+        input.tilgungswechsel =
+          await sonderCacheHelper.getTilgungswechselFromCache(
+            calculationId!,
+            tilgungswechselCache,
+          );
         const tilgungsTabelle = calcTilgung(input, nebenkosten);
         setTable(tilgungsTabelle);
       }
 
+      if (skipNextInputEffect.current) {
+        skipNextInputEffect.current = false;
+        return; // skip recalculation caused by URL change
+      }
       loadData();
-    }, 10);
+    }, 100);
 
     return () => {
       clearTimeout(debounceTimeout);
@@ -134,7 +125,6 @@ export default function ResultDisplay() {
   };
 
   useEffect(() => {
-    setSelectedScenario((Number(calculationId) - 1).toString());
     async function loadData() {
       if (calculationId) {
         try {
@@ -154,10 +144,21 @@ export default function ResultDisplay() {
           updateNebenkosten(Math.round(nebenkosten));
 
           // reset cache
-          const sondertilgungen = await getSondertilgungFromCache(calculationId!, true);
-          const tilgungswechsel = await getTilgungswechselFromCache(calculationId!, true);
+          const sondertilgungen =
+            await sonderCacheHelper.getSondertilgungFromCache(
+              calculationId!,
+              sondertilgungenCache,
+              true,
+            );
+          const tilgungswechsel =
+            await sonderCacheHelper.getTilgungswechselFromCache(
+              calculationId!,
+              tilgungswechselCache,
+              true,
+            );
           result.sondertilgungen = sondertilgungen;
           result.tilgungswechsel = tilgungswechsel;
+          skipNextInputEffect.current = true;
           setInput(result);
 
           const tilgungungsTabelle = calcTilgung(result, nebenkosten);
@@ -172,7 +173,7 @@ export default function ResultDisplay() {
   }, [calculationId]);
 
   return (
-    <div className="sm:px-10 px-3 pt-2 md:pb-10">
+    <div className="px-3 pt-2 sm:px-10 md:pb-10">
       <div
         className={`grid gap-y-6 md:gap-x-6 md:gap-y-16 lg:grid-cols-[1fr_5fr] ${table && "items-start"}`}
       >
@@ -189,7 +190,6 @@ export default function ResultDisplay() {
             <>
               <MainStatsSection
                 userInput={input}
-                calculationId={selectedScenario}
                 table={table}
               />
               <div className="grid gap-6 2xl:grid-cols-[3fr_2fr]">
@@ -201,7 +201,11 @@ export default function ResultDisplay() {
                     sendChangeNotification={changeHandler}
                   />
                 </div>
-                <ChartsContainer setInput={setInput} input={input} table={table} />
+                <ChartsContainer
+                  setInput={setInput}
+                  input={input}
+                  table={table}
+                />
                 <MobileTilgungsTabelleContainer
                   input={input}
                   table={table}

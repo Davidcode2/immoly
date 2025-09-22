@@ -9,7 +9,6 @@ import BarChartInterestVsTilgung from "./barChartInterestVsTilgung";
 type PropTypes = {
   userInput: CashRoiModel | null;
   table: ArmotizationEntry[];
-  calculationId: string | null;
 };
 
 export default function MainStatsSection({
