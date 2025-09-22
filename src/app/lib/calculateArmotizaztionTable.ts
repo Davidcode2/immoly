@@ -1,17 +1,12 @@
-import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 import ArmotizationEntry from "./models/ArmotizationEntry";
 import CashRoiModel from "./models/cashRoiModel";
 
 export default function calcTilgung(
   calculation: CashRoiModel,
-  nebenkosten?: number,
+  nebenkosten: number,
 ): ArmotizationEntry[] {
   if (!calculation) {
     return [];
-  }
-
-  if (!nebenkosten) {
-    nebenkosten = new NebenkostenCalculator(calculation.principal).calcSumme();
   }
 
   const kreditsumme =

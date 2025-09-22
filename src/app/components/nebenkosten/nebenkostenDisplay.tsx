@@ -1,5 +1,5 @@
 import CashRoiModel from "app/lib/models/cashRoiModel";
-import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
+import { NebenkostenCalculatorForNebenkostenComponent } from "app/services/nebenkostenCalculationService";
 import { useEffect, useRef, useState } from "react";
 import CenteredModal from "../centeredModal";
 import PieChartNebenkosten from "./pieChartNebenkosten";
@@ -20,15 +20,18 @@ type PropTypes = {
 export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const bundesland = useBundeslandStore((state) => state.value); 
+  const bundesland = useBundeslandStore((state) => state.value);
   const [maklergebuehr, setMaklergebuehr] = useState<number>(3.57);
   const [nebenkosten, setNebenkosten] = useState<
     { name: string; value: number }[]
   >([]);
   const sumNebenkosten = useRef<number>(0);
 
-  const nebenkostenCalculator = new NebenkostenCalculator(
-    calculationData?.principal || 0,
+  if (!calculationData) {
+    throw new Error("No calculation data available");
+  }
+  const nebenkostenCalculator = new NebenkostenCalculatorForNebenkostenComponent(
+    calculationData?.principal,
   );
 
   const handleMouseEnter = (index: number) => setActiveIndex(index);
@@ -118,11 +121,10 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
               key={entry.name}
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={handleMouseLeave}
-              className={`flex cursor-pointer flex-col transition-opacity ${
-                activeIndex === index
+              className={`flex cursor-pointer flex-col transition-opacity ${activeIndex === index
                   ? "text-[var(--accent)] opacity-100"
                   : "opacity-90"
-              }`}
+                }`}
             >
               <div className="flex items-center">
                 <span

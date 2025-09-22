@@ -26,6 +26,7 @@ import { tilgungswechselAccessor } from "./services/tilgungswechselAccessor";
 import { calculationAccessor } from "./services/calculationsAccessor";
 import { CalculationDbo } from "./lib/models/calculationDbo";
 import SonderCacheHelper from "./services/cacheHelper";
+import { DEFAULT_CALCULATION } from "./constants";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -74,12 +75,9 @@ export default function ResultDisplay() {
   );
 
   useEffect(() => {
-    setInput({
-      monthly_rate: 1800,
-      principal: 480000,
-      down_payment: 70000,
-      interest_rate: 3.8,
-    } as CashRoiModel);
+    setInput(DEFAULT_CALCULATION);
+    const nebenkosten = new NebenkostenCalculator(DEFAULT_CALCULATION.principal, 3.57, bundesland).calcSumme();
+    updateNebenkosten(Math.round(nebenkosten));
   }, []);
 
   useEffect(() => {
@@ -140,6 +138,8 @@ export default function ResultDisplay() {
             (result as CalculationDbo).maklerguehrPercentage ?? maklergebuehr,
             (result as CalculationDbo).bundesland ?? bundesland,
           ).calcSumme();
+          console.log("nebenkosten loaded from calculation:", nebenkosten);
+          console.log(result);
 
           updateNebenkosten(Math.round(nebenkosten));
 
@@ -158,6 +158,7 @@ export default function ResultDisplay() {
             );
           result.sondertilgungen = sondertilgungen;
           result.tilgungswechsel = tilgungswechsel;
+
           skipNextInputEffect.current = true;
           setInput(result);
 

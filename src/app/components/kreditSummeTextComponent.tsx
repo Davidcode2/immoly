@@ -1,4 +1,3 @@
-import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 import Image from "next/image";
 import PieChartGesamtBetrag from "./lineChartGesamtbetrag";
 import { useNebenkostenStore } from "app/store";
@@ -11,10 +10,10 @@ export default function KreditSummeTextComponent({
   principal,
   downPayment,
 }: PropTypes) {
-  let nebenkosten = new NebenkostenCalculator(principal).calcSumme();
-  nebenkosten = useNebenkostenStore((state) => state.value);
+  const nebenkosten = useNebenkostenStore((state) => state.value);
   const kreditSummeRaw = principal + nebenkosten - downPayment;
   const kreditSumme = kreditSummeRaw < 0 ? 0 : kreditSummeRaw;
+
 
   return (
     <div className="z-20 max-h-56 rounded-lg bg-[var(--light-accent)]/10 shadow backdrop-blur-2xl">
