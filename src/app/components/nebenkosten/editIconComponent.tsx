@@ -13,7 +13,7 @@ export default function EditIconComponent({ setShowModal }: PropTypes) {
       <div className="group z-30 inline-block rounded-xl border-[var(--dark-accent)] md:p-1 md:px-2 text-xs transition-colors hover:bg-[var(--dark-accent)] hover:text-[var(--secondary)] md:border">
         <div className="hidden pr-1 md:inline-block">Mehr</div>
         <Image
-          className="hidden opacity-50 group-hover:opacity-60 group-hover:invert md:inline-block"
+          className="hidden opacity-50 group-hover:opacity-60 group-hover:invert md:inline-block dark:invert"
           src={EditIcon}
           width={14}
           height={14}
