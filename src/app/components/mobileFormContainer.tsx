@@ -13,7 +13,7 @@ export default function MobileFormContainer({ input, setInput }: PropTypes) {
   return (
       <DraggableContainer
         className={
-          "sticky -bottom-5 z-30 ml-[calc(50%-50vw)] w-screen rounded-t-2xl border border-[var(--light-accent)]/20 bg-[var(--ultralight-accent)]/80 backdrop-blur-lg md:hidden"
+          "sticky -bottom-5 z-30 ml-[calc(50%-50vw)] w-screen rounded-t-2xl border border-[var(--light-accent)]/20 bg-[var(--ultralight-accent)]/50 backdrop-blur-lg md:hidden"
         }
       >
         <div className="rounded-2xl">

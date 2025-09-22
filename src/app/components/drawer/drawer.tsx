@@ -149,7 +149,7 @@ export function DraggableContainer({
       style={{ height: `${height}vh`, touchAction: 'none' }} // touchAction: 'none' prevents browser from interfering
     >
       <Handle />
-      <div className="absolute h-4 w-full bg-linear-to-b from-[var(--ultralight-accent)] from-10% to-[var(--ultralight-accent)]/10 px-4"></div>
+      <div className="absolute h-4 w-full bg-linear-to-b dark:from-transparent from-[var(--ultralight-accent)]/70 from-10% to-transparent px-4"></div>
       <div className={` ${height <= MIN_HEIGHT_VH ? "hidden" : "block" } h-[calc(100%-2rem)] overflow-y-auto`}>
         {children}
       </div>
