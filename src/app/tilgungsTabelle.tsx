@@ -22,8 +22,10 @@ export default function Tilgungstabelle({
 }: PropTypes) {
   const [temporaryTable, setTemporaryTable] =
     useState<ArmotizationEntry[]>(table);
-  const [showTilgungswechselModal, setShowTilgungswechselModal] = useState<boolean>(false);
-  const [showSondertilgungModal, setShowSondertilgungModal] = useState<boolean>(false);
+  const [showTilgungswechselModal, setShowTilgungswechselModal] =
+    useState<boolean>(false);
+  const [showSondertilgungModal, setShowSondertilgungModal] =
+    useState<boolean>(false);
   const [selectedEntry, setSelectedEntry] = useState<ArmotizationEntry>();
   const tilgungsWechselModalRef = useRef<HTMLDivElement>(null);
 
@@ -115,9 +117,7 @@ export default function Tilgungstabelle({
           <SondertilgungModal
             handleSubmit={handleSondertilgungSubmit}
             year={selectedEntry!.year!}
-            sondertilgung={
-              selectedEntry!.sondertilgung || 0
-            }
+            sondertilgung={selectedEntry!.sondertilgung || 0}
           />
         </CenteredModal>
       )}
@@ -174,16 +174,16 @@ export default function Tilgungstabelle({
               <td className="max-w-12 py-3 sm:px-4 md:max-w-22 md:py-5">
                 {Math.round(x.remainingPrincipal).toLocaleString("de")}
               </td>
-              <td onClick={(e) => openSondertilgungModal(e, x)} className="sondertilgungInput w-16 py-3 sm:px-4 md:w-24 md:py-5">
-                <form
-                  onSubmit={(e) => handleSondertilgungSubmit(e, x.year)}
-                  className="justify-fit sondertilgungInput flex sm:gap-4"
-                >
+              <td
+                onClick={(e) => openSondertilgungModal(e, x)}
+                className="sondertilgungInput w-16 py-3 sm:px-4 md:w-24 md:py-5"
+              >
+                <div className="justify-fit sondertilgungInput flex sm:gap-4">
                   <SondertilgungDisplay
                     year={x.year}
                     sondertilgung={getSondertilgung(x)}
                   />
-                </form>
+                </div>
               </td>
             </tr>
           ))}
