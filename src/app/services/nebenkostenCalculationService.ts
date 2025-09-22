@@ -1,3 +1,4 @@
+import { DEFAULT_BUNDESLAND } from "app/constants";
 import { getGrundsteuer } from "./nebenkostenGrundsteuer";
 
 export default class NebenkostenCalculator {
@@ -8,12 +9,12 @@ export default class NebenkostenCalculator {
   private maklergebuehr: number = 0;
   private summe: number = 0;
   maklergebuehrPercentage: number = 3.57;
-  bundesland = "Baden-Wuerttemberg";
+  bundesland = DEFAULT_BUNDESLAND;
 
   constructor(principal: number, maklergebuehr?: number, bundesland?: string) {
     this.principal = principal;
     this.maklergebuehr = maklergebuehr || 0;
-    this.bundesland = (bundesland && bundesland != "") ? bundesland : "Baden-Wuerttemberg";
+    this.bundesland = (bundesland && bundesland != "") ? bundesland : DEFAULT_BUNDESLAND;
   }
 
   calcSumme = () => {

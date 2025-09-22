@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { DEFAULT_BUNDESLAND } from './constants';
 
 interface NumberState {
   value: number
@@ -16,7 +17,7 @@ export const useNebenkostenStore = create<NumberState>((set) => ({
 }))
 
 export const useBundeslandStore = create<StringState>((set) => ({
-  value: "",
+  value: DEFAULT_BUNDESLAND,
   updateValue: (newValue: string) => set({ value: newValue }),
 }))
 

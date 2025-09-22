@@ -11,6 +11,7 @@ import {
   useNebenkostenStore,
 } from "app/store";
 import EditIconComponent from "./editIconComponent";
+import { DEFAULT_BUNDESLAND } from "app/constants";
 
 type PropTypes = {
   calculationData: CashRoiModel | null;
@@ -45,7 +46,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
     const nebenkostenResult = calcGraphData();
     sumNebenkosten.current = nebenkostenCalculator.calcSumme();
     updateMaklergebuehr(maklergebuehr);
-    updateBundesland(bundesland || "Baden-Wuerttemberg");
+    updateBundesland(bundesland || DEFAULT_BUNDESLAND);
     setNebenkosten(nebenkostenResult);
     updateNebenkosten(sumNebenkosten.current);
   }, [bundesland, maklergebuehr, calculationData]);

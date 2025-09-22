@@ -136,7 +136,7 @@ export default function Tilgungstabelle({
                 {Math.round(x.principal).toLocaleString("de")}
                 <div className="md:hidden">
                   {x.tilgungswechsel > 0 && (
-                    <div className="text-xs text-green-600">
+                    <div className="text-xs text-[var(--dark-success)]">
                       {x.tilgungswechsel.toLocaleString("de")} mntl.
                     </div>
                   )}
@@ -147,7 +147,7 @@ export default function Tilgungstabelle({
               >
                 {x.yearlyRate.toLocaleString("de")}
                 {x.tilgungswechsel > 0 && (
-                  <div className="text-xs text-green-600">
+                  <div className="text-xs text-[var(--dark-success)]">
                     {x.tilgungswechsel.toLocaleString("de")} mntl.
                   </div>
                 )}
