@@ -4,10 +4,11 @@ import PieChartNebenkosten from "./pieChartNebenkosten";
 import { screenWidthMobile } from "app/utils/screenWidth";
 import NebenkostenEntry from "./nebenkostenEntry";
 import { bundeslaender } from "app/services/nebenkostenGrundsteuer";
-import { NebenkostenWithPercentageModel } from "./nebenkostenFrontendModel";
+import { CompleteNebenkostenModel } from "./nebenkostenFrontendModel";
 
 type PropTypes = {
-  nebenkosten: NebenkostenWithPercentageModel[];
+  nebenkostenArray: CompleteNebenkostenModel[];
+  setNebenkostenArray: (arg: CompleteNebenkostenModel[]) => void;
   sumNebenkosten: number;
   setBundesland: (bundesland: string) => void;
   bundesland: string;
@@ -16,7 +17,8 @@ type PropTypes = {
   handleMouseLeave: () => void;
 };
 export default function NebenkostenModal({
-  nebenkosten,
+  nebenkostenArray,
+  setNebenkostenArray,
   setBundesland,
   bundesland,
   sumNebenkosten,
@@ -55,7 +57,7 @@ export default function NebenkostenModal({
         <div>
           <div className="relative bottom-10 h-50 w-full p-6 md:static md:h-40 md:w-40">
             <PieChartNebenkosten
-              data={nebenkosten}
+              data={nebenkostenArray}
               activeIndex={activeIndex}
               handleMouseEnter={handleMouseEnter}
               handleMouseLeave={handleMouseLeave}
@@ -63,11 +65,12 @@ export default function NebenkostenModal({
           </div>
 
           <div className="space-y-4 px-6 pb-6">
-            {nebenkosten.map(
-              (entry: NebenkostenWithPercentageModel, index: number) => (
+            {nebenkostenArray.map(
+              (entry: CompleteNebenkostenModel, index: number) => (
                 <NebenkostenEntry
                   key={entry.name}
                   entry={entry}
+                  setNebenkostenArray={setNebenkostenArray}
                   handleMouseEnter={handleMouseEnter}
                   handleMouseLeave={handleMouseLeave}
                   percentage={entry.percentage}

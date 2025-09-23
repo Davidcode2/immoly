@@ -1,9 +1,16 @@
 import EditNebenkostenInput from "./editNebenkostenInput";
 import CenteredModal from "../centeredModal";
 import { useState } from "react";
+import {
+  useGrundbuchkostenStore,
+  useMaklergebuehrStore,
+  useNotarkostenStore,
+} from "app/store";
+import { AbsoluteNebenkostenModel, CompleteNebenkostenModel } from "./nebenkostenFrontendModel";
 
 type PropTypes = {
-  entry: { name: string; value: number };
+  entry: CompleteNebenkostenModel;
+  setNebenkostenArray: (arg: CompleteNebenkostenModel[]) => void;
   handleMouseEnter: (index: number) => void;
   handleMouseLeave: () => void;
   setShowMap: (arg: boolean) => void;
@@ -14,6 +21,7 @@ type PropTypes = {
 };
 export default function NebenkostenEntry({
   entry,
+  setNebenkostenArray,
   handleMouseEnter,
   handleMouseLeave,
   setShowMap,
@@ -24,17 +32,32 @@ export default function NebenkostenEntry({
 }: PropTypes) {
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
 
+  const updateNotarkosten = useNotarkostenStore((state) => state.updateValue);
+  const updateGrundbuchkosten = useGrundbuchkostenStore(
+    (state) => state.updateValue,
+  );
+  const updateMaklerbebuehr = useMaklergebuehrStore(
+    (state) => state.updateValue,
+  );
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
+    setNebenkostenArray((prev) => {
+      const updatedArray = prev.map((item: AbsoluteNebenkostenModel) =>
+        item.name === entry.name ? { ...item, value: newValue } : item,
+      );
+      return updatedArray;
+    });
+
     switch (entry.name) {
       case "Notarkosten":
-        entry.value = newValue;
+        updateNotarkosten(newValue);
         break;
       case "Grundbuchkosten":
-        entry.value = newValue;
+        updateGrundbuchkosten(newValue);
         break;
       case "Maklergebühr":
-        entry.value = newValue;
+        updateMaklerbebuehr(newValue);
         break;
       default:
         throw new Error("Unknown nebenkosten entry");
@@ -45,7 +68,11 @@ export default function NebenkostenEntry({
     <>
       {showEditModal && (
         <CenteredModal onClose={() => setShowEditModal(false)}>
-          <EditNebenkostenInput entry={entry} handleChange={handleChange} />
+          <EditNebenkostenInput
+            entry={entry}
+            handleChange={handleChange}
+            setShowEditModal={setShowEditModal}
+          />
         </CenteredModal>
       )}
 

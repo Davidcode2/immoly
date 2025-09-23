@@ -26,3 +26,27 @@ export const useMaklergebuehrStore = create<NumberState>((set) => ({
   updateValue: (newValue: number) => set({ value: newValue }),
 }))
 
+export const useGrundbuchkostenStore = create<NumberState>((set) => ({
+  value: 0,
+  updateValue: (newValue: number) => set({ value: newValue }),
+}))
+
+export const useNotarkostenStore = create<NumberState>((set) => ({
+  value: 0,
+  updateValue: (newValue: number) => set({ value: newValue }),
+}))
+
+export const useMaklergebuehrPercentageStore = create<StringState>((set) => ({
+  value: "3.57",
+  updateValue: (newValue: string) => set({ value: newValue }),
+}))
+
+export const useGrundbuchkostenPercentageStore = create<StringState>((set) => ({
+  value: "1.5",
+  updateValue: (newValue: string) => set({ value: newValue }),
+}))
+
+export const useNotarkostenPercentageStore = create<StringState>((set) => ({
+  value: "2",
+  updateValue: (newValue: string) => set({ value: newValue }),
+}))

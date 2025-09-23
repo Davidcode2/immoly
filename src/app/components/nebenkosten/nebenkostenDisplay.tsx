@@ -9,10 +9,20 @@ import {
   useBundeslandStore,
   useMaklergebuehrStore,
   useNebenkostenStore,
+  useGrundbuchkostenStore,
+  useNotarkostenStore,
+  useMaklergebuehrPercentageStore,
+  useNotarkostenPercentageStore,
+  useGrundbuchkostenPercentageStore,
 } from "app/store";
 import EditIconComponent from "./editIconComponent";
 import { DEFAULT_BUNDESLAND } from "app/constants";
-import { NebenkostenObjectModel, NebenkostenWithPercentageModel } from "./nebenkostenFrontendModel";
+import {
+  AbsoluteNebenkostenModel,
+  CompleteNebenkostenModel,
+  RelativeNebenkostenModel,
+} from "./nebenkostenFrontendModel";
+import { getGrundsteuer } from "app/services/nebenkostenGrundsteuer";
 
 type PropTypes = {
   calculationData: CashRoiModel | null;
@@ -23,17 +33,38 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const [showModal, setShowModal] = useState<boolean>(false);
   const bundesland = useBundeslandStore((state) => state.value);
   const [nebenkostenObject, setNebenkostenObject] = useState<
-    NebenkostenWithPercentageModel[]
+    CompleteNebenkostenModel[]
   >([]);
   const sumNebenkosten = useRef<number>(0);
-  const maklergebuehrPercentage = useMaklergebuehrStore((state) => state.value);
+
+  const maklergebuehr = useMaklergebuehrStore((state) => state.value);
+  const notarkosten = useNotarkostenStore((state) => state.value);
+  const grundbuchkosten = useGrundbuchkostenStore((state) => state.value);
+
+  const maklergebuehrPercentage = useMaklergebuehrPercentageStore(
+    (state) => state.value,
+  );
+  const notarkostenPercentage = useNotarkostenPercentageStore(
+    (state) => state.value,
+  );
+  const grundbuchkostenPercentage = useGrundbuchkostenPercentageStore(
+    (state) => state.value,
+  );
+
+  const updateMaklergebuehrPercentage = useMaklergebuehrPercentageStore((state) => state.updateValue);
+  const updateNotarkostenPercentage = useNotarkostenPercentageStore((state) => state.updateValue);
+  const updateGrundbuchkostenPercentage = useGrundbuchkostenPercentageStore((state) => state.updateValue);
 
   if (!calculationData) {
     throw new Error("No calculation data available");
   }
-  const nebenkostenCalculator = new NebenkostenCalculatorForNebenkostenComponent(
-    calculationData?.principal,
-  );
+  const nebenkostenCalculator =
+    new NebenkostenCalculatorForNebenkostenComponent(
+      calculationData?.principal,
+      parseFloat(maklergebuehrPercentage.replace(",", ".")),
+      notarkosten,
+      grundbuchkosten,
+    );
 
   const handleMouseEnter = (index: number) => setActiveIndex(index);
   const handleMouseLeave = () => setActiveIndex(null);
@@ -42,32 +73,14 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const updateBundesland = useBundeslandStore((state) => state.updateValue);
 
   useEffect(() => {
-    nebenkostenCalculator.bundesland = bundesland;
-    nebenkostenCalculator.maklergebuehrPercentage = maklergebuehrPercentage;
-    const nebenkostenResult = calcGraphData();
-    const nebenkostenWithPercentage = mapToNebenkostenWithPercentage(nebenkostenResult);
-    sumNebenkosten.current = nebenkostenCalculator.calcSumme();
-    updateBundesland(bundesland || DEFAULT_BUNDESLAND);
-    setNebenkostenObject(nebenkostenWithPercentage);
-    updateNebenkosten(sumNebenkosten.current);
-  }, [bundesland, calculationData, maklergebuehrPercentage]);
-
-  const mapToNebenkostenWithPercentage = (nebenkostenObject: NebenkostenObjectModel[]) => {
-    return nebenkostenObject.map((item: NebenkostenObjectModel) => {
-      let percentage = 0;
-      if (sumNebenkosten.current > 0) {
-        percentage = Math.round(item.value * 100 / calculationData.principal * 100) / 100;
-      }
-      return { ...item, percentage };
-    });
-  }
-
-  const calcGraphData = () => {
-    const graphData = [
-      { name: "Notarkosten", value: nebenkostenCalculator.calcNotarkosten() },
+    const nebenkostenResult = [
+      {
+        name: "Notarkosten",
+        value: notarkosten,
+      },
       {
         name: "Grundbuchkosten",
-        value: nebenkostenCalculator.calcGrundbuchkosten(),
+        value: grundbuchkosten,
       },
       {
         name: "Grunderwerbsteuer",
@@ -75,10 +88,126 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
       },
       {
         name: "Maklergebühr",
-        value: nebenkostenCalculator.calcMaklergebuehr(),
+        value: maklergebuehr
       },
     ];
-    return graphData;
+    const nebenkostenWithPercentage =
+      mapToNebenkostenWithPercentage(nebenkostenResult);
+    sumNebenkosten.current = nebenkostenCalculator.calcSumme();
+    setNebenkostenObject(nebenkostenWithPercentage);
+    updateNebenkosten(sumNebenkosten.current);
+  }, [calculationData, notarkosten, grundbuchkosten, maklergebuehr]);
+
+  useEffect(() => {
+    nebenkostenCalculator.bundesland = bundesland;
+    updateBundesland(bundesland || DEFAULT_BUNDESLAND);
+    setNebenkostenObject((prev) => {
+      const grundsteuerValue = nebenkostenCalculator.calcGrunderwerbsteuer(bundesland);
+      const grundsteuerPercentage = getGrundsteuer(bundesland);
+      const grundsteuerIndex = prev.findIndex((item) => item.name === "Grunderwerbsteuer");
+      const newArray = [...prev];
+      newArray[grundsteuerIndex].percentage = grundsteuerPercentage;
+      newArray[grundsteuerIndex].value = grundsteuerValue;
+      return newArray;
+    });
+    let newSum = nebenkostenObject.reduce((acc, current) => {
+      return acc + current.value;
+    }, 0);
+    newSum -= nebenkostenObject.find((item) => item.name === "Grunderwerbsteuer")?.value || 0;
+    newSum += nebenkostenCalculator.calcGrunderwerbsteuer(bundesland);
+    sumNebenkosten.current = newSum;
+    updateNebenkosten(sumNebenkosten.current);
+  }, [bundesland]);
+
+  useEffect(() => {
+    const nebenkostenResult = [
+      {
+        name: "Notarkosten",
+        percentage: Number.parseFloat(notarkostenPercentage.replace(",", "."))
+      },
+      {
+        name: "Grundbuchkosten",
+        percentage: Number.parseFloat(grundbuchkostenPercentage.replace(",", "."))
+      },
+      {
+        name: "Grunderwerbsteuer",
+        percentage: getGrundsteuer(bundesland),
+      },
+      {
+        name: "Maklergebühr",
+        percentage: Number.parseFloat(maklergebuehrPercentage.replace(",", "."))
+      },
+    ];
+    const completeNebenkosten = mapToNebenkostenWithAbsoluteValues(nebenkostenResult);
+    const newSum = completeNebenkosten.reduce((acc, current) => { 
+      return acc + current.value;
+    }, 0);
+    sumNebenkosten.current = newSum;
+    updateNebenkosten(sumNebenkosten.current);
+    setNebenkostenObject(completeNebenkosten);
+  }, [
+    maklergebuehrPercentage,
+    notarkostenPercentage,
+    grundbuchkostenPercentage,
+  ]);
+
+  const mapToNebenkostenWithAbsoluteValues = (
+    relativeNebenkosten: RelativeNebenkostenModel[],
+  ): CompleteNebenkostenModel[] => {
+    const res = relativeNebenkosten.map((item: RelativeNebenkostenModel) => ({
+      name: item.name,
+      percentage: item.percentage,
+      value: Math.round((item.percentage / 100) * calculationData.principal),
+      setPercentage: getPercentageUpdater(item.name),
+      setAbsolute: getAbsoluteUpdater(item.name),
+    }));
+    res.forEach((item) => {
+      item.setAbsolute(item.value);
+    });
+    return res;
+  };
+
+  const getPercentageUpdater = (name: string) => {
+    switch (name) {
+      case "Notarkosten":
+        return updateNotarkostenPercentage
+      case "Grundbuchkosten":
+        return updateGrundbuchkostenPercentage
+      case "Maklergebühr":
+        return updateMaklergebuehrPercentage
+      default:
+        return () => {};
+    }
+  }
+
+  const getAbsoluteUpdater = (name: string) => {
+    switch (name) {
+      case "Notarkosten":
+        return useNotarkostenStore.getState().updateValue
+      case "Grundbuchkosten":
+        return useGrundbuchkostenStore.getState().updateValue
+      case "Maklergebühr":
+        return useMaklergebuehrStore.getState().updateValue
+      default:
+        return () => {};
+    }
+  }
+
+  const mapToNebenkostenWithPercentage = (
+    nebenkostenObject: AbsoluteNebenkostenModel[],
+  ): CompleteNebenkostenModel[] => {
+    const res = nebenkostenObject.map((item: AbsoluteNebenkostenModel) => {
+      let percentage = 0;
+      if (sumNebenkosten.current > 0) {
+        percentage =
+          Math.round(((item.value * 100) / calculationData.principal) * 100) /
+          100;
+      }
+      const setPercentage = getPercentageUpdater(item.name);
+      const setAbsolute = getAbsoluteUpdater(item.name);
+      return { ...item, percentage, setPercentage, setAbsolute };
+    });
+    return res;
   };
 
   const openModalOnMobile = () => {
@@ -104,7 +233,8 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
             <NebenkostenModal
               setBundesland={updateBundesland}
               bundesland={bundesland}
-              nebenkosten={nebenkostenObject}
+              nebenkostenArray={nebenkostenObject}
+              setNebenkostenArray={setNebenkostenObject}
               sumNebenkosten={sumNebenkosten.current}
               activeIndex={activeIndex}
               handleMouseEnter={handleMouseEnter}

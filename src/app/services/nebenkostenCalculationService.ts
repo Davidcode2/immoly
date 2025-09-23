@@ -11,11 +11,23 @@ export default class NebenkostenCalculator {
   private maklergebuehrPercentage: number = 3.57;
   bundesland = DEFAULT_BUNDESLAND;
 
-  constructor(principal: number, maklergebuehrPercentage: number,  bundesland?: string) {
+  constructor(
+    principal: number,
+    maklergebuehrPercentage: number,
+    bundesland?: string,
+  ) {
     this.principal = principal;
-    this.maklergebuehrPercentage = maklergebuehrPercentage; 
-    this.bundesland = (bundesland && bundesland != "") ? bundesland : DEFAULT_BUNDESLAND;
-    console.log("NebenkostenCalculator created with principal: ", principal, " maklergebuehr: ", maklergebuehrPercentage, " bundesland: ", this.bundesland);
+    this.maklergebuehrPercentage = maklergebuehrPercentage;
+    this.bundesland =
+      bundesland && bundesland != "" ? bundesland : DEFAULT_BUNDESLAND;
+    console.log(
+      "NebenkostenCalculator created with principal: ",
+      principal,
+      " maklergebuehr: ",
+      maklergebuehrPercentage,
+      " bundesland: ",
+      this.bundesland,
+    );
   }
 
   calcSumme = () => {
@@ -56,7 +68,8 @@ export default class NebenkostenCalculator {
   };
 
   calcGrunderwerbsteuer = (bundesland?: string) => {
-    const _bundesland = (bundesland && bundesland != "") ? bundesland : this.bundesland;
+    const _bundesland =
+      bundesland && bundesland != "" ? bundesland : this.bundesland;
     const tax = getGrundsteuer(_bundesland) / 100;
     return this.principal * tax;
   };
@@ -69,14 +82,32 @@ export class NebenkostenCalculatorForNebenkostenComponent {
   private grundbuchkosten: number = 0;
   private maklergebuehr: number = 0;
   private summe: number = 0;
-  maklergebuehrPercentage: number = 3.57;
+  private maklergebuehrPercentage: number = 3.57;
   bundesland = DEFAULT_BUNDESLAND;
 
-  constructor(principal: number, maklergebuehrPercentage?: number,  bundesland?: string) {
+  constructor(
+    principal: number,
+    maklergebuehrPercentage: number,
+    notarkosten: number,
+    grundbuchkosten: number,
+    bundesland?: string,
+  ) {
     this.principal = principal;
-    this.maklergebuehrPercentage = maklergebuehrPercentage || this.maklergebuehrPercentage;
-    this.bundesland = (bundesland && bundesland != "") ? bundesland : DEFAULT_BUNDESLAND;
-    console.log("NebenkostenCalculator created with principal: ", principal, " maklergebuehr: ", maklergebuehrPercentage, " bundesland: ", this.bundesland);
+    this.maklergebuehrPercentage =
+      maklergebuehrPercentage || this.maklergebuehrPercentage;
+    this.bundesland =
+      bundesland && bundesland != "" ? bundesland : DEFAULT_BUNDESLAND;
+    this.notarkosten = notarkosten;
+    this.grundbuchkosten = grundbuchkosten;
+
+    console.log(
+      "NebenkostenCalculator created with principal: ",
+      principal,
+      " maklergebuehr: ",
+      maklergebuehrPercentage,
+      " bundesland: ",
+      this.bundesland,
+    );
   }
 
   calcSumme = () => {
@@ -117,7 +148,8 @@ export class NebenkostenCalculatorForNebenkostenComponent {
   };
 
   calcGrunderwerbsteuer = (bundesland?: string) => {
-    const _bundesland = (bundesland && bundesland != "") ? bundesland : this.bundesland;
+    const _bundesland =
+      bundesland && bundesland != "" ? bundesland : this.bundesland;
     const tax = getGrundsteuer(_bundesland) / 100;
     return this.principal * tax;
   };
