@@ -4,15 +4,13 @@ import PieChartNebenkosten from "./pieChartNebenkosten";
 import { screenWidthMobile } from "app/utils/screenWidth";
 import NebenkostenEntry from "./nebenkostenEntry";
 import { bundeslaender } from "app/services/nebenkostenGrundsteuer";
+import { NebenkostenWithPercentageModel } from "./nebenkostenFrontendModel";
 
 type PropTypes = {
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  nebenkosten: any;
+  nebenkosten: NebenkostenWithPercentageModel[];
   sumNebenkosten: number;
   setBundesland: (bundesland: string) => void;
   bundesland: string;
-  setMaklergebuehr: (percentage: number) => void;
-  maklergebuehr: number;
   activeIndex: number | null;
   handleMouseEnter: (index: number) => void;
   handleMouseLeave: () => void;
@@ -21,8 +19,6 @@ export default function NebenkostenModal({
   nebenkosten,
   setBundesland,
   bundesland,
-  maklergebuehr,
-  setMaklergebuehr,
   sumNebenkosten,
   activeIndex,
   handleMouseEnter,
@@ -68,16 +64,15 @@ export default function NebenkostenModal({
 
           <div className="space-y-4 px-6 pb-6">
             {nebenkosten.map(
-              (entry: { name: string; value: number }, index: number) => (
+              (entry: NebenkostenWithPercentageModel, index: number) => (
                 <NebenkostenEntry
                   key={entry.name}
                   entry={entry}
                   handleMouseEnter={handleMouseEnter}
                   handleMouseLeave={handleMouseLeave}
+                  percentage={entry.percentage}
                   setShowMap={setShowMap}
                   bundesland={bundesland}
-                  maklergebuehr={maklergebuehr}
-                  setMaklergebuehr={setMaklergebuehr}
                   index={index}
                   activeIndex={activeIndex}
                 />

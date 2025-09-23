@@ -1,4 +1,5 @@
 import { getGrundsteuer } from "app/services/nebenkostenGrundsteuer";
+import { useMaklergebuehrStore } from "app/store";
 
 type PropTypes = {
   entry: { name: string; value: number };
@@ -6,9 +7,8 @@ type PropTypes = {
   handleMouseLeave: () => void;
   setShowMap: (arg: boolean) => void;
   bundesland: string;
-  maklergebuehr: number;
-  setMaklergebuehr: (arg: number) => void;
   activeIndex: number | null;
+  percentage: number;
   index: number;
 };
 export default function NebenkostenEntry({
@@ -16,22 +16,24 @@ export default function NebenkostenEntry({
   handleMouseEnter,
   handleMouseLeave,
   setShowMap,
+  percentage,
   bundesland,
-  maklergebuehr,
-  setMaklergebuehr,
   index,
   activeIndex,
 }: PropTypes) {
+  const maklergebuehrPercentage = useMaklergebuehrStore((state) => state.value);
+  const updateMaklergebuehrPercentage = useMaklergebuehrStore(
+    (state) => state.updateValue,
+  );
 
   return (
     <div
       onMouseEnter={() => handleMouseEnter(index)}
       onMouseLeave={handleMouseLeave}
-      className={`group flex cursor-pointer items-center justify-between rounded-lg transition-all hover:bg-white/5 ${
-        activeIndex === index
+      className={`group flex cursor-pointer items-center justify-between rounded-lg transition-all ${activeIndex === index
           ? "text-[var(--accent)] opacity-100"
           : "opacity-90"
-      }`}
+        }`}
     >
       <div className="flex items-center gap-2">
         <span
@@ -56,20 +58,25 @@ export default function NebenkostenEntry({
         <div className="text-xl md:text-lg">
           €{entry.value.toLocaleString("de")}
         </div>
-        {entry.name === "Grunderwerbsteuer" && (
+        {entry.name === "Maklergebühr" ? (
           <div className="w-fit rounded-xl bg-[var(--dark-accent)] p-1 px-2 text-xs text-[var(--secondary)]">
-            {bundesland ? getGrundsteuer(bundesland) : 0.05 } %
+            {entry.name === "Maklergebühr" && (
+              <select
+                value={maklergebuehrPercentage}
+                name="maklergebuehr"
+                onChange={(e) =>
+                  updateMaklergebuehrPercentage(Number(e.target.value))
+                }
+              >
+                <option value={3.57}>3,57 %</option>
+                <option value={2.98}>2,98 %</option>
+                <option value={3.12}>3,12 %</option>
+              </select>
+            )}
           </div>
-        )}
-        {entry.name === "Maklergebühr" && (
+        ) : (
           <div className="w-fit rounded-xl bg-[var(--dark-accent)] p-1 px-2 text-xs text-[var(--secondary)]">
-          { entry.name === "Maklergebühr" && (
-            <select value={maklergebuehr} name="maklergebuehr" onChange={(e) => setMaklergebuehr(Number(e.target.value))}>
-              <option value={3.57}>3,57 %</option>
-              <option value={2.98}>2,98 %</option>
-              <option value={3.12}>3,12 %</option>
-            </select>
-          )}
+            {percentage} %
           </div>
         )}
       </div>

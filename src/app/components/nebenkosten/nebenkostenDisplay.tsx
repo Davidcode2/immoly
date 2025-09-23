@@ -12,6 +12,7 @@ import {
 } from "app/store";
 import EditIconComponent from "./editIconComponent";
 import { DEFAULT_BUNDESLAND } from "app/constants";
+import { NebenkostenObjectModel, NebenkostenWithPercentageModel } from "./nebenkostenFrontendModel";
 
 type PropTypes = {
   calculationData: CashRoiModel | null;
@@ -21,11 +22,11 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const bundesland = useBundeslandStore((state) => state.value);
-  const [maklergebuehr, setMaklergebuehr] = useState<number>(3.57);
-  const [nebenkosten, setNebenkosten] = useState<
-    { name: string; value: number }[]
+  const [nebenkostenObject, setNebenkostenObject] = useState<
+    NebenkostenWithPercentageModel[]
   >([]);
   const sumNebenkosten = useRef<number>(0);
+  const maklergebuehrPercentage = useMaklergebuehrStore((state) => state.value);
 
   if (!calculationData) {
     throw new Error("No calculation data available");
@@ -38,21 +39,28 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const handleMouseLeave = () => setActiveIndex(null);
 
   const updateNebenkosten = useNebenkostenStore((state) => state.updateValue);
-  const updateMaklergebuehr = useMaklergebuehrStore(
-    (state) => state.updateValue,
-  );
   const updateBundesland = useBundeslandStore((state) => state.updateValue);
 
   useEffect(() => {
     nebenkostenCalculator.bundesland = bundesland;
-    nebenkostenCalculator.maklergebuehrPercentage = maklergebuehr;
+    nebenkostenCalculator.maklergebuehrPercentage = maklergebuehrPercentage;
     const nebenkostenResult = calcGraphData();
+    const nebenkostenWithPercentage = mapToNebenkostenWithPercentage(nebenkostenResult);
     sumNebenkosten.current = nebenkostenCalculator.calcSumme();
-    updateMaklergebuehr(maklergebuehr);
     updateBundesland(bundesland || DEFAULT_BUNDESLAND);
-    setNebenkosten(nebenkostenResult);
+    setNebenkostenObject(nebenkostenWithPercentage);
     updateNebenkosten(sumNebenkosten.current);
-  }, [bundesland, maklergebuehr, calculationData]);
+  }, [bundesland, calculationData, maklergebuehrPercentage]);
+
+  const mapToNebenkostenWithPercentage = (nebenkostenObject: NebenkostenObjectModel[]) => {
+    return nebenkostenObject.map((item: NebenkostenObjectModel) => {
+      let percentage = 0;
+      if (sumNebenkosten.current > 0) {
+        percentage = Math.round(item.value * 100 / calculationData.principal * 100) / 100;
+      }
+      return { ...item, percentage };
+    });
+  }
 
   const calcGraphData = () => {
     const graphData = [
@@ -94,11 +102,9 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
         {showModal && (
           <CenteredModal onClose={() => setShowModal(false)}>
             <NebenkostenModal
-              setMaklergebuehr={setMaklergebuehr}
-              maklergebuehr={maklergebuehr}
               setBundesland={updateBundesland}
               bundesland={bundesland}
-              nebenkosten={nebenkosten}
+              nebenkosten={nebenkostenObject}
               sumNebenkosten={sumNebenkosten.current}
               activeIndex={activeIndex}
               handleMouseEnter={handleMouseEnter}
@@ -109,14 +115,14 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
         <EditIconComponent setShowModal={setShowModal} />
         <div className="absolute -bottom-[5px] h-40 w-40 md:static md:hidden md:h-48 md:w-48">
           <PieChartNebenkosten
-            data={nebenkosten}
+            data={nebenkostenObject}
             activeIndex={activeIndex}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
           />
         </div>
         <div className="order-first hidden h-20 w-full flex-col gap-12 overflow-y-scroll pb-4 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
-          {nebenkosten.map((entry, index) => (
+          {nebenkostenObject.map((entry, index) => (
             <div
               key={entry.name}
               onMouseEnter={() => handleMouseEnter(index)}
@@ -145,7 +151,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
         </div>
         <div className="relative bottom-4 z-20 hidden h-40 w-40 md:block md:h-38 md:w-48">
           <PieChartNebenkosten
-            data={nebenkosten}
+            data={nebenkostenObject}
             activeIndex={activeIndex}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
