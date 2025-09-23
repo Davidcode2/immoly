@@ -16,6 +16,7 @@ export default function TilgungsWechselModal({
     inputRef.current!.select();
     inputRef.current!.focus();
   },[]);
+
   return (
     <div className="tilgungsWechselModal z-40 mx-10 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl sm:mx-0 md:w-[400px]">
       <div className="tilgungsWechselModal">

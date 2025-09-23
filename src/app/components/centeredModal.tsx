@@ -1,4 +1,4 @@
-import { ReactNode, useState, type JSX } from "react";
+import { ReactNode, useRef, useState, type JSX } from "react";
 import { createPortal } from "react-dom";
 
 type PropTypes = {
@@ -11,13 +11,16 @@ export default function CenteredModal({
   onClose,
 }: PropTypes): JSX.Element {
   const [isShown, setIsShown] = useState<boolean>(false);
+  const backdropRef = useRef<HTMLDivElement>(null);
   setTimeout(() => {
     setIsShown(true);
   }, 100);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    if (target.classList.contains("modal")) {
+    if (
+      backdropRef.current &&
+      backdropRef.current.isSameNode(e.target as Node)
+    ) {
       onClose();
     }
   };
@@ -29,7 +32,10 @@ export default function CenteredModal({
           className={`fixed inset-0 z-40 backdrop-blur-sm transition-all ${isShown ? "opacity-100" : "opacity-0"}`}
           onClick={handleBackdropClick}
         >
-          <div className="modal flex h-full w-full items-center justify-center">
+          <div
+            ref={backdropRef}
+            className="modal flex h-full w-full items-center justify-center"
+          >
             {children}
           </div>
         </div>,
