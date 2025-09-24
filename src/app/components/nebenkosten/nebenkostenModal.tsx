@@ -4,27 +4,26 @@ import PieChartNebenkosten from "./pieChartNebenkosten";
 import { screenWidthMobile } from "app/utils/screenWidth";
 import NebenkostenEntry from "./nebenkostenEntry";
 import { bundeslaender } from "app/services/nebenkostenGrundsteuer";
-import { CompleteNebenkostenModel } from "./nebenkostenFrontendModel";
 
 type PropTypes = {
-  nebenkostenArray: CompleteNebenkostenModel[];
-  setNebenkostenArray: (arg: CompleteNebenkostenModel[]) => void;
+  pieChartData: { name: string, value: number}[];
   sumNebenkosten: number;
   setBundesland: (bundesland: string) => void;
   bundesland: string;
   activeIndex: number | null;
   handleMouseEnter: (index: number) => void;
   handleMouseLeave: () => void;
+  principal: number
 };
 export default function NebenkostenModal({
-  nebenkostenArray,
-  setNebenkostenArray,
+  pieChartData,
   setBundesland,
   bundesland,
   sumNebenkosten,
   activeIndex,
   handleMouseEnter,
   handleMouseLeave,
+  principal,
 }: PropTypes) {
   const [showMap, setShowMap] = useState<boolean>(false);
 
@@ -57,7 +56,7 @@ export default function NebenkostenModal({
         <div>
           <div className="relative bottom-10 h-50 w-full p-6 md:static md:h-40 md:w-40">
             <PieChartNebenkosten
-              data={nebenkostenArray}
+              data={pieChartData}
               activeIndex={activeIndex}
               handleMouseEnter={handleMouseEnter}
               handleMouseLeave={handleMouseLeave}
@@ -65,12 +64,11 @@ export default function NebenkostenModal({
           </div>
 
           <div className="space-y-4 px-6 pb-6">
-            {nebenkostenArray.map(
-              (entry: CompleteNebenkostenModel, index: number) => (
+            {pieChartData.map(
+              (entry: any, index: number) => (
                 <NebenkostenEntry
                   key={entry.name}
                   entry={entry}
-                  setNebenkostenArray={setNebenkostenArray}
                   handleMouseEnter={handleMouseEnter}
                   handleMouseLeave={handleMouseLeave}
                   percentage={entry.percentage}
@@ -78,6 +76,7 @@ export default function NebenkostenModal({
                   bundesland={bundesland}
                   index={index}
                   activeIndex={activeIndex}
+                  principal={principal}
                 />
               ),
             )}

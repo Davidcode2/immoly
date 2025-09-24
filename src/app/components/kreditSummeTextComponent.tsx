@@ -1,6 +1,7 @@
 import Image from "next/image";
 import PieChartGesamtBetrag from "./lineChartGesamtbetrag";
-import { useNebenkostenStore } from "app/store";
+import { useBundeslandStore, useGrundbuchkostenStore, useMaklergebuehrStore, useNebenkostenStore, useNotarkostenStore } from "app/store";
+import { getGrundsteuer } from "app/services/nebenkostenGrundsteuer";
 
 type PropTypes = {
   principal: number;
@@ -10,7 +11,20 @@ export default function KreditSummeTextComponent({
   principal,
   downPayment,
 }: PropTypes) {
-  const nebenkosten = useNebenkostenStore((state) => state.value);
+  //const nebenkosten = useNebenkostenStore((state) => state.value);
+  const bundesland = useBundeslandStore((state) => state.value);
+
+  const calcSummeNebenkosten = (principal: number) => {
+    const grundsteuer = (getGrundsteuer(bundesland) * principal) / 100;
+    const nebenkosten =
+      useMaklergebuehrStore.getState().value +
+      useGrundbuchkostenStore.getState().value +
+      useNotarkostenStore.getState().value +
+      Math.round(grundsteuer);
+    return nebenkosten;
+  }
+  const nebenkosten = calcSummeNebenkosten(principal);
+
   const kreditSummeRaw = principal + nebenkosten - downPayment;
   const kreditSumme = kreditSummeRaw < 0 ? 0 : kreditSummeRaw;
 

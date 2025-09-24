@@ -6,11 +6,10 @@ import {
   useMaklergebuehrStore,
   useNotarkostenStore,
 } from "app/store";
-import { AbsoluteNebenkostenModel, CompleteNebenkostenModel } from "./nebenkostenFrontendModel";
+import { CompleteNebenkostenModel } from "./nebenkostenFrontendModel";
 
 type PropTypes = {
   entry: CompleteNebenkostenModel;
-  setNebenkostenArray: (arg: CompleteNebenkostenModel[]) => void;
   handleMouseEnter: (index: number) => void;
   handleMouseLeave: () => void;
   setShowMap: (arg: boolean) => void;
@@ -18,10 +17,10 @@ type PropTypes = {
   activeIndex: number | null;
   percentage: number;
   index: number;
+  principal: number;
 };
 export default function NebenkostenEntry({
   entry,
-  setNebenkostenArray,
   handleMouseEnter,
   handleMouseLeave,
   setShowMap,
@@ -29,40 +28,9 @@ export default function NebenkostenEntry({
   bundesland,
   index,
   activeIndex,
+  principal,
 }: PropTypes) {
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
-
-  const updateNotarkosten = useNotarkostenStore((state) => state.updateValue);
-  const updateGrundbuchkosten = useGrundbuchkostenStore(
-    (state) => state.updateValue,
-  );
-  const updateMaklerbebuehr = useMaklergebuehrStore(
-    (state) => state.updateValue,
-  );
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = Number(e.target.value);
-    setNebenkostenArray((prev) => {
-      const updatedArray = prev.map((item: AbsoluteNebenkostenModel) =>
-        item.name === entry.name ? { ...item, value: newValue } : item,
-      );
-      return updatedArray;
-    });
-
-    switch (entry.name) {
-      case "Notarkosten":
-        updateNotarkosten(newValue);
-        break;
-      case "Grundbuchkosten":
-        updateGrundbuchkosten(newValue);
-        break;
-      case "Maklergebühr":
-        updateMaklerbebuehr(newValue);
-        break;
-      default:
-        throw new Error("Unknown nebenkosten entry");
-    }
-  };
 
   return (
     <>
@@ -70,8 +38,8 @@ export default function NebenkostenEntry({
         <CenteredModal onClose={() => setShowEditModal(false)}>
           <EditNebenkostenInput
             entry={entry}
-            handleChange={handleChange}
             setShowEditModal={setShowEditModal}
+            principal={principal}
           />
         </CenteredModal>
       )}

@@ -16,8 +16,9 @@ import MobileFormContainer from "./components/mobileFormContainer";
 import MobileTilgungsTabelleContainer from "./components/mobileTilgungsTabelleContainer";
 import {
   useBundeslandStore,
+  useGrundbuchkostenStore,
   useMaklergebuehrStore,
-  useNebenkostenStore,
+  useNotarkostenStore,
 } from "app/store";
 import NebenkostenCalculator from "./services/nebenkostenCalculationService";
 import SloganHero from "./components/hero/sloganHero";
@@ -27,6 +28,7 @@ import { calculationAccessor } from "./services/calculationsAccessor";
 import { CalculationDbo } from "./lib/models/calculationDbo";
 import SonderCacheHelper from "./services/cacheHelper";
 import { DEFAULT_CALCULATION } from "./constants";
+import { getGrundsteuer } from "./services/nebenkostenGrundsteuer";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -40,14 +42,16 @@ export default function ResultDisplay() {
 
   const searchParams = useSearchParams();
   const calculationId = searchParams.get("calculationId");
-  const updateNebenkosten = useNebenkostenStore((state) => state.updateValue);
+  //const updateNebenkosten = useNebenkostenStore((state) => state.updateValue);
   const updateMaklergebuehr = useMaklergebuehrStore(
     (state) => state.updateValue,
   );
   const updateBundesland = useBundeslandStore((state) => state.updateValue);
-  const nebenkosten = useNebenkostenStore((state) => state.value);
+  //const nebenkosten = useNebenkostenStore((state) => state.value);
   const bundesland = useBundeslandStore((state) => state.value);
   const maklergebuehr = useMaklergebuehrStore((state) => state.value);
+  const grundbuchkosten = useGrundbuchkostenStore((state) => state.value);
+  const notarkosten = useNotarkostenStore((state) => state.value);
 
   const skipNextInputEffect = useRef(false);
 
@@ -65,7 +69,7 @@ export default function ResultDisplay() {
       tilgungswechselCache,
       true,
     );
-    const tilgungungsTabelle = calcTilgung(input, nebenkosten);
+    const tilgungungsTabelle = calcTilgung(input, calcSummeNebenkosten(input.principal));
     setTable(tilgungungsTabelle);
   };
 
@@ -74,10 +78,24 @@ export default function ResultDisplay() {
     setTilgungswechselCache,
   );
 
+  const calcSummeNebenkosten = (principal: number) => {
+    const grundsteuer = (getGrundsteuer(bundesland) * principal) / 100;
+    const nebenkosten =
+      useMaklergebuehrStore.getState().value +
+      useGrundbuchkostenStore.getState().value +
+      useNotarkostenStore.getState().value +
+      Math.round(grundsteuer);
+    return nebenkosten;
+  }
+
   useEffect(() => {
     setInput(DEFAULT_CALCULATION);
-    const nebenkosten = new NebenkostenCalculator(DEFAULT_CALCULATION.principal, 3.57, bundesland).calcSumme();
-    updateNebenkosten(Math.round(nebenkosten));
+    const nebenkosten = new NebenkostenCalculator(
+      DEFAULT_CALCULATION.principal,
+      3.57,
+      bundesland,
+    ).calcSumme();
+    //updateNebenkosten(Math.round(nebenkosten));
   }, []);
 
   useEffect(() => {
@@ -94,7 +112,7 @@ export default function ResultDisplay() {
             calculationId!,
             tilgungswechselCache,
           );
-        const tilgungsTabelle = calcTilgung(input, nebenkosten);
+        const tilgungsTabelle = calcTilgung(input, calcSummeNebenkosten(input.principal));
         setTable(tilgungsTabelle);
       }
 
@@ -108,7 +126,7 @@ export default function ResultDisplay() {
     return () => {
       clearTimeout(debounceTimeout);
     };
-  }, [input, nebenkosten]);
+  }, [input, maklergebuehr, bundesland, notarkosten, grundbuchkosten]);
 
   const getFromBrowserStorage = (id: string) => {
     const calculation = calculationAccessor(id);
@@ -141,7 +159,7 @@ export default function ResultDisplay() {
           console.log("nebenkosten loaded from calculation:", nebenkosten);
           console.log(result);
 
-          updateNebenkosten(Math.round(nebenkosten));
+          //updateNebenkosten(Math.round(nebenkosten));
 
           // reset cache
           const sondertilgungen =
@@ -189,10 +207,7 @@ export default function ResultDisplay() {
             <NoData />
           ) : (
             <>
-              <MainStatsSection
-                userInput={input}
-                table={table}
-              />
+              <MainStatsSection userInput={input} table={table} />
               <div className="grid gap-6 2xl:grid-cols-[3fr_2fr]">
                 <div className="hidden md:block">
                   <TilgungstabelleContainer
