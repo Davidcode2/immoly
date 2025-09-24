@@ -5,6 +5,7 @@ import {
   useMaklergebuehrPercentageStore,
   useNotarkostenPercentageStore,
 } from "app/store";
+import { BookKey, Check, DoorOpen, ScrollText, Stamp } from "lucide-react";
 
 type PropTypes = {
   entry: AbsoluteNebenkostenModel;
@@ -99,11 +100,29 @@ export default function EditNebenkostenInput({
     (Number(currentPercentage().replace(",", ".")) / 100) * principal,
   );
 
+  const getIcon = (name: string) => {
+    switch (name) {
+      case "Notarkosten":
+        return (
+          <>
+            <ScrollText size={32} />
+          </>
+        );
+      case "Grundbuchkosten":
+        return <BookKey size={32} />;
+      case "Maklergebühr":
+        return <DoorOpen size={32} />;
+    }
+  };
+
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-5 bg-radial md:w-1/4">
-        <label className="self-start text-4xl" htmlFor={entry.name}>
-          {entry.name}
+      <div className="flex flex-col items-center justify-center gap-5 bg-radial md:w-2/3 lg:w-1/3">
+        <label
+          className="flex items-center gap-x-4 self-start text-4xl"
+          htmlFor={entry.name}
+        >
+          {getIcon(entry.name)} {entry.name}
         </label>
         <form onSubmit={() => setShowEditModal(false)}>
           <input
@@ -118,14 +137,18 @@ export default function EditNebenkostenInput({
         </form>
         <>
           <form onSubmit={() => setShowEditModal(false)}>
-            <div className="flex items-center justify-center">
+            <div className="flex w-full items-center justify-around">
               <input
                 value={currentPercentage().substring(0, 4)}
                 type="text"
-                className="w-22 rounded-full bg-linear-to-br from-[var(--dark-accent)] to-[var(--accent)] p-1 px-4 text-start text-lg text-[var(--secondary)]"
+                className="w-22 rounded-full bg-linear-to-br from-[var(--dark-accent)] to-[var(--accent)] p-1 px-4 shadow-lg text-start text-lg text-[var(--secondary)]"
                 onChange={handlePercentageChange}
               />
               <div className="relative right-7">%</div>
+              <button className="flex gap-x-2 items-center cursor-pointer rounded-full bg-[var(--success)] shadow-lg text-[var(--background)] p-1 px-4 text-start text-lg">
+                Übernehmen
+                <Check />
+              </button>
             </div>
           </form>
         </>
