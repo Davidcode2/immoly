@@ -34,7 +34,7 @@ export default function StoredCalculations() {
     <div className="grid h-[800px] grid-rows-[1fr_auto_1fr] bg-[var(--light-accent)]/50">
       {showDeletedConfirmationModal && (
         <Toast onClose={() => setShowDeletedConfirmationModal(false)}>
-          <div className="z-40 mx-10 backdrop-blur-xl rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 sm:mx-0 md:w-[400px]">
+          <div className="z-40 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 md:w-[400px]">
             <div className="m-6 flex gap-x-4 items-center">
               <Check size={72} />
               <div>Szenario gelöscht</div>

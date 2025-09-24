@@ -8,6 +8,8 @@ import { calculationsLocalStorageSetter } from "app/services/calculationsLocalSt
 import { useBundeslandStore, useMaklergebuehrPercentageStore } from "app/store";
 import NebenKostenModel from "app/lib/models/nebenkostenModel";
 import { transferSonderAmounts } from "app/services/sonderAmountBrowserUpdater";
+import Toast from "../toast";
+import { Check } from "lucide-react";
 
 export default function FinanzierungsForm({
   values,
@@ -24,12 +26,19 @@ export default function FinanzierungsForm({
   const [monthlyRate, setMonthlyRate] = useState<number | string>("");
   const searchParams = useSearchParams();
   const router = useRouter();
-  const maklergebuehrPercentage = useMaklergebuehrPercentageStore.getState().value;
+  const maklergebuehrPercentage =
+    useMaklergebuehrPercentageStore.getState().value;
   const bundesland = useBundeslandStore.getState().value;
+  const [showSavedToast, setShowSavedToast] = useState(false);
 
   const monthlyRateInPercent = () => {
-    const nebenkosten = new NebenkostenCalculator(Number(principalValue), Number(maklergebuehrPercentage.replace(",", ".")), bundesland).calcSumme();
-    const kreditSumme = Number(principalValue) + nebenkosten - Number(downPayment);
+    const nebenkosten = new NebenkostenCalculator(
+      Number(principalValue),
+      Number(maklergebuehrPercentage.replace(",", ".")),
+      bundesland,
+    ).calcSumme();
+    const kreditSumme =
+      Number(principalValue) + nebenkosten - Number(downPayment);
     const yearlyRate = Number(monthlyRate) * 12;
     const zins = (Number(interestRate) * kreditSumme) / 100;
     const tilgung = yearlyRate - zins;
@@ -99,7 +108,9 @@ export default function FinanzierungsForm({
   const handleSubmit = async () => {
     const nebenkosten: NebenKostenModel = {
       bundesland: bundesland,
-      maklergebuehrPercentage: Number(maklergebuehrPercentage.replace(",", "."))
+      maklergebuehrPercentage: Number(
+        maklergebuehrPercentage.replace(",", "."),
+      ),
     };
     if (!values) {
       return;
@@ -107,70 +118,82 @@ export default function FinanzierungsForm({
     const uuid = calculationsLocalStorageSetter(values, nebenkosten);
     if (uuid) {
       const params = new URLSearchParams(searchParams);
-      params.set('calculationId', uuid);
+      params.set("calculationId", uuid);
       router.push(`/?${params.toString()}`, { scroll: false });
     }
     transferSonderAmounts(uuid);
-  }
+    setShowSavedToast(true);
+  };
 
   return (
-    <Form action={handleSubmit} className="mx-8 pb-8 md:pb-0 md:mx-auto">
-      <div className="p-2">
-        <div className="mb-2 grid gap-8 md:gap-8 md:justify-center lg:justify-none">
-          {/* Eigenkapital */}
-          <SliderInput
-            min={0}
-            max={450000}
-            step={1000}
-            value={Number(downPayment) || 0}
-            inputName={"down_payment"}
-            label={"Eigenkapital"}
-            htmlFor={"capital"}
-            handleChange={handleInputChange}
-          />
-          <SliderInput
-            min={500}
-            max={6000}
-            step={10}
-            value={Number(monthlyRate)}
-            inputName={"monthly_rate"}
-            label={"Monatsrate"}
-            htmlFor={"monthlyRate"}
-            handleChange={handleInputChange}
-          >
-            <div className="md:w-36 border-b border-stone-700 bg-transparent pb-1 text-xl text-neutral-500 transition-colors duration-200 focus:border-slate-500 focus:outline-none md:text-base">
-              {monthlyRateInPercent()}
+    <>
+      {showSavedToast && (
+        <Toast onClose={() => setShowSavedToast(false)}>
+          <div className="z-40 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 md:w-[400px]">
+            <div className="m-6 flex gap-x-4 items-center">
+              <Check size={72} />
+              <div>Szenario gespeichert</div>
             </div>
-          </SliderInput>
-          <SliderInput
-            min={0.1}
-            max={6}
-            step={0.1}
-            value={Number(interestRate) || 0}
-            inputName={"interest_rate"}
-            label={"Kreditzins"}
-            htmlFor={"interestRate"}
-            handleChange={handleInputChange}
-          />
-          <SliderInput
-            min={50000}
-            max={1500000}
-            step={10000}
-            value={Number(principalValue) || 0}
-            inputName={"principal"}
-            label={"Kaufsumme"}
-            htmlFor={"creditSum"}
-            handleChange={handleInputChange}
-          >
-          </SliderInput>
+          </div>
+        </Toast>
+      )}
+      <Form action={handleSubmit} className="mx-8 pb-8 md:mx-auto md:pb-0">
+        <div className="p-2">
+          <div className="lg:justify-none mb-2 grid gap-8 md:justify-center md:gap-8">
+            {/* Eigenkapital */}
+            <SliderInput
+              min={0}
+              max={450000}
+              step={1000}
+              value={Number(downPayment) || 0}
+              inputName={"down_payment"}
+              label={"Eigenkapital"}
+              htmlFor={"capital"}
+              handleChange={handleInputChange}
+            />
+            <SliderInput
+              min={500}
+              max={6000}
+              step={10}
+              value={Number(monthlyRate)}
+              inputName={"monthly_rate"}
+              label={"Monatsrate"}
+              htmlFor={"monthlyRate"}
+              handleChange={handleInputChange}
+            >
+              <div className="border-b border-stone-700 bg-transparent pb-1 text-xl text-neutral-500 transition-colors duration-200 focus:border-slate-500 focus:outline-none md:w-36 md:text-base">
+                {monthlyRateInPercent()}
+              </div>
+            </SliderInput>
+            <SliderInput
+              min={0.1}
+              max={6}
+              step={0.1}
+              value={Number(interestRate) || 0}
+              inputName={"interest_rate"}
+              label={"Kreditzins"}
+              htmlFor={"interestRate"}
+              handleChange={handleInputChange}
+            />
+            <SliderInput
+              min={50000}
+              max={1500000}
+              step={10000}
+              value={Number(principalValue) || 0}
+              inputName={"principal"}
+              label={"Kaufsumme"}
+              htmlFor={"creditSum"}
+              handleChange={handleInputChange}
+            ></SliderInput>
+          </div>
         </div>
-      </div>
-      <button
-        type="submit"
-        className="cursor-pointer mt-9 w-full rounded-lg bg-[var(--primary)]/90 px-4 py-2 font-bold text-white shadow backdrop-blur-md transition-colors duration-200 hover:bg-[var(--primary)]"
-      >
-        Berechnung speichern
-      </button>
-    </Form>
+        <button
+          type="submit"
+          className="mt-9 w-full cursor-pointer rounded-lg bg-[var(--primary)]/90 px-4 py-2 font-bold text-white shadow backdrop-blur-md transition-colors duration-200 hover:bg-[var(--primary)]"
+        >
+          Berechnung speichern
+        </button>
+      </Form>
+    </>
   );
 }

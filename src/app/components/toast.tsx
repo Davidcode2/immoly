@@ -30,7 +30,7 @@ export default function Toast({
   useEffect(() => {
     setProgress(100); // reset to full bar
     const duration = 5000;
-    const steps = 40; // how many updates
+    const steps = 50; // how many updates
     const stepTime = duration / steps;
     let current = 100;
 
@@ -54,22 +54,23 @@ export default function Toast({
     <>
       {createPortal(
         <div
-          className={`fixed top-10 md:right-10 z-40 transition-all ${isShown ? "opacity-100" : "opacity-0"}`}
+          className={`fixed top-10 z-40 mx-auto flex w-full transition-all duration-250 md:right-10 md:w-fit ${isShown ? "opacity-100" : "opacity-0"}`}
           onClick={handleBackdropClick}
         >
           <div
             ref={backdropRef}
-            className="modal flex h-full w-96 items-center justify-center"
+            className="modal mx-auto flex h-full w-fit items-center justify-center"
           >
+          <div className="relative backdrop-blur-xl rounded-xl">
             {children}
-            <div className="z-50 absolute bottom-[1px] left-[6px] mx-auto w-[97%]">
-              <div
-                className="h-1 rounded-bl-full bg-[var(--accent)]/60 transition-all duration-100 ease-linear"
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
+            <div
+              className="absolute z-50 bottom-[0px] left-[6px] max-w-[94%] h-1 rounded-bl-full bg-[var(--accent)] transition-all duration-100 ease-linear"
+              style={{ width: `${progress}%` }}
+            ></div>
+</div>
           </div>
         </div>,
+
         document.body,
       )}
     </>
