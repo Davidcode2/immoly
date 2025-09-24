@@ -7,12 +7,15 @@ import { Check, LoaderCircle } from "lucide-react";
 
 export default function StoredScenario({
   calculation,
+  setShowDeletedConfirmationModal,
 }: {
   calculation: CalculationDbo;
+  setShowDeletedConfirmationModal: (arg1: boolean) => void;
 }) {
   const [selected, setSelected] = useState(false);
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
+    useState(false);
 
   const setCalcId = () => {
     if (selected) return;
@@ -31,6 +34,9 @@ export default function StoredScenario({
   };
 
   const deleteSelectedItem = async () => {
+    console.log("deleted");
+    setShowDeletedConfirmationModal(true);
+    console.log("after");
     const res = deleteCalculation(calculation.id);
     if (!res) {
       alert("Fehler beim Löschen des Szenarios");
