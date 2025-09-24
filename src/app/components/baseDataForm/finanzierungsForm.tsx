@@ -5,7 +5,7 @@ import SliderInput from "app/components/slider/sliderInput";
 import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 import { useRouter, useSearchParams } from "next/navigation";
 import { calculationsLocalStorageSetter } from "app/services/calculationsLocalStorageSetter";
-import { useBundeslandStore, useMaklergebuehrStore } from "app/store";
+import { useBundeslandStore, useMaklergebuehrPercentageStore } from "app/store";
 import NebenKostenModel from "app/lib/models/nebenkostenModel";
 import { transferSonderAmounts } from "app/services/sonderAmountBrowserUpdater";
 
@@ -24,11 +24,11 @@ export default function FinanzierungsForm({
   const [monthlyRate, setMonthlyRate] = useState<number | string>("");
   const searchParams = useSearchParams();
   const router = useRouter();
-  const maklergebuehrPercentage = useMaklergebuehrStore.getState().value;
+  const maklergebuehrPercentage = useMaklergebuehrPercentageStore.getState().value;
   const bundesland = useBundeslandStore.getState().value;
 
   const monthlyRateInPercent = () => {
-    const nebenkosten = new NebenkostenCalculator(Number(principalValue), maklergebuehrPercentage, bundesland).calcSumme();
+    const nebenkosten = new NebenkostenCalculator(Number(principalValue), Number(maklergebuehrPercentage.replace(",", ".")), bundesland).calcSumme();
     const kreditSumme = Number(principalValue) + nebenkosten - Number(downPayment);
     const yearlyRate = Number(monthlyRate) * 12;
     const zins = (Number(interestRate) * kreditSumme) / 100;
