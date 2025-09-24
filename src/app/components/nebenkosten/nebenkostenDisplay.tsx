@@ -4,7 +4,7 @@ import CenteredModal from "../centeredModal";
 import PieChartNebenkosten from "./pieChartNebenkosten";
 import NebenkostenModal from "./nebenkostenModal";
 import { screenWidthMobile } from "app/utils/screenWidth";
-import { useBundeslandStore } from "app/store";
+import { useBundeslandStore, useGrundbuchkostenPercentageStore, useMaklergebuehrPercentageStore, useNotarkostenPercentageStore } from "app/store";
 import EditIconComponent from "./editIconComponent";
 import { getGrundsteuer } from "app/services/nebenkostenGrundsteuer";
 import NebenkostenGrid from "./nebenkostenGrid";
@@ -23,15 +23,10 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const [showModal, setShowModal] = useState<boolean>(false);
   const bundesland = useBundeslandStore((state) => state.value);
   const sumNebenkosten = useRef<number>(0);
-  const [principal, setPrincipal] = useState<number>(calculationData ? calculationData.principal : 0);
 
   if (!calculationData) {
     throw new Error("No calculation data available");
   }
-
-  useEffect(() => {
-    setPrincipal(calculationData.principal);
-  }, [calculationData]);
 
   const handleMouseEnter = (index: number) => setActiveIndex(index);
   const handleMouseLeave = () => setActiveIndex(null);
@@ -39,6 +34,26 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const updateBundesland = useBundeslandStore((state) => state.updateValue);
   const grunderwerbsteuer = (
     getGrundsteuer(bundesland) * calculationData.principal) / 100;
+  const maklergebuehrPercentage = Number(useMaklergebuehrPercentageStore((state) => state.value).replace(",", "."));
+
+  const notarkostenPercentage = Number(useNotarkostenPercentageStore((state) => state.value).replace(",", "."));
+  const grundbuchkostenPercentage = Number(useGrundbuchkostenPercentageStore((state) => state.value).replace(",", "."));
+
+  const absoluteMaklergebuehrFromPercentage = Math.round((maklergebuehrPercentage / 100) * calculationData.principal);
+  const absoluteNotarkostenFromPercentage = Math.round((notarkostenPercentage / 100) * calculationData.principal);
+  const absoluteGrundbuchkostenFromPercentage = Math.round((grundbuchkostenPercentage / 100) * calculationData.principal);
+
+  if (notarkostenPercentage !== 0) {
+    useNotarkostenStore.getState().updateValue(
+      Math.round((notarkostenPercentage / 100) * calculationData.principal)
+    );
+  }
+
+  if (grundbuchkostenPercentage !== 0) {
+    useGrundbuchkostenStore.getState().updateValue(
+      Math.round((grundbuchkostenPercentage / 100) * calculationData.principal)
+    );
+  }
 
   const openModalOnMobile = () => {
     if (screenWidthMobile() && !showModal) {
@@ -53,21 +68,23 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
       useGrundbuchkostenStore.getState().value +
       useNotarkostenStore.getState().value +
       Math.round(grundsteuer);
-    return nebenkosten;
+    return Math.round(nebenkosten);
   }
 
   sumNebenkosten.current = calcSummeNebenkosten(calculationData.principal);
 
   const pieChartData = [
-    { name: "Notarkosten", value: useNotarkostenStore((state) => state.value) },
+    { name: "Notarkosten", 
+      value: absoluteNotarkostenFromPercentage
+    },
     {
       name: "Grundbuchkosten",
-      value: useGrundbuchkostenStore((state) => state.value),
+      value: absoluteGrundbuchkostenFromPercentage
     },
     { name: "Grunderwerbsteuer", value: grunderwerbsteuer },
     {
       name: "Maklergebühr",
-      value: useMaklergebuehrStore((state) => state.value),
+      value: absoluteMaklergebuehrFromPercentage,
     },
   ];
 
@@ -93,7 +110,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
               activeIndex={activeIndex}
               handleMouseEnter={handleMouseEnter}
               handleMouseLeave={handleMouseLeave}
-              principal={principal}
+              principal={calculationData.principal}
             />
           </CenteredModal>
         )}

@@ -2,11 +2,8 @@ import { useEffect, useRef } from "react";
 import { CompleteNebenkostenModel } from "./nebenkostenFrontendModel";
 import {
   useGrundbuchkostenPercentageStore,
-  useGrundbuchkostenStore,
   useMaklergebuehrPercentageStore,
-  useMaklergebuehrStore,
   useNotarkostenPercentageStore,
-  useNotarkostenStore,
 } from "app/store";
 
 type PropTypes = {
@@ -32,17 +29,6 @@ export default function EditNebenkostenInput({
   const updateGrundbuchkostenPercentageState =
     useGrundbuchkostenPercentageStore((state) => state.updateValue);
 
-  /** absolute updaters **/
-  const updateMaklergebuehrAbsoluteState = useMaklergebuehrStore(
-    (state) => state.updateValue,
-  );
-  const updateNotarkostenAbsolute = useNotarkostenStore(
-    (state) => state.updateValue,
-  );
-  const updateGrundbuchkostenAbsolute = useGrundbuchkostenStore(
-    (state) => state.updateValue,
-  );
-
   /** relative stores **/
   const maklergebuehrPercentage = useMaklergebuehrPercentageStore(
     (state) => state.value,
@@ -66,19 +52,9 @@ export default function EditNebenkostenInput({
         break;
       case "Grundbuchkosten":
         updateGrundbuchkostenPercentageState(e.target.value);
-        updateGrundbuchkostenAbsolute(
-          Math.round(
-            (Number(e.target.value.replace(",", ".")) / 100) * principal,
-          ),
-        );
         break;
       case "Maklergebühr":
         updateMaklergebuehrPercentageState(e.target.value);
-        updateMaklergebuehrAbsoluteState(
-          Math.round(
-            (Number(e.target.value.replace(",", ".")) / 100) * principal,
-          ),
-        );
         break;
       default:
         throw new Error("Unknown nebenkosten entry");
@@ -94,29 +70,34 @@ export default function EditNebenkostenInput({
       case "Maklergebühr":
         return maklergebuehrPercentage.replace(".", ",");
       default:
-        return 0;
+        return "";
     }
   };
 
   const handleAbsoluteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = Number(e.target.value);
+    const newAbs = Number(e.target.value);
+    const newPercent = ((newAbs / principal) * 100)
+      .toFixed(10)
+      .replace(".", ",");
+
     switch (entry.name) {
       case "Notarkosten":
-        updateNotarkostenAbsolute(newValue);
+        updateNotarkostenPercentageState(newPercent);
         break;
       case "Grundbuchkosten":
-        updateGrundbuchkostenAbsolute(newValue);
+        updateGrundbuchkostenPercentageState(newPercent);
         break;
       case "Maklergebühr":
-        updateMaklergebuehrAbsoluteState(newValue);
-        updateMaklergebuehrPercentageState(
-          ((newValue / principal) * 100).toFixed(2),
-        );
+        updateMaklergebuehrPercentageState(newPercent);
         break;
       default:
         throw new Error("Unknown nebenkosten entry");
     }
   };
+
+  const absoluteValue = Math.round(
+    (Number(currentPercentage().replace(",", ".")) / 100) * principal,
+  )
 
   return (
     <>
@@ -131,14 +112,14 @@ export default function EditNebenkostenInput({
             ref={inputRef}
             onChange={handleAbsoluteChange}
             name={entry.name}
-            value={Math.round(entry.value) || ""}
+            value={Math.round(absoluteValue) || ""}
             className="focus:bg-[var(--foreground)/20 w-full rounded-full border border-slate-300 bg-[var(--foreground)]/10 px-8 py-1 text-left text-xl text-[var(--text)] outline-none placeholder:text-slate-400 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] focus:placeholder:text-[var(--text)] md:text-5xl"
           />
         </form>
         <>
           <div className="flex items-center justify-center">
             <input
-              value={currentPercentage()}
+              value={currentPercentage().substring(0,4)}
               type="text"
               className="w-22 rounded-full bg-linear-to-br from-[var(--dark-accent)] to-[var(--accent)] p-1 px-4 text-start text-lg text-[var(--secondary)]"
               onChange={handlePercentageChange}

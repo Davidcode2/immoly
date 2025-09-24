@@ -2,11 +2,12 @@ import EditNebenkostenInput from "./editNebenkostenInput";
 import CenteredModal from "../centeredModal";
 import { useState } from "react";
 import {
-  useGrundbuchkostenStore,
-  useMaklergebuehrStore,
-  useNotarkostenStore,
+  useGrundbuchkostenPercentageStore,
+  useMaklergebuehrPercentageStore,
+  useNotarkostenPercentageStore,
 } from "app/store";
 import { CompleteNebenkostenModel } from "./nebenkostenFrontendModel";
+import { getGrundsteuer } from "app/services/nebenkostenGrundsteuer";
 
 type PropTypes = {
   entry: CompleteNebenkostenModel;
@@ -15,7 +16,6 @@ type PropTypes = {
   setShowMap: (arg: boolean) => void;
   bundesland: string;
   activeIndex: number | null;
-  percentage: number;
   index: number;
   principal: number;
 };
@@ -24,13 +24,53 @@ export default function NebenkostenEntry({
   handleMouseEnter,
   handleMouseLeave,
   setShowMap,
-  percentage,
   bundesland,
   index,
   activeIndex,
   principal,
 }: PropTypes) {
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
+
+  const maklergebuehrPercentage = useMaklergebuehrPercentageStore(
+    (state) => state.value,
+  );
+  const notarkostenPercentage = useNotarkostenPercentageStore(
+    (state) => state.value,
+  );
+  const grundbuchkostenPercentage = useGrundbuchkostenPercentageStore(
+    (state) => state.value,
+  );
+
+  const currentPercentage = () => {
+    switch (entry.name) {
+      case "Notarkosten":
+        return (
+          Math.round(Number(notarkostenPercentage.replace(",", ".")) * 100) /
+          100
+        )
+          .toString()
+          .replace(".", ",");
+      case "Grundbuchkosten":
+        return (
+          Math.round(
+            Number(grundbuchkostenPercentage.replace(",", ".")) * 100,
+          ) / 100
+        )
+          .toString()
+          .replace(".", ",");
+      case "Maklergebühr":
+        return (
+          Math.round(Number(maklergebuehrPercentage.replace(",", ".")) * 100) /
+          100
+        )
+          .toString()
+          .replace(".", ",");
+      case "Grunderwerbsteuer":
+        return getGrundsteuer(bundesland);
+      default:
+        return "";
+    }
+  };
 
   return (
     <>
@@ -79,7 +119,7 @@ export default function NebenkostenEntry({
             €{entry.value.toLocaleString("de")}
           </div>
           <div className="w-fit rounded-xl bg-[var(--dark-accent)] p-1 px-2 text-xs text-[var(--secondary)]">
-            {percentage} %
+            {currentPercentage()} %
           </div>
         </div>
       </div>

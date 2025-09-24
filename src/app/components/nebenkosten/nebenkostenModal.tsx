@@ -71,7 +71,6 @@ export default function NebenkostenModal({
                   entry={entry}
                   handleMouseEnter={handleMouseEnter}
                   handleMouseLeave={handleMouseLeave}
-                  percentage={entry.percentage}
                   setShowMap={setShowMap}
                   bundesland={bundesland}
                   index={index}

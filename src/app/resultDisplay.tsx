@@ -85,7 +85,7 @@ export default function ResultDisplay() {
       useGrundbuchkostenStore.getState().value +
       useNotarkostenStore.getState().value +
       Math.round(grundsteuer);
-    return nebenkosten;
+    return Math.round(nebenkosten);
   }
 
   useEffect(() => {
