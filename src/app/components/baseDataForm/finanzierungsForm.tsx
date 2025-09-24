@@ -99,7 +99,7 @@ export default function FinanzierungsForm({
   const handleSubmit = async () => {
     const nebenkosten: NebenKostenModel = {
       bundesland: bundesland,
-      maklergebuehrPercentage: maklergebuehrPercentage,
+      maklergebuehrPercentage: Number(maklergebuehrPercentage.replace(",", "."))
     };
     if (!values) {
       return;
