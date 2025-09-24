@@ -1,5 +1,5 @@
 import CashRoiModel from "app/lib/models/cashRoiModel";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import CenteredModal from "../centeredModal";
 import PieChartNebenkosten from "./pieChartNebenkosten";
 import NebenkostenModal from "./nebenkostenModal";

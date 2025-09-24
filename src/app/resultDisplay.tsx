@@ -90,12 +90,6 @@ export default function ResultDisplay() {
 
   useEffect(() => {
     setInput(DEFAULT_CALCULATION);
-    const nebenkosten = new NebenkostenCalculator(
-      DEFAULT_CALCULATION.principal,
-      3.57,
-      bundesland,
-    ).calcSumme();
-    //updateNebenkosten(Math.round(nebenkosten));
   }, []);
 
   useEffect(() => {
@@ -156,10 +150,6 @@ export default function ResultDisplay() {
             (result as CalculationDbo).maklerguehrPercentage ?? maklergebuehr,
             (result as CalculationDbo).bundesland ?? bundesland,
           ).calcSumme();
-          console.log("nebenkosten loaded from calculation:", nebenkosten);
-          console.log(result);
-
-          //updateNebenkosten(Math.round(nebenkosten));
 
           // reset cache
           const sondertilgungen =

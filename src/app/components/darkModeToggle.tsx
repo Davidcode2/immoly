@@ -13,7 +13,6 @@ export default function DarkModeToggle() {
     if (!theme) {
       setTheme("green-mist-light");
     }
-    console.log("Current theme:", theme);
     // set .dark class if dark theme active for tailwindss dark: utility
     if (theme!.includes("dark"))
       document.documentElement.classList.add("dark");
@@ -40,7 +39,6 @@ export default function DarkModeToggle() {
   };
 
   if (!mounted) {
-    // optional: render a placeholder to avoid layout shift
     return <div className="h-6 w-6" />;
   }
 

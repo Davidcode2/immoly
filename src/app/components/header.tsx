@@ -25,7 +25,6 @@ export default function Header() {
     setTheme(
       theme!.includes("dark") ? value!.split("light")[0] + "dark" : value,
     );
-    console.log(value);
   };
 
   const brushIcon = (

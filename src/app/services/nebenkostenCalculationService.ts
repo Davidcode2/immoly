@@ -20,14 +20,6 @@ export default class NebenkostenCalculator {
     this.maklergebuehrPercentage = maklergebuehrPercentage;
     this.bundesland =
       bundesland && bundesland != "" ? bundesland : DEFAULT_BUNDESLAND;
-    console.log(
-      "NebenkostenCalculator created with principal: ",
-      principal,
-      " maklergebuehr: ",
-      maklergebuehrPercentage,
-      " bundesland: ",
-      this.bundesland,
-    );
   }
 
   calcSumme = () => {
@@ -39,7 +31,6 @@ export default class NebenkostenCalculator {
       this.calcGrundbuchkosten() +
       this.calcMaklergebuehr() +
       this.calcGrunderwerbsteuer(this.bundesland);
-    console.log("Nebenkosten Summe: ", this.summe);
     return this.summe;
   };
 
@@ -99,15 +90,6 @@ export class NebenkostenCalculatorForNebenkostenComponent {
       bundesland && bundesland != "" ? bundesland : DEFAULT_BUNDESLAND;
     this.notarkosten = notarkosten;
     this.grundbuchkosten = grundbuchkosten;
-
-    console.log(
-      "NebenkostenCalculator created with principal: ",
-      principal,
-      " maklergebuehr: ",
-      maklergebuehrPercentage,
-      " bundesland: ",
-      this.bundesland,
-    );
   }
 
   calcSumme = () => {
@@ -119,7 +101,6 @@ export class NebenkostenCalculatorForNebenkostenComponent {
       this.calcGrundbuchkosten() +
       this.calcMaklergebuehr() +
       this.calcGrunderwerbsteuer(this.bundesland);
-    console.log("Nebenkosten Summe: ", this.summe);
     return this.summe;
   };
 
