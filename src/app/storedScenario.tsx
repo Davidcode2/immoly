@@ -34,9 +34,7 @@ export default function StoredScenario({
   };
 
   const deleteSelectedItem = async () => {
-    console.log("deleted");
     setShowDeletedConfirmationModal(true);
-    console.log("after");
     const res = deleteCalculation(calculation.id);
     if (!res) {
       alert("Fehler beim Löschen des Szenarios");

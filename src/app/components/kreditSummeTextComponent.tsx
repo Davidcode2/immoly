@@ -1,6 +1,11 @@
 import Image from "next/image";
 import PieChartGesamtBetrag from "./lineChartGesamtbetrag";
-import { useBundeslandStore, useGrundbuchkostenStore, useMaklergebuehrStore, useNotarkostenStore } from "app/store";
+import {
+  useBundeslandStore,
+  useGrundbuchkostenPercentageStore,
+  useMaklergebuehrPercentageStore,
+  useNotarkostenPercentageStore,
+} from "app/store";
 import { getGrundsteuer } from "app/services/nebenkostenGrundsteuer";
 
 type PropTypes = {
@@ -11,18 +16,37 @@ export default function KreditSummeTextComponent({
   principal,
   downPayment,
 }: PropTypes) {
-  //const nebenkosten = useNebenkostenStore((state) => state.value);
   const bundesland = useBundeslandStore((state) => state.value);
+  const maklergebuehrPercentage = Number(
+    useMaklergebuehrPercentageStore((state) => state.value).replace(",", "."),
+  );
+
+  const notarkostenPercentage = Number(
+    useNotarkostenPercentageStore((state) => state.value).replace(",", "."),
+  );
+  const grundbuchkostenPercentage = Number(
+    useGrundbuchkostenPercentageStore((state) => state.value).replace(",", "."),
+  );
 
   const calcSummeNebenkosten = (principal: number) => {
+    const absoluteMaklergebuehrFromPercentage = Math.round(
+      (maklergebuehrPercentage / 100) * principal,
+    );
+    const absoluteNotarkostenFromPercentage = Math.round(
+      (notarkostenPercentage / 100) * principal,
+    );
+    const absoluteGrundbuchkostenFromPercentage = Math.round(
+      (grundbuchkostenPercentage / 100) * principal,
+    );
+
     const grundsteuer = (getGrundsteuer(bundesland) * principal) / 100;
     const nebenkosten =
-      useMaklergebuehrStore.getState().value +
-      useGrundbuchkostenStore.getState().value +
-      useNotarkostenStore.getState().value +
+      absoluteMaklergebuehrFromPercentage +
+      absoluteGrundbuchkostenFromPercentage +
+      absoluteNotarkostenFromPercentage +
       Math.round(grundsteuer);
     return Math.round(nebenkosten);
-  }
+  };
   const nebenkosten = calcSummeNebenkosten(principal);
 
   const kreditSummeRaw = principal + nebenkosten - downPayment;

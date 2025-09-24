@@ -8,11 +8,6 @@ import { useBundeslandStore, useGrundbuchkostenPercentageStore, useMaklergebuehr
 import EditIconComponent from "./editIconComponent";
 import { getGrundsteuer } from "app/services/nebenkostenGrundsteuer";
 import NebenkostenGrid from "./nebenkostenGrid";
-import {
-  useGrundbuchkostenStore,
-  useMaklergebuehrStore,
-  useNotarkostenStore,
-} from "app/store";
 
 type PropTypes = {
   calculationData: CashRoiModel | null;
@@ -43,18 +38,6 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const absoluteNotarkostenFromPercentage = Math.round((notarkostenPercentage / 100) * calculationData.principal);
   const absoluteGrundbuchkostenFromPercentage = Math.round((grundbuchkostenPercentage / 100) * calculationData.principal);
 
-  if (notarkostenPercentage !== 0) {
-    useNotarkostenStore.getState().updateValue(
-      Math.round((notarkostenPercentage / 100) * calculationData.principal)
-    );
-  }
-
-  if (grundbuchkostenPercentage !== 0) {
-    useGrundbuchkostenStore.getState().updateValue(
-      Math.round((grundbuchkostenPercentage / 100) * calculationData.principal)
-    );
-  }
-
   const openModalOnMobile = () => {
     if (screenWidthMobile() && !showModal) {
       setShowModal(true);
@@ -64,9 +47,9 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const calcSummeNebenkosten = (principal: number) => {
     const grundsteuer = (getGrundsteuer(bundesland) * principal) / 100;
     const nebenkosten =
-      useMaklergebuehrStore.getState().value +
-      useGrundbuchkostenStore.getState().value +
-      useNotarkostenStore.getState().value +
+      absoluteMaklergebuehrFromPercentage +
+      absoluteGrundbuchkostenFromPercentage +
+      absoluteNotarkostenFromPercentage +
       Math.round(grundsteuer);
     return Math.round(nebenkosten);
   }

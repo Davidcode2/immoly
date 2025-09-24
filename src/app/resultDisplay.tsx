@@ -16,9 +16,9 @@ import MobileFormContainer from "./components/mobileFormContainer";
 import MobileTilgungsTabelleContainer from "./components/mobileTilgungsTabelleContainer";
 import {
   useBundeslandStore,
-  useGrundbuchkostenStore,
-  useMaklergebuehrStore,
-  useNotarkostenStore,
+  useGrundbuchkostenPercentageStore,
+  useMaklergebuehrPercentageStore,
+  useNotarkostenPercentageStore,
 } from "app/store";
 import NebenkostenCalculator from "./services/nebenkostenCalculationService";
 import SloganHero from "./components/hero/sloganHero";
@@ -42,16 +42,24 @@ export default function ResultDisplay() {
 
   const searchParams = useSearchParams();
   const calculationId = searchParams.get("calculationId");
-  //const updateNebenkosten = useNebenkostenStore((state) => state.updateValue);
-  const updateMaklergebuehr = useMaklergebuehrStore(
-    (state) => state.updateValue,
-  );
   const updateBundesland = useBundeslandStore((state) => state.updateValue);
-  //const nebenkosten = useNebenkostenStore((state) => state.value);
   const bundesland = useBundeslandStore((state) => state.value);
-  const maklergebuehr = useMaklergebuehrStore((state) => state.value);
-  const grundbuchkosten = useGrundbuchkostenStore((state) => state.value);
-  const notarkosten = useNotarkostenStore((state) => state.value);
+  const maklergebuehr = useMaklergebuehrPercentageStore((state) => state.value);
+  const grundbuchkosten = useGrundbuchkostenPercentageStore(
+    (state) => state.value,
+  );
+  const notarkosten = useNotarkostenPercentageStore((state) => state.value);
+
+  const maklergebuehrPercentage = Number(
+    useMaklergebuehrPercentageStore((state) => state.value).replace(",", "."),
+  );
+
+  const notarkostenPercentage = Number(
+    useNotarkostenPercentageStore((state) => state.value).replace(",", "."),
+  );
+  const grundbuchkostenPercentage = Number(
+    useGrundbuchkostenPercentageStore((state) => state.value).replace(",", "."),
+  );
 
   const skipNextInputEffect = useRef(false);
 
@@ -69,7 +77,10 @@ export default function ResultDisplay() {
       tilgungswechselCache,
       true,
     );
-    const tilgungungsTabelle = calcTilgung(input, calcSummeNebenkosten(input.principal));
+    const tilgungungsTabelle = calcTilgung(
+      input,
+      calcSummeNebenkosten(input.principal),
+    );
     setTable(tilgungungsTabelle);
   };
 
@@ -79,14 +90,24 @@ export default function ResultDisplay() {
   );
 
   const calcSummeNebenkosten = (principal: number) => {
+    const absoluteMaklergebuehrFromPercentage = Math.round(
+      (maklergebuehrPercentage / 100) * principal,
+    );
+    const absoluteNotarkostenFromPercentage = Math.round(
+      (notarkostenPercentage / 100) * principal,
+    );
+    const absoluteGrundbuchkostenFromPercentage = Math.round(
+      (grundbuchkostenPercentage / 100) * principal,
+    );
+
     const grundsteuer = (getGrundsteuer(bundesland) * principal) / 100;
     const nebenkosten =
-      useMaklergebuehrStore.getState().value +
-      useGrundbuchkostenStore.getState().value +
-      useNotarkostenStore.getState().value +
+      absoluteMaklergebuehrFromPercentage +
+      absoluteGrundbuchkostenFromPercentage +
+      absoluteNotarkostenFromPercentage +
       Math.round(grundsteuer);
     return Math.round(nebenkosten);
-  }
+  };
 
   useEffect(() => {
     setInput(DEFAULT_CALCULATION);
@@ -106,7 +127,10 @@ export default function ResultDisplay() {
             calculationId!,
             tilgungswechselCache,
           );
-        const tilgungsTabelle = calcTilgung(input, calcSummeNebenkosten(input.principal));
+        const tilgungsTabelle = calcTilgung(
+          input,
+          calcSummeNebenkosten(input.principal),
+        );
         setTable(tilgungsTabelle);
       }
 
@@ -143,7 +167,7 @@ export default function ResultDisplay() {
             console.warn("No result found for calculationId:", calculationId);
             return;
           }
-          updateMaklergebuehr((result as CalculationDbo).maklerguehrPercentage);
+          //updateMaklergebuehr((result as CalculationDbo).maklerguehrPercentage);
           updateBundesland((result as CalculationDbo).bundesland);
           const nebenkosten = new NebenkostenCalculator(
             result.principal,

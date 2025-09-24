@@ -31,6 +31,7 @@ export default function FinanzierungsForm({
   const bundesland = useBundeslandStore.getState().value;
   const [showSavedToast, setShowSavedToast] = useState(false);
 
+  // TODO take all nebenkosten into account
   const monthlyRateInPercent = () => {
     const nebenkosten = new NebenkostenCalculator(
       Number(principalValue),

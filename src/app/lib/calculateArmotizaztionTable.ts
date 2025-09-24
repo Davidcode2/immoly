@@ -9,6 +9,7 @@ export default function calcTilgung(
     return [];
   }
 
+  console.log("nebenkosten in calcTilgung", nebenkosten);
   const kreditsumme =
     calculation.principal + nebenkosten - calculation.down_payment;
   const annuitaet = calculation.monthly_rate * 12;
