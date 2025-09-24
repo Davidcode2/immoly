@@ -6,11 +6,11 @@ import {
   useMaklergebuehrPercentageStore,
   useNotarkostenPercentageStore,
 } from "app/store";
-import { CompleteNebenkostenModel } from "./nebenkostenFrontendModel";
+import { AbsoluteNebenkostenModel } from "./nebenkostenFrontendModel";
 import { getGrundsteuer } from "app/services/nebenkostenGrundsteuer";
 
 type PropTypes = {
-  entry: CompleteNebenkostenModel;
+  entry: AbsoluteNebenkostenModel;
   handleMouseEnter: (index: number) => void;
   handleMouseLeave: () => void;
   setShowMap: (arg: boolean) => void;

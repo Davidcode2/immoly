@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { CompleteNebenkostenModel } from "./nebenkostenFrontendModel";
+import { AbsoluteNebenkostenModel } from "./nebenkostenFrontendModel";
 import {
   useGrundbuchkostenPercentageStore,
   useMaklergebuehrPercentageStore,
@@ -7,7 +7,7 @@ import {
 } from "app/store";
 
 type PropTypes = {
-  entry: CompleteNebenkostenModel;
+  entry: AbsoluteNebenkostenModel;
   setShowEditModal: (arg1: boolean) => void;
   principal: number;
 };
@@ -97,7 +97,7 @@ export default function EditNebenkostenInput({
 
   const absoluteValue = Math.round(
     (Number(currentPercentage().replace(",", ".")) / 100) * principal,
-  )
+  );
 
   return (
     <>
@@ -117,15 +117,17 @@ export default function EditNebenkostenInput({
           />
         </form>
         <>
-          <div className="flex items-center justify-center">
-            <input
-              value={currentPercentage().substring(0,4)}
-              type="text"
-              className="w-22 rounded-full bg-linear-to-br from-[var(--dark-accent)] to-[var(--accent)] p-1 px-4 text-start text-lg text-[var(--secondary)]"
-              onChange={handlePercentageChange}
-            />
-            <div className="relative right-7">%</div>
-          </div>
+          <form onSubmit={() => setShowEditModal(false)}>
+            <div className="flex items-center justify-center">
+              <input
+                value={currentPercentage().substring(0, 4)}
+                type="text"
+                className="w-22 rounded-full bg-linear-to-br from-[var(--dark-accent)] to-[var(--accent)] p-1 px-4 text-start text-lg text-[var(--secondary)]"
+                onChange={handlePercentageChange}
+              />
+              <div className="relative right-7">%</div>
+            </div>
+          </form>
         </>
       </div>
     </>
