@@ -118,7 +118,7 @@ export default function NumberInput({
       name={inputName}
       onChange={localHandleChange}
       placeholder="Zahl eingeben"
-      className={` ${!formattedValidationPattern().test(displayValue) ? "text-green-900" : ""} w-36 border-b border-[var(--secondary)] bg-transparent pb-1 text-xl transition-colors duration-200 invalid:text-green-900 focus:border-[var(--accent)] focus:outline-none lg:text-base`}
+      className={` ${!formattedValidationPattern().test(displayValue) ? "text-[var(--ultralight-accent)]" : ""} w-36 border-b border-[var(--secondary)] bg-transparent pb-1 text-xl transition-colors duration-200 invalid:text-green-900 focus:border-[var(--accent)] focus:outline-none lg:text-base`}
     />
   );
 }
