@@ -99,14 +99,14 @@
 [data-theme="red-velvet-light"] {
   --background: #ffffff;
   --foreground: #330000;
-  --dark-accent: #660000;
+  --dark-accent: hsl(180, 2%, 61%);
   --accent: #ee0000;
-  --light-accent: gray;
+  --light-accent: hsl(10, 12%, 21%);
   --strong-accent: hsl(10, 85%, 41%);
   --ultralight-accent: #fff0f0;
-  --primary: gray;
+  --primary: #ee0000;
   --grey-accent: hsl(172, 8%, 60%);
-  --secondary: #ffcccc;
+  --secondary: hsl(10, 15%, 20%);
   --success: hsl(120, 40%, 60%);
   --dark-success: hsl(120, 40%, 50%);
   --alert: #ff6600;
@@ -117,7 +117,7 @@
   --foreground: #ffffff;
   --dark-accent: #660000;
   --accent: #ee0000;
-  --light-accent: hsl(1, 80%, 99%);
+  --light-accent: hsl(1, 5%, 50%);
   --strong-accent: hsl(180, 5%, 81%);
   --ultralight-accent: #fff0f0;
   --grey-accent: hsl(172, 8%, 60%);
@@ -168,6 +168,7 @@
   --light-accent: #d2b48c;
   --strong-accent: hsl(30, 85%, 41%);
   --ultralight-accent: #fffaf0;
+  --grey-accent: hsl(172, 8%, 60%);
   --primary: #deb887;
   --secondary: #f5deb3;
   --success: hsl(120, 40%, 60%);
@@ -183,6 +184,7 @@
   --accent: #a0522d;
   --light-accent: #d2b48c;
   --strong-accent: hsl(30, 85%, 41%);
+  --grey-accent: hsl(172, 8%, 60%);
   --ultralight-accent: #fffaf0;
   --primary: #deb887;
   --secondary: #f5deb3;

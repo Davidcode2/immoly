@@ -36,7 +36,8 @@ export default function PieChartGesamtBetrag({
           cy="50%"
           innerRadius="60%"
           outerRadius="100%"
-          paddingAngle={0}
+          paddingAngle={8}
+          stroke="none"
           dataKey="value"
         >
           {data.map((_, index) => (
