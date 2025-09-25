@@ -73,13 +73,13 @@ export default function KreditSummeTextComponent({
         </div>
       </div>
       <div className="grid h-fit grid-cols-[1fr_1fr] items-baseline gap-x-2 rounded-b-lg p-5 pt-2 md:p-8 md:pt-4">
-        <span className="text-(length:--text-2xs) text-[var(--dark-accent)]/90">
+        <span className="text-(length:--text-2xs) dark:text-[var(--ultralight-accent)]/90 text-[var(--dark-accent)]/90">
           Kaufpreis
         </span>
         <span className="text-end text-xs">
           {principal.toLocaleString("de")}
         </span>
-        <span className="group relative flex items-center gap-x-2 text-start text-(length:--text-2xs) text-[var(--dark-accent)]/90">
+        <span className="group relative flex items-center gap-x-2 text-start text-(length:--text-2xs) dark:text-[var(--ultralight-accent)]/90 text-[var(--dark-accent)]/90">
           Eigenkapital
           {nebenkosten > downPayment && (
             <>
@@ -101,10 +101,10 @@ export default function KreditSummeTextComponent({
         <span className={`${downPayment > 10000000 ? "w-18" : downPayment > 1000000 ? "w-16" : "w-14" } text-end sm:w-auto justify-self-end text-[var(--strong-accent)] text-xs`}>
           -&nbsp;{downPayment.toLocaleString("de")}
         </span>
-        <span className="self-center text-(length:--text-2xs) text-[var(--dark-accent)]/90">
+        <span className="self-center text-(length:--text-2xs) dark:text-[var(--ultralight-accent)]/90 text-[var(--dark-accent)]/90">
           Nebenkosten
         </span>
-        <div className="text-end text-xs text-[var(--dark-accent)]/80">
+        <div className="text-end text-xs dark:text-[var(--accent)]/90 text-[var(--dark-accent)]/90">
           +&nbsp;{nebenkosten.toLocaleString("de")}
         </div>
       </div>

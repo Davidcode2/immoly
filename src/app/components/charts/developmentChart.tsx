@@ -18,6 +18,7 @@ import {
   renderThousandIndicator,
 } from "./chartHelper";
 import { onThemeChangeColorUpdate } from "app/services/onThemeChangeColorUpdate";
+import { useThemeColorUpdates } from "app/hooks/useThemeColorUpdates";
 
 export default function DevelopmentChart({
   tilgungsTabelle,
@@ -37,7 +38,6 @@ export default function DevelopmentChart({
   const [labelColor, setLabelColor] = useState<string>("hsl(200, 80%, 10%)");
   const sparenLineColor = "var(--light-accent)";
   const tilgungLineColor = "var(--accent)";
-
 
   const calcInterest = () => {
     const interestCalculations = tilgungsTabelle.reduce(
@@ -83,22 +83,10 @@ export default function DevelopmentChart({
     );
   };
 
-  useEffect(() => {
-    const observerLabels = onThemeChangeColorUpdate(
-      setLabelColor,
-      "hsl(200, 80%, 10%)",
-      "hsl(172, 15%, 35%)",
-    );
-    const observerGrid = onThemeChangeColorUpdate(
-      setGridColor,
-      "hsl(10, 10%, 80%)",
-      "hsl(10, 10%, 10%)",
-    );
-    return () => {
-      observerLabels.disconnect();
-      observerGrid.disconnect();
-    };
-  }, []);
+  useThemeColorUpdates([
+    [setLabelColor, "var(--grey-accent)", "var(--grey-accent)"],
+    [setGridColor, "var(--grey-accent)", "var(--grey-accent)"],
+  ]);
 
   useEffect(() => {
     if (!tilgungsTabelle) {

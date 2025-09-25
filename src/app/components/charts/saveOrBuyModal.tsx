@@ -18,7 +18,7 @@ export default function SaveOrBuyModal({ table, input, setInput }: PropTypes) {
   };
 
   return (
-    <div className="rounded-lg bg-[var(--primary)]/60 p-10 shadow-xl">
+    <div className="rounded-lg bg-[var(--background)]/80 border p-10 shadow-xl">
       <h4 className="mb-8 font-extrabold text-4xl">Kaufen oder Sparen?</h4>
       <div className="flex flex-col gap-30 lg:flex-row">
         <OptionalParameters

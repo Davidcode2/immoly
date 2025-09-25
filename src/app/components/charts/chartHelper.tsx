@@ -47,7 +47,7 @@ export const renderLegend = (props: any) => {
     <ul className="flex gap-x-4 text-xl">
       {payload.map((entry: any, index: number) => (
         <li
-          className={`${entry.value === "Tilgung" ? "text-[var(--dark-accent)]" : "text-[var(--light-accent)]"}`}
+          className={`${entry.value === "Tilgung" ? "text-[var(--accent)]" : "text-[var(--light-accent)]"}`}
           key={`item-${index}`}
         >
           &mdash; {entry.value}

@@ -5,7 +5,7 @@ export const onThemeChangeColorUpdate = (
 ): MutationObserver => {
   const updateColor = () => {
     const theme = document.documentElement.getAttribute("data-theme");
-    setColor(theme === "dark" ? darkColor : lightColor);
+    setColor(theme && theme.includes("dark") ? darkColor : lightColor);
   };
 
   updateColor();

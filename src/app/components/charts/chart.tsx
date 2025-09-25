@@ -10,8 +10,12 @@ import {
 } from "recharts";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
-import { customToolTip, renderLegend, renderThousandIndicator } from "./chartHelper";
-import { onThemeChangeColorUpdate } from "app/services/onThemeChangeColorUpdate";
+import {
+  customToolTip,
+  renderLegend,
+  renderThousandIndicator,
+} from "./chartHelper";
+import { useThemeColorUpdates } from "app/hooks/useThemeColorUpdates";
 
 interface ChartDataItem {
   name: string;
@@ -30,26 +34,13 @@ export default function PlotlyChart({
   const [debouncedChartData, setDebouncedChartData] = useState<
     ChartDataItem[] | null
   >(null);
-  const [gridColor, setGridColor] = useState<string>("hsl(10, 10%, 10%)");
-  const [labelColor, setLabelColor] = useState<string>("hsl(200, 80%, 10%)");
+  const [gridColor, setGridColor] = useState<string>("var(--background)");
+  const [labelColor, setLabelColor] = useState<string>("var(--foreground)");
 
-
-  useEffect(() => {
-    const observerLabels = onThemeChangeColorUpdate(
-      setLabelColor,
-      "hsl(200, 80%, 10%)",
-      "hsl(172, 15%, 35%)",
-    );
-    const observerGrid = onThemeChangeColorUpdate(
-      setGridColor,
-      "hsl(10, 10%, 80%)",
-      "hsl(10, 10%, 10%)",
-    );
-    return () => {
-      observerLabels.disconnect();
-      observerGrid.disconnect();
-    };
-  }, []);
+  useThemeColorUpdates([
+    [setLabelColor, "var(--grey-accent)", "var(--grey-accent)"],
+    [setGridColor, "var(--grey-accent)", "var(--grey-accent)"],
+  ]);
 
   useEffect(() => {
     if (!data) {
@@ -81,7 +72,6 @@ export default function PlotlyChart({
 
   const zinsLineColor = "var(--light-accent)";
   const tilgungLineColor = "var(--accent)";
-
 
   if (!debouncedChartData) {
     return null;
