@@ -13,6 +13,7 @@ import {
 import EditIconComponent from "./editIconComponent";
 import { getGrundsteuer } from "app/services/nebenkostenGrundsteuer";
 import NebenkostenGrid from "./nebenkostenGrid";
+import { useCalcNebenkostenSum } from "app/hooks/useCalcNebenkostenSum";
 
 type PropTypes = {
   calculationData: CashRoiModel | null;
@@ -61,23 +62,13 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
     }
   };
 
-  const calcSummeNebenkosten = (principal: number) => {
-    const grundsteuer = (getGrundsteuer(bundesland) * principal) / 100;
-    const nebenkosten =
-      absoluteMaklergebuehrFromPercentage +
-      absoluteGrundbuchkostenFromPercentage +
-      absoluteNotarkostenFromPercentage +
-      Math.round(grundsteuer);
-    return Math.round(nebenkosten);
-  };
-
   const sumPercentage =
     maklergebuehrPercentage +
     grundbuchkostenPercentage +
     notarkostenPercentage +
     getGrundsteuer(bundesland);
 
-  sumNebenkosten.current = calcSummeNebenkosten(calculationData.principal);
+  sumNebenkosten.current = useCalcNebenkostenSum(calculationData.principal);
 
   const pieChartData = [
     { name: "Notarkosten", value: absoluteNotarkostenFromPercentage },

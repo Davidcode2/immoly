@@ -1,12 +1,6 @@
 import Image from "next/image";
 import PieChartGesamtBetrag from "./lineChartGesamtbetrag";
-import {
-  useBundeslandStore,
-  useGrundbuchkostenPercentageStore,
-  useMaklergebuehrPercentageStore,
-  useNotarkostenPercentageStore,
-} from "app/store";
-import { getGrundsteuer } from "app/services/nebenkostenGrundsteuer";
+import { useCalcNebenkostenSum } from "app/hooks/useCalcNebenkostenSum";
 
 type PropTypes = {
   principal: number;
@@ -16,42 +10,11 @@ export default function KreditSummeTextComponent({
   principal,
   downPayment,
 }: PropTypes) {
-  const bundesland = useBundeslandStore((state) => state.value);
-  const maklergebuehrPercentage = Number(
-    useMaklergebuehrPercentageStore((state) => state.value).replace(",", "."),
-  );
 
-  const notarkostenPercentage = Number(
-    useNotarkostenPercentageStore((state) => state.value).replace(",", "."),
-  );
-  const grundbuchkostenPercentage = Number(
-    useGrundbuchkostenPercentageStore((state) => state.value).replace(",", "."),
-  );
-
-  const calcSummeNebenkosten = (principal: number) => {
-    const absoluteMaklergebuehrFromPercentage = Math.round(
-      (maklergebuehrPercentage / 100) * principal,
-    );
-    const absoluteNotarkostenFromPercentage = Math.round(
-      (notarkostenPercentage / 100) * principal,
-    );
-    const absoluteGrundbuchkostenFromPercentage = Math.round(
-      (grundbuchkostenPercentage / 100) * principal,
-    );
-
-    const grundsteuer = (getGrundsteuer(bundesland) * principal) / 100;
-    const nebenkosten =
-      absoluteMaklergebuehrFromPercentage +
-      absoluteGrundbuchkostenFromPercentage +
-      absoluteNotarkostenFromPercentage +
-      Math.round(grundsteuer);
-    return Math.round(nebenkosten);
-  };
-  const nebenkosten = calcSummeNebenkosten(principal);
+  const nebenkosten = useCalcNebenkostenSum(principal);
 
   const kreditSummeRaw = principal + nebenkosten - downPayment;
   const kreditSumme = kreditSummeRaw < 0 ? 0 : kreditSummeRaw;
-
 
   return (
     <div className="z-20 max-h-56 rounded-lg bg-[var(--light-accent)]/10 shadow backdrop-blur-2xl">
