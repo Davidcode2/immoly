@@ -12,7 +12,6 @@ import {
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import ChartDataItem from "app/lib/models/ChartDataItem";
 import InterestEarnedModel from "app/lib/models/interestEarnedModel";
-import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
 import {
   customToolTip,
   renderLegend,
