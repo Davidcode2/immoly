@@ -3,15 +3,19 @@ type PropTypes = {
   activeIndex: number | null;
   handleMouseEnter: (index: number) => void;
   handleMouseLeave: () => void;
+  openModal: (arg1: boolean) => void;
 };
 export default function NebenkostenGrid({
   data,
   activeIndex,
   handleMouseEnter,
   handleMouseLeave,
+  openModal
 }: PropTypes) {
   return (
-    <div className="order-first hidden h-20 w-full flex-col gap-12 overflow-y-scroll pb-4 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
+    <div 
+    onClick={() => openModal(true)}
+    className="order-first hidden h-20 w-full flex-col gap-12 overflow-y-scroll pb-4 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
       {data.map((entry, index) => (
         <div
           key={entry.name}
