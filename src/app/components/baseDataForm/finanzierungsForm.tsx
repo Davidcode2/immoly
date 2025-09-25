@@ -158,7 +158,7 @@ export default function FinanzierungsForm({
               htmlFor={"monthlyRate"}
               handleChange={handleInputChange}
             >
-              <div className="border-b border-stone-700 bg-transparent pb-1 text-xl text-neutral-500 transition-colors duration-200 focus:border-slate-500 focus:outline-none md:w-36 md:text-base">
+              <div className="border-b border-stone-700 bg-transparent pb-1 text-xl dark:text-[var(--ultralight-accent)] text-neutral-500 transition-colors duration-200 focus:border-slate-500 focus:outline-none md:w-36 md:text-base">
                 {monthlyRateInPercent()}
               </div>
             </SliderInput>
