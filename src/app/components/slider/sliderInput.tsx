@@ -1,4 +1,5 @@
 "use client";
+
 import NumberInput from "app/components/baseDataForm/numberInput";
 import Slider from "./slider";
 import { screenWidthMobile } from "app/utils/screenWidth";

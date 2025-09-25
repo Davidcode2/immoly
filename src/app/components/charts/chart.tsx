@@ -10,7 +10,6 @@ import {
   YAxis,
 } from "recharts";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
-import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
 import {
   customToolTip,
   renderLegend,

@@ -4,7 +4,6 @@ import CashRoiModel from "app/lib/models/cashRoiModel";
 import { useState } from "react";
 import CenteredModal from "../centeredModal";
 import SaveOrBuyModal from "./saveOrBuyModal";
-import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
 
 type PropTypes = {
   table: ArmotizationEntry[];
