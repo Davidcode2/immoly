@@ -128,11 +128,6 @@ export default function ResultDisplay() {
             tilgungswechselCache,
           );
         const nebenkosten = calcSummeNebenkosten(input.principal);
-        console.log(
-          "nebenkosten in input useEffect before calcTilgung " + nebenkosten,
-        );
-        console.log("input");
-        console.log(input);
 
         principal.current = input.principal;
         const tilgungsTabelle = calcTilgung(input, nebenkosten);
@@ -158,7 +153,6 @@ export default function ResultDisplay() {
       return;
     }
     const sumNebenkosten = calcSummeNebenkosten(principal.current);
-    console.log("Nebenkosten useEffect nebekosten: " + sumNebenkosten);
     const tilgungsTabelle = calcTilgung(input, sumNebenkosten);
     setTable(tilgungsTabelle);
   }, [maklergebuehrPercentage, bundeslandState, notarkosten, grundbuchkosten]);
