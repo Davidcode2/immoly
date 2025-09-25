@@ -139,7 +139,7 @@ export default function ResultDisplay() {
         return; // skip recalculation caused by URL change
       }
       loadData();
-    }, 100);
+    }, 5);
 
     return () => {
       clearTimeout(debounceTimeout);
