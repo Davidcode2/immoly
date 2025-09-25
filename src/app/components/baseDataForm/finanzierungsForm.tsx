@@ -2,7 +2,6 @@ import Form from "next/form";
 import { useEffect, useState } from "react";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import SliderInput from "app/components/slider/sliderInput";
-import NebenkostenCalculator from "app/services/nebenkostenCalculationService";
 import { useRouter, useSearchParams } from "next/navigation";
 import { calculationsLocalStorageSetter } from "app/services/calculationsLocalStorageSetter";
 import { useBundeslandStore, useMaklergebuehrPercentageStore } from "app/store";
@@ -10,6 +9,7 @@ import NebenKostenModel from "app/lib/models/nebenkostenModel";
 import { transferSonderAmounts } from "app/services/sonderAmountBrowserUpdater";
 import Toast from "../toast";
 import { Check } from "lucide-react";
+import { useCalcNebenkostenSum } from "app/hooks/useCalcNebenkostenSum";
 
 export default function FinanzierungsForm({
   values,
@@ -31,13 +31,9 @@ export default function FinanzierungsForm({
   const bundesland = useBundeslandStore.getState().value;
   const [showSavedToast, setShowSavedToast] = useState(false);
 
-  // TODO take all nebenkosten into account
+  const nebenkosten = useCalcNebenkostenSum(Number(principalValue));
+
   const monthlyRateInPercent = () => {
-    const nebenkosten = new NebenkostenCalculator(
-      Number(principalValue),
-      Number(maklergebuehrPercentage.replace(",", ".")),
-      bundesland,
-    ).calcSumme();
     const kreditSumme =
       Number(principalValue) + nebenkosten - Number(downPayment);
     const yearlyRate = Number(monthlyRate) * 12;

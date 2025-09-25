@@ -61,6 +61,7 @@ export default function Tilgungstabelle({
       calculationId!,
     );
     sendChangeNotification();
+    setShowSondertilgungModal(false);
   };
 
   const handleTilgungsWechsel = async (
