@@ -7,14 +7,16 @@
 @custom-variant blue-dream-light (&:where([data-theme=blue-dream-light], [data-theme=blue-dream-light] *));
 
 :root {
+  --background: hsl(1, 0%, 100%);
+  --foreground: hsl(194, 33%, 12%);
   --dark-accent: hsl(194, 33%, 18%);
   --neutral-accent: hsl(194, 33%, 22%);
   --accent: hsl(195, 37%, 40%);
   --strong-accent: hsl(180, 55%, 31%);
   --light-accent: hsl(172, 25%, 55%);
   --ultralight-accent: hsl(172, 25%, 95%);
-  --primary: oklch(0.216 0.006 56.043);
-  --secondary: oklch(0.97 0.001 106.424);
+  --primary: hsl(129, 22%, 69%);
+  --secondary: hsl(95, 32%, 82%);
   --success: hsl(120, 40%, 60%);
   --dark-success: hsl(120, 40%, 50%);
   --alert: hsl(20, 70%, 60%);
