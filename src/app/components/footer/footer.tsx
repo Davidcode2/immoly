@@ -1,8 +1,8 @@
 import Image from "next/image";
 export default function Footer() {
   return (
-    <div className="bg-[var(--secondary)]">
-      <div className="flex justify-center gap-x-2 p-8 text-[var(--dark-accent)]/50">
+    <div className="dark:bg-[var(--background)] bg-[var(--secondary)]">
+      <div className="flex justify-center gap-x-2 p-8 dark:text-[var(--foreground)] text-[var(--dark-accent)]/50">
         Gebaut auf der{" "}
         <Image
           src="/images/icons/icons8-couch-85.png"
@@ -11,7 +11,7 @@ export default function Footer() {
           alt="Couch"
         />
       </div>
-      <div className="text-xs grid p-8 text-[var(--dark-accent)]/50">
+      <div className="text-xs grid p-8">
         <span>
           Icons by{" "}
           <a href="https://www.icons8.de" title="Flaticon">
