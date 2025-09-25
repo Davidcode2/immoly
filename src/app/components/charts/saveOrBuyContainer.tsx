@@ -4,6 +4,7 @@ import CashRoiModel from "app/lib/models/cashRoiModel";
 import { useState } from "react";
 import CenteredModal from "../centeredModal";
 import SaveOrBuyModal from "./saveOrBuyModal";
+import { calcWidth, screenWidthMobile } from "app/utils/screenWidth";
 
 type PropTypes = {
   table: ArmotizationEntry[];
@@ -40,11 +41,18 @@ export default function SaveOrBuyContainer({
             d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
           />
         </svg>
-        <DevelopmentChart
-          tilgungsTabelle={table}
-          rent={input.rent}
-          interest={input.cash_roi || 0}
-        />
+        <div
+          style={{
+            width: `${calcWidth()}px`,
+            height: `${screenWidthMobile() ? 200 : 260}px`,
+          }}
+        >
+          <DevelopmentChart
+            tilgungsTabelle={table}
+            rent={input.rent}
+            interest={input.cash_roi || 0}
+          />
+        </div>
       </div>
     </div>
   );

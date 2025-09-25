@@ -4,6 +4,7 @@ import {
   Legend,
   Line,
   LineChart,
+  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
@@ -17,7 +18,6 @@ import {
   renderLegend,
   renderThousandIndicator,
 } from "./chartHelper";
-import { onThemeChangeColorUpdate } from "app/services/onThemeChangeColorUpdate";
 import { useThemeColorUpdates } from "app/hooks/useThemeColorUpdates";
 
 export default function DevelopmentChart({
@@ -128,9 +128,8 @@ export default function DevelopmentChart({
   }
 
   return (
+    <ResponsiveContainer>
     <LineChart
-      width={calcWidth()}
-      height={screenWidthMobile() ? 200 : 260}
       data={debouncedChartData}
       margin={{
         top: 30,
@@ -181,5 +180,6 @@ export default function DevelopmentChart({
         dot={false}
       />
     </LineChart>
+    </ResponsiveContainer>
   );
 }
