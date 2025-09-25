@@ -103,11 +103,7 @@ export default function EditNebenkostenInput({
   const getIcon = (name: string) => {
     switch (name) {
       case "Notarkosten":
-        return (
-          <>
-            <ScrollText size={32} />
-          </>
-        );
+        return <ScrollText size={32} />;
       case "Grundbuchkosten":
         return <BookKey size={32} />;
       case "Maklergebühr":

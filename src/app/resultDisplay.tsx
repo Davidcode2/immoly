@@ -20,7 +20,6 @@ import {
   useMaklergebuehrPercentageStore,
   useNotarkostenPercentageStore,
 } from "app/store";
-import NebenkostenCalculator from "./services/nebenkostenCalculationService";
 import SloganHero from "./components/hero/sloganHero";
 import { sondertilgungenAccessor } from "./services/sondertilgungAccessor";
 import { tilgungswechselAccessor } from "./services/tilgungswechselAccessor";
@@ -43,12 +42,12 @@ export default function ResultDisplay() {
   const searchParams = useSearchParams();
   const calculationId = searchParams.get("calculationId");
   const updateBundesland = useBundeslandStore((state) => state.updateValue);
-  const bundesland = useBundeslandStore((state) => state.value);
-  const maklergebuehr = useMaklergebuehrPercentageStore((state) => state.value);
+  const bundeslandState = useBundeslandStore((state) => state.value);
   const grundbuchkosten = useGrundbuchkostenPercentageStore(
     (state) => state.value,
   );
   const notarkosten = useNotarkostenPercentageStore((state) => state.value);
+  const principal = useRef(0);
 
   const maklergebuehrPercentage = Number(
     useMaklergebuehrPercentageStore((state) => state.value).replace(",", "."),
@@ -89,7 +88,8 @@ export default function ResultDisplay() {
     setTilgungswechselCache,
   );
 
-  const calcSummeNebenkosten = (principal: number) => {
+  const calcSummeNebenkosten = (principal: number, bundesland?: string) => {
+    bundesland = bundesland ? bundesland : bundeslandState;
     const absoluteMaklergebuehrFromPercentage = Math.round(
       (maklergebuehrPercentage / 100) * principal,
     );
@@ -127,10 +127,15 @@ export default function ResultDisplay() {
             calculationId!,
             tilgungswechselCache,
           );
-        const tilgungsTabelle = calcTilgung(
-          input,
-          calcSummeNebenkosten(input.principal),
+        const nebenkosten = calcSummeNebenkosten(input.principal);
+        console.log(
+          "nebenkosten in input useEffect before calcTilgung " + nebenkosten,
         );
+        console.log("input");
+        console.log(input);
+
+        principal.current = input.principal;
+        const tilgungsTabelle = calcTilgung(input, nebenkosten);
         setTable(tilgungsTabelle);
       }
 
@@ -144,7 +149,19 @@ export default function ResultDisplay() {
     return () => {
       clearTimeout(debounceTimeout);
     };
-  }, [input, maklergebuehr, bundesland, notarkosten, grundbuchkosten]);
+  }, [input]);
+
+  useEffect(() => {
+    if (!input) return;
+    if (skipNextInputEffect.current) {
+      skipNextInputEffect.current = false;
+      return;
+    }
+    const sumNebenkosten = calcSummeNebenkosten(principal.current);
+    console.log("Nebenkosten useEffect nebekosten: " + sumNebenkosten);
+    const tilgungsTabelle = calcTilgung(input, sumNebenkosten);
+    setTable(tilgungsTabelle);
+  }, [maklergebuehrPercentage, bundeslandState, notarkosten, grundbuchkosten]);
 
   const getFromBrowserStorage = (id: string) => {
     const calculation = calculationAccessor(id);
@@ -167,13 +184,12 @@ export default function ResultDisplay() {
             console.warn("No result found for calculationId:", calculationId);
             return;
           }
-          //updateMaklergebuehr((result as CalculationDbo).maklerguehrPercentage);
-          updateBundesland((result as CalculationDbo).bundesland);
-          const nebenkosten = new NebenkostenCalculator(
+          principal.current = result.principal;
+          // TODO use nebenkosten from storage
+          const nebenkosten = calcSummeNebenkosten(
             result.principal,
-            (result as CalculationDbo).maklerguehrPercentage ?? maklergebuehr,
-            (result as CalculationDbo).bundesland ?? bundesland,
-          ).calcSumme();
+            result.bundesland,
+          );
 
           // reset cache
           const sondertilgungen =
@@ -191,11 +207,21 @@ export default function ResultDisplay() {
           result.sondertilgungen = sondertilgungen;
           result.tilgungswechsel = tilgungswechsel;
 
+          /* skip the inputEffect to prevent duplicating the calculation */
           skipNextInputEffect.current = true;
           setInput(result);
 
           const tilgungungsTabelle = calcTilgung(result, nebenkosten);
           setTable(tilgungungsTabelle);
+
+          /* update bundesland last to prevent jump in maklergebuehr value 
+           * which would be caused by an update to the table. Downstream components would then update  
+           * the nebenkosten with the old principal */
+          //updateMaklergebuehr((result as CalculationDbo).maklerguehrPercentage);
+          if (bundeslandState !== result.bundesland) {
+            updateBundesland((result as CalculationDbo).bundesland);
+            skipNextInputEffect.current = true;
+          }
         } catch (e) {
           console.error(e);
         }

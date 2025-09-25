@@ -73,7 +73,7 @@ export default function Header() {
   ];
 
   return (
-    <div className="mx-auto flex w-screen justify-center py-10 text-center">
+    <div className="mx-auto flex justify-center py-10 text-center">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="rounded-full">

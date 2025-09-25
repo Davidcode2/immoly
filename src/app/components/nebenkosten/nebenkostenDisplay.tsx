@@ -4,7 +4,12 @@ import CenteredModal from "../centeredModal";
 import PieChartNebenkosten from "./pieChartNebenkosten";
 import NebenkostenModal from "./nebenkostenModal";
 import { screenWidthMobile } from "app/utils/screenWidth";
-import { useBundeslandStore, useGrundbuchkostenPercentageStore, useMaklergebuehrPercentageStore, useNotarkostenPercentageStore } from "app/store";
+import {
+  useBundeslandStore,
+  useGrundbuchkostenPercentageStore,
+  useMaklergebuehrPercentageStore,
+  useNotarkostenPercentageStore,
+} from "app/store";
 import EditIconComponent from "./editIconComponent";
 import { getGrundsteuer } from "app/services/nebenkostenGrundsteuer";
 import NebenkostenGrid from "./nebenkostenGrid";
@@ -27,16 +32,28 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   const handleMouseLeave = () => setActiveIndex(null);
 
   const updateBundesland = useBundeslandStore((state) => state.updateValue);
-  const grunderwerbsteuer = (
-    getGrundsteuer(bundesland) * calculationData.principal) / 100;
-  const maklergebuehrPercentage = Number(useMaklergebuehrPercentageStore((state) => state.value).replace(",", "."));
+  const grunderwerbsteuer =
+    (getGrundsteuer(bundesland) * calculationData.principal) / 100;
+  const maklergebuehrPercentage = Number(
+    useMaklergebuehrPercentageStore((state) => state.value).replace(",", "."),
+  );
 
-  const notarkostenPercentage = Number(useNotarkostenPercentageStore((state) => state.value).replace(",", "."));
-  const grundbuchkostenPercentage = Number(useGrundbuchkostenPercentageStore((state) => state.value).replace(",", "."));
+  const notarkostenPercentage = Number(
+    useNotarkostenPercentageStore((state) => state.value).replace(",", "."),
+  );
+  const grundbuchkostenPercentage = Number(
+    useGrundbuchkostenPercentageStore((state) => state.value).replace(",", "."),
+  );
 
-  const absoluteMaklergebuehrFromPercentage = Math.round((maklergebuehrPercentage / 100) * calculationData.principal);
-  const absoluteNotarkostenFromPercentage = Math.round((notarkostenPercentage / 100) * calculationData.principal);
-  const absoluteGrundbuchkostenFromPercentage = Math.round((grundbuchkostenPercentage / 100) * calculationData.principal);
+  const absoluteMaklergebuehrFromPercentage = Math.round(
+    (maklergebuehrPercentage / 100) * calculationData.principal,
+  );
+  const absoluteNotarkostenFromPercentage = Math.round(
+    (notarkostenPercentage / 100) * calculationData.principal,
+  );
+  const absoluteGrundbuchkostenFromPercentage = Math.round(
+    (grundbuchkostenPercentage / 100) * calculationData.principal,
+  );
 
   const openModalOnMobile = () => {
     if (screenWidthMobile() && !showModal) {
@@ -52,17 +69,21 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
       absoluteNotarkostenFromPercentage +
       Math.round(grundsteuer);
     return Math.round(nebenkosten);
-  }
+  };
+
+  const sumPercentage =
+    maklergebuehrPercentage +
+    grundbuchkostenPercentage +
+    notarkostenPercentage +
+    getGrundsteuer(bundesland);
 
   sumNebenkosten.current = calcSummeNebenkosten(calculationData.principal);
 
   const pieChartData = [
-    { name: "Notarkosten", 
-      value: absoluteNotarkostenFromPercentage
-    },
+    { name: "Notarkosten", value: absoluteNotarkostenFromPercentage },
     {
       name: "Grundbuchkosten",
-      value: absoluteGrundbuchkostenFromPercentage
+      value: absoluteGrundbuchkostenFromPercentage,
     },
     { name: "Grunderwerbsteuer", value: grunderwerbsteuer },
     {
@@ -75,9 +96,10 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
     <div className="max-h-56 rounded-lg px-6 pt-6 text-xs shadow backdrop-blur-2xl md:col-span-2 md:pt-8 md:text-base">
       <div className="mb-0 text-xs md:mb-0">Nebenkosten</div>
       <div className="mb-5 md:relative">
-        <div className="text-3xl md:absolute">
+        <div className="text-3xl md:absolute ">
           {sumNebenkosten.current.toLocaleString("de")}
         </div>
+        <div className="left-30 md:absolute top-2 w-fit rounded-xl bg-[var(--ultralight-accent)] p-1 px-2 text-xs text-[var(--foreground)] dark:bg-[var(--dark-accent)]">{sumPercentage} %</div>
       </div>
       <div
         className="flex flex-col items-center justify-between md:flex-row md:justify-start md:gap-6"
