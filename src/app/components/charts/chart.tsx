@@ -4,6 +4,7 @@ import {
   Legend,
   Line,
   LineChart,
+  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
@@ -78,54 +79,59 @@ export default function PlotlyChart({
   }
 
   return (
-    <LineChart
-      className="grid justify-stretch"
-      width={calcWidth()}
-      height={screenWidthMobile() ? 400 : 300}
-      data={debouncedChartData}
-      margin={{
-        top: 30,
-        right: 0,
-        left: 10,
-        bottom: 15,
-      }}
-    >
-      <XAxis
-        dataKey="name"
-        minTickGap={50}
-        axisLine={false}
-        tick={{ fill: labelColor, fontSize: 12, dy: 5 }}
-        tickLine={false}
-        label={{ value: "Jahr", position: "insideBottomRight", dy: 20, dx: 4 }}
-      />
-      <YAxis
-        tick={(props) => renderThousandIndicator({ ...props, labelColor })}
-        tickCount={4}
-        axisLine={false}
-        tickLine={false}
-        label={{ value: "EUR", position: "insideTopLeft", dx: -16, dy: -4 }}
-      />
-      <Tooltip content={customToolTip} />
-      <Legend content={renderLegend} />
-      <CartesianGrid
-        vertical={false}
-        stroke={gridColor}
-        strokeDasharray="3 3"
-      />
-      <Line
-        type="monotone"
-        dataKey="Zins"
-        stroke={zinsLineColor}
-        animationDuration={1000}
-        dot={false}
-      />
-      <Line
-        type="monotone"
-        dataKey="Tilgung"
-        stroke={tilgungLineColor}
-        animationDuration={1000}
-        dot={false}
-      />
-    </LineChart>
+    <ResponsiveContainer>
+      <LineChart
+        className=""
+        data={debouncedChartData}
+        margin={{
+          top: 30,
+          right: 0,
+          left: 10,
+          bottom: 15,
+        }}
+      >
+        <XAxis
+          dataKey="name"
+          minTickGap={50}
+          axisLine={false}
+          tick={{ fill: labelColor, fontSize: 12, dy: 5 }}
+          tickLine={false}
+          label={{
+            value: "Jahr",
+            position: "insideBottomRight",
+            dy: 20,
+            dx: 4,
+          }}
+        />
+        <YAxis
+          tick={(props) => renderThousandIndicator({ ...props, labelColor })}
+          tickCount={4}
+          axisLine={false}
+          tickLine={false}
+          label={{ value: "EUR", position: "insideTopLeft", dx: -16, dy: -4 }}
+        />
+        <Tooltip content={customToolTip} />
+        <Legend content={renderLegend} />
+        <CartesianGrid
+          vertical={false}
+          stroke={gridColor}
+          strokeDasharray="3 3"
+        />
+        <Line
+          type="monotone"
+          dataKey="Zins"
+          stroke={zinsLineColor}
+          animationDuration={1000}
+          dot={false}
+        />
+        <Line
+          type="monotone"
+          dataKey="Tilgung"
+          stroke={tilgungLineColor}
+          animationDuration={1000}
+          dot={false}
+        />
+      </LineChart>
+    </ResponsiveContainer>
   );
 }

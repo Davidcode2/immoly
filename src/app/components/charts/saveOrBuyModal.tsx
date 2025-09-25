@@ -20,13 +20,13 @@ export default function SaveOrBuyModal({ table, input, setInput }: PropTypes) {
   return (
     <div className="rounded-lg bg-[var(--background)]/80 border p-10 shadow-xl">
       <h4 className="mb-8 font-extrabold text-4xl">Kaufen oder Sparen?</h4>
-      <div className="flex flex-col gap-30 lg:flex-row">
+      <div className="flex flex-col gap-x-30 gap-y-10 lg:flex-row">
         <OptionalParameters
           cashRoi={input.cash_roi!}
           handleInputChange={handleChange}
           rent={input.rent!}
         />
-        <div className="w-[400px]">
+        <div className="w-[400px] min-h-[280px]">
           <DevelopmentChart
             tilgungsTabelle={table}
             rent={input.rent}

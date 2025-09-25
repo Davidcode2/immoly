@@ -41,12 +41,7 @@ export default function SaveOrBuyContainer({
             d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
           />
         </svg>
-        <div
-          style={{
-            width: `${calcWidth()}px`,
-            height: `${screenWidthMobile() ? 200 : 260}px`,
-          }}
-        >
+        <div className="h-[180px] min-h-[260px] rounded-lg">
           <DevelopmentChart
             tilgungsTabelle={table}
             rent={input.rent}
