@@ -5,7 +5,7 @@ import {
   useMaklergebuehrPercentageStore,
   useNotarkostenPercentageStore,
 } from "app/store";
-import { BookKey, Check, DoorOpen, ScrollText, Stamp } from "lucide-react";
+import { BookKey, Check, DoorOpen, ScrollText } from "lucide-react";
 
 type PropTypes = {
   entry: AbsoluteNebenkostenModel;
