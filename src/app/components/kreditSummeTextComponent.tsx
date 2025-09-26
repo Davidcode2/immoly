@@ -49,8 +49,8 @@ export default function KreditSummeTextComponent({
                 className="absolute left-18 md:static"
                 src="/images/icons/icons8-warnung-emoji-48.png"
                 alt="yellow warning icon with exclamation point"
-                width={24}
-                height={24}
+                width={16}
+                height={16}
               />
               <span className="invisible absolute left-28 w-60 rounded-lg bg-white p-4 text-xs text-[var(--accent)] shadow-lg group-hover:visible dark:bg-black">
                 Eigenkapital deckt Nebenkosten nicht.
