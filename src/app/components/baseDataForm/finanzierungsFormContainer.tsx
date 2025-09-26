@@ -13,7 +13,7 @@ export default function FinanzierungsFormContainer({
 }: PropTypes) {
   return (
     <div className="rounded-lg shadow backdrop-blur-2xl md:p-8 lg:dark:shadow-[10px_4px_20px_var(--dark-accent)]/5">
-      <div className="pb-4">
+      <div className="flex lg:block justify-center pb-4">
         <Hero />
       </div>
       <div className="p-4">

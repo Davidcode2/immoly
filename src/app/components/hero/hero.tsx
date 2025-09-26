@@ -9,7 +9,7 @@ export default function Hero() {
           <CursorSwarm />
         </div>
         <h1 className="text-6xl font-extrabold">Immoly</h1>
-        <div className="p-2">
+        <div className="block md:flex lg:block justify-center p-2">
           <IconsHeader />
         </div>
       </div>

@@ -127,7 +127,7 @@ export default function FinanzierungsForm({
       {showSavedToast && (
         <Toast onClose={() => setShowSavedToast(false)}>
           <div className="z-40 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 md:w-[400px]">
-            <div className="m-6 flex gap-x-4 items-center">
+            <div className="m-6 flex items-center gap-x-4">
               <Check size={72} />
               <div>Szenario gespeichert</div>
             </div>
@@ -158,7 +158,7 @@ export default function FinanzierungsForm({
               htmlFor={"monthlyRate"}
               handleChange={handleInputChange}
             >
-              <div className="border-b border-stone-700 bg-transparent pb-1 text-xl dark:text-[var(--ultralight-accent)] text-neutral-500 transition-colors duration-200 focus:border-slate-500 focus:outline-none md:w-36 md:text-base">
+              <div className="border-b border-stone-700 bg-transparent pb-1 text-xl text-neutral-500 transition-colors duration-200 focus:border-slate-500 focus:outline-none md:w-36 md:text-base dark:text-[var(--ultralight-accent)]">
                 {monthlyRateInPercent()}
               </div>
             </SliderInput>
@@ -184,12 +184,14 @@ export default function FinanzierungsForm({
             ></SliderInput>
           </div>
         </div>
-        <button
-          type="submit"
-          className="mt-9 w-full cursor-pointer rounded-lg bg-[var(--primary)]/90 px-4 py-2 font-bold text-white shadow backdrop-blur-md transition-colors duration-200 hover:bg-[var(--primary)]"
-        >
-          Berechnung speichern
-        </button>
+        <div className="flex justify-center w-full mx-auto">
+          <button
+            type="submit"
+            className="mt-9 cursor-pointer rounded-lg bg-[var(--primary)]/90 px-4 py-2 font-bold text-white shadow backdrop-blur-md transition-colors duration-200 hover:bg-[var(--primary)] w-full md:w-fit lg:w-full"
+          >
+            Berechnung speichern
+          </button>
+        </div>
       </Form>
     </>
   );
