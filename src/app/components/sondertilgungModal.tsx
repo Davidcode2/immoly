@@ -39,6 +39,10 @@ export default function SondertilgungModal({
               id="sondertilgung"
               name="sondertilgungAmount"
               type="text"
+              inputMode="numeric"
+              min={0}
+              max={9999999}
+              maxLength={7}
               defaultValue={String(sondertilgung)}
             />
             <div className="relative top-1 -left-6 text-lg">€</div>

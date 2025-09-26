@@ -38,6 +38,10 @@ export default function TilgungsWechselModal({
               id="newTilgung"
               name="newTilgung"
               type="text"
+              inputMode="numeric"
+              min={0}
+              max={50000}
+              maxLength={7}
               defaultValue={String(tilgungswechsel)}
             />
             <div className="relative top-1 -left-6 text-lg">€</div>
