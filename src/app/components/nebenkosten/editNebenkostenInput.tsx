@@ -113,14 +113,14 @@ export default function EditNebenkostenInput({
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-5 bg-radial md:w-2/3 lg:w-1/3">
+      <div className="z-40 mx-10 flex flex-col gap-y-6 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl sm:mx-0 md:w-[400px] dark:from-[var(--background)]/80 dark:to-[var(--background)]/50 dark:shadow-[0_4px_200px_var(--dark-accent)]/10">
         <label
-          className="flex items-center gap-x-4 self-start text-4xl"
+          className="flex w-full items-center gap-x-4 self-start rounded-t-xl bg-[var(--primary)]/40 p-10 text-2xl dark:border-b dark:bg-[var(--background)]/80"
           htmlFor={entry.name}
         >
           {getIcon(entry.name)} {entry.name}
         </label>
-        <form onSubmit={() => setShowEditModal(false)}>
+        <form onSubmit={() => setShowEditModal(false)} className="px-10">
           <input
             id={entry.name}
             type="number"
@@ -128,25 +128,30 @@ export default function EditNebenkostenInput({
             onChange={handleAbsoluteChange}
             name={entry.name}
             value={Math.round(absoluteValue) || ""}
-            className="focus:bg-[var(--foreground)/20 w-full rounded-full border border-slate-300 bg-[var(--foreground)]/10 px-8 py-1 text-left text-xl text-[var(--text)] outline-none placeholder:text-slate-400 focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] focus:placeholder:text-[var(--text)] md:text-5xl"
+            className="w-36 border-b border-[var(--dark-accent)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--dark-accent)]/60 focus:outline-none md:text-2xl"
           />
         </form>
         <>
-          <form onSubmit={() => setShowEditModal(false)}>
-            <div className="flex w-full items-center justify-around">
+          <form onSubmit={() => setShowEditModal(false)} className="px-10">
+            <div className="flex items-center">
               <input
                 value={currentPercentage().substring(0, 4)}
                 type="text"
-                className="w-22 rounded-full bg-linear-to-br from-[var(--dark-accent)] to-[var(--accent)] p-1 px-4 shadow-lg text-start text-lg text-[var(--secondary)]"
+                className="w-36 border-b border-[var(--dark-accent)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--dark-accent)]/60 focus:outline-none md:text-2xl"
                 onChange={handlePercentageChange}
               />
               <div className="relative right-7">%</div>
-              <button className="flex gap-x-2 items-center cursor-pointer rounded-full bg-[var(--success)] shadow-lg text-[var(--background)] p-1 px-4 text-start text-lg">
-                Übernehmen
-                <Check />
-              </button>
             </div>
           </form>
+          <div className="p-6">
+            <button
+              onClick={() => setShowEditModal(false)}
+              className="mx-auto flex cursor-pointer items-center gap-x-2 rounded-full bg-[var(--success)] p-1 px-4 text-start text-lg text-[var(--background)] shadow-lg md:mx-0 md:ml-auto"
+            >
+              Übernehmen
+              <Check />
+            </button>
+          </div>
         </>
       </div>
     </>
