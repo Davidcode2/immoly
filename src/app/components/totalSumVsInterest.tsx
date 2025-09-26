@@ -13,7 +13,7 @@ export default function TotalSumVsInterest({
       <div>
         <div className="flex flex-col gap-4 md:flex-row md:gap-x-3">
           {canBePaidOfInTime && (
-            <div className="md:border-r md:pr-2 border-slate-200">
+            <div className="md:border-r md:pr-2 border-[var(--grey-accent)]">
               <div className="text-xs">Summe Gesamt</div>
               <div
                 className={`${totalSum >= 1000000 ? "text-2xl" : "text-3xl"} md:text-base`}
