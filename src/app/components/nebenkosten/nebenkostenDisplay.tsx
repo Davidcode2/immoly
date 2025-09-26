@@ -88,10 +88,13 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
       <div className="mb-0 text-xs md:mb-0">Nebenkosten</div>
       <div className="mb-5 md:relative">
         <div className="text-3xl md:absolute">
-          {sumNebenkosten.current.toLocaleString("de")}
-        </div>
-        <div className="top-2 left-30 w-fit rounded-xl bg-[var(--ultralight-accent)] p-1 px-2 text-xs text-[var(--foreground)] md:absolute dark:bg-[var(--dark-accent)]">
-          {(Math.round(sumPercentage * 100) / 100).toLocaleString("de")} %
+          <div className="md:flex gap-x-4">
+            <div className="">{sumNebenkosten.current.toLocaleString("de")}</div>
+            <div className="w-fit self-end rounded-xl text-base text-[var(--foreground)] bg-[var(--ultralight-accent)] p-1 px-2 text-xs text-[var(--foreground)] dark:bg-[var(--dark-accent)]">
+              {(Math.round(sumPercentage * 100) / 100).toLocaleString("de")}
+              &nbsp;%
+            </div>
+          </div>
         </div>
       </div>
       <div
