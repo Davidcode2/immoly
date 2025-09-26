@@ -80,7 +80,7 @@
   @apply text-slate-100;
   --background: #0a0a0a;
   --foreground: #ededed;
-  --ultra-accent: hsl(194, 13%, 8%);
+  --ultra-accent: hsl(194, 13%, 12%);
   --dark-accent: hsl(194, 33%, 18%);
   --neutral-accent: hsl(194, 33%, 22%);
   --accent: hsl(195, 37%, 40%);
