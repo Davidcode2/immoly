@@ -121,22 +121,33 @@ export default function EditNebenkostenInput({
           {getIcon(entry.name)} {entry.name}
         </label>
         <form onSubmit={() => setShowEditModal(false)} className="px-10">
-          <input
-            id={entry.name}
-            type="number"
-            ref={inputRef}
-            onChange={handleAbsoluteChange}
-            name={entry.name}
-            value={Math.round(absoluteValue) || ""}
-            className="w-36 border-b border-[var(--dark-accent)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--dark-accent)]/60 focus:outline-none md:text-2xl"
-          />
+          <div className="flex items-center">
+            <input
+              id={entry.name}
+              type="text"
+              inputMode="numeric"
+              maxLength={6}
+              max={999999}
+              min={0}
+              ref={inputRef}
+              onChange={handleAbsoluteChange}
+              name={entry.name}
+              value={Math.round(absoluteValue) || ""}
+              className="w-36 border-b border-[var(--dark-accent)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--dark-accent)]/60 focus:outline-none md:text-2xl"
+            />
+            <div className="relative right-7">€</div>
+          </div>
         </form>
         <>
           <form onSubmit={() => setShowEditModal(false)} className="px-10">
             <div className="flex items-center">
               <input
-                value={currentPercentage().substring(0, 4)}
+                value={currentPercentage().substring(0,5)}
                 type="text"
+                inputMode="numeric"
+                maxLength={5}
+                max={99.99}
+                min={0}
                 className="w-36 border-b border-[var(--dark-accent)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--dark-accent)]/60 focus:outline-none md:text-2xl"
                 onChange={handlePercentageChange}
               />
