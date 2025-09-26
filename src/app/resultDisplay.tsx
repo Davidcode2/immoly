@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import calcTilgung from "app/lib/calculateArmotizaztionTable";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import CashRoiModel from "app/lib/models/cashRoiModel";
@@ -28,6 +28,7 @@ import { CalculationDbo } from "./lib/models/calculationDbo";
 import SonderCacheHelper from "./services/cacheHelper";
 import { DEFAULT_CALCULATION } from "./constants";
 import { getGrundsteuer } from "./services/nebenkostenGrundsteuer";
+import { debounce } from "./utils/debounce";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -48,6 +49,7 @@ export default function ResultDisplay() {
   );
   const notarkosten = useNotarkostenPercentageStore((state) => state.value);
   const principal = useRef(0);
+  const workerRef = useRef<Worker>(null);
 
   const maklergebuehrPercentage = Number(
     useMaklergebuehrPercentageStore((state) => state.value).replace(",", "."),
@@ -114,36 +116,47 @@ export default function ResultDisplay() {
   }, []);
 
   useEffect(() => {
-    const debounceTimeout = setTimeout(() => {
-      async function loadData() {
-        if (!input) return;
-        input.sondertilgungen =
-          await sonderCacheHelper.getSondertilgungFromCache(
-            calculationId!,
-            sondertilgungenCache,
-          );
-        input.tilgungswechsel =
-          await sonderCacheHelper.getTilgungswechselFromCache(
-            calculationId!,
-            tilgungswechselCache,
-          );
-        const nebenkosten = calcSummeNebenkosten(input.principal);
-
-        principal.current = input.principal;
-        const tilgungsTabelle = calcTilgung(input, nebenkosten);
-        setTable(tilgungsTabelle);
-      }
-
-      if (skipNextInputEffect.current) {
-        skipNextInputEffect.current = false;
-        return; // skip recalculation caused by URL change
-      }
-      loadData();
-    }, 5);
-
-    return () => {
-      clearTimeout(debounceTimeout);
+    workerRef.current = new Worker(
+      new URL("./workers/tilgungCalculation.worker.ts", import.meta.url),
+    );
+    workerRef.current.onmessage = (e) => {
+      setTable(e.data);
     };
+    return () => workerRef.current?.terminate();
+  }, []);
+
+  const postToWorker = useMemo(
+    () =>
+      debounce((input, nebenkosten) => {
+        workerRef.current?.postMessage({ input, nebenkosten });
+      }, 5),
+    [],
+  );
+
+  useEffect(() => {
+    async function loadData() {
+      if (!input) return;
+      input.sondertilgungen = await sonderCacheHelper.getSondertilgungFromCache(
+        calculationId!,
+        sondertilgungenCache,
+      );
+      input.tilgungswechsel =
+        await sonderCacheHelper.getTilgungswechselFromCache(
+          calculationId!,
+          tilgungswechselCache,
+        );
+
+      const nebenkosten = calcSummeNebenkosten(input.principal);
+      principal.current = input.principal;
+
+      postToWorker(input, nebenkosten);
+    }
+
+    if (skipNextInputEffect.current) {
+      skipNextInputEffect.current = false;
+      return; // skip recalculation caused by URL change
+    }
+    loadData();
   }, [input]);
 
   useEffect(() => {
