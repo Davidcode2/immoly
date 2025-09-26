@@ -1,6 +1,7 @@
 import {
   calcCursorPosition,
   formatGerman,
+  parseDecimal,
 } from "app/services/numberFormatService";
 import { useEffect, useRef, useState } from "react";
 
@@ -11,6 +12,7 @@ type PropTypes = {
   min?: number;
   max?: number;
   maxLength?: number;
+  handleChange?: (arg1: React.ChangeEvent<HTMLInputElement>, arg2: number) => void
 }
 export default function InputWithThousandsSeparator({
   value,
@@ -19,6 +21,7 @@ export default function InputWithThousandsSeparator({
   min,
   max,
   maxLength,
+  handleChange,
 }: PropTypes) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [displayValue, setDisplayValue] = useState<string>("");
@@ -68,7 +71,9 @@ export default function InputWithThousandsSeparator({
 
     setDisplayValue(formatted);
     setPrevValue(unformatted);
-    //handleSubmit(parseDecimal(unformatted) || 0, year);
+    if (handleChange) {
+      handleChange(e, parseDecimal(unformatted) || 0);
+    }
   };
   const validationPattern = () => {
     return new RegExp(`^[0-9]{0,${maxLength}}$`);

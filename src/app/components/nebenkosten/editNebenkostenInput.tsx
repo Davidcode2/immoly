@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { AbsoluteNebenkostenModel } from "./nebenkostenFrontendModel";
 import {
   useGrundbuchkostenPercentageStore,
@@ -6,6 +5,7 @@ import {
   useNotarkostenPercentageStore,
 } from "app/store";
 import { BookKey, Check, DoorOpen, ScrollText } from "lucide-react";
+import InputWithThousandsSeparator from "../inputWithThousandsSeparator";
 
 type PropTypes = {
   entry: AbsoluteNebenkostenModel;
@@ -18,7 +18,6 @@ export default function EditNebenkostenInput({
   setShowEditModal,
   principal,
 }: PropTypes) {
-  const inputRef = useRef<HTMLInputElement>(null);
 
   /** relative updaters **/
   const updateNotarkostenPercentageState = useNotarkostenPercentageStore(
@@ -41,12 +40,12 @@ export default function EditNebenkostenInput({
     (state) => state.value,
   );
 
-  useEffect(() => {
-    inputRef.current!.select();
-    inputRef.current!.focus();
-  }, []);
-
   const handlePercentageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    /* prevent user from entering values larger than two digits before the comma */
+    if ((!value.includes(",") && !value.includes(".")) && value.length >= 3) {
+      return;
+    }
     switch (entry.name) {
       case "Notarkosten":
         updateNotarkostenPercentageState(e.target.value);
@@ -75,8 +74,11 @@ export default function EditNebenkostenInput({
     }
   };
 
-  const handleAbsoluteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newAbs = Number(e.target.value);
+  const handleAbsoluteChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    parsedValue: number,
+  ) => {
+    const newAbs = parsedValue;
     const newPercent = ((newAbs / principal) * 100)
       .toFixed(10)
       .replace(".", ",");
@@ -122,17 +124,12 @@ export default function EditNebenkostenInput({
         </label>
         <form onSubmit={() => setShowEditModal(false)} className="px-10">
           <div className="flex items-center">
-            <input
-              id={entry.name}
-              type="text"
-              inputMode="numeric"
-              maxLength={6}
+            <InputWithThousandsSeparator
+              inputName={entry.name}
+              maxLength={9}
               max={999999}
-              min={0}
-              ref={inputRef}
-              onChange={handleAbsoluteChange}
-              name={entry.name}
-              value={Math.round(absoluteValue) || ""}
+              handleChange={handleAbsoluteChange}
+              value={absoluteValue}
               className="w-36 border-b border-[var(--dark-accent)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--dark-accent)]/60 focus:outline-none md:text-2xl"
             />
             <div className="relative right-7">€</div>
@@ -142,7 +139,7 @@ export default function EditNebenkostenInput({
           <form onSubmit={() => setShowEditModal(false)} className="px-10">
             <div className="flex items-center">
               <input
-                value={currentPercentage().substring(0,5)}
+                value={currentPercentage().substring(0, 5)}
                 type="text"
                 inputMode="numeric"
                 maxLength={5}
