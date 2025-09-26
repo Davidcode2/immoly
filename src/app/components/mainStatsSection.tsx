@@ -11,11 +11,7 @@ type PropTypes = {
   table: ArmotizationEntry[];
 };
 
-export default function MainStatsSection({
-  userInput,
-  table,
-}: PropTypes) {
-
+export default function MainStatsSection({ userInput, table }: PropTypes) {
   const kreditSummeRaw =
     table && table.length
       ? table[0].remainingPrincipal + table[0].principal
@@ -23,9 +19,9 @@ export default function MainStatsSection({
   const kreditSumme = kreditSummeRaw < 0 ? 0 : kreditSummeRaw;
   const sumZinsen = table
     ? table.reduce(
-        (acc: number, row: ArmotizationEntry) => acc + row.interest,
-        0,
-      )
+      (acc: number, row: ArmotizationEntry) => acc + row.interest,
+      0,
+    )
     : 0;
   const totalSum = kreditSumme + sumZinsen;
 
@@ -45,7 +41,7 @@ export default function MainStatsSection({
         paidInYear={paidInYear}
         kreditSumme={kreditSumme}
       />
-      <div className="md:hidden h-46 max-h-48 shadow rounded-lg p-5">
+      <div className="h-46 max-h-48 rounded-lg p-5 shadow md:hidden dark:shadow-[0_4px_50px_var(--dark-accent)]/20">
         <TotalSumVsInterest
           sumZinsen={sumZinsen}
           totalSum={totalSum}
