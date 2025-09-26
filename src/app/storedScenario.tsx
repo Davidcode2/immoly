@@ -62,7 +62,7 @@ export default function StoredScenario({
             {new Date(calculation.created_at).toLocaleDateString()}
           </span>
           <button
-            className="text-red-300 transition-colors hover:text-red-400"
+            className="text-red-300 cursor-pointer transition-colors hover:text-red-400"
             onClick={deleteSelectedItem}
           >
             <svg
