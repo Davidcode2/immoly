@@ -65,18 +65,13 @@ export default function Tilgungstabelle({
   };
 
   const handleTilgungsWechsel = async (
-    event: React.FormEvent<HTMLFormElement>,
+    newTilgung: string,
     year: number,
   ) => {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const newTilgung = form.elements.namedItem(
-      "newTilgung",
-    ) as HTMLInputElement;
     updateSonderAmountInBrowserStorage(
       "tilgungswechsel",
       String(year),
-      newTilgung.value,
+      newTilgung,
       calculationId!,
     );
     sendChangeNotification();
