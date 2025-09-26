@@ -106,6 +106,7 @@
   --dark-accent: #003366;
   --accent: #0066cc;
   --light-accent: #66b2ff;
+  --neutral-accent: hsl(200, 53%, 42%);
   --strong-accent: hsl(200, 85%, 41%);
   --ultralight-accent: #f0f8ff;
   --grey-accent: hsl(172, 8%, 60%);
@@ -122,6 +123,7 @@
   --dark-accent: #002d67;
   --accent: #0066b3;
   --light-accent: #66b2ff;
+  --neutral-accent: hsl(200, 53%, 42%);
   --strong-accent: hsl(200, 85%, 41%);
   --ultralight-accent: #f0f8ff;
   --grey-accent: hsl(172, 8%, 60%);
@@ -142,6 +144,7 @@
   --dark-accent: #6b4c4c;
   --accent: #a0522d;
   --light-accent: #d2b48c;
+  --neutral-accent: hsl(30, 53%, 42%);
   --strong-accent: hsl(30, 85%, 41%);
   --ultralight-accent: #fffaf0;
   --grey-accent: hsl(172, 8%, 60%);
@@ -159,6 +162,7 @@
   --dark-accent: #6b4c4c;
   --accent: #a0522d;
   --light-accent: #d2b48c;
+  --neutral-accent: hsl(30, 53%, 42%);
   --strong-accent: hsl(30, 85%, 41%);
   --grey-accent: hsl(172, 8%, 60%);
   --ultralight-accent: #fffaf0;
