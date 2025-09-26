@@ -68,7 +68,6 @@ export default function Header() {
   const themes = [
     { value: "hearth-stone-light", color: "#6b4c4c" },
     { value: "green-mist-light", color: "hsl(172, 25%, 55%)" },
-    { value: "red-velvet-light", color: "#660000" },
     { value: "blue-dream-light", color: "#0066cc" },
   ];
 

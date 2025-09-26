@@ -15,13 +15,13 @@ export default function TilgungsWechselModal({
   useEffect(() => {
     inputRef.current!.select();
     inputRef.current!.focus();
-  },[]);
+  }, []);
 
   return (
-    <div className="tilgungsWechselModal z-40 mx-10 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl sm:mx-0 md:w-[400px]">
+    <div className="tilgungsWechselModal z-40 mx-10 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl sm:mx-0 md:w-[400px] dark:from-[var(--background)]/80 dark:to-[var(--background)]/50 dark:shadow-[0_4px_200px_var(--dark-accent)]/10">
       <div className="tilgungsWechselModal">
         <label
-          className="tilgungsWechselModal flex rounded-t-lg bg-[var(--primary)]/40 px-10 py-10 text-base"
+          className="tilgungsWechselModal flex rounded-t-lg rounded-t-xl bg-[var(--primary)]/40 px-10 py-10 text-base dark:border-b dark:bg-[var(--background)]/80"
           htmlFor="newTilgung"
         >
           Wählen Sie eine neue monatliche Rate nach{" "}
@@ -42,7 +42,7 @@ export default function TilgungsWechselModal({
             />
             <div className="relative top-1 -left-6 text-lg">€</div>
           </div>
-          <button className="mx-auto my-10 px-10 cursor-pointer rounded-lg bg-[var(--light-accent)] p-2 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90">
+          <button className="mx-auto my-10 cursor-pointer rounded-lg bg-[var(--light-accent)] p-2 px-10 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90 dark:bg-[var(--dark-accent)]">
             Übernehmen
           </button>
         </form>
