@@ -12,7 +12,7 @@ export default function FinanzierungsFormContainer({
   setInput,
 }: PropTypes) {
   return (
-    <div className="md:p-8 rounded-lg from-neutral-400/10 to-neutral-950/20 shadow backdrop-blur-2xl dark:bg-gradient-to-tl">
+    <div className="rounded-lg shadow backdrop-blur-2xl md:p-8 lg:dark:shadow-[10px_4px_20px_var(--dark-accent)]/5">
       <div className="pb-4">
         <Hero />
       </div>
