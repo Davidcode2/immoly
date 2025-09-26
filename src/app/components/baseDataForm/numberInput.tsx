@@ -27,28 +27,22 @@ export default function NumberInput({
   const percentageInputs = ["interest_rate", "cash_roi"];
 
   useEffect(() => {
-    const debouncedChange = setTimeout(() => {
-      if (value !== undefined) {
-        const formattedValue = formatGerman(String(value));
-        if (percentageInputs.includes(inputName) && isLocalChange.current) {
-          isLocalChange.current = false;
-          return;
-        }
-        if (percentageInputs.includes(inputName)) {
-          const percentageValue = parseDecimal(String(value));
-          setDisplayValue(percentageValue.toFixed(2).replace(".", ","));
-        } else {
-          setDisplayValue(formattedValue);
-          if (inputRef.current) {
-            inputRef.current.value = formattedValue;
-          }
+    if (value !== undefined) {
+      const formattedValue = formatGerman(String(value));
+      if (percentageInputs.includes(inputName) && isLocalChange.current) {
+        isLocalChange.current = false;
+        return;
+      }
+      if (percentageInputs.includes(inputName)) {
+        const percentageValue = parseDecimal(String(value));
+        setDisplayValue(percentageValue.toFixed(2).replace(".", ","));
+      } else {
+        setDisplayValue(formattedValue);
+        if (inputRef.current) {
+          inputRef.current.value = formattedValue;
         }
       }
-    }, 10);
-
-    return () => {
-      clearTimeout(debouncedChange);
-    };
+    }
   }, [value]);
 
   const localHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
