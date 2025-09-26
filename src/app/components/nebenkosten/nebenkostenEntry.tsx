@@ -91,7 +91,7 @@ export default function NebenkostenEntry({
           if (entry.name !== "Grunderwerbsteuer") setShowEditModal(true);
         }}
         className={`group flex cursor-pointer items-center justify-between rounded-lg transition-all ${activeIndex === index
-            ? "text-[var(--accent)] opacity-100"
+            ? "text-[var(--primary)] opacity-100"
             : "opacity-90"
           }`}
       >

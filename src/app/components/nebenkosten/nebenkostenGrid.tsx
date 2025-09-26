@@ -22,7 +22,7 @@ export default function NebenkostenGrid({
           onMouseEnter={() => handleMouseEnter(index)}
           onMouseLeave={handleMouseLeave}
           className={`flex cursor-pointer flex-col transition-opacity ${activeIndex === index
-              ? "text-[var(--accent)] opacity-100"
+              ? "text-[var(--primary)] opacity-100"
               : "opacity-90"
             }`}
         >

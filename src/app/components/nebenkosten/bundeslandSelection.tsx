@@ -9,7 +9,7 @@ type PropTypes = {
 export default function BundeslandSelection({bundesland, setBundesland, setShowMap}: PropTypes) {
   return (
     <div
-      className={`fixed z-40 h-fit w-full rounded-xl bg-radial-[at_50%_50%] from-[var(--background)] to-[var(--secondary)] md:static md:rounded-none md:rounded-l-xl dark:to-[var(--ultra-accent)] md:dark:to-[var(--background)]/20 dark:border-r`}
+      className={`fixed z-40 h-fit w-full rounded-xl bg-radial-[at_50%_50%] from-[var(--background)] to-[var(--secondary)] md:static md:rounded-none md:rounded-l-xl dark:to-[var(--primary)] md:dark:to-[var(--background)]/20 dark:border-r`}
     >
       <div className="mx-10 mt-4 rounded-full bg-[var(--foreground)] dark:bg-[var(--background)] p-2 text-sm dark:text-[var(--foreground)] text-[var(--background)] shadow-lg md:mb-4">
         <select
