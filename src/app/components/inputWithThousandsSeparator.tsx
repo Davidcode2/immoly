@@ -4,15 +4,22 @@ import {
 } from "app/services/numberFormatService";
 import { useEffect, useRef, useState } from "react";
 
+type PropTypes = {
+  value: number;
+  className: string;
+  inputName: string;
+  min?: number;
+  max?: number;
+  maxLength?: number;
+}
 export default function InputWithThousandsSeparator({
   value,
   className,
   inputName,
-}: {
-  value: number;
-  className: string;
-  inputName: string;
-}) {
+  min,
+  max,
+  maxLength,
+}: PropTypes) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [displayValue, setDisplayValue] = useState<string>("");
   const [prevValue, setPrevValue] = useState<string>("");
@@ -64,7 +71,7 @@ export default function InputWithThousandsSeparator({
     //handleSubmit(parseDecimal(unformatted) || 0, year);
   };
   const validationPattern = () => {
-    return /^[0-9]{0,5}$/;
+    return new RegExp(`^[0-9]{0,${maxLength}}$`);
   };
 
   return (
@@ -76,9 +83,9 @@ export default function InputWithThousandsSeparator({
       name={inputName}
       type="text"
       inputMode="numeric"
-      min={0}
-      max={50000}
-      maxLength={7}
+      min={min || 0}
+      max={max || 1000000}
+      maxLength={maxLength || 10}
       value={displayValue}
     />
   );

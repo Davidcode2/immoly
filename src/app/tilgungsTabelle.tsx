@@ -33,27 +33,15 @@ export default function Tilgungstabelle({
     setTemporaryTable(table);
   }, [table]);
 
-  const getSondertilgungFromForm = (
-    event: React.FormEvent<HTMLFormElement>,
-  ) => {
-    const form = event.target as HTMLFormElement;
-    const sondertilgungAmount = (
-      form.elements.namedItem("sondertilgungAmount") as HTMLInputElement
-    ).value;
-    return sondertilgungAmount;
-  };
-
   const getSondertilgung = (entry: ArmotizationEntry) => {
     const amount = entry.sondertilgung || "";
     return amount.toLocaleString("de");
   };
 
   const handleSondertilgungSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
+    updatedSondertilgungAmount: string,
     year: number,
   ) => {
-    event.preventDefault();
-    const updatedSondertilgungAmount = getSondertilgungFromForm(event);
     updateSonderAmountInBrowserStorage(
       "sondertilgungen",
       String(year),
