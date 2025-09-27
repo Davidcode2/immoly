@@ -141,7 +141,7 @@ export default function EditNebenkostenInput({
               <input
                 value={currentPercentage().substring(0, 5)}
                 type="text"
-                inputMode="numeric"
+                inputMode="decimal"
                 maxLength={5}
                 max={99.99}
                 min={0}
