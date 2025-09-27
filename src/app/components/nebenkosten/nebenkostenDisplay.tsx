@@ -3,7 +3,6 @@ import { useRef, useState } from "react";
 import CenteredModal from "../centeredModal";
 import PieChartNebenkosten from "./pieChartNebenkosten";
 import NebenkostenModal from "./nebenkostenModal";
-import { screenWidthMobile } from "app/utils/screenWidth";
 import {
   useBundeslandStore,
   useGrundbuchkostenPercentageStore,
@@ -57,7 +56,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
   );
 
   const openModalOnMobile = () => {
-    if (screenWidthMobile() && !showModal) {
+    if (!showModal) {
       setShowModal(true);
     }
   };

@@ -2,7 +2,6 @@
 
 import NumberInput from "app/components/baseDataForm/numberInput";
 import Slider from "./slider";
-import { screenWidthMobile } from "app/utils/screenWidth";
 
 type SliderInputProps = {
   min: number;
@@ -36,7 +35,7 @@ const SliderInput: React.FC<SliderInputProps> = ({
     <div>
       <label
         htmlFor={htmlFor}
-        className={`mb-4 block text-[var(--light-accent)] ${screenWidthMobile() ? "dark:text-[var(--ultralight-accent)]" : ""} uppercase sm:mb-1`}
+        className={`mb-4 block text-[var(--light-accent)] dark:text-[var(--ultralight-accent)] md:dark:text-[var(--light-accent)] uppercase sm:mb-1`}
       >
         {label}
       </label>
