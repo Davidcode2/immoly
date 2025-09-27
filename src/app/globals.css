@@ -5,6 +5,11 @@
 @custom-variant green-mist-light (&:where([data-theme=green-mist-light], [data-theme=green-mist-light] *));
 @custom-variant blue-dream-light (&:where([data-theme=blue-dream-light], [data-theme=blue-dream-light] *));
 
+html {
+  scrollbar-width: thin; /* for Firefox */
+  scrollbar-color: #888 transparent; /* for Firefox */
+}
+
 :root {
   --background: hsl(1, 0%, 100%);
   --foreground: hsl(194, 33%, 12%);
