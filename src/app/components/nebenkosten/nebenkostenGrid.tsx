@@ -15,7 +15,7 @@ export default function NebenkostenGrid({
   return (
     <div 
     onClick={() => openModal(true)}
-    className="order-first hidden h-20 w-full flex-col gap-12 overflow-y-scroll pb-4 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
+    className="order-first hidden h-20 w-full flex-col gap-12 pb-4 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
       {data.map((entry, index) => (
         <div
           key={entry.name}
