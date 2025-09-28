@@ -22,7 +22,7 @@ export default function MobileFormContainer({ input, setInput }: PropTypes) {
   return (
     <div className="fixed bottom-10 left-1/2 z-30 -translate-x-1/2">
       <Drawer
-        modal={false}
+        modal={true}
       >
         <DrawerTrigger>
           <div className="sticky bottom-0 rounded-full border border-[var(--grey-accent)] bg-[var(--background)] px-5 py-2 shadow transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]">
