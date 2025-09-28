@@ -1,9 +1,11 @@
+import { Ellipsis } from "lucide-react";
+
 export default function NoData() {
   return (
     <>
-      <div className="col-span-full hidden h-full rounded-lg text-2xl md:flex md:items-center md:justify-center backdrop-blur-lg shadow">
-        <div className="px-4">
-          Gib deine Daten ein oder wähle ein Szenario...
+      <div className="col-span-full hidden xl:h-full h-96 rounded-lg text-2xl md:flex md:items-center md:justify-center backdrop-blur-lg">
+        <div className="px-4 animate-pulse">
+            <Ellipsis />
         </div>
       </div>
     </>
