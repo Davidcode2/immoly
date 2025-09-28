@@ -7,6 +7,7 @@ import {
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
+  DrawerOverlay,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
@@ -18,27 +19,35 @@ type PropTypes = {
 
 export default function MobileFormContainer({ input, setInput }: PropTypes) {
   return (
-    <Drawer defaultOpen={true} modal={false}>
-      <DrawerTrigger>
-        <div className="my-10 rounded-full border border-[var(--grey-accent)] p-5 shadow transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]">
-          Eingabefeld öffnen
-        </div>
-      </DrawerTrigger>
-      <DrawerContent className="w-screen rounded-t-2xl border border-[var(--light-accent)]/20 bg-[var(--ultralight-accent)]/50 backdrop-blur-lg md:hidden">
-        <DrawerHeader>
-          <div className="invisible hidden">
-            <DrawerTitle>Formular für Finanzierungsparameter</DrawerTitle>
-            <DrawerDescription>Slider für Eigenkapital, monatliche Rate, Kreditzins und Kreditsumme</DrawerDescription>
+    <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-30">
+      <Drawer defaultOpen={true} modal={false}>
+        <DrawerTrigger>
+          <div className="sticky bottom-0 rounded-full bg-[var(--background)] border border-[var(--grey-accent)] px-5 py-2 shadow transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]">
+            Eingabefeld öffnen
           </div>
-        </DrawerHeader>
-        <div className="">
-          <div className="rounded-2xl">
-            <div className={``}>
-              <FinanzierungsForm values={input} setInput={setInput} />
+        </DrawerTrigger>
+        <DrawerOverlay className="fixed inset-0" />
+        <DrawerContent className="fixed w-screen rounded-t-2xl border border-[var(--light-accent)]/20 bg-[var(--ultralight-accent)]/50 backdrop-blur-lg md:hidden">
+          <div className="overflow-y-auto">
+            <DrawerHeader>
+              <div className="invisible hidden">
+                <DrawerTitle>Formular für Finanzierungsparameter</DrawerTitle>
+                <DrawerDescription>
+                  Slider für Eigenkapital, monatliche Rate, Kreditzins und
+                  Kreditsumme
+                </DrawerDescription>
+              </div>
+            </DrawerHeader>
+            <div className="">
+              <div className="rounded-2xl">
+                <div className={``}>
+                  <FinanzierungsForm values={input} setInput={setInput} />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </DrawerContent>
-    </Drawer>
+        </DrawerContent>
+      </Drawer>
+    </div>
   );
 }
