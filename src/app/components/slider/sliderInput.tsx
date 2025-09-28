@@ -55,7 +55,7 @@ const SliderInput: React.FC<SliderInputProps> = ({
             inputName={inputName}
             value={value}
           />
-          <div className="relative -left-6 text-stone-600">
+          <div className="relative -left-6 text-[var(--foreground)]/80">
             { percentageInputs.includes(inputName) ? "%" : sign}
           </div>
           {children}
