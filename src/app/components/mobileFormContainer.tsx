@@ -11,18 +11,28 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { useState } from "react";
 
 type PropTypes = {
   input: CashRoiModel | null;
   setInput: (data: CashRoiModel) => void;
 };
 
+const snapPoints = ["600px", 1];
+
 export default function MobileFormContainer({ input, setInput }: PropTypes) {
+  const [snap, setSnap] = useState<number | string | null>(snapPoints[0]);
+
   return (
-    <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-30">
-      <Drawer modal={false}>
+    <div className="fixed bottom-10 left-1/2 z-30 -translate-x-1/2">
+      <Drawer
+        modal={false}
+        snapPoints={snapPoints}
+        activeSnapPoint={snap}
+        setActiveSnapPoint={setSnap}
+      >
         <DrawerTrigger>
-          <div className="sticky bottom-0 rounded-full bg-[var(--background)] border border-[var(--grey-accent)] px-5 py-2 shadow transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]">
+          <div className="sticky bottom-0 rounded-full border border-[var(--grey-accent)] bg-[var(--background)] px-5 py-2 shadow transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]">
             Eingabefeld öffnen
           </div>
         </DrawerTrigger>
