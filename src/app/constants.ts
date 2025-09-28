@@ -1,6 +1,6 @@
 import CashRoiModel from "./lib/models/cashRoiModel";
 
-export const DEFAULT_THEME = "green-mist-light";
+export const DEFAULT_THEME = "green-mist-dark";
 export const DEFAULT_BUNDESLAND = "Baden-Wuerttemberg";
 export const DEFAULT_CALCULATION = {
       monthly_rate: 1800,

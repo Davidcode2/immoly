@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Immoly - Immobilienfinanzierung",
   description:
-    "Immoly ist eine Plattform für Immobilienfinanzierung. Berechnen Sie Ihre Finanzierungsmöglichkeiten und Tilgungstabellen.",
+    "Immoly ist eine Plattform für Immobilienfinanzierung. Berechnen Sie Ihre Finanzierungsmöglichkeiten und Tilgungstabelle.",
 };
 
 export default function RootLayout({
@@ -37,7 +37,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
-          defaultTheme="green-mist-light"
+          defaultTheme="green-mist-dark"
           enableSystem
           disableTransitionOnChange
         >
