@@ -20,7 +20,7 @@ type PropTypes = {
 export default function MobileFormContainer({ input, setInput }: PropTypes) {
   return (
     <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-30">
-      <Drawer defaultOpen={true} modal={false}>
+      <Drawer modal={false}>
         <DrawerTrigger>
           <div className="sticky bottom-0 rounded-full bg-[var(--background)] border border-[var(--grey-accent)] px-5 py-2 shadow transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]">
             Eingabefeld öffnen
