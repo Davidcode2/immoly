@@ -29,6 +29,7 @@ import SonderCacheHelper from "./services/cacheHelper";
 import { DEFAULT_CALCULATION } from "./constants";
 import { getGrundsteuer } from "./services/nebenkostenGrundsteuer";
 import { debounce } from "./utils/debounce";
+import FinanzierungsFormContainerMedium from "./components/finanzierungsFormContainerMedium";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -50,6 +51,7 @@ export default function ResultDisplay() {
   const notarkosten = useNotarkostenPercentageStore((state) => state.value);
   const principal = useRef(0);
   const workerRef = useRef<Worker>(null);
+  const [showForm, setShowForm] = useState(false);
 
   const maklergebuehrPercentage = Number(
     useMaklergebuehrPercentageStore((state) => state.value).replace(",", "."),
@@ -253,10 +255,18 @@ export default function ResultDisplay() {
 
   return (
     <div className="px-3 pt-2 sm:px-10 md:pb-10">
+      <div className="fixed left-10 top-10 z-30">
+        <FinanzierungsFormContainerMedium
+          formValues={input}
+          setInput={setInput}
+          showForm={showForm}
+          setShowForm={setShowForm}
+        />
+      </div>
       <div
-        className={`grid gap-y-6 md:gap-x-6 md:gap-y-16 lg:grid-cols-[1fr_5fr] ${table && "items-start"}`}
+        className={`grid gap-y-6 md:gap-x-6 md:gap-y-16 2xl:grid-cols-[1fr_5fr] ${table && "items-start"}`}
       >
-        <div className="hidden md:block">
+        <div className="hidden 2xl:block">
           <FinanzierungsFormContainer formValues={input} setInput={setInput} />
         </div>
         <div className="rounded-lg backdrop-blur-2xl md:mt-12 md:hidden md:p-8">
@@ -292,7 +302,7 @@ export default function ResultDisplay() {
             </>
           )}
         </div>
-        <div className="md:hidden mx-auto">
+        <div className="mx-auto md:hidden">
           <MobileFormContainer input={input} setInput={setInput} />
         </div>
       </div>
