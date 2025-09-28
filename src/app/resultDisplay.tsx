@@ -292,7 +292,9 @@ export default function ResultDisplay() {
             </>
           )}
         </div>
-        <MobileFormContainer input={input} setInput={setInput} />
+        <div className="md:hidden mx-auto">
+          <MobileFormContainer input={input} setInput={setInput} />
+        </div>
       </div>
     </div>
   );

@@ -265,3 +265,8 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+[data-vaul-drawer] > div:first-child {
+  @apply bg-[var(--grey-accent)] dark:bg-[var(--background)]/60 w-30 h-2 rounded-full;
+}
+
