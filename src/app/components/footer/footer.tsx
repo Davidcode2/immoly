@@ -1,7 +1,7 @@
 import Image from "next/image";
 export default function Footer() {
   return (
-    <div className="grid gap-y-8 bg-[var(--secondary)] p-8 dark:bg-[var(--background)]">
+    <div className="sm:px-24 grid gap-y-8 bg-[var(--secondary)] p-8 dark:bg-[var(--background)]">
       <div className="flex gap-2">
         <a href="https://github.com/davidcode2">
           <svg
@@ -63,12 +63,12 @@ export default function Footer() {
           House icon created by Rahman Haryanto - Flaticon
         </a>
       </div>
-      <div className="flex gap-x-2 text-[var(--dark-accent)]/50 dark:text-[var(--foreground)]">
+      <div className="text-xs items-center flex gap-x-2 text-[var(--dark-accent)]/50 dark:text-[var(--foreground)]">
         Gebaut auf der{" "}
         <Image
           src="/images/icons/icons8-couch-85.png"
-          width="25"
-          height="25"
+          width="20"
+          height="20"
           alt="Couch"
         />
       </div>

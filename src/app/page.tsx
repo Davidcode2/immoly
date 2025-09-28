@@ -22,8 +22,8 @@ export default async function GraphPage() {
           </Suspense>
           <StoredCalculations />
         </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }
