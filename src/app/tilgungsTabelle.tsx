@@ -83,7 +83,7 @@ export default function Tilgungstabelle({
   return (
     <div
       ref={tilgungsWechselModalRef}
-      className="grid h-fit justify-stretch rounded-lg text-xs lg:text-base"
+      className="grid h-fit justify-stretch rounded-lg text-xs xl:text-base"
     >
       {showTilgungswechselModal && (
         <CenteredModal onClose={() => setShowTilgungswechselModal(false)}>

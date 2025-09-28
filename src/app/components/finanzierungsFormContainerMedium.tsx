@@ -36,40 +36,32 @@ export default function FinanzierungsFormContainerMedium({
         dismissible={false}
       >
         <DrawerTrigger>
-          <Button className="rounded-full text-sm text-[var(--foreground)] border border-[var(--grey-accent)] bg-[var(--background)] px-5 py-2 shadow-sm transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]">
+          <div className="rounded-full border border-[var(--grey-accent)] bg-[var(--background)] px-5 py-2 text-sm text-[var(--foreground)] shadow-sm transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]">
             Eingabefeld öffnen
-          </Button>
+          </div>
         </DrawerTrigger>
-        <DrawerOverlay className="fixed inset-0" />
+        <DrawerOverlay className="fixed inset-0 bg-black/80" />
         <DrawerContent className="bg-[var(--ultralight-accent)]/50 backdrop-blur-lg">
-          <div className="px-4">
-            <div className="mt-20 justify-center">
+          <DrawerHeader>
+            <div className="invisible hidden">
+              <DrawerTitle>Formular für Finanzierungsparameter</DrawerTitle>
+              <DrawerDescription>
+                Slider für Eigenkapital, monatliche Rate, Kreditzins und
+                Kreditsumme
+              </DrawerDescription>
+            </div>
+          </DrawerHeader>
+          <div className="overflow-y-auto px-4">
+            <div className="mt-10 justify-center">
               <Hero />
             </div>
-            <div className="overflow-y-auto">
-              <DrawerHeader>
-                <div className="invisible hidden">
-                  <DrawerTitle>Formular für Finanzierungsparameter</DrawerTitle>
-                  <DrawerDescription>
-                    Slider für Eigenkapital, monatliche Rate, Kreditzins und
-                    Kreditsumme
-                  </DrawerDescription>
-                </div>
-              </DrawerHeader>
-              <div className="">
-                <div className="rounded-2xl">
-                  <div className={``}>
-                    <button className="fixed top-10 left-10 rounded-full text-sm border border-[var(--grey-accent)] bg-[var(--background)] px-5 py-2 shadow transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]" onClick={() => setShowForm(false)}>
-                      Schließen
-                    </button>
-                    <FinanzierungsForm
-                      values={formValues}
-                      setInput={setInput}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <button
+              className="fixed top-10 left-10 rounded-full border border-[var(--grey-accent)] bg-[var(--background)] px-5 py-2 text-sm shadow transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]"
+              onClick={() => setShowForm(false)}
+            >
+              Schließen
+            </button>
+            <FinanzierungsForm values={formValues} setInput={setInput} />
           </div>
         </DrawerContent>
       </Drawer>

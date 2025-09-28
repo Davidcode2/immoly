@@ -187,7 +187,7 @@ export default function FinanzierungsForm({
         <div className="flex justify-center w-full mx-auto">
           <button
             type="submit"
-            className="mt-9 cursor-pointer rounded-lg dark:bg-[var(--accent)]/50 bg-[var(--primary)]/90 px-4 py-2 font-bold text-[var(--foreground)] shadow backdrop-blur-md transition-colors duration-200 dark:hover:bg-[var(--accent)]/80 hover:bg-[var(--primary)] w-full md:w-fit lg:w-full"
+            className="mt-9 cursor-pointer rounded-full dark:bg-[var(--accent)]/50 bg-[var(--primary)]/90 px-4 py-2 text-[var(--foreground)] shadow backdrop-blur-md transition-colors duration-200 dark:hover:bg-[var(--accent)]/80 hover:bg-[var(--primary)] w-full md:w-fit 2xl:w-full"
           >
             Berechnung speichern
           </button>
