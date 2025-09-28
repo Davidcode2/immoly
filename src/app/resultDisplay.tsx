@@ -255,7 +255,7 @@ export default function ResultDisplay() {
 
   return (
     <div className="px-3 pt-2 sm:px-10 md:pb-10">
-      <div className="fixed left-10 top-10 z-30">
+      <div className="fixed left-10 top-9 z-30">
         <FinanzierungsFormContainerMedium
           formValues={input}
           setInput={setInput}

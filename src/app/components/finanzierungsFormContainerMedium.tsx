@@ -11,6 +11,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import CashRoiModel from "app/lib/models/cashRoiModel";
+import { PanelLeftOpen, PanelRightOpen } from "lucide-react";
 
 type PropTypes = {
   formValues: CashRoiModel | null;
@@ -36,7 +37,8 @@ export default function FinanzierungsFormContainerMedium({
         dismissible={false}
       >
         <DrawerTrigger>
-          <div className="rounded-full border border-[var(--grey-accent)] bg-[var(--background)] px-5 py-2 text-sm text-[var(--foreground)] shadow-sm transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]">
+          <div className="flex items-center gap-x-4 rounded-full border border-[var(--grey-accent)] bg-[var(--background)] px-5 py-2 text-sm text-[var(--foreground)] shadow-sm transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]">
+            <PanelLeftOpen strokeWidth={"1"}/>
             Eingabefeld öffnen
           </div>
         </DrawerTrigger>
@@ -56,10 +58,10 @@ export default function FinanzierungsFormContainerMedium({
               <Hero />
             </div>
             <button
-              className="fixed top-10 left-10 rounded-full border border-[var(--grey-accent)] bg-[var(--background)] px-5 py-2 text-sm shadow transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]"
+              className="fixed top-9 left-72 rounded-full border-[var(--grey-accent)] px-5 py-2 text-sm transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]"
               onClick={() => setShowForm(false)}
             >
-              Schließen
+              <PanelRightOpen strokeWidth={"1"} />
             </button>
             <FinanzierungsForm values={formValues} setInput={setInput} />
           </div>
