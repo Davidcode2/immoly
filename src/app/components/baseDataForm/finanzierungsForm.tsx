@@ -7,9 +7,8 @@ import { calculationsLocalStorageSetter } from "app/services/calculationsLocalSt
 import { useBundeslandStore, useMaklergebuehrPercentageStore } from "app/store";
 import NebenKostenModel from "app/lib/models/nebenkostenModel";
 import { transferSonderAmounts } from "app/services/sonderAmountBrowserUpdater";
-import Toast from "../toast";
-import { Check } from "lucide-react";
 import { useCalcNebenkostenSum } from "app/hooks/useCalcNebenkostenSum";
+import { toast } from "sonner"
 
 export default function FinanzierungsForm({
   values,
@@ -29,7 +28,6 @@ export default function FinanzierungsForm({
   const maklergebuehrPercentage =
     useMaklergebuehrPercentageStore.getState().value;
   const bundesland = useBundeslandStore.getState().value;
-  const [showSavedToast, setShowSavedToast] = useState(false);
 
   const nebenkosten = useCalcNebenkostenSum(Number(principalValue));
 
@@ -119,21 +117,11 @@ export default function FinanzierungsForm({
       router.push(`/?${params.toString()}`, { scroll: false });
     }
     transferSonderAmounts(uuid);
-    setShowSavedToast(true);
+    toast.success("Szenario gespeichert");
   };
 
   return (
     <>
-      {showSavedToast && (
-        <Toast onClose={() => setShowSavedToast(false)}>
-          <div className="z-40 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 md:w-[400px]">
-            <div className="m-6 flex items-center gap-x-4">
-              <Check size={72} />
-              <div>Szenario gespeichert</div>
-            </div>
-          </div>
-        </Toast>
-      )}
       <Form action={handleSubmit} className="mx-8 pb-8 md:mx-auto md:pb-0">
         <div className="p-2">
           <div className="lg:justify-none mb-2 grid gap-8 md:justify-center md:gap-8">

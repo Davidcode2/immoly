@@ -4,13 +4,12 @@ import { CalculationDbo } from "./lib/models/calculationDbo";
 import { deleteCalculation } from "./services/calculationsAccessor";
 import { useSearchParams } from "next/navigation";
 import { Check, LoaderCircle } from "lucide-react";
+import { toast } from "sonner"
 
 export default function StoredScenario({
   calculation,
-  setShowDeletedConfirmationModal,
 }: {
   calculation: CalculationDbo;
-  setShowDeletedConfirmationModal: (arg1: boolean) => void;
 }) {
   const [selected, setSelected] = useState(false);
   const searchParams = useSearchParams();
@@ -34,7 +33,7 @@ export default function StoredScenario({
   };
 
   const deleteSelectedItem = async () => {
-    setShowDeletedConfirmationModal(true);
+    toast("Szenario gelöscht")
     const res = deleteCalculation(calculation.id);
     if (!res) {
       alert("Fehler beim Löschen des Szenarios");

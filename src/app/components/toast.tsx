@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useRef, useState, type JSX } from "react";
+import { motion } from "motion/react"
 import { createPortal } from "react-dom";
 
 type PropTypes = {
@@ -53,7 +54,7 @@ export default function Toast({
   return (
     <>
       {createPortal(
-        <div
+        <motion.div initial={{ scale: .7 }} animate={{ scale: 1 }} 
           className={`fixed top-10 z-40 mx-auto flex w-full transition-all duration-250 md:right-10 md:w-fit ${isShown ? "opacity-100" : "opacity-0"}`}
           onClick={handleBackdropClick}
         >
@@ -69,7 +70,7 @@ export default function Toast({
             ></div>
 </div>
           </div>
-        </div>,
+        </motion.div>,
 
         document.body,
       )}
