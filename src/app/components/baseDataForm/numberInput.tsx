@@ -99,6 +99,7 @@ export default function NumberInput({
       type="text"
       id={id}
       value={displayValue}
+      inputMode="decimal"
       name={inputName}
       onChange={localHandleChange}
       placeholder="Zahl eingeben"
