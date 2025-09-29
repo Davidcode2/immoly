@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./slider.css";
+import { Slider as ShadcnSlider } from "@/components/ui/slider";
 
 type SliderProps = {
   value: number;
@@ -20,12 +20,7 @@ const Slider: React.FC<SliderProps> = ({
 }) => {
   const [inputValue, setInputValue] = useState(value);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = Number(e.target.value);
-    localChange(newValue, e.target.name);
-  };
-
-  const localChange = (newValue: number, inputName: string) => {
+  const localChange = (newValue: number) => {
     setInputValue(newValue);
     onChange(inputName, newValue);
   };
@@ -36,34 +31,34 @@ const Slider: React.FC<SliderProps> = ({
 
   const stepChange = (upOrDown: number) => {
     const up = upOrDown === 1;
-    if (up) {
-      localChange(inputValue + step, inputName);
-    } else {
-      localChange(inputValue - step, inputName);
-    }
+    const next = up ? inputValue + step : inputValue - step;
+    localChange(Math.min(Math.max(next, min), max)); // clamp
   };
 
   return (
-    <div className="sm:mx-0 -mx-5 flex">
+    <div className="mx-0 flex items-center gap-2 w-full">
+      {/* Decrement button (mobile only) */}
       <button
-        className="rounded-lg border-[var(--accent)] px-2 opacity-50 hover:border hover:opacity-100 lg:hidden"
+        className="rounded-lg border px-2 opacity-50 hover:opacity-100 lg:hidden"
         onClick={() => stepChange(-1)}
         type="button"
       >
         -
       </button>
-      <input
-        type="range"
-        value={inputValue}
+
+      {/* Shadcn Slider */}
+      <ShadcnSlider
+        value={[inputValue]}
         min={min}
         max={max}
         step={step}
-        onChange={handleInputChange}
-        name={inputName}
-        className="mt-1"
+        onValueChange={(vals) => localChange(vals[0])}
+        className="flex-1"
       />
+
+      {/* Increment button (mobile only) */}
       <button
-        className="rounded-lg border-[var(--accent)] px-2 opacity-50 hover:border hover:opacity-100 lg:hidden"
+        className="rounded-lg border px-2 opacity-50 hover:opacity-100 lg:hidden"
         onClick={() => stepChange(1)}
         type="button"
       >
@@ -74,3 +69,4 @@ const Slider: React.FC<SliderProps> = ({
 };
 
 export default Slider;
+
