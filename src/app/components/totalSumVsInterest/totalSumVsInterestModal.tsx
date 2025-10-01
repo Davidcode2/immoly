@@ -89,7 +89,7 @@ export default function TotalSumVsInterestModal({
   };
 
   return (
-    <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 p-20 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl">
+    <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 p-6 lg:p-20 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl">
       <div className="grid xl:grid-cols-2">
         <div className="">
           <Image
@@ -120,7 +120,7 @@ export default function TotalSumVsInterestModal({
             <div>kürzeste Zinsbindung wählen.</div>
           ) : (
             <>
-              <div>Restsumme nach {years} Jahren</div>
+              <div className="text-xs">Restsumme nach {years} Jahren</div>
               <div className="text-5xl text-[var(--primary)]">
                 {Math.round(restSummeAfter(years)).toLocaleString("de")}
               </div>
@@ -135,7 +135,7 @@ export default function TotalSumVsInterestModal({
                       return (
                         <div
                           key={entry.year}
-                          className={`${index === 0 && "rounded-l-full"} ${index === yearsArray.length - 1 && "rounded-r-full"} ${entry.disabled ? "bg-[var(--grey-accent)]" : "hover:bg-[var(--light-accent)]"} px-5 py-3`}
+                          className={`${index === 0 && "rounded-l-full"} ${index === yearsArray.length - 1 && "rounded-r-full"} ${entry.disabled ? "bg-[var(--grey-accent)]" : "hover:bg-[var(--light-accent)]"} ${ years === entry.year && "font-bold" } px-5 py-3`}
                           onClick={() => localSetYears(entry)}
                         >
                           {entry.year}&nbsp;Jahre
@@ -144,13 +144,6 @@ export default function TotalSumVsInterestModal({
                     },
                   )}
                 </div>
-                <Image
-                  src={EditIcon}
-                  alt="Stift zum Bearbeiten"
-                  className="opacity-70 transition-opacity hover:opacity-100 dark:invert"
-                  width={24}
-                  height={24}
-                />
               </div>
             </>
           )}
