@@ -3,7 +3,7 @@ import BarChartInterestVsTilgung from "../barChartInterestVsTilgung";
 import AttentionIcon from "/public/images/icons/attention_flaticon.png";
 import Image from "next/image";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditIcon from "/public/images/icons/icons8-edit-48.png";
 
 type PropTypes = {
@@ -25,13 +25,68 @@ export default function TotalSumVsInterestModal({
   table,
 }: PropTypes) {
   const [years, setYears] = useState(10);
+
   const restSummeAfter = (year: number) => {
     const index = table.findIndex((x) => x.year === year);
-    const restSumme = table[index].remainingPrincipal;
-    return restSumme;
+    if (!index) {
+      return 0;
+    }
+    try {
+      const restSumme = table[index].remainingPrincipal;
+      return restSumme;
+    } catch (e) {
+      return 0;
+    }
   };
 
-  const yearsArray = [5, 10, 15];
+  useEffect(() => {
+    setYears(table.length <= 10 ? 5 : 10);
+  }, []);
+
+  const makeYearsArray = () => {
+    const maxYears = table.length;
+    if (maxYears <= 5) {
+      return [
+        { year: 5, disabled: true },
+        { year: 10, disabled: true },
+        { year: 20, disabled: true },
+      ];
+    }
+    if (maxYears <= 10) {
+      return [
+        { year: 5, disabled: false },
+        { year: 10, disabled: true },
+        { year: 20, disabled: true },
+      ];
+    }
+    if (maxYears <= 15) {
+      return [
+        { year: 5, disabled: false },
+        { year: 10, disabled: false },
+        { year: 20, disabled: true },
+      ];
+    }
+    if (maxYears <= 20) {
+      return [
+        { year: 5, disabled: false },
+        { year: 10, disabled: false },
+        { year: 15, disabled: false },
+      ];
+    }
+    return [
+      { year: 5, disabled: false },
+      { year: 10, disabled: false },
+      { year: 20, disabled: false },
+    ];
+  };
+  const yearsArray = [5, 10, 20];
+
+  const localSetYears = (entry: { year: number; disabled: boolean }) => {
+    if (entry.disabled) {
+      return;
+    }
+    setYears(entry.year);
+  };
 
   return (
     <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 p-20 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl">
@@ -61,33 +116,44 @@ export default function TotalSumVsInterestModal({
           </div>
         </div>
         <div className="flex flex-col gap-y-4">
-          <div>Restsumme nach {years} Jahren</div>
-          <div className="text-5xl text-[var(--primary)]">
-            {Math.round(restSummeAfter(years)).toLocaleString("de")}
-          </div>
-          <div>Zinsbindung</div>
-          <div className="flex items-center gap-x-4">
-            <div className="flex rounded-l-full rounded-r-full bg-[var(--accent)]">
-              {yearsArray.map((year: number, index: number) => {
-                return (
-                  <div
-                    key={year}
-                    className={`${index === 0 && "rounded-l-full"} ${index === yearsArray.length - 1 && "rounded-r-full"} px-5 py-3 hover:bg-[var(--light-accent)]`}
-                    onClick={() => setYears(year)}
-                  >
-                    {year}&nbsp;Jahre
-                  </div>
-                );
-              })}
-            </div>
-            <Image
-              src={EditIcon}
-              alt="Stift zum Bearbeiten"
-              className="dark:invert hover:opacity-100 opacity-70 transition-opacity"
-              width={24}
-              height={24}
-            />
-          </div>
+          {table.length <= 5 ? (
+            <div>kürzeste Zinsbindung wählen.</div>
+          ) : (
+            <>
+              <div>Restsumme nach {years} Jahren</div>
+              <div className="text-5xl text-[var(--primary)]">
+                {Math.round(restSummeAfter(years)).toLocaleString("de")}
+              </div>
+              <div>Zinsbindung</div>
+              <div className="flex items-center gap-x-4">
+                <div className="flex rounded-l-full rounded-r-full bg-[var(--accent)]">
+                  {makeYearsArray().map(
+                    (
+                      entry: { year: number; disabled: boolean },
+                      index: number,
+                    ) => {
+                      return (
+                        <div
+                          key={entry.year}
+                          className={`${index === 0 && "rounded-l-full"} ${index === yearsArray.length - 1 && "rounded-r-full"} ${entry.disabled ? "bg-[var(--grey-accent)]" : "hover:bg-[var(--light-accent)]"} px-5 py-3`}
+                          onClick={() => localSetYears(entry)}
+                        >
+                          {entry.year}&nbsp;Jahre
+                        </div>
+                      );
+                    },
+                  )}
+                </div>
+                <Image
+                  src={EditIcon}
+                  alt="Stift zum Bearbeiten"
+                  className="opacity-70 transition-opacity hover:opacity-100 dark:invert"
+                  width={24}
+                  height={24}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
