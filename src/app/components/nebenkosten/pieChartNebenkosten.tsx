@@ -7,6 +7,7 @@ type PropTypes = {
   activeIndex: number | null;
   handleMouseEnter: (index: number) => void;
   handleMouseLeave: () => void;
+  customInnerWidth?: string
 };
 
 export default function PieChartNebenkosten({
@@ -14,6 +15,7 @@ export default function PieChartNebenkosten({
   activeIndex,
   handleMouseEnter,
   handleMouseLeave,
+  customInnerWidth
 }: PropTypes) {
   const [colors, setColors] = useState<string[]>([]);
   const { resolvedTheme } = useTheme();
@@ -36,13 +38,16 @@ export default function PieChartNebenkosten({
     return () => clearTimeout(id);
   }, [resolvedTheme]);
 
+  const cy =  window.innerWidth < 768 ? "100%" : "50%";
+  const innerWidth = customInnerWidth ? customInnerWidth : window.innerWidth < 768 ? "50%" : "70%";
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <PieChart>
         <Pie
           data={data}
-          cy={window.innerWidth < 768 ? "100%" : "50%"}
-          innerRadius={window.innerWidth < 768 ? "50%" : "70%"}
+          cy={cy}
+          innerRadius={innerWidth}
           outerRadius={"100%"}
           paddingAngle={3}
           dataKey="value"

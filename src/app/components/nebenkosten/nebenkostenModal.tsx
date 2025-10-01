@@ -14,6 +14,7 @@ type PropTypes = {
   handleMouseEnter: (index: number) => void;
   handleMouseLeave: () => void;
   principal: number;
+  onClose: () => void;
 };
 export default function NebenkostenModal({
   pieChartData,
@@ -24,6 +25,7 @@ export default function NebenkostenModal({
   handleMouseEnter,
   handleMouseLeave,
   principal,
+  onClose,
 }: PropTypes) {
   const [showMap, setShowMap] = useState<boolean>(false);
 
@@ -32,19 +34,42 @@ export default function NebenkostenModal({
   }, [bundesland]);
 
   return (
-    <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl backdrop-blur-3xl md:backdrop-blur-xl md:mx-auto md:max-w-3xl">
+    <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl">
+      <button
+        className="fixed top-5 right-5 z-40 cursor-pointer transition-colors hover:text-red-400"
+        onClick={() => onClose()}
+      >
+        <svg
+          className="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
       <div className="grid md:grid-cols-2">
         {(!screenWidthMobile() || showMap) && (
-          <BundeslandSelection bundesland={bundesland} setBundesland={setBundesland} setShowMap={setShowMap}/>
+          <BundeslandSelection
+            bundesland={bundesland}
+            setBundesland={setBundesland}
+            setShowMap={setShowMap}
+          />
         )}
         <div>
           <div className="relative h-45">
-            <div className="absolute h-70 bottom-6 w-full md:p-6 md:static md:h-45 md:w-45">
+            <div className="absolute bottom-6 h-70 w-full md:static md:h-45 md:w-45 md:p-6">
               <PieChartNebenkosten
                 data={pieChartData}
                 activeIndex={activeIndex}
                 handleMouseEnter={handleMouseEnter}
                 handleMouseLeave={handleMouseLeave}
+                customInnerWidth={ window.innerWidth < 768 ? "80%" : "" }
               />
             </div>
           </div>

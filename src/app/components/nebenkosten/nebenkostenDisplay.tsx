@@ -111,6 +111,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
               handleMouseEnter={handleMouseEnter}
               handleMouseLeave={handleMouseLeave}
               principal={calculationData.principal}
+              onClose={() => setShowModal(false)}
             />
           </CenteredModal>
         )}
