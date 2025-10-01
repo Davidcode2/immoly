@@ -4,7 +4,6 @@ import AttentionIcon from "/public/images/icons/attention_flaticon.png";
 import Image from "next/image";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import { useEffect, useState } from "react";
-import EditIcon from "/public/images/icons/icons8-edit-48.png";
 
 type PropTypes = {
   sumZinsen: number;
@@ -34,7 +33,9 @@ export default function TotalSumVsInterestModal({
     try {
       const restSumme = table[index].remainingPrincipal;
       return restSumme;
-    } catch (e) {
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
+    } catch (e: any) {
+      console.debug(e);
       return 0;
     }
   };
