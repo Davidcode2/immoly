@@ -1,6 +1,3 @@
-import Image from "next/image";
-import EditIcon from "/public/images/icons/icons8-edit-48.png";
-
 type PropTypes = {
   setShowModal: (arg1: boolean) => void;
 };
@@ -10,16 +7,8 @@ export default function EditIconComponent({ setShowModal }: PropTypes) {
       className="absolute top-5 right-4 cursor-pointer"
       onClick={() => setShowModal(true)}
     >
-      <div className="group z-30 inline-block rounded-xl border-[var(--dark-accent)] md:p-1 md:px-2 text-xs transition-colors hover:bg-[var(--dark-accent)] hover:text-[var(--secondary)] md:border">
-        <div className="hidden pr-1 md:inline-block">Mehr</div>
-        <Image
-          className="hidden opacity-50 group-hover:opacity-60 group-hover:invert md:inline-block dark:invert"
-          src={EditIcon}
-          width={14}
-          height={14}
-          alt="Bearbeiten"
-        />
-        <div className="inline-block opacity-50 group-hover:opacity-60 group-hover:invert md:hidden">
+      <div className="group z-30 inline-block rounded-xl md:p-1 md:px-2 text-xs ">
+        <div className="inline-block opacity-50 hover:opacity-70 transition-colors">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

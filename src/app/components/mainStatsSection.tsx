@@ -1,9 +1,9 @@
-import TimeUntilTilgung from "app/timeUntilTilgung";
+import TimeUntilTilgung from "app/components/totalSumVsInterest/timeUntilTilgung";
 import NebenkostenDisplay from "./nebenkosten/nebenkostenDisplay";
 import KreditSummeTextComponent from "./kreditSummeTextComponent";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
-import TotalSumVsInterest from "./totalSumVsInterest";
+import TotalSumVsInterest from "app/components/totalSumVsInterest/totalSumVsInterest";
 import BarChartInterestVsTilgung from "./barChartInterestVsTilgung";
 
 type PropTypes = {
@@ -40,6 +40,7 @@ export default function MainStatsSection({ userInput, table }: PropTypes) {
         paidAfter={paidAfter}
         paidInYear={paidInYear}
         kreditSumme={kreditSumme}
+        table={table}
       />
       <div className="h-46 max-h-48 rounded-lg p-5 shadow md:hidden dark:shadow-[0_4px_50px_var(--dark-accent)]/20">
         <TotalSumVsInterest
