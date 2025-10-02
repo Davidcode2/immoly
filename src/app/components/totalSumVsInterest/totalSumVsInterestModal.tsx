@@ -33,7 +33,7 @@ export default function TotalSumVsInterestModal({
     try {
       const restSumme = table[index].remainingPrincipal;
       return restSumme;
-    /* eslint-disable  @typescript-eslint/no-explicit-any */
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
     } catch (e: any) {
       console.debug(e);
       return 0;
@@ -90,7 +90,7 @@ export default function TotalSumVsInterestModal({
   };
 
   return (
-    <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 p-6 lg:p-20 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl">
+    <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 p-6 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl lg:p-20">
       <div className="grid xl:grid-cols-2">
         <div className="">
           <Image
@@ -106,7 +106,7 @@ export default function TotalSumVsInterestModal({
             paidAfter={paidAfter}
             paidInYear={paidInYear}
           />
-          <div className="hidden md:block">
+          <div className="hidden w-[180px] md:block">
             {paidAfter !== -1 && (
               <BarChartInterestVsTilgung
                 sumZinsen={sumZinsen}
@@ -125,29 +125,26 @@ export default function TotalSumVsInterestModal({
               <div className="text-5xl">
                 {Math.round(restSummeAfter(years)).toLocaleString("de")}
               </div>
-              <div>Zinsbindung</div>
-              <div className="flex items-center gap-x-4">
-                <div className="flex rounded-l-full rounded-r-full bg-[var(--accent)]">
-                  {makeYearsArray().map(
-                    (
-                      entry: { year: number; disabled: boolean },
-                      index: number,
-                    ) => {
-                      return (
-                        <div
-                          key={entry.year}
-                          className={`${index === 0 && "rounded-l-full"} ${index === yearsArray.length - 1 && "rounded-r-full"} ${entry.disabled ? "bg-[var(--grey-accent)]" : "hover:bg-[var(--light-accent)]"} ${ years === entry.year && "font-bold" } px-5 py-3`}
-                          onClick={() => localSetYears(entry)}
-                        >
-                          {entry.year}&nbsp;Jahre
-                        </div>
-                      );
-                    },
-                  )}
-                </div>
-              </div>
             </>
           )}
+          <div>Zinsbindung</div>
+          <div className="flex items-center gap-x-4">
+            <div className="flex rounded-l-full rounded-r-full bg-[var(--accent)]/90">
+              {makeYearsArray().map(
+                (entry: { year: number; disabled: boolean }, index: number) => {
+                  return (
+                    <div
+                      key={entry.year}
+                      className={`${index === 0 && "rounded-l-full"} ${index === yearsArray.length - 1 && "rounded-r-full"} ${entry.disabled ? "bg-[var(--grey-accent)] text-stone-600" : "hover:bg-[var(--accent)]"} ${years === entry.year && "font-bold"} px-5 py-3`}
+                      onClick={() => localSetYears(entry)}
+                    >
+                      {entry.year}&nbsp;Jahre
+                    </div>
+                  );
+                },
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
