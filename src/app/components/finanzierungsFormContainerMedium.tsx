@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/drawer";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import { PanelLeftOpen, PanelRightOpen } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 type PropTypes = {
   formValues: CashRoiModel | null;
@@ -24,6 +26,29 @@ export default function FinanzierungsFormContainerMedium({
   showForm,
   setShowForm,
 }: PropTypes) {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (!showForm) return;
+    const param = "form";
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(param, "open");
+    window.history.pushState(null, "", `?${params.toString()}`);
+
+    const handlePopState = () => {
+      setShowForm(false);
+    };
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      // Optionally clean up URL
+      const cleanUrl = new URL(window.location.href);
+      cleanUrl.searchParams.delete(param);
+      window.history.replaceState(null, "", cleanUrl.toString());
+    };
+  }, [showForm]);
+
   return (
     <div
       className={`hidden md:block 2xl:hidden lg:dark:shadow-[10px_4px_20px_var(--dark-accent)]/5`}
@@ -37,7 +62,7 @@ export default function FinanzierungsFormContainerMedium({
       >
         <DrawerTrigger>
           <div className="flex items-center gap-x-4 rounded-full border border-[var(--grey-accent)] bg-[var(--background)] px-5 py-2 text-sm text-[var(--foreground)] shadow-sm transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]">
-            <PanelLeftOpen strokeWidth={"1"}/>
+            <PanelLeftOpen strokeWidth={"1"} />
             Eingabefeld öffnen
           </div>
         </DrawerTrigger>
