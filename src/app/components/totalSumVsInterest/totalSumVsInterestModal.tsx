@@ -106,7 +106,7 @@ export default function TotalSumVsInterestModal({
             paidAfter={paidAfter}
             paidInYear={paidInYear}
           />
-          <div className="hidden h-20 w-40 md:block">
+          <div className="hidden md:block">
             {paidAfter !== -1 && (
               <BarChartInterestVsTilgung
                 sumZinsen={sumZinsen}
@@ -122,7 +122,7 @@ export default function TotalSumVsInterestModal({
           ) : (
             <>
               <div className="text-xs">Restsumme nach {years} Jahren</div>
-              <div className="text-5xl text-[var(--primary)]">
+              <div className="text-5xl">
                 {Math.round(restSummeAfter(years)).toLocaleString("de")}
               </div>
               <div>Zinsbindung</div>

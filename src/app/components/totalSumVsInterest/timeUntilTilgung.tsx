@@ -23,6 +23,8 @@ export default function TimeUntilTilgung({
   kreditSumme,
   table,
 }: PropTypes) {
+
+
   const [showModal, setShowModal] = useState(false);
   const show = window.innerWidth >= 768;
   return (
@@ -74,7 +76,7 @@ export default function TimeUntilTilgung({
             paidAfter={paidAfter}
             paidInYear={paidInYear}
           />
-          <div className="hidden h-20 w-40 md:block">
+          <div className="hidden md:block">
             {paidAfter !== -1 && (
               <BarChartInterestVsTilgung
                 sumZinsen={sumZinsen}
