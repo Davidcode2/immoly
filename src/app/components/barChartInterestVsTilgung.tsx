@@ -1,3 +1,4 @@
+import { screenWidthMobile } from "app/utils/screenWidth";
 import { motion } from "motion/react";
 
 type PropTypes = {
@@ -15,7 +16,7 @@ export default function BarChartInterestVsTilgung({
     return <div />;
   }
 
-  const barWidthInPixels = 180;
+  const barWidthInPixels = screenWidthMobile() ? 140 : 180;
   const totalSum = kreditSumme + sumZinsen;
 
   const calcZinsenBarWidth = () => {
