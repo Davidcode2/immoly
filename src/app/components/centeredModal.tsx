@@ -1,20 +1,20 @@
-import { ReactNode, useRef, useState, type JSX } from "react";
+import { useSearchParams } from "next/navigation";
+import { ReactNode, useEffect, useRef, type JSX } from "react";
 import { createPortal } from "react-dom";
 
 type PropTypes = {
   children: ReactNode;
   onClose: () => void;
+  historyState?: { modalId: string; urlParam?: string }; // optional prop
 };
 
 export default function CenteredModal({
   children: children,
   onClose,
+  historyState,
 }: PropTypes): JSX.Element {
-  const [isShown, setIsShown] = useState<boolean>(false);
   const backdropRef = useRef<HTMLDivElement>(null);
-  setTimeout(() => {
-    setIsShown(true);
-  }, 100);
+  const searchParams = useSearchParams();
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (
@@ -25,11 +25,33 @@ export default function CenteredModal({
     }
   };
 
+  useEffect(() => {
+    if (historyState) {
+      const param = historyState.urlParam || "modal";
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(param, historyState.modalId);
+      window.history.pushState(null, "", `?${params.toString()}`);
+
+      const handlePopState = () => {
+        onClose();
+      };
+      window.addEventListener("popstate", handlePopState);
+
+      return () => {
+        window.removeEventListener("popstate", handlePopState);
+        // Optionally clean up URL
+        const cleanUrl = new URL(window.location.href);
+        cleanUrl.searchParams.delete(param);
+        window.history.replaceState(null, "", cleanUrl.toString());
+      };
+    }
+  }, []);
+
   return (
     <>
       {createPortal(
         <div
-          className={`fixed inset-0 z-40 backdrop-blur-sm transition-all ${isShown ? "opacity-100" : "opacity-0"}`}
+          className={`fixed inset-0 z-40 backdrop-blur-sm transition-all`}
           onClick={handleBackdropClick}
         >
           <div

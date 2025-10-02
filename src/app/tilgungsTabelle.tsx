@@ -52,10 +52,7 @@ export default function Tilgungstabelle({
     setShowSondertilgungModal(false);
   };
 
-  const handleTilgungsWechsel = async (
-    newTilgung: string,
-    year: number,
-  ) => {
+  const handleTilgungsWechsel = async (newTilgung: string, year: number) => {
     updateSonderAmountInBrowserStorage(
       "tilgungswechsel",
       String(year),
@@ -86,7 +83,10 @@ export default function Tilgungstabelle({
       className="grid h-fit justify-stretch rounded-lg text-xs xl:text-base"
     >
       {showTilgungswechselModal && (
-        <CenteredModal onClose={() => setShowTilgungswechselModal(false)}>
+        <CenteredModal
+          onClose={() => setShowTilgungswechselModal(false)}
+          historyState={{ modalId: "repayment-change" }}
+        >
           <TilgungsWechselModal
             handleSubmit={handleTilgungsWechsel}
             year={selectedEntry!.year!}
@@ -97,7 +97,9 @@ export default function Tilgungstabelle({
         </CenteredModal>
       )}
       {showSondertilgungModal && (
-        <CenteredModal onClose={() => setShowSondertilgungModal(false)}>
+        <CenteredModal onClose={() => setShowSondertilgungModal(false)}
+          historyState={{ modalId: "special-repayment" }}
+        >
           <SondertilgungModal
             handleSubmit={handleSondertilgungSubmit}
             year={selectedEntry!.year!}

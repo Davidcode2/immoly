@@ -75,7 +75,9 @@ export default function NebenkostenEntry({
   return (
     <>
       {showEditModal && (
-        <CenteredModal onClose={() => setShowEditModal(false)}>
+        <CenteredModal onClose={() => setShowEditModal(false)}
+          historyState={{ modalId: "edit-ancillary-costs" }}
+        >
           <EditNebenkostenInput
             entry={entry}
             setShowEditModal={setShowEditModal}

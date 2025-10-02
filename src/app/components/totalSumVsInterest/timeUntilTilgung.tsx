@@ -23,14 +23,15 @@ export default function TimeUntilTilgung({
   kreditSumme,
   table,
 }: PropTypes) {
-
-
   const [showModal, setShowModal] = useState(false);
   const show = window.innerWidth >= 768;
   return (
     <>
       {showModal && (
-        <CenteredModal onClose={() => setShowModal(false)}>
+        <CenteredModal
+          onClose={() => setShowModal(false)}
+          historyState={{ modalId: "sum-vs-interest" }}
+        >
           <TotalSumVsInterestModal
             sumZinsen={sumZinsen}
             totalSum={totalSum}
