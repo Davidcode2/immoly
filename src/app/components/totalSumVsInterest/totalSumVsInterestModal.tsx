@@ -90,8 +90,8 @@ export default function TotalSumVsInterestModal({
   };
 
   return (
-    <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 p-6 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl lg:p-20">
-      <div className="grid xl:grid-cols-2">
+    <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 p-6 pb-10 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl lg:p-20">
+      <div className="grid xl:grid-cols-2 gap-y-10">
         <div className="">
           <Image
             className={`${paidAfter === -1 ? "block" : "hidden"} absolute top-0 left-12 opacity-20 md:top-12 md:left-28 dark:invert`}
