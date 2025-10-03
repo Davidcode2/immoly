@@ -4,6 +4,7 @@ import AttentionIcon from "/public/images/icons/attention_flaticon.png";
 import Image from "next/image";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import { useEffect, useState } from "react";
+import CloseButton from "../closeButton";
 
 type PropTypes = {
   sumZinsen: number;
@@ -12,6 +13,7 @@ type PropTypes = {
   paidInYear: number;
   kreditSumme: number;
   show: boolean;
+  setShow: (show: boolean) => void;
   table: ArmotizationEntry[];
 };
 export default function TotalSumVsInterestModal({
@@ -21,6 +23,7 @@ export default function TotalSumVsInterestModal({
   paidInYear,
   kreditSumme,
   show,
+  setShow,
   table,
 }: PropTypes) {
   const [years, setYears] = useState(10);
@@ -39,6 +42,8 @@ export default function TotalSumVsInterestModal({
       return 0;
     }
   };
+  
+  const paidOffAfterFiveYears = table.length <= 5;
 
   useEffect(() => {
     setYears(table.length <= 10 ? 5 : 10);
@@ -91,6 +96,7 @@ export default function TotalSumVsInterestModal({
 
   return (
     <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 p-6 pb-10 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl lg:p-20">
+      <CloseButton onClick={() => setShow(false)} />
       <div className="grid xl:grid-cols-2 gap-y-10">
         <div className="">
           <Image
@@ -105,6 +111,7 @@ export default function TotalSumVsInterestModal({
             totalSum={totalSum}
             paidAfter={paidAfter}
             paidInYear={paidInYear}
+            isModal={true}
           />
           <div className="hidden w-[180px] md:block">
             {paidAfter !== -1 && (
@@ -117,25 +124,27 @@ export default function TotalSumVsInterestModal({
           </div>
         </div>
         <div className="flex flex-col gap-y-4">
-          {table.length <= 5 ? (
-            <div>kürzeste Zinsbindung wählen.</div>
+          {paidOffAfterFiveYears ? (
+            <div>Nach fünf Jahren bereits abgezahlt, daher kürzeste Zinsbindung wählen.</div>
           ) : (
             <>
-              <div className="text-xs">Restsumme nach {years} Jahren</div>
+              <div className="">Restsumme nach Ende der Zinsbindung</div>
               <div className="text-5xl">
                 {Math.round(restSummeAfter(years)).toLocaleString("de")}
               </div>
             </>
           )}
-          <div>Zinsbindung</div>
+          { !paidOffAfterFiveYears &&
+          <div>bei einer Zinsbindung von {years} Jahren</div>
+          }
           <div className="flex items-center gap-x-4">
-            <div className="flex rounded-l-full rounded-r-full bg-[var(--accent)]/90">
+            <div className="flex rounded-l-full rounded-r-full bg-[var(--secondary)]/90">
               {makeYearsArray().map(
                 (entry: { year: number; disabled: boolean }, index: number) => {
                   return (
                     <div
                       key={entry.year}
-                      className={`${index === 0 && "rounded-l-full"} ${index === yearsArray.length - 1 && "rounded-r-full"} ${entry.disabled ? "bg-[var(--grey-accent)] text-stone-600" : "hover:bg-[var(--accent)]"} ${years === entry.year && "font-bold"} px-5 py-3`}
+                      className={`${index === 0 && "rounded-l-full"} dark:text-[var(--background)] ${index === yearsArray.length - 1 && "rounded-r-full"} ${entry.disabled ? "bg-[var(--grey-accent)] text-stone-600" : "hover:bg-[var(--secondary)]"} ${years === entry.year && "font-bold"} px-5 py-3`}
                       onClick={() => localSetYears(entry)}
                     >
                       {entry.year}&nbsp;Jahre

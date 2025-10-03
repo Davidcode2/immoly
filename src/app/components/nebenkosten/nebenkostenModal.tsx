@@ -4,6 +4,7 @@ import { screenWidthMobile } from "app/utils/screenWidth";
 import NebenkostenEntry from "./nebenkostenEntry";
 import { AbsoluteNebenkostenModel } from "./nebenkostenFrontendModel";
 import BundeslandSelection from "./bundeslandSelection";
+import CloseButton from "../closeButton";
 
 type PropTypes = {
   pieChartData: { name: string; value: number }[];
@@ -35,24 +36,7 @@ export default function NebenkostenModal({
 
   return (
     <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl">
-      <button
-        className="fixed top-5 right-5 z-40 cursor-pointer transition-colors hover:text-red-400"
-        onClick={() => onClose()}
-      >
-        <svg
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
+      <CloseButton onClick={onClose} />
       <div className="grid md:grid-cols-2">
         {(!screenWidthMobile() || showMap) && (
           <BundeslandSelection
@@ -69,7 +53,7 @@ export default function NebenkostenModal({
                 activeIndex={activeIndex}
                 handleMouseEnter={handleMouseEnter}
                 handleMouseLeave={handleMouseLeave}
-                customInnerWidth={ window.innerWidth < 768 ? "80%" : "" }
+                customInnerWidth={window.innerWidth < 768 ? "80%" : ""}
               />
             </div>
           </div>

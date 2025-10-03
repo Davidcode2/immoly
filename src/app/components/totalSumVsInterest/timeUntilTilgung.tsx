@@ -23,7 +23,7 @@ export default function TimeUntilTilgung({
   kreditSumme,
   table,
 }: PropTypes) {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const show = window.innerWidth >= 768;
   return (
     <>
@@ -39,6 +39,7 @@ export default function TimeUntilTilgung({
             paidInYear={paidInYear}
             kreditSumme={kreditSumme}
             show={show}
+            setShow={setShowModal}
             table={table}
           />
         </CenteredModal>

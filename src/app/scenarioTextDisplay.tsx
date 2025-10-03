@@ -5,11 +5,13 @@ export default function ScenarioTextDisplay({
   paidInYear,
   sumZinsen,
   totalSum,
+  isModal,
 }: {
   paidAfter: number;
   paidInYear: number;
   sumZinsen: number;
   totalSum: number;
+  isModal?: boolean;
 }) {
   return (
     <>
@@ -20,7 +22,7 @@ export default function ScenarioTextDisplay({
           <div className="text-[var(--accent)]">Das wird nichts</div>
         ) : (
           <div className="flex-col md:flex md:gap-1">
-            <div className="text-xs">Jahre bis Volltilgung in {paidInYear}</div>
+            <div className={`${!isModal && "text-xs" }`}>Jahre bis Volltilgung in {paidInYear}</div>
             <span className="text-8xl text-[var(--primary)] md:text-7xl">
               {paidAfter}
             </span>
