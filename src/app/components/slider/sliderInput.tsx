@@ -35,7 +35,7 @@ const SliderInput: React.FC<SliderInputProps> = ({
     <div>
       <label
         htmlFor={htmlFor}
-        className={`pb-4 block text-[var(--light-accent)] dark:text-[var(--ultralight-accent)] 2xl:dark:text-[var(--light-accent)] uppercase`}
+        className={`pb-4 block max-sm:text-[var(--foreground)] text-[var(--light-accent)] dark:text-[var(--ultralight-accent)] 2xl:dark:text-[var(--light-accent)] uppercase`}
       >
         {label}
       </label>

@@ -114,7 +114,8 @@ html {
   --neutral-accent: hsl(200, 53%, 42%);
   --strong-accent: hsl(200, 85%, 41%);
   --ultralight-accent: #f0f8ff;
-  --grey-accent: hsl(172, 8%, 60%);
+  --grey-accent: hsl(200, 8%, 60%);
+  --muted-accent: hsl(200, 15%, 55%);
   --primary: #99ccff;
   --secondary: #cce6ff;
   --success: hsl(120, 40%, 60%);
@@ -131,7 +132,8 @@ html {
   --neutral-accent: hsl(200, 53%, 42%);
   --strong-accent: hsl(200, 85%, 41%);
   --ultralight-accent: #f0f8ff;
-  --grey-accent: hsl(172, 8%, 60%);
+  --grey-accent: hsl(200, 8%, 60%);
+  --muted-accent: hsl(200, 15%, 55%);
   --primary: #99ccff;
   --secondary: #cce6ff;
   --success: hsl(120, 40%, 60%);
@@ -152,7 +154,8 @@ html {
   --neutral-accent: hsl(30, 53%, 42%);
   --strong-accent: hsl(30, 85%, 41%);
   --ultralight-accent: #fffaf0;
-  --grey-accent: hsl(172, 8%, 60%);
+  --grey-accent: hsl(30, 8%, 60%);
+  --muted-accent: hsl(30, 15%, 55%);
   --primary: #deb887;
   --secondary: #f5deb3;
   --success: hsl(120, 40%, 60%);
@@ -169,7 +172,8 @@ html {
   --light-accent: #d2b48c;
   --neutral-accent: hsl(30, 53%, 42%);
   --strong-accent: hsl(30, 85%, 41%);
-  --grey-accent: hsl(172, 8%, 60%);
+  --grey-accent: hsl(30, 8%, 60%);
+  --muted-accent: hsl(30, 15%, 55%);
   --ultralight-accent: #fffaf0;
   --primary: #deb887;
   --secondary: #f5deb3;

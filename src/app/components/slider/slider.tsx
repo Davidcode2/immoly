@@ -53,7 +53,7 @@ const Slider: React.FC<SliderProps> = ({
         max={max}
         step={step}
         onValueChange={(vals) => localChange(vals[0])}
-        className="flex-1"
+        className="flex-1 bg-[--dark-accent]"
       />
 
       {/* Increment button (mobile only) */}
