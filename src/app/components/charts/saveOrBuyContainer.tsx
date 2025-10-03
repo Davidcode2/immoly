@@ -22,7 +22,7 @@ export default function SaveOrBuyContainer({
     <div>
       {showModal && (
         <CenteredModal onClose={() => setShowModal(false)}>
-          <SaveOrBuyModal table={table} input={input} setInput={setInput} />
+          <SaveOrBuyModal table={table} input={input} setInput={setInput} setShowModal={setShowModal} />
         </CenteredModal>
       )}
       <div className="group cursor-pointer" onClick={() => setShowModal(true)}>
