@@ -96,7 +96,7 @@ export default function NebenkostenEntry({
             setShowEditModal(true);
           }
         }}
-        className={`group flex cursor-pointer items-center justify-between rounded-lg transition-all ${activeIndex === index
+        className={`group flex gap-x-6 cursor-pointer items-center justify-between rounded-lg transition-all ${activeIndex === index
             ? "text-[var(--primary)] opacity-100"
             : "opacity-90"
           }`}

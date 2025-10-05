@@ -56,6 +56,14 @@ export default function NebenkostenModal({
                 customInnerWidth={window.innerWidth < 768 ? "80%" : ""}
               />
             </div>
+            <div className="relative top-20">
+              <div className="flex w-full flex-col text-center justify-center md:hidden">
+                Summe
+                <p className="text-2xl dark:text-[var(--ultralight-accent)]">
+                  € {sumNebenkosten.toLocaleString("de-DE")}
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="space-y-4 px-6 pb-6">
@@ -75,7 +83,7 @@ export default function NebenkostenModal({
               ),
             )}
 
-            <div className="mt-6 border-t border-slate-500/20 pt-4">
+            <div className="max-md:hidden mt-6 border-t border-slate-500/20 pt-4">
               <div className="flex items-center justify-between gap-x-8">
                 <h2 className="text-lg">Summe Nebenkosten</h2>
                 <p className="w-32 text-end text-2xl dark:text-[var(--ultralight-accent)]">
