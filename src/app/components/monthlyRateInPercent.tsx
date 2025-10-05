@@ -32,20 +32,23 @@ export default function MonthlyRateInPercent({
     const zins = (Number(interestRate) * kreditSumme) / 100;
     const tilgung = yearlyRate - zins;
     const monthlyRateInPercent = (100 / kreditSumme) * tilgung;
-    return monthlyRateInPercent;
+    return Math.round(monthlyRateInPercent * 100) / 100;
   };
 
   const calcAbsoluteMonthlyRateFromPercentage = (value: string) => {
     const kreditSumme =
       Number(principalValue) + nebenkosten - Number(downPayment);
     const parsedValue = Number(value.replace(",", "."));
-    console.log(parsedValue);
     if (isNaN(parsedValue)) {
       return 0;
     }
-    const yearlyRate = (parsedValue / 100) * kreditSumme;
-    const absoluteMonthlyRate = yearlyRate / 12;
-    return absoluteMonthlyRate;
+    // Calculate tilgung from percentage
+    const tilgung = (parsedValue / 100) * kreditSumme;
+    // Calculate yearly interest
+    const zins = (Number(interestRate) * kreditSumme) / 100;
+    // Calculate monthly rate
+    const monthlyRate = (tilgung + zins) / 12;
+    return monthlyRate.toFixed(2);
   };
 
   return (
