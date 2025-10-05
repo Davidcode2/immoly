@@ -35,3 +35,8 @@ export const useMobileFormOpenStore = create<BooleanState>((set) => ({
   value: false,
   updateValue: (newValue: boolean) => set({ value: newValue }),
 }))
+
+export const useNebenkostenActiveStore = create<BooleanState>((set) => ({
+  value: true,
+  updateValue: (newValue: boolean) => set({ value: newValue }),
+}))

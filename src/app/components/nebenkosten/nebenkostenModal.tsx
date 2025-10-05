@@ -5,6 +5,9 @@ import NebenkostenEntry from "./nebenkostenEntry";
 import { AbsoluteNebenkostenModel } from "./nebenkostenFrontendModel";
 import BundeslandSelection from "./bundeslandSelection";
 import CloseButton from "../closeButton";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { useNebenkostenActiveStore } from "app/store";
 
 type PropTypes = {
   pieChartData: { name: string; value: number }[];
@@ -29,6 +32,8 @@ export default function NebenkostenModal({
   onClose,
 }: PropTypes) {
   const [showMap, setShowMap] = useState<boolean>(false);
+  const nebenkostenActive = useNebenkostenActiveStore().value;
+  const setNebenkostenActive = useNebenkostenActiveStore().updateValue;
 
   useEffect(() => {
     setBundesland(bundesland);
@@ -57,11 +62,24 @@ export default function NebenkostenModal({
               />
             </div>
             <div className="relative top-20">
-              <div className="flex w-full flex-col text-center justify-center md:hidden">
-                Summe
+              <div className="flex w-full flex-col justify-center text-center md:hidden">
+                <h5>Summe</h5>
                 <p className="text-2xl dark:text-[var(--ultralight-accent)]">
                   € {sumNebenkosten.toLocaleString("de-DE")}
                 </p>
+                <div className="flex items-center justify-center space-x-2 pt-2">
+                  <Label htmlFor="enableNebenkosten" className="text-xs">
+                    Nebenkosten aktivieren
+                  </Label>
+                  <Checkbox
+                    id="enableNebenkosten"
+                    className=""
+                    checked={nebenkostenActive}
+                    onCheckedChange={(value) =>
+                      setNebenkostenActive(value as boolean)
+                    }
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -83,7 +101,7 @@ export default function NebenkostenModal({
               ),
             )}
 
-            <div className="max-md:hidden mt-6 border-t border-slate-500/20 pt-4">
+            <div className="mt-6 border-t border-slate-500/20 pt-4 max-md:hidden">
               <div className="flex items-center justify-between gap-x-8">
                 <h2 className="text-lg">Summe Nebenkosten</h2>
                 <p className="w-32 text-end text-2xl dark:text-[var(--ultralight-accent)]">

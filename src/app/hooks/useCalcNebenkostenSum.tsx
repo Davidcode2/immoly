@@ -3,10 +3,12 @@ import {
   useBundeslandStore,
   useGrundbuchkostenPercentageStore,
   useMaklergebuehrPercentageStore,
+  useNebenkostenActiveStore,
   useNotarkostenPercentageStore,
 } from "app/store";
 
 export function useCalcNebenkostenSum(principal: number) {
+  const nebenkostenActive = useNebenkostenActiveStore().value;
   const bundesland = useBundeslandStore((state) => state.value);
   const maklergebuehrPercentage = Number(
     useMaklergebuehrPercentageStore((s) => s.value).replace(",", "."),
@@ -17,6 +19,8 @@ export function useCalcNebenkostenSum(principal: number) {
   const grundbuchkostenPercentage = Number(
     useGrundbuchkostenPercentageStore((s) => s.value).replace(",", "."),
   );
+
+  if (!nebenkostenActive) return 0;
 
   return calcSummeNebenkosten(
     principal,

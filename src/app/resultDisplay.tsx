@@ -18,6 +18,7 @@ import {
   useBundeslandStore,
   useGrundbuchkostenPercentageStore,
   useMaklergebuehrPercentageStore,
+  useNebenkostenActiveStore,
   useNotarkostenPercentageStore,
 } from "app/store";
 import SloganHero from "./components/hero/sloganHero";
@@ -30,6 +31,7 @@ import { DEFAULT_CALCULATION } from "./constants";
 import { getGrundsteuer } from "./services/nebenkostenGrundsteuer";
 import { debounce } from "./utils/debounce";
 import FinanzierungsFormContainerMedium from "./components/finanzierungsFormContainerMedium";
+import { useCalcNebenkostenSum } from "./hooks/useCalcNebenkostenSum";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -40,6 +42,7 @@ export default function ResultDisplay() {
   const [tilgungswechselCache, setTilgungswechselCache] = useState<
     Tilgungswechsel[]
   >([]);
+  const nebenkostenActive = useNebenkostenActiveStore().value;
 
   const searchParams = useSearchParams();
   const calculationId = searchParams.get("calculationId");
@@ -93,6 +96,9 @@ export default function ResultDisplay() {
   );
 
   const calcSummeNebenkosten = (principal: number, bundesland?: string) => {
+    if (!nebenkostenActive) {
+      return 0;
+    }
     bundesland = bundesland ? bundesland : bundeslandState;
     const absoluteMaklergebuehrFromPercentage = Math.round(
       (maklergebuehrPercentage / 100) * principal,
@@ -135,6 +141,8 @@ export default function ResultDisplay() {
     [],
   );
 
+  useCalcNebenkostenSum(principal.current);
+
   useEffect(() => {
     async function loadData() {
       if (!input) return;
@@ -159,7 +167,7 @@ export default function ResultDisplay() {
       return; // skip recalculation caused by URL change
     }
     loadData();
-  }, [input]);
+  }, [input, nebenkostenActive]);
 
   useEffect(() => {
     if (!input) return;
