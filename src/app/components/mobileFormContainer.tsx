@@ -11,6 +11,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { useMobileFormOpenStore } from "app/store";
 
 type PropTypes = {
   input: CashRoiModel | null;
@@ -18,10 +19,15 @@ type PropTypes = {
 };
 
 export default function MobileFormContainer({ input, setInput }: PropTypes) {
+  const mobileFormState = useMobileFormOpenStore();
+  const showMobileForm = mobileFormState.value;
+  const setShowMobileForm = mobileFormState.updateValue;
 
   return (
     <div className="fixed bottom-10 left-1/2 z-30 -translate-x-1/2">
       <Drawer
+        open={showMobileForm}
+        onOpenChange={setShowMobileForm}
         modal={true}
       >
         <DrawerTrigger>

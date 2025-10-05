@@ -1,4 +1,3 @@
-import IconsHeader from "../iconsHeader";
 import CursorSwarm from "./cursor-swarm";
 
 export default function Hero() {
@@ -9,9 +8,6 @@ export default function Hero() {
           <CursorSwarm />
         </div>
         <h1 className="text-6xl font-extrabold">Immoly</h1>
-        <div className="block lg:block justify-center p-2">
-          <IconsHeader />
-        </div>
       </div>
     </div>
   );

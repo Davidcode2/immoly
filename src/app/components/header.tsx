@@ -12,6 +12,7 @@ import {
   DropdownMenuRadioGroup,
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
+import IconsHeader from "./iconsHeader";
 
 export default function Header() {
   const [position, setPosition] = useState("bottom");
@@ -72,36 +73,45 @@ export default function Header() {
   ];
 
   return (
-    <div className="mx-auto flex justify-center py-10 text-center">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="rounded-full">
-            <div className="px-5">{brushIcon}</div>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 text-[var(--foreground)] bg-[var(--background)]">
-          <DropdownMenuRadioGroup
-            value={position}
-            onValueChange={onValueChange}
-          >
-            {themes.map((theme) => (
-              <DropdownMenuRadioItem
-                key={theme.value}
-                value={theme.value}
-                className="capitalize"
+    <div>
+      <div className="grid md:grid-cols-3 items-center py-10 text-center">
+        <div className="col-start-2 flex justify-center text-center max-md:hidden">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="rounded-full">
+                <div className="px-5">{brushIcon}</div>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56 bg-[var(--background)] text-[var(--foreground)]">
+              <DropdownMenuRadioGroup
+                value={position}
+                onValueChange={onValueChange}
               >
-                {theme.value.replace("-light", "").replace("-", " ")}
-                {theme.color && (
-                  <span
-                    className="float-right rounded-full p-1"
-                    style={{ color: theme.color }}
-                  >{brushIconCurvy}</span>
-                )}
-              </DropdownMenuRadioItem>
-            ))}
-          </DropdownMenuRadioGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
+                {themes.map((theme) => (
+                  <DropdownMenuRadioItem
+                    key={theme.value}
+                    value={theme.value}
+                    className="capitalize"
+                  >
+                    {theme.value.replace("-light", "").replace("-", " ")}
+                    {theme.color && (
+                      <span
+                        className="float-right rounded-full p-1"
+                        style={{ color: theme.color }}
+                      >
+                        {brushIconCurvy}
+                      </span>
+                    )}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        <div className="flex ml-auto mr-10">
+          <IconsHeader />
+        </div>
+      </div>
     </div>
   );
 }

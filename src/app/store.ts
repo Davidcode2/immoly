@@ -6,6 +6,11 @@ interface StringState {
   updateValue: (newValue: string) => void;
 }
 
+interface BooleanState {
+  value: boolean
+  updateValue: (newValue: boolean) => void;
+}
+
 export const useBundeslandStore = create<StringState>((set) => ({
   value: DEFAULT_BUNDESLAND,
   updateValue: (newValue: string) => set({ value: newValue }),
@@ -24,4 +29,9 @@ export const useGrundbuchkostenPercentageStore = create<StringState>((set) => ({
 export const useNotarkostenPercentageStore = create<StringState>((set) => ({
   value: "2",
   updateValue: (newValue: string) => set({ value: newValue }),
+}))
+
+export const useMobileFormOpenStore = create<BooleanState>((set) => ({
+  value: false,
+  updateValue: (newValue: boolean) => set({ value: newValue }),
 }))
