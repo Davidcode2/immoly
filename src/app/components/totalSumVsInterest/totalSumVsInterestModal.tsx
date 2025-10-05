@@ -144,7 +144,7 @@ export default function TotalSumVsInterestModal({
                   return (
                     <div
                       key={entry.year}
-                      className={`${index === 0 && "rounded-l-full"} dark:text-[var(--background)] ${index === yearsArray.length - 1 && "rounded-r-full"} ${entry.disabled ? "bg-[var(--grey-accent)] text-stone-600" : "hover:bg-[var(--secondary)]"} ${years === entry.year && "font-bold"} px-5 py-3`}
+                      className={`${index === 0 && "rounded-l-full"} dark:text-[var(--background)] ${index === yearsArray.length - 1 && "rounded-r-full"} ${entry.disabled ? "bg-[var(--grey-accent)] text-stone-600" : "hover:bg-[var(--secondary)]"} ${years === entry.year && "font-bold"} px-5 py-3 cursor-pointer`}
                       onClick={() => localSetYears(entry)}
                     >
                       {entry.year}&nbsp;Jahre
