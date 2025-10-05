@@ -31,8 +31,8 @@ export default function MobileFormContainer({ input, setInput }: PropTypes) {
         modal={true}
       >
         <DrawerTrigger>
-          <div className="sticky bottom-0 rounded-full border border-[var(--grey-accent)] bg-[var(--background)] px-5 py-2 shadow transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]">
-            Eingabefeld öffnen
+          <div className="sticky bottom-0 rounded-full border border-[var(--grey-accent)] bg-[var(--primary)] px-5 py-2 dark:text-[var(--background)] shadow transition-all hover:bg-[var(--secondary)]">
+            Berechnung anpassen
           </div>
         </DrawerTrigger>
         <DrawerOverlay className="fixed inset-0" />

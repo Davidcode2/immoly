@@ -61,9 +61,9 @@ export default function FinanzierungsFormContainerMedium({
         dismissible={false}
       >
         <DrawerTrigger>
-          <div className="flex items-center gap-x-4 rounded-full border border-[var(--grey-accent)] bg-[var(--background)] px-5 py-2 text-sm text-[var(--foreground)] shadow-sm transition-all hover:bg-[var(--primary)] hover:text-[var(--background)]">
+          <div className="hover:bg-[var(--secondary) flex items-center gap-x-4 rounded-full border border-[var(--grey-accent)] bg-[var(--primary)] px-5 py-2 text-sm dark:text-[var(--background)] shadow-sm transition-all">
             <PanelLeftOpen strokeWidth={"1"} />
-            Eingabefeld öffnen
+            Berechnung anpassen
           </div>
         </DrawerTrigger>
         <DrawerOverlay className="fixed inset-0 bg-black/80" />
