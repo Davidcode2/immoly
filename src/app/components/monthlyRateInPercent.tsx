@@ -1,4 +1,6 @@
 import { useCalcNebenkostenSum } from "app/hooks/useCalcNebenkostenSum";
+import { useState, useEffect } from "react";
+
 export default function MonthlyRateInPercent({
   principalValue,
   downPayment,
@@ -12,18 +14,15 @@ export default function MonthlyRateInPercent({
   monthlyRate: string;
   handleInputChange: (field: string, value: number) => void;
 }) {
-  const handleCurrentMonthlyRatePercentageChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const value = e.target.value;
-    /* prevent user from entering values larger than two digits before the comma */
-    console.log(value);
-    const absoluteValue = calcAbsoluteMonthlyRateFromPercentage(value);
-    //setMonthlyRateInPercentRef(value)
-    handleInputChange("monthly_rate", absoluteValue);
-  };
-
   const nebenkosten = useCalcNebenkostenSum(Number(principalValue));
+
+  // Local state for input value
+  const [inputValue, setInputValue] = useState<string>("");
+
+  // Update input value when monthlyRate changes externally
+  useEffect(() => {
+    setInputValue(monthlyRateInPercent().toString());
+  }, [principalValue, downPayment, interestRate, monthlyRate, nebenkosten]);
 
   const monthlyRateInPercent = () => {
     const kreditSumme =
@@ -48,13 +47,26 @@ export default function MonthlyRateInPercent({
     const zins = (Number(interestRate) * kreditSumme) / 100;
     // Calculate monthly rate
     const monthlyRate = (tilgung + zins) / 12;
-    return monthlyRate.toFixed(2);
+    return Number(monthlyRate.toFixed());
+  };
+
+  const handleCurrentMonthlyRatePercentageChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const value = e.target.value;
+    setInputValue(value);
+    const absoluteValue = calcAbsoluteMonthlyRateFromPercentage(value);
+    handleInputChange("monthly_rate", absoluteValue);
+  };
+
+  const handleBlur = () => {
+    setInputValue(monthlyRateInPercent().toString());
   };
 
   return (
     <>
       <input
-        value={monthlyRateInPercent()}
+        value={inputValue}
         type="text"
         inputMode="decimal"
         maxLength={5}
@@ -62,6 +74,7 @@ export default function MonthlyRateInPercent({
         min={0}
         className="w-36 border-b border-[var(--dark-accent)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--dark-accent)]/60 focus:outline-none md:text-2xl"
         onChange={handleCurrentMonthlyRatePercentageChange}
+        onBlur={handleBlur}
       />
       <div>{monthlyRateInPercent()}</div>
       <div className="border-b border-stone-700 bg-transparent pb-1 text-xl text-neutral-500 transition-colors duration-200 focus:border-slate-500 focus:outline-none md:w-36 md:text-base dark:text-[var(--ultralight-accent)]"></div>

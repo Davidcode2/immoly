@@ -134,14 +134,12 @@ export default function FinanzierungsForm({
               htmlFor={"monthlyRate"}
               handleChange={handleInputChange}
             >
-              <MonthlyRateInPercent 
-              principalValue={String(principalValue)}
-              monthlyRate={String(monthlyRate)}
-              downPayment={String(downPayment)}
-              interestRate={String(interestRate)}
-              handleInputChange={handleInputChange}
-
-
+              <MonthlyRateInPercent
+                principalValue={String(principalValue)}
+                monthlyRate={String(monthlyRate)}
+                downPayment={String(downPayment)}
+                interestRate={String(interestRate)}
+                handleInputChange={handleInputChange}
               />
             </SliderInput>
             <SliderInput
