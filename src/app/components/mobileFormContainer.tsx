@@ -31,7 +31,7 @@ export default function MobileFormContainer({ input, setInput }: PropTypes) {
         modal={true}
       >
         <DrawerTrigger>
-          <div className="sticky bottom-0 rounded-full border border-[var(--grey-accent)] bg-[var(--primary)] px-5 py-2 dark:text-[var(--background)] shadow transition-all hover:bg-[var(--secondary)]">
+          <div className="sticky bottom-0 rounded-full border border-[var(--grey-accent)] bg-[var(--primary)] px-5 py-2 dark:text-[var(--background)] text-sm shadow transition-all hover:bg-[var(--secondary)]">
             Berechnung anpassen
           </div>
         </DrawerTrigger>
