@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   useGrundbuchkostenPercentageStore,
   useMaklergebuehrPercentageStore,
+  useNebenkostenActiveStore,
   useNotarkostenPercentageStore,
 } from "app/store";
 import { AbsoluteNebenkostenModel } from "./nebenkostenFrontendModel";
@@ -30,6 +31,7 @@ export default function NebenkostenEntry({
   principal,
 }: PropTypes) {
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const nebenkostenActive = useNebenkostenActiveStore().value;
 
   const maklergebuehrPercentage = useMaklergebuehrPercentageStore(
     (state) => state.value,
@@ -109,7 +111,7 @@ export default function NebenkostenEntry({
             }}
           />
           <div>
-            <div className="text-base">{entry.name}</div>
+            <div className={`${!nebenkostenActive && "line-through text-[var(--grey-accent)]" } text-base`}>{entry.name}</div>
             {entry.name === "Grunderwerbsteuer" && (
               <button
                 className="w-fit rounded-xl border border-[var(--dark-accent)] p-1 px-2 text-xs hover:bg-[var(--dark-accent)] hover:text-[var(--secondary)]"
@@ -120,7 +122,7 @@ export default function NebenkostenEntry({
           </div>
         </div>
         <div className="flex flex-col items-end">
-          <div className="text-xl md:text-lg">
+          <div className={`${!nebenkostenActive && "line-through text-[var(--grey-accent)]" } text-xl md:text-lg`}>
             €{entry.value.toLocaleString("de")}
           </div>
           <div className="w-fit rounded-xl bg-[var(--dark-accent)] p-1 px-2 text-xs text-[var(--secondary)]">

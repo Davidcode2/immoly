@@ -1,3 +1,5 @@
+import { useNebenkostenActiveStore } from "app/store";
+
 type PropTypes = {
   data: { name: string; value: number }[];
   activeIndex: number | null;
@@ -12,18 +14,19 @@ export default function NebenkostenGrid({
   handleMouseLeave,
   openModal
 }: PropTypes) {
+  const nebenkostenActive = useNebenkostenActiveStore().value;
   return (
-    <div 
-    onClick={() => openModal(true)}
-    className="order-first hidden h-20 w-full flex-col gap-12 pb-4 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
+    <div
+      onClick={() => openModal(true)}
+      className="order-first hidden h-20 w-full flex-col gap-12 pb-4 md:grid md:h-fit md:grid-cols-2 md:gap-2 md:p-0">
       {data.map((entry, index) => (
         <div
           key={entry.name}
           onMouseEnter={() => handleMouseEnter(index)}
           onMouseLeave={handleMouseLeave}
           className={`flex cursor-pointer flex-col transition-opacity ${activeIndex === index
-              ? "text-[var(--primary)] opacity-100"
-              : "opacity-90"
+            ? "text-[var(--primary)] opacity-100"
+            : "opacity-90"
             }`}
         >
           <div className="flex items-center">
@@ -37,7 +40,7 @@ export default function NebenkostenGrid({
               {entry.name}:
             </div>
           </div>
-          <div className="text-2xl md:text-lg">
+          <div className={`${!nebenkostenActive && "line-through text-[var(--grey-accent)]"} text-2xl md:text-lg`}>
             €{entry.value.toLocaleString("de")}
           </div>
         </div>

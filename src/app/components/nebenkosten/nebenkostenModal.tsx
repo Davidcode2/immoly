@@ -8,6 +8,8 @@ import CloseButton from "../closeButton";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useNebenkostenActiveStore } from "app/store";
+import AttentionIcon from "/public/images/icons/attention_flaticon.png";
+import Image from "next/image";
 
 type PropTypes = {
   pieChartData: { name: string; value: number }[];
@@ -68,7 +70,10 @@ export default function NebenkostenModal({
                   € {sumNebenkosten.toLocaleString("de-DE")}
                 </p>
                 <div className="flex items-center justify-center space-x-2 pt-2">
-                  <Label htmlFor="enableNebenkosten" className="text-xs">
+                  <Label
+                    htmlFor="enableNebenkosten"
+                    className="text-xs font-normal"
+                  >
                     Nebenkosten aktivieren
                   </Label>
                   <Checkbox
@@ -103,10 +108,37 @@ export default function NebenkostenModal({
 
             <div className="mt-6 border-t border-slate-500/20 pt-4 max-md:hidden">
               <div className="flex items-center justify-between gap-x-8">
-                <h2 className="text-lg">Summe Nebenkosten</h2>
+                <h2
+                  className={`${!nebenkostenActive && "line-through"} text-lg`}
+                >
+                  Summe Nebenkosten
+                </h2>
                 <p className="w-32 text-end text-2xl dark:text-[var(--ultralight-accent)]">
                   €{sumNebenkosten.toLocaleString("de-DE")}
                 </p>
+              </div>
+              <div className="mt-2 flex gap-x-4">
+                <Label
+                  htmlFor="enableNebenkosten"
+                  className="text-xs font-normal"
+                >
+                  <Image
+                    className={`${!nebenkostenActive ? "block" : "hidden"}`}
+                    src="/images/icons/icons8-warnung-emoji-48.png"
+                    alt="yellow warning icon with exclamation point"
+                    width={16}
+                    height={16}
+                  />
+                  Nebenkosten aktivieren
+                </Label>
+                <Checkbox
+                  id="enableNebenkosten"
+                  className=""
+                  checked={nebenkostenActive}
+                  onCheckedChange={(value) =>
+                    setNebenkostenActive(value as boolean)
+                  }
+                />
               </div>
             </div>
           </div>
