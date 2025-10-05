@@ -4,11 +4,12 @@ import CashRoiModel from "app/lib/models/cashRoiModel";
 import SliderInput from "app/components/slider/sliderInput";
 import { useRouter, useSearchParams } from "next/navigation";
 import { calculationsLocalStorageSetter } from "app/services/calculationsLocalStorageSetter";
-import { useBundeslandStore, useMaklergebuehrPercentageStore } from "app/store";
+import { useBundeslandStore, useMaklergebuehrPercentageStore, useMobileFormOpenStore } from "app/store";
 import NebenKostenModel from "app/lib/models/nebenkostenModel";
 import { transferSonderAmounts } from "app/services/sonderAmountBrowserUpdater";
 import { toast } from "sonner";
 import MonthlyRateInPercent from "../monthlyRateInPercent";
+import { screenWidthMobile } from "app/utils/screenWidth";
 
 export default function FinanzierungsForm({
   values,
@@ -28,6 +29,7 @@ export default function FinanzierungsForm({
   const maklergebuehrPercentage =
     useMaklergebuehrPercentageStore.getState().value;
   const bundesland = useBundeslandStore.getState().value;
+  const setMobileFormOpenState = useMobileFormOpenStore().updateValue;
 
   const handleInputChange = (name: string, value: number) => {
     switch (name) {
@@ -106,6 +108,9 @@ export default function FinanzierungsForm({
     }
     transferSonderAmounts(uuid);
     toast.success("Szenario gespeichert");
+    if (screenWidthMobile()) {
+      setMobileFormOpenState(false);
+    }
   };
 
   return (
