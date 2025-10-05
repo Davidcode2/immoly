@@ -7,8 +7,8 @@ import { calculationsLocalStorageSetter } from "app/services/calculationsLocalSt
 import { useBundeslandStore, useMaklergebuehrPercentageStore } from "app/store";
 import NebenKostenModel from "app/lib/models/nebenkostenModel";
 import { transferSonderAmounts } from "app/services/sonderAmountBrowserUpdater";
-import { useCalcNebenkostenSum } from "app/hooks/useCalcNebenkostenSum";
-import { toast } from "sonner"
+import { toast } from "sonner";
+import MonthlyRateInPercent from "../monthlyRateInPercent";
 
 export default function FinanzierungsForm({
   values,
@@ -28,18 +28,6 @@ export default function FinanzierungsForm({
   const maklergebuehrPercentage =
     useMaklergebuehrPercentageStore.getState().value;
   const bundesland = useBundeslandStore.getState().value;
-
-  const nebenkosten = useCalcNebenkostenSum(Number(principalValue));
-
-  const monthlyRateInPercent = () => {
-    const kreditSumme =
-      Number(principalValue) + nebenkosten - Number(downPayment);
-    const yearlyRate = Number(monthlyRate) * 12;
-    const zins = (Number(interestRate) * kreditSumme) / 100;
-    const tilgung = yearlyRate - zins;
-    const monthlyRateInPercent = (100 / kreditSumme) * tilgung;
-    return monthlyRateInPercent.toFixed(2) + " %";
-  };
 
   const handleInputChange = (name: string, value: number) => {
     switch (name) {
@@ -146,9 +134,15 @@ export default function FinanzierungsForm({
               htmlFor={"monthlyRate"}
               handleChange={handleInputChange}
             >
-              <div className="border-b border-stone-700 bg-transparent pb-1 text-xl text-neutral-500 transition-colors duration-200 focus:border-slate-500 focus:outline-none md:w-36 md:text-base dark:text-[var(--ultralight-accent)]">
-                {monthlyRateInPercent()}
-              </div>
+              <MonthlyRateInPercent 
+              principalValue={String(principalValue)}
+              monthlyRate={String(monthlyRate)}
+              downPayment={String(downPayment)}
+              interestRate={String(interestRate)}
+              handleInputChange={handleInputChange}
+
+
+              />
             </SliderInput>
             <SliderInput
               min={0.1}
@@ -172,10 +166,10 @@ export default function FinanzierungsForm({
             ></SliderInput>
           </div>
         </div>
-        <div className="flex justify-center w-full mx-auto">
+        <div className="mx-auto flex w-full justify-center">
           <button
             type="submit"
-            className="mt-15 cursor-pointer rounded-full dark:bg-[var(--accent)]/50 bg-[var(--primary)]/90 px-4 py-2 text-[var(--foreground)] shadow backdrop-blur-md transition-colors duration-200 dark:hover:bg-[var(--accent)]/80 hover:bg-[var(--primary)] w-full md:w-fit 2xl:w-full"
+            className="mt-15 w-full cursor-pointer rounded-full bg-[var(--primary)]/90 px-4 py-2 text-[var(--foreground)] shadow backdrop-blur-md transition-colors duration-200 hover:bg-[var(--primary)] md:w-fit 2xl:w-full dark:bg-[var(--accent)]/50 dark:hover:bg-[var(--accent)]/80"
           >
             Berechnung speichern
           </button>
