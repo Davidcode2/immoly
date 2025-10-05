@@ -62,7 +62,7 @@ export default function NebenkostenModal({
                 customInnerWidth={window.innerWidth < 768 ? "80%" : ""}
               />
             </div>
-            <div className="relative top-20">
+            <div className="relative top-18">
               <div className="flex w-full flex-col justify-center text-center md:hidden">
                 <h5>Summe</h5>
                 <p className="text-2xl dark:text-[var(--ultralight-accent)]">
