@@ -90,7 +90,11 @@ export default function NebenkostenEntry({
         onMouseEnter={() => handleMouseEnter(index)}
         onMouseLeave={handleMouseLeave}
         onClick={() => {
-          if (entry.name !== "Grunderwerbsteuer") setShowEditModal(true);
+          if (entry.name === "Grunderwerbsteuer") {
+            setShowMap(true);
+          } else {
+            setShowEditModal(true);
+          }
         }}
         className={`group flex cursor-pointer items-center justify-between rounded-lg transition-all ${activeIndex === index
             ? "text-[var(--primary)] opacity-100"
@@ -109,7 +113,6 @@ export default function NebenkostenEntry({
             {entry.name === "Grunderwerbsteuer" && (
               <button
                 className="w-fit rounded-xl border border-[var(--dark-accent)] p-1 px-2 text-xs hover:bg-[var(--dark-accent)] hover:text-[var(--secondary)]"
-                onClick={() => setShowMap(true)}
               >
                 {bundesland}
               </button>
