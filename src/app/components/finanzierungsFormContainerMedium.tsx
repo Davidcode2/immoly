@@ -78,7 +78,7 @@ export default function FinanzierungsFormContainerMedium({
             </div>
           </DrawerHeader>
           <div className="overflow-y-auto px-4">
-            <div className="mt-10 justify-center">
+            <div className="mt-10 mb-14 justify-center">
               <Hero />
             </div>
             <button
