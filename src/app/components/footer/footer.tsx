@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
+import ColorSwitcher from "../colorSwitcher";
 export default function Footer() {
   return (
-    <div className="sm:px-24 grid gap-y-8 bg-[var(--secondary)] p-8 dark:bg-[var(--background)]">
+    <div className="grid gap-y-8 bg-[var(--secondary)] p-8 sm:px-24 dark:bg-[var(--background)]">
       <div className="flex gap-2">
         <a href="https://github.com/davidcode2">
           <svg
@@ -63,7 +66,10 @@ export default function Footer() {
           House icon created by Rahman Haryanto - Flaticon
         </a>
       </div>
-      <div className="text-xs items-center flex gap-x-2 text-[var(--dark-accent)]/50 dark:text-[var(--foreground)]">
+      <div className="md:hidden">
+        <ColorSwitcher />
+      </div>
+      <div className="flex items-center gap-x-2 text-xs text-[var(--dark-accent)]/50 dark:text-[var(--foreground)]">
         Gebaut auf der{" "}
         <Image
           src="/images/icons/icons8-couch-85.png"

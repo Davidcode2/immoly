@@ -8,7 +8,6 @@ import CloseButton from "../closeButton";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useNebenkostenActiveStore } from "app/store";
-import AttentionIcon from "/public/images/icons/attention_flaticon.png";
 import Image from "next/image";
 
 type PropTypes = {
