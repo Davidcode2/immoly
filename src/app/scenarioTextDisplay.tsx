@@ -22,7 +22,7 @@ export default function ScenarioTextDisplay({
           <div className="text-[var(--accent)]">Das wird nichts</div>
         ) : (
           <div className="flex-col md:flex md:gap-1">
-            <div className={`${!isModal && "text-xs" }`}>Jahre bis Volltilgung in {paidInYear}</div>
+            <div className={`${!isModal && "text-xs" } max-sm:max-w-[90%]`}>Jahre bis Volltilgung in&nbsp;{paidInYear}</div>
             <span className="text-8xl text-[var(--primary)] md:text-7xl">
               {paidAfter}
             </span>
