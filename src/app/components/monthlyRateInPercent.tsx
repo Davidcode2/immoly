@@ -15,14 +15,8 @@ export default function MonthlyRateInPercent({
   handleInputChange: (field: string, value: number) => void;
 }) {
   const nebenkosten = useCalcNebenkostenSum(Number(principalValue));
-
-  // Local state for input value
   const [inputValue, setInputValue] = useState<string>("");
-
-  // Update input value when monthlyRate changes externally
-  useEffect(() => {
-    setInputValue(monthlyRateInPercent().toString());
-  }, [principalValue, downPayment, interestRate, monthlyRate, nebenkosten]);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const monthlyRateInPercent = () => {
     const kreditSumme =
@@ -41,26 +35,42 @@ export default function MonthlyRateInPercent({
     if (isNaN(parsedValue)) {
       return 0;
     }
-    // Calculate tilgung from percentage
     const tilgung = (parsedValue / 100) * kreditSumme;
-    // Calculate yearly interest
     const zins = (Number(interestRate) * kreditSumme) / 100;
-    // Calculate monthly rate
     const monthlyRate = (tilgung + zins) / 12;
     return Number(monthlyRate.toFixed());
   };
 
+  // Only update inputValue from calculated value if not editing
+  useEffect(() => {
+    if (!isEditing) {
+      setInputValue(monthlyRateInPercent().toString().replace(".", ","));
+    }
+  }, [
+    principalValue,
+    downPayment,
+    interestRate,
+    monthlyRate,
+    nebenkosten,
+    isEditing,
+  ]);
+
   const handleCurrentMonthlyRatePercentageChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
+    setIsEditing(true);
     const value = e.target.value;
+    if (!value.includes(",") && !value.includes(".") && value.length >= 3) {
+      return;
+    }
     setInputValue(value);
     const absoluteValue = calcAbsoluteMonthlyRateFromPercentage(value);
     handleInputChange("monthly_rate", absoluteValue);
   };
 
   const handleBlur = () => {
-    setInputValue(monthlyRateInPercent().toString());
+    setIsEditing(false);
+    setInputValue(monthlyRateInPercent().toString().replace(".", ","));
   };
 
   return (
@@ -72,12 +82,11 @@ export default function MonthlyRateInPercent({
         maxLength={5}
         max={99.99}
         min={0}
-        className="w-36 border-b border-[var(--dark-accent)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--dark-accent)]/60 focus:outline-none md:text-2xl"
+        className="w-24 border-b border-[var(--secondary)] bg-transparent pb-1 text-xl transition-colors duration-200 invalid:text-green-900 focus:border-[var(--accent)] focus:outline-none lg:text-base"
         onChange={handleCurrentMonthlyRatePercentageChange}
         onBlur={handleBlur}
       />
-      <div>{monthlyRateInPercent()}</div>
-      <div className="border-b border-stone-700 bg-transparent pb-1 text-xl text-neutral-500 transition-colors duration-200 focus:border-slate-500 focus:outline-none md:w-36 md:text-base dark:text-[var(--ultralight-accent)]"></div>
+      <div className="relative -left-6 text-[var(--foreground)]/80">%</div>
     </>
   );
 }
