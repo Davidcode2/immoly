@@ -52,10 +52,8 @@ export default function TimeUntilTilgung({
         <div>
           <EditIconComponent setShowModal={setShowModal} />
           <Image
-            className={`${paidAfter === -1 ? "block" : "hidden"} absolute top-0 left-12 opacity-20 md:top-12 md:left-28 dark:invert`}
+            className={`${paidAfter === -1 ? "block" : "hidden"} absolute top-6 left-12 opacity-20 md:top-8 md:left-28 dark:invert w-40 h-40`}
             src={AttentionIcon}
-            height="200"
-            width="200"
             alt="Achtung"
           />
           <ScenarioTextDisplay

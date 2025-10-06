@@ -100,10 +100,10 @@ export default function TotalSumVsInterestModal({
       <div className="grid xl:grid-cols-2 gap-y-10">
         <div className="">
           <Image
-            className={`${paidAfter === -1 ? "block" : "hidden"} absolute top-0 left-12 opacity-20 md:top-12 md:left-28 dark:invert`}
+            className={`${paidAfter === -1 ? "block" : "hidden"} absolute top-0 left-32 opacity-20 md:left-40 md:top-8 lg:left-50 lg:top-20 dark:invert`}
             src={AttentionIcon}
-            height="200"
-            width="200"
+            height="100"
+            width="100"
             alt="Achtung"
           />
           <ScenarioTextDisplay
