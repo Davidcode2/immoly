@@ -9,7 +9,7 @@ export default function SloganHero() {
       <Hero />
       <div className="my-10 flex flex-col gap-4 p-4 text-7xl">
         <p className="text-4xl break-words hyphens-auto whitespace-normal">
-          Finden Dein perfektes Szenario.
+          Finde Dein perfektes Szenario.
         </p>
         <p className="text-base">
           Dein Traum vom Eigenheim, deine Daten, deine Privatsphäre. Der
