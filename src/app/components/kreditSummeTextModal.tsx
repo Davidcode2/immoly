@@ -54,7 +54,7 @@ export default function KreditSummeModal({
           {nebenkosten > downPayment && (
             <>
               <Image
-                className="absolute left-18 md:static"
+                className=""
                 src="/images/icons/icons8-warnung-emoji-48.png"
                 alt="yellow warning icon with exclamation point"
                 width={16}
