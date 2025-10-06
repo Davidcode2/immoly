@@ -6,6 +6,7 @@ import { useState } from "react";
 import CenteredModal from "../centeredModal";
 import TotalSumVsInterestModal from "./totalSumVsInterestModal";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
+import EditIconComponent from "../nebenkosten/editIconComponent";
 
 type PropTypes = {
   sumZinsen: number;
@@ -49,22 +50,7 @@ export default function TimeUntilTilgung({
         onClick={() => setShowModal(true)}
       >
         <div>
-          <div className="fixed top-5 right-4 opacity-50 hover:opacity-70">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
-              />
-            </svg>
-          </div>
+          <EditIconComponent setShowModal={setShowModal} />
           <Image
             className={`${paidAfter === -1 ? "block" : "hidden"} absolute top-0 left-12 opacity-20 md:top-12 md:left-28 dark:invert`}
             src={AttentionIcon}
