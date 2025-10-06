@@ -51,7 +51,7 @@ export default function CenteredModal({
     <>
       {createPortal(
         <div
-          className={`fixed inset-0 z-40 backdrop-blur-sm transition-all`}
+          className={`fixed inset-0 z-40 backdrop-blur-lg transition-all`}
           onClick={handleBackdropClick}
         >
           <div
