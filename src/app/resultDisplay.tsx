@@ -32,6 +32,7 @@ import { getGrundsteuer } from "./services/nebenkostenGrundsteuer";
 import { debounce } from "./utils/debounce";
 import FinanzierungsFormContainerMedium from "./components/finanzierungsFormContainerMedium";
 import { useCalcNebenkostenSum } from "./hooks/useCalcNebenkostenSum";
+import FinanzierungsForm from "./components/baseDataForm/finanzierungsForm";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -263,7 +264,7 @@ export default function ResultDisplay() {
 
   return (
     <div className="px-3 pt-2 sm:px-10 md:pb-10">
-      <div className="fixed left-10 top-9 z-30">
+      <div className="fixed top-9 left-10 z-30">
         <FinanzierungsFormContainerMedium
           formValues={input}
           setInput={setInput}
@@ -279,6 +280,9 @@ export default function ResultDisplay() {
         </div>
         <div className="rounded-lg backdrop-blur-2xl md:mt-12 md:hidden md:p-8">
           <SloganHero />
+        </div>
+        <div className="md:hidden">
+          <FinanzierungsForm values={input} setInput={setInput} showButton={false}/>
         </div>
         <div className="grid gap-y-6">
           {!table ? (

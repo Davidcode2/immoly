@@ -14,9 +14,11 @@ import { screenWidthMobile } from "app/utils/screenWidth";
 export default function FinanzierungsForm({
   values,
   setInput,
+  showButton = true,
 }: {
   values: CashRoiModel | null;
   setInput: (data: CashRoiModel) => void;
+  showButton?: boolean;
 }) {
   const [downPayment, setDownPayment] = useState<number | string>("");
   const [principalValue, setPrincipal] = useState<number | string>("");
@@ -115,7 +117,7 @@ export default function FinanzierungsForm({
 
   return (
     <>
-      <Form action={handleSubmit} className="mx-8 pb-8 md:mx-auto md:pb-0">
+      <Form action={handleSubmit} className="mx-4 pb-8 md:mx-auto md:pb-0">
         <div className="p-2">
           <div className="lg:justify-none mb-2 grid gap-8 md:justify-center md:gap-8">
             {/* Eigenkapital */}
@@ -169,6 +171,7 @@ export default function FinanzierungsForm({
             ></SliderInput>
           </div>
         </div>
+        { showButton &&
         <div className="mx-auto flex w-full justify-center">
           <button
             type="submit"
@@ -177,6 +180,7 @@ export default function FinanzierungsForm({
             Berechnung speichern
           </button>
         </div>
+        }
       </Form>
     </>
   );
