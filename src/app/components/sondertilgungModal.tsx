@@ -42,7 +42,7 @@ export default function SondertilgungModal({
           <InputWithThousandsSeparator inputName="sondertilgungAmount" value={sondertilgung} max={9999999} maxLength={9} className="sondertilgungInput w-36 border-b border-[var(--dark-accent)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--dark-accent)]/60 focus:outline-none md:text-2xl"/>
             <div className="relative top-1 -left-6 text-lg">€</div>
           </div>
-          <button className="mx-auto my-10 cursor-pointer rounded-lg bg-[var(--light-accent)] p-2 px-10 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90 dark:bg-[var(--dark-accent)]">
+          <button className="mx-auto my-10 cursor-pointer rounded-full bg-[var(--light-accent)] p-2 px-10 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90 dark:bg-[var(--dark-accent)]">
             Übernehmen
           </button>
         </form>
