@@ -78,7 +78,7 @@ export default function KreditSummeTextComponent({
             {nebenkosten > downPayment && (
               <>
                 <Image
-                  className="absolute left-18 md:static"
+                  className="absolute left-17 sm:left-18 md:static"
                   src="/images/icons/icons8-warnung-emoji-48.png"
                   alt="yellow warning icon with exclamation point"
                   width={16}
