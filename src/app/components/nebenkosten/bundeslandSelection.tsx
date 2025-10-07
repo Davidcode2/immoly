@@ -1,4 +1,4 @@
-import GermanyMap from "../germanyMap";
+import GermanyMap from "./germanyMap";
 import { bundeslaender } from "app/services/nebenkostenGrundsteuer";
 import {
   Select,

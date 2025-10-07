@@ -1,10 +1,10 @@
 import TimeUntilTilgung from "app/components/totalSumVsInterest/timeUntilTilgung";
 import NebenkostenDisplay from "./nebenkosten/nebenkostenDisplay";
-import KreditSummeTextComponent from "./kreditSummeTextComponent";
+import KreditSummeTextComponent from "./creditSum/kreditSummeTextComponent";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import TotalSumVsInterest from "app/components/totalSumVsInterest/totalSumVsInterest";
-import BarChartInterestVsTilgung from "./barChartInterestVsTilgung";
+import BarChartInterestVsTilgung from "app/components/totalSumVsInterest/barChartInterestVsTilgung";
 
 type PropTypes = {
   userInput: CashRoiModel | null;

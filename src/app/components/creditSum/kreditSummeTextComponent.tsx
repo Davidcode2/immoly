@@ -1,9 +1,9 @@
 import Image from "next/image";
-import PieChartGesamtBetrag from "./lineChartGesamtbetrag";
+import PieChartGesamtBetrag from "./pieChartTotalSumWithNebenkosten";
 import { useCalcNebenkostenSum } from "app/hooks/useCalcNebenkostenSum";
-import EditIconComponent from "./nebenkosten/editIconComponent";
+import EditIconComponent from "../nebenkosten/editIconComponent";
 import { useState } from "react";
-import CenteredModal from "./centeredModal";
+import CenteredModal from "../centeredModal";
 import KreditSummeModal from "./kreditSummeTextModal";
 
 type PropTypes = {

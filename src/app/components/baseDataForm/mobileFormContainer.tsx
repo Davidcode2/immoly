@@ -1,7 +1,7 @@
 "use client";
 
 import CashRoiModel from "app/lib/models/cashRoiModel";
-import FinanzierungsForm from "./baseDataForm/finanzierungsForm";
+import FinanzierungsForm from "./finanzierungsForm";
 import {
   Drawer,
   DrawerContent,

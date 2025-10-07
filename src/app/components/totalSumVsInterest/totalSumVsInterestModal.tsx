@@ -1,10 +1,10 @@
 import ScenarioTextDisplay from "app/scenarioTextDisplay";
-import BarChartInterestVsTilgung from "../barChartInterestVsTilgung";
+import BarChartInterestVsTilgung from "./barChartInterestVsTilgung";
 import AttentionIcon from "/public/images/icons/attention_flaticon.png";
 import Image from "next/image";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import { useEffect, useState } from "react";
-import CloseButton from "../closeButton";
+import CloseButton from "../utilities/closeButton";
 
 type PropTypes = {
   sumZinsen: number;

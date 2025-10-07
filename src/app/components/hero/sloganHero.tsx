@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ScrollIndicator from "../scrollIndicator";
+import ScrollIndicator from "../utilities/scrollIndicator";
 import Hero from "./hero";
 
 export default function SloganHero() {

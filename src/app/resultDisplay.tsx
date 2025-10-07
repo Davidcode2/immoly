@@ -12,7 +12,7 @@ import ChartsContainer from "app/components/charts/chartsContainer";
 import MainStatsSection from "./components/mainStatsSection";
 import { Sondertilgung } from "./lib/models/sondertilgung";
 import { Tilgungswechsel } from "./lib/models/tilgungswechsel";
-import MobileFormContainer from "./components/mobileFormContainer";
+import MobileFormContainer from "./components/baseDataForm/mobileFormContainer";
 import MobileTilgungsTabelleContainer from "./components/mobileTilgungsTabelleContainer";
 import {
   useBundeslandStore,
@@ -30,7 +30,7 @@ import SonderCacheHelper from "./services/cacheHelper";
 import { DEFAULT_CALCULATION } from "./constants";
 import { getGrundsteuer } from "./services/nebenkostenGrundsteuer";
 import { debounce } from "./utils/debounce";
-import FinanzierungsFormContainerMedium from "./components/finanzierungsFormContainerMedium";
+import FinanzierungsFormContainerMedium from "./components/baseDataForm/finanzierungsFormContainerMedium";
 import { useCalcNebenkostenSum } from "./hooks/useCalcNebenkostenSum";
 import FinanzierungsForm from "./components/baseDataForm/finanzierungsForm";
 

@@ -4,7 +4,7 @@ import { screenWidthMobile } from "app/utils/screenWidth";
 import NebenkostenEntry from "./nebenkostenEntry";
 import { AbsoluteNebenkostenModel } from "./nebenkostenFrontendModel";
 import BundeslandSelection from "./bundeslandSelection";
-import CloseButton from "../closeButton";
+import CloseButton from "../utilities/closeButton";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useNebenkostenActiveStore } from "app/store";

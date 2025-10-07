@@ -1,5 +1,5 @@
 import Image from "next/image";
-import CloseButton from "./closeButton";
+import CloseButton from "../utilities/closeButton";
 
 type PropTypes = {
   principal: number;

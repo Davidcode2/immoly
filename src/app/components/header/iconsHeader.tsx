@@ -1,4 +1,4 @@
-import DarkModeToggle from "./darkModeToggle";
+import DarkModeToggle from "../darkModeToggle";
 
 export default function IconsHeader() {
 

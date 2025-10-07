@@ -1,5 +1,5 @@
-import FinanzierungsForm from "./baseDataForm/finanzierungsForm";
-import Hero from "./hero/hero";
+import FinanzierungsForm from "./finanzierungsForm";
+import Hero from "../hero/hero";
 import {
   Drawer,
   DrawerContent,

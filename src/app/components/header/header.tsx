@@ -1,5 +1,5 @@
 "use client";
-import ColorSwitcher from "./colorSwitcher";
+import ColorSwitcher from "../colorSwitcher";
 import IconsHeader from "./iconsHeader";
 
 export default function Header() {

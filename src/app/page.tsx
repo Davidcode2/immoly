@@ -5,7 +5,7 @@ import ResultDisplay from "app/resultDisplay";
 import { Suspense } from "react";
 import Loading from "app/loading";
 import Footer from "./components/footer/footer";
-import Header from "./components/header";
+import Header from "./components/header/header";
 
 export default async function GraphPage() {
   if (process.env.SKIP_BUILD_STATIC_GENERATION === "true") {

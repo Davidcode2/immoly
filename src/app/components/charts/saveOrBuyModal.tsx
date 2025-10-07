@@ -2,7 +2,7 @@ import CashRoiModel from "app/lib/models/cashRoiModel";
 import OptionalParameters from "../baseDataForm/optionalParameters";
 import DevelopmentChart from "./developmentChart";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
-import CloseButton from "../closeButton";
+import CloseButton from "../utilities/closeButton";
 
 type PropTypes = {
   setInput: (data: CashRoiModel) => void;
