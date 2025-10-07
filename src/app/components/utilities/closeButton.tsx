@@ -3,6 +3,7 @@ export default function CloseButton({ onClick }: { onClick: () => void }) {
     <button
       className="fixed top-3 right-3 z-40 cursor-pointer transition-colors hover:text-red-400 p-2"
       onClick={() => onClick()}
+      aria-label="Close"
     >
       <svg
         className="h-4 w-4"

@@ -6,7 +6,10 @@ export default function Footer() {
   return (
     <div className="grid gap-y-8 bg-[var(--secondary)] p-8 sm:px-24 dark:bg-[var(--background)]">
       <div className="flex gap-2">
-        <a href="https://github.com/davidcode2">
+        <a
+          href="https://github.com/davidcode2"
+          aria-label="Github profile"
+        >
           <svg
             viewBox="0 0 100 100"
             className="mt-[3px] h-5 w-5 fill-black dark:fill-white"

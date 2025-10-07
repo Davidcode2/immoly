@@ -85,6 +85,7 @@ export default function MonthlyRateInPercent({
         className="w-24 border-b border-[var(--secondary)] bg-transparent pb-1 text-xl transition-colors duration-200 invalid:text-green-900 focus:border-[var(--accent)] focus:outline-none lg:text-base"
         onChange={handleCurrentMonthlyRatePercentageChange}
         onBlur={handleBlur}
+        aria-label="Monatliche Rate in Prozent"
       />
       <div className="relative -left-6 text-[var(--foreground)]/80">%</div>
     </>

@@ -72,7 +72,11 @@ export default function ColorSwitcher() {
     <div className="">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="rounded-full">
+          <Button
+            variant="outline"
+            className="rounded-full"
+            aria-label="Farbschema ändern"
+          >
             <div className="px-5">{brushIcon}</div>
           </Button>
         </DropdownMenuTrigger>
