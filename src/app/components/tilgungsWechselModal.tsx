@@ -27,17 +27,17 @@ export default function TilgungsWechselModal({
     <div className="tilgungsWechselModal z-40 mx-10 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl sm:mx-0 md:w-[400px] dark:from-[var(--background)]/80 dark:to-[var(--background)]/50 dark:shadow-[0_4px_200px_var(--dark-accent)]/10">
       <div className="tilgungsWechselModal">
         <label
-          className="tilgungsWechselModal flex rounded-t-lg rounded-t-xl bg-[var(--primary)]/40 px-10 py-10 text-base dark:border-b dark:bg-[var(--background)]/80"
+          className="tilgungsWechselModal flex rounded-t-xl bg-[var(--primary)]/40 md:p-10 p-6 text-base dark:border-b dark:bg-[var(--background)]/80"
           htmlFor="newTilgung"
         >
-          Wählen Sie eine neue monatliche Rate nach{" "}
+          Wähle eine neue monatliche Rate nach{" "}
           {year <= 1 ? "einem Jahr" : year + " Jahren"}
         </label>
         <form
           onSubmit={localHandleSubmit}
           className="flex flex-col justify-around"
         >
-          <div className="flex justify-center pt-18 pb-8">
+          <div className="flex justify-center md:pt-18 pt-10 pb-4">
           <InputWithThousandsSeparator value={tilgungswechsel} className="tilgungsWechselModal w-36 border-b border-[var(--dark-accent)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--dark-accent)]/60 focus:outline-none md:text-2xl" inputName="newTilgung" max={50000} maxLength={6}/>
             <div className="relative top-1 -left-6 text-lg">€</div>
           </div>

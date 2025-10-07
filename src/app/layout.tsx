@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Immoly - Immobilienfinanzierung",
   description:
-    "Immoly ist eine Plattform für Immobilienfinanzierung. Berechnen Sie Ihre Finanzierungsmöglichkeiten und Tilgungstabelle.",
+    "Immoly ist eine Plattform für Immobilienfinanzierung. Berechne Deine Finanzierungsmöglichkeiten mit Tilgungstabelle und Visualisierung.",
 };
 
 export default function RootLayout({

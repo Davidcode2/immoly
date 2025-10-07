@@ -25,7 +25,7 @@ export default function BundeslandSelection({
       <div className="mx-10 mt-4 text-sm text-[var(--foreground)] md:mb-4">
         <Select value={bundesland} onValueChange={setBundesland}>
           <SelectTrigger className="w-full rounded-full bg-[var(--foreground)] text-[var(--background)] dark:text-[var(--foreground)] dark:bg-[var(--background)] p-2 px-6 shadow-lg">
-            <SelectValue placeholder="Wählen Sie Ihr Bundesland" />
+            <SelectValue placeholder="Wähle dein Bundesland" />
           </SelectTrigger>
           <SelectContent>
             {bundeslaender.map((_bundesland: string) => (

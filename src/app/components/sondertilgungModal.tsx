@@ -28,17 +28,17 @@ export default function SondertilgungModal({
     <div className="sondertilgungInput z-40 mx-10 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl sm:mx-0 md:w-[400px] dark:from-[var(--background)]/80 dark:to-[var(--background)]/50 dark:shadow-[0_4px_200px_var(--dark-accent)]/10">
       <div className="sondertilgungInput">
         <label
-          className="sondertilgungInput flex rounded-t-lg bg-[var(--primary)]/40 px-10 py-10 text-base dark:bg-[var(--background)]/80 rounded-t-xl dark:border-b"
+          className="sondertilgungInput flex bg-[var(--primary)]/40 p-6 md:p-10 text-base dark:bg-[var(--background)]/80 rounded-t-xl dark:border-b"
           htmlFor="newTilgung"
         >
-          Erstellen Sie eine Sondertilgung nach{" "}
+          Erstelle eine Sondertilgung nach{" "}
           {year <= 1 ? "einem Jahr" : year + " Jahren"}
         </label>
         <form
           onSubmit={localHandleSubmit}
           className="flex flex-col justify-around"
         >
-          <div className="flex justify-center pt-18 pb-8">
+          <div className="flex justify-center md:pt-18 pt-10 pb-4">
           <InputWithThousandsSeparator inputName="sondertilgungAmount" value={sondertilgung} max={9999999} maxLength={9} className="sondertilgungInput w-36 border-b border-[var(--dark-accent)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--dark-accent)]/60 focus:outline-none md:text-2xl"/>
             <div className="relative top-1 -left-6 text-lg">€</div>
           </div>
