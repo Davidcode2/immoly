@@ -1,6 +1,6 @@
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import CashRoiModel from "app/lib/models/cashRoiModel";
-import Tilgungstabelle from "app/tilgungsTabelle";
+import Tilgungstabelle from "app/components/tilgungstabelle/tilgungsTabelle";
 
 type PropTypes = {
   calculationId: string | null;

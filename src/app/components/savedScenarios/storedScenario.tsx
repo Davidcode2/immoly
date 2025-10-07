@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { CalculationDbo } from "./lib/models/calculationDbo";
-import { deleteCalculation } from "./services/calculationsAccessor";
+import { CalculationDbo } from "app/lib/models/calculationDbo";
+import { deleteCalculation } from "app/services/calculationsAccessor";
 import { useSearchParams } from "next/navigation";
 import { Check, LoaderCircle } from "lucide-react";
 import { toast } from "sonner"

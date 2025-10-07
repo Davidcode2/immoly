@@ -1,8 +1,8 @@
 "use client";
 import StoredScenario from "./storedScenario";
 import { useEffect, useState } from "react";
-import { CalculationDbo } from "./lib/models/calculationDbo";
-import { calculationsAccessor } from "./services/calculationsAccessor";
+import { CalculationDbo } from "app/lib/models/calculationDbo";
+import { calculationsAccessor } from "app/services/calculationsAccessor";
 
 export default function StoredCalculations() {
   const [calculations, setCalculations] = useState<CalculationDbo[]>([]);

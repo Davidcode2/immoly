@@ -6,14 +6,14 @@ import calcTilgung from "app/lib/calculateArmotizaztionTable";
 import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
 import CashRoiModel from "app/lib/models/cashRoiModel";
 import NoData from "app/components/noData";
-import TilgungstabelleContainer from "app/components/tilgungstabelleContainer";
+import TilgungstabelleContainer from "app/components/tilgungstabelle/tilgungstabelleContainer";
 import FinanzierungsFormContainer from "app/components/baseDataForm/finanzierungsFormContainer";
 import ChartsContainer from "app/components/charts/chartsContainer";
 import MainStatsSection from "./components/mainStatsSection";
 import { Sondertilgung } from "./lib/models/sondertilgung";
 import { Tilgungswechsel } from "./lib/models/tilgungswechsel";
 import MobileFormContainer from "./components/baseDataForm/mobileFormContainer";
-import MobileTilgungsTabelleContainer from "./components/mobileTilgungsTabelleContainer";
+import MobileTilgungsTabelleContainer from "./components/tilgungstabelle/mobileTilgungsTabelleContainer";
 import {
   useBundeslandStore,
   useGrundbuchkostenPercentageStore,

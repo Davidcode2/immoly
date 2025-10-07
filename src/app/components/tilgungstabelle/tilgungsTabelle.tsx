@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import ArmotizationEntry from "./lib/models/ArmotizationEntry";
-import CashRoiModel from "./lib/models/cashRoiModel";
-import SondertilgungDisplay from "./components/sondertilgungDisplay";
-import { screenWidthMobile } from "./utils/screenWidth";
-import CenteredModal from "./components/centeredModal";
-import TilgungsWechselModal from "./components/tilgungsWechselModal";
-import { updateSonderAmountInBrowserStorage } from "./services/sonderAmountBrowserUpdater";
-import SondertilgungModal from "./components/sondertilgungModal";
+import ArmotizationEntry from "../../lib/models/ArmotizationEntry";
+import CashRoiModel from "../../lib/models/cashRoiModel";
+import SondertilgungDisplay from "./sondertilgungDisplay";
+import { screenWidthMobile } from "../../utils/screenWidth";
+import CenteredModal from "../centeredModal";
+import TilgungsWechselModal from "./tilgungsWechselModal";
+import { updateSonderAmountInBrowserStorage } from "../../services/sonderAmountBrowserUpdater";
+import SondertilgungModal from "./sondertilgungModal";
 
 type PropTypes = {
   table: ArmotizationEntry[];

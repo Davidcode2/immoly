@@ -1,4 +1,4 @@
-import TotalSumVsInterest from "./components/totalSumVsInterest/totalSumVsInterest";
+import TotalSumVsInterest from "./totalSumVsInterest";
 
 export default function ScenarioTextDisplay({
   paidAfter,

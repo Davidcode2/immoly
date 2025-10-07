@@ -1,4 +1,4 @@
-import ScenarioTextDisplay from "../../scenarioTextDisplay";
+import ScenarioTextDisplay from "./scenarioTextDisplay";
 import AttentionIcon from "/public/images/icons/attention_flaticon.png";
 import BarChartInterestVsTilgung from "./barChartInterestVsTilgung";
 import Image from "next/image";

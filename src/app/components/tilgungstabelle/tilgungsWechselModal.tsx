@@ -1,4 +1,4 @@
-import InputWithThousandsSeparator from "./inputWithThousandsSeparator";
+import InputWithThousandsSeparator from "../inputWithThousandsSeparator";
 
 type PropTypes = {
   handleSubmit: (newTilgung: string, year: number) => void;

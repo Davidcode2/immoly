@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import StoredCalculations from "app/storedCalculations";
+import StoredCalculations from "app/components/savedScenarios/storedCalculations";
 import ResultDisplay from "app/resultDisplay";
 import { Suspense } from "react";
 import Loading from "app/loading";
