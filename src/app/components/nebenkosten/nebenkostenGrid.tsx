@@ -41,7 +41,7 @@ export default function NebenkostenGrid({
             </div>
           </div>
           <div className={`${!nebenkostenActive && "line-through text-[var(--grey-accent)]"} text-2xl md:text-lg`}>
-            €{entry.value.toLocaleString("de")}
+            {entry.value.toLocaleString("de")}&nbsp;€
           </div>
         </div>
       ))}

@@ -123,7 +123,7 @@ export default function NebenkostenEntry({
         </div>
         <div className="flex flex-col items-end">
           <div className={`${!nebenkostenActive && "line-through text-[var(--grey-accent)]" } text-xl md:text-lg`}>
-            €{entry.value.toLocaleString("de")}
+            {entry.value.toLocaleString("de")}&nbsp;€
           </div>
           <div className="w-fit rounded-xl bg-[var(--dark-accent)] p-1 px-2 text-xs text-[var(--secondary)]">
             {currentPercentage()} %
