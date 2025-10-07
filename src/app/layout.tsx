@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "./theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import Script from "next/script";
+import Head from "next/head";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,12 +62,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de" suppressHydrationWarning>
-      <head>
-        <Script
-          src="https://analytics.jakob-lingel.dev/script.js"
-          data-website-id="ccf8342c-1b2a-4f38-b8ab-1b7c70acbbd4"
-          strategy="afterInteractive"
-        ></Script>
+      <Head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -82,10 +78,15 @@ export default function RootLayout({
             }),
           }}
         />
-      </head>
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Script
+          src="https://analytics.jakob-lingel.dev/script.js"
+          data-website-id="ccf8342c-1b2a-4f38-b8ab-1b7c70acbbd4"
+          strategy="afterInteractive"
+        ></Script>
         <Toaster position="top-center" />
         <ThemeProvider
           defaultTheme="green-mist-dark"
