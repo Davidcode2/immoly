@@ -1,5 +1,5 @@
-import { Sondertilgung } from "app/lib/models/sondertilgung";
-import { Tilgungswechsel } from "app/lib/models/tilgungswechsel";
+import { Sondertilgung } from "@/lib/models/sondertilgung";
+import { Tilgungswechsel } from "@/lib/models/tilgungswechsel";
 import { tilgungswechselAccessor } from "./tilgungswechselAccessor";
 import { sondertilgungenAccessor } from "./sondertilgungAccessor";
 

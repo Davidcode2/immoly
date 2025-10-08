@@ -1,4 +1,4 @@
-import { CalculationDbo } from "app/lib/models/calculationDbo";
+import { CalculationDbo } from "@/lib/models/calculationDbo";
 import { dispatchLocalStorageEvent } from "./calculationsLocalStorageSetter";
 
 export const calculationAccessor = (id: string) => {

@@ -1,7 +1,7 @@
-import BaseModel from "app/lib/models/baseModel";
-import { CalculationDbo } from "app/lib/models/calculationDbo";
-import CashRoiModel from "app/lib/models/cashRoiModel";
-import NebenKostenModel from "app/lib/models/nebenkostenModel";
+import BaseModel from "@/lib/models/baseModel";
+import { CalculationDbo } from "@/lib/models/calculationDbo";
+import CashRoiModel from "@/lib/models/cashRoiModel";
+import NebenKostenModel from "@/lib/models/nebenkostenModel";
 
 export function calculationsLocalStorageSetter(
   input: CashRoiModel,

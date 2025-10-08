@@ -1,4 +1,4 @@
-import { DEFAULT_BUNDESLAND } from "app/constants";
+import { DEFAULT_BUNDESLAND } from "@/constants";
 import { getGrundsteuer } from "./nebenkostenGrundsteuer";
 
 export default class NebenkostenCalculator {

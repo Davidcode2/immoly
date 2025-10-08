@@ -1,4 +1,4 @@
-import { Sondertilgung } from "app/lib/models/sondertilgung";
+import { Sondertilgung } from "@/lib/models/sondertilgung";
 
 export const sondertilgungenAccessor = (id: string): Sondertilgung[] => {
   const sondertilgungen = localStorage.getItem(`${id}-sondertilgungen`);

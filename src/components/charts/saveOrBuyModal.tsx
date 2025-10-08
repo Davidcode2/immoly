@@ -1,7 +1,7 @@
-import CashRoiModel from "app/lib/models/cashRoiModel";
+import CashRoiModel from "@/lib/models/cashRoiModel";
 import OptionalParameters from "../baseDataForm/optionalParameters";
 import DevelopmentChart from "./developmentChart";
-import ArmotizationEntry from "app/lib/models/ArmotizationEntry";
+import ArmotizationEntry from "@/lib/models/ArmotizationEntry";
 import CloseButton from "../utilities/closeButton";
 
 type PropTypes = {

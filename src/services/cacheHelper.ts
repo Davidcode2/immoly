@@ -1,9 +1,9 @@
-import { Sondertilgung } from "app/lib/models/sondertilgung";
+import { Sondertilgung } from "@/lib/models/sondertilgung";
 import {
   getSondertilgungenCacheHelper,
   getTilgungswechselCacheHelper,
 } from "./sonderCalculationsHelper";
-import { Tilgungswechsel } from "app/lib/models/tilgungswechsel";
+import { Tilgungswechsel } from "@/lib/models/tilgungswechsel";
 
 export default class SonderCacheHelper {
   constructor(

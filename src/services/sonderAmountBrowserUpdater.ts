@@ -1,4 +1,4 @@
-import { Sondertilgung } from "app/lib/models/sondertilgung";
+import { Sondertilgung } from "@/lib/models/sondertilgung";
 import {
   deleteTilgungswechsel,
   tilgungswechselAccessor,
