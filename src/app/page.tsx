@@ -4,8 +4,6 @@ import { Suspense } from "react";
 import StoredCalculations from "@/components/savedScenarios/storedCalculations";
 import ResultDisplay from "@/resultDisplay";
 import Loading from "@/app/loading";
-import Footer from "@/components/footer/footer";
-import Header from "@/components/header/header";
 
 export default async function GraphPage() {
   if (process.env.SKIP_BUILD_STATIC_GENERATION === "true") {
@@ -14,16 +12,12 @@ export default async function GraphPage() {
   }
   return (
     <div className="">
-      <div className="mx-auto min-h-screen max-w-[2000px]">
-        <Header />
         <div className="flex flex-col md:gap-6">
           <Suspense fallback={<Loading />}>
             <ResultDisplay />
           </Suspense>
           <StoredCalculations />
         </div>
-        <Footer />
-      </div>
     </div>
   );
 }
