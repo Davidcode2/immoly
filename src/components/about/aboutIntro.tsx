@@ -2,29 +2,48 @@ import author_coding_grandpa from "/public/images/author_coding_looking_like_a_g
 import Image from "next/image";
 export default function AboutIntro() {
   return (
-      <div className="grid lg:grid-cols-2 gap-10">
-        <Image
-          src={author_coding_grandpa}
-          alt="Picture of the author"
-          width={500}
-          height={500}
-          className="justify-self-center rounded-full"
-        />
-        <div>
-          <h4 className="text-4xl">Hi, ich bin Jakob</h4>
-          <p className="py-6">
-            Vor einiger Zeit haben wir uns gefragt wie es wäre in den eigenen
-            vier Wänden zu wohnen. Also haben wir uns mit Immobilienfinanzierung
-            beschäftigt und schnell herausgefunden, dass die Kohle nicht reicht.
-            Jedenfalls war ich mit den Tilgungsrechnern die ich online gefunden
-            habe nicht zufrieden, da sie entweder nicht schön aussahen oder nur
-            meine Daten abgreifen wollten. Ich dachte, es wäre vielleicht ganz
-            nett, einen eigenen Rechner zu bauen. Immoly.io ist das Ergebnis.
-            Ich hoffe, dass du Spaß damit hast. Du kannst auch unseren
-            Immobilientraum unterstützen, indem du auf einen der Affiliate-Links
-            klickst.
-          </p>
-        </div>
+    <div className="grid gap-10 lg:grid-cols-2">
+      <Image
+        src={author_coding_grandpa}
+        alt="Picture of the author"
+        width={500}
+        height={500}
+        className="justify-self-center rounded-full"
+      />
+      <div className="text-lg">
+        <h4 className="text-4xl">Hi, ich bin Jakob</h4>
+        <p className="py-6">
+          Vor einiger Zeit haben wir uns gefragt, wie es wohl wäre, endlich in
+          den eigenen vier Wänden zu wohnen. Also haben wir angefangen, uns
+          intensiver mit dem Thema Immobilienfinanzierung zu beschäftigen –
+          voller Motivation und mit vielen Fragen im Kopf. Relativ schnell
+          mussten wir allerdings feststellen, dass der Traum vom Eigenheim gar
+          nicht so einfach zu finanzieren ist. Die Zahlen haben uns ziemlich
+          schnell auf den Boden der Tatsachen zurückgeholt.
+        </p>
+        <p>
+          Auf der Suche nach einem guten Tilgungsrechner bin ich dann durch
+          einige Online-Tools gegangen – und ehrlich gesagt: So richtig
+          zufrieden war ich mit keinem davon. Viele sahen altbacken aus, andere
+          wollten direkt meine persönlichen Daten, bevor überhaupt eine
+          Berechnung möglich war. Also habe ich mir gedacht: Warum nicht selbst
+          einen Rechner bauen, der modern aussieht, transparent funktioniert und
+          Spaß macht?
+        </p>
+        <p>
+          Aus dieser Idee ist <strong>Immoly.io</strong> entstanden – ein
+          Projekt aus echtem Interesse und mit viel Liebe zum Detail. Ich hoffe,
+          dass du damit genauso gerne herumrechnest, wie ich daran gearbeitet
+          habe. Und falls du unseren Traum vom Eigenheim ein kleines Stück mit
+          unterstützen möchtest, kannst du das tun, indem du auf einen unserer
+          Affiliate-Links klickst. So hilfst du uns, ohne dass es dich einen
+          Cent kostet.
+        </p>
+        <p>
+          Viel Spaß beim Rechnen und Planen – und vielleicht sehen wir uns ja
+          bald im Eigenheim!
+        </p>
       </div>
+    </div>
   );
 }
