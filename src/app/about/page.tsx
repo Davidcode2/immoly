@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import useScreenshotThemer from "@/hooks/useScreenshotThemer";
@@ -10,8 +10,8 @@ import StyledCard from "@/components/about/styledCard";
 export default function About() {
   const images = useScreenshotThemer();
 
-  function AnimatedImage({ image }: { image: any }) {
-    const ref = useRef<HTMLElement | null>(null);
+  function AnimatedImage({ image }: { image: { src: StaticImageData, alt: string } }) {
+    const ref = useRef<HTMLDivElement | null>(null);
     const { scrollYProgress } = useScroll({
       target: ref,
       // map element entering -> leaving viewport
@@ -49,11 +49,11 @@ export default function About() {
   return (
     <div className="mx-10 lg:mr-20 lg:ml-40">
       <AboutIntro />
-      <div className="mt-40 grid-cols-10 gap-x-20 gap-y-96 lg:grid">
+      <div className="mt-40 grid-cols-10 gap-x-20 lg:gap-y-96 lg:grid">
         <div className="row-span-full col-start-3 col-span-7 col-end-10">
           <AnimatedImage image={images[0]} />
         </div>
-        <div className="col-span-4 col-start-1 row-start-1 flex min-h-[200vh] flex-col justify-between gap-y-60">
+        <div className="col-span-4 col-start-1 row-start-1 flex lg:min-h-[200vh] flex-col justify-between gap-y-60">
           <StyledCard header={"Einfach und Übersichtlich"}>
             <div>
               Unser Tilgungsrechner ist einfach und übersichtlich gestaltet –
@@ -75,11 +75,11 @@ export default function About() {
           </StyledCard>
         </div>
       </div>
-      <div className="mt-40 grid-cols-10 gap-x-20 gap-y-96 lg:grid my-96">
+      <div className="lg:mt-40 lg:grid-cols-10 gap-x-20 lg:gap-y-96 lg:grid my-96">
         <div className="row-span-full col-start-3 col-span-7 col-end-10">
           <AnimatedImage image={images[1]} />
         </div>
-        <div className="row-start-1 col-span-4 col-start-1 flex min-h-[200vh] flex-col justify-between gap-y-60">
+        <div className="row-start-1 col-span-4 col-start-1 flex lg:min-h-[200vh] flex-col justify-between gap-y-60">
           <StyledCard header={"Alles auf einen Blick"}>
             <div>
               Interaktive Diagramme zeigen dir auf einen Blick, wie sich
@@ -94,11 +94,11 @@ export default function About() {
           </StyledCard>
         </div>
       </div>
-      <div className="mt-40 grid-cols-10 gap-x-20 gap-y-96 lg:grid">
+      <div className="lg:mt-40 lg:grid-cols-10 gap-x-20 lg:gap-y-96 lg:grid my-96">
         <div className="row-span-full col-start-3 col-span-7 col-end-10">
           <AnimatedImage image={images[2]} />
         </div>
-        <div className="row-start-1 col-span-4 col-start-1 flex min-h-[200vh] flex-col justify-between gap-y-60">
+        <div className="row-start-1 col-span-4 col-start-1 flex lg:min-h-[200vh] flex-col justify-between gap-y-60">
           <StyledCard header={"Alles auf einen Blick"}>
             <div>
               Interaktive Diagramme zeigen dir auf einen Blick, wie sich
