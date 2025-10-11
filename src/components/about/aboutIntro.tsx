@@ -13,7 +13,7 @@ export default function AboutIntro() {
       <div className="text-lg">
         <h4 className="text-4xl">Hi, ich bin Jakob</h4>
         <p className="py-6">
-          Vor einiger Zeit haben wir uns gefragt, wie es wohl wäre, endlich in
+          Vor einiger Zeit haben wir uns gefragt, wie es wohl wäre, in
           den eigenen vier Wänden zu wohnen. Also haben wir angefangen, uns
           intensiver mit dem Thema Immobilienfinanzierung zu beschäftigen –
           voller Motivation und mit vielen Fragen im Kopf. Relativ schnell

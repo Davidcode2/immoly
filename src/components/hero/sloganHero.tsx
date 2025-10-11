@@ -1,9 +1,10 @@
 import Image from "next/image";
 import ScrollIndicator from "@/components/utilities/scrollIndicator";
 import Hero from "./hero";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export default function SloganHero() {
-
   return (
     <div className="rounded-lg border-slate-200 p-4">
       <Hero />
@@ -17,7 +18,15 @@ export default function SloganHero() {
           Echtzeit-Berechnung, Sondertilgungen und Tilgungswechseln.
         </p>
 
-        <p className="text-base">Keine Registrierung, Keine Cookies, Keine Datensammlung.</p>
+        <p className="text-base">
+          Keine Registrierung, Keine Cookies, Keine Datensammlung.
+        <div className="inline-block">
+          <Link href="/about" className="inline-block">
+          <ArrowRight className="inline-block mx-3" strokeWidth={1} size={16} />
+            Mehr erfahren.
+          </Link>
+        </div>
+        </p>
         <div className="flex">
           <p>Got</p>
           <Image
