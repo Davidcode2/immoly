@@ -7,7 +7,7 @@ export default function Descriptions() {
   const images = useScreenshotThemer();
 
   return (
-    <div>
+    <div className="max-lg:mb-40">
       <DescriptionContainer image={images[0]}>
         <StyledCard header={"Einfach und Übersichtlich"}>
           <div>
@@ -21,18 +21,12 @@ export default function Descriptions() {
             bleiben privat und werden nicht gespeichert.
           </div>
         </StyledCard>
-        <StyledCard header={"Kostenlos und Werbefrei"}>
-          <div>
-            Passe Zinsen, Tilgung und Sonderzahlungen individuell an und sieh
-            sofort, wie sich deine Finanzierung verändert.
-          </div>
-        </StyledCard>
       </DescriptionContainer>
       <DescriptionContainer image={images[1]}>
         <StyledCard header={"Alles auf einen Blick"}>
           <div>
-            Interaktive Diagramme zeigen dir auf einen Blick, wie sich
-            Restschuld und Zinslast über die Jahre entwickeln.
+            Passe Zinsen, Tilgung und Sonderzahlungen individuell an und sieh
+            sofort, wie sich deine Finanzierung verändert.
           </div>
         </StyledCard>
         <StyledCard header={"Nachvollziehbar"}>
@@ -43,16 +37,15 @@ export default function Descriptions() {
         </StyledCard>
       </DescriptionContainer>
       <DescriptionContainer image={images[2]}>
-        <StyledCard header={"Alles auf einen Blick"}>
+        <StyledCard header={"Interaktiv"}>
           <div>
             Interaktive Diagramme zeigen dir auf einen Blick, wie sich
             Restschuld und Zinslast über die Jahre entwickeln.
           </div>
         </StyledCard>
-        <StyledCard header={"Nachvollziehbar"}>
+        <StyledCard header={"Darkmode"}>
           <div>
-            Alle Berechnungen werden nachvollziehbar dargestellt – so weißt du
-            immer, wie dein Tilgungsplan entsteht.
+          Was jeder bisher an einem Tilgungsrechner vermisst hat: Darkmode und mehrere Farbschemata
           </div>
         </StyledCard>
       </DescriptionContainer>

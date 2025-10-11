@@ -1,5 +1,6 @@
 import immoly_nebenkosten_screenshot from "/public/images/green_mist_screenshots/screenshot-nebenkosten.png";
 import green_mist_screenshot from "/public/images/green_mist_screenshots/screenshot-green-mist-full.png";
+import green_mist_save_or_buy_screenshot from "/public/images/green_mist_screenshots/screenshot-save-or-buy.png";
 import hearth_stone_screenshot1 from "/public/images/hearth_stone_screenshots/screenshot-full-hearth-stone.png";
 import hearth_stone_screenshot2 from "/public/images/hearth_stone_screenshots/2025-10-08-21-05-35.png";
 import hearth_stone_screenshot3 from "/public/images/hearth_stone_screenshots/2025-10-08-21-05-53.png";
@@ -23,7 +24,7 @@ const green_mist_screenshots = [
     alt: "Screenshot der Nebenkosten Seite",
   },
   {
-    src: green_mist_screenshot,
+    src: green_mist_save_or_buy_screenshot,
     alt: "Screenshot der Nebenkosten Seite",
   },
 ];

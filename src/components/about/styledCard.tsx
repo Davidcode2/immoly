@@ -16,7 +16,7 @@ export default function StyledCard({
           </div>
           {header}
         </div>
-        <div className="px-6 py-3 xl:py-10 xl:pr-48 xl:pl-10">{children}</div>
+        <div className="px-6 py-3 md:py-10 xl:pr-48 xl:pl-10">{children}</div>
       </div>
     </div>
   );
