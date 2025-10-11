@@ -20,12 +20,17 @@ export default function SloganHero() {
 
         <p className="text-base">
           Keine Registrierung, Keine Cookies, Keine Datensammlung.
-        <div className="inline-block">
-          <Link href="/about" className="inline-block">
-          <ArrowRight className="inline-block mx-3" strokeWidth={1} size={16} />
+          <Link
+            href="/about"
+            className="ml-3 inline-flex items-center"
+          >
+            <ArrowRight
+              className="mr-1 inline-block"
+              strokeWidth={1}
+              size={16}
+            />
             Mehr erfahren.
           </Link>
-        </div>
         </p>
         <div className="flex">
           <p>Got</p>
