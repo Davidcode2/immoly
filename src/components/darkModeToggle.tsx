@@ -43,7 +43,7 @@ export default function DarkModeToggle() {
   }
 
   return (
-    <div onClick={handleToggleDarkMode}>
+    <div className="hover:cursor-pointer" onClick={handleToggleDarkMode}>
       {(theme || DEFAULT_THEME).includes("dark") ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"

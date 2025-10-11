@@ -1,4 +1,4 @@
-import author_coding_grandpa from "/public/images/author_coding_looking_like_a_grandpa.png";
+import author_coding_grandpa from "/public/images/author_coding_looking_like_a_grandpa.webp";
 import Image from "next/image";
 export default function AboutIntro() {
   return (
@@ -23,12 +23,12 @@ export default function AboutIntro() {
         </p>
         <p>
           Auf der Suche nach einem guten Tilgungsrechner bin ich dann durch
-          einige Online-Tools gegangen – und ehrlich gesagt: So richtig
-          zufrieden war ich mit keinem davon. Viele sahen altbacken aus, andere
-          wollten direkt meine persönlichen Daten, bevor überhaupt eine
-          Berechnung möglich war. Also habe ich mir gedacht: Warum nicht selbst
-          einen Rechner bauen, der modern aussieht, transparent funktioniert und
-          Spaß macht?
+          einige Online-Tools gegangen. So richtig zufrieden war ich mit keinem
+          davon. Viele beantworteten nur die Frage: &ldquo;Was kann ich mir
+          leisten?&rdquo;. Andere wollten direkt meine persönlichen Daten, bevor
+          überhaupt eine Berechnung möglich war. Also habe ich mir gedacht:
+          Warum nicht selbst einen Rechner bauen, der modern aussieht,
+          transparent funktioniert und Spaß macht?
         </p>
         <p>
           Aus dieser Idee ist <strong>Immoly.io</strong> entstanden – ein
@@ -36,12 +36,10 @@ export default function AboutIntro() {
           dass du damit genauso gerne herumrechnest, wie ich daran gearbeitet
           habe. Und falls du unseren Traum vom Eigenheim ein kleines Stück mit
           unterstützen möchtest, kannst du das tun, indem du auf einen unserer
-          Affiliate-Links klickst. So hilfst du uns, ohne dass es dich einen
-          Cent kostet.
+          Affiliate-Links klickst. So hilfst du uns, ohne dass es dich etwas
+          kostet.
         </p>
-        <p>
-          Viel Spaß beim Rechnen und Planen. 
-        </p>
+        <p>Viel Spaß beim Rechnen und Planen.</p>
       </div>
     </div>
   );
