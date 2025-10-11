@@ -40,8 +40,7 @@ export default function AboutIntro() {
           Cent kostet.
         </p>
         <p>
-          Viel Spaß beim Rechnen und Planen – und vielleicht sehen wir uns ja
-          bald im Eigenheim!
+          Viel Spaß beim Rechnen und Planen. 
         </p>
       </div>
     </div>
