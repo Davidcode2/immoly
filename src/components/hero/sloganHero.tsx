@@ -22,14 +22,14 @@ export default function SloganHero() {
           Keine Registrierung, Keine Cookies, Keine Datensammlung.
           <Link
             href="/about"
-            className="ml-3 inline-flex items-center"
+            className="ml-3 inline-flex items-baseline"
           >
             <ArrowRight
-              className="mr-1 inline-block"
+              className="mr-1 inline-block self-center"
               strokeWidth={1}
               size={16}
             />
-            Mehr erfahren.
+            Mehr erfahren
           </Link>
         </p>
         <div className="flex">
