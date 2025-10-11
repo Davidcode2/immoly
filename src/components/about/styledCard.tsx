@@ -14,7 +14,7 @@ export default function StyledCard({
           <div className="h-fit w-fit rounded-full bg-[var(--dark-accent)] p-6">
             <Check stroke="var(--background)" />
           </div>
-          {header}
+          <h5 className="font-fira-code text-base lg:text-xl">{header}</h5>
         </div>
         <div className="px-6 py-3 md:py-10 xl:pr-48 xl:pl-10">{children}</div>
       </div>

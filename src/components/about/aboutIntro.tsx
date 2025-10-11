@@ -11,7 +11,7 @@ export default function AboutIntro() {
         className="justify-self-center rounded-full"
       />
       <div className="text-lg">
-        <h4 className="text-4xl">Hi, ich bin Jakob</h4>
+        <h4 className="text-4xl font-fira-code">Hi, ich bin Jakob</h4>
         <p className="py-6">
           Vor einiger Zeit haben wir uns gefragt, wie es wohl wäre, in
           den eigenen vier Wänden zu wohnen. Also haben wir angefangen, uns
