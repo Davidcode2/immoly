@@ -38,7 +38,7 @@ export default function SiteMenu() {
           <Equal />
         </DrawerTrigger>
         <DrawerOverlay className="fixed inset-0 bg-black/40" />
-        <DrawerContent className="rounded-l-2xl bg-[var(--ultralight-accent)] dark:bg-[var(--ultra-accent)]">
+        <DrawerContent className="rounded-t-2xl bg-[var(--ultralight-accent)] dark:bg-[var(--ultra-accent)]">
           <DrawerHeader className="hidden border-b p-6">
             <DrawerTitle className="text-2xl">Menü</DrawerTitle>
             <DrawerDescription>Wohin möchtest du?</DrawerDescription>
