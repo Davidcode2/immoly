@@ -126,6 +126,7 @@ html {
 [data-theme="blue-dream-dark"] {
   --background: #0a0a0a;
   --foreground: #ffffff;
+  --ultra-accent: hsl(200, 13%, 12%);
   --dark-accent: #002d67;
   --accent: #0066b3;
   --light-accent: #66b2ff;
@@ -166,6 +167,7 @@ html {
 [data-theme="hearth-stone-dark"] {
   --background: #2f2b28;
   --background: hsl(10, 99%, 1%);
+  --ultra-accent: hsl(10, 13%, 12%);
   --foreground: #f5f5dc;
   --dark-accent: #6b4c4c;
   --accent: #a0522d;
