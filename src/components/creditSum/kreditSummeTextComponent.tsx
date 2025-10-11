@@ -47,7 +47,7 @@ export default function KreditSummeTextComponent({
           <p className="text-xs">Kreditsumme</p>
           <div className="flex items-center justify-between">
             <div
-              className={`${kreditSumme >= 10000000 ? "text-xl md:text-2xl" : kreditSumme >= 1000000 ? "text-2xl md:text-3xl" : kreditSumme >= 100000 ? "text-(length:--text-2_5xl) md:text-4xl" : "text-3xl md:text-4xl"} flex h-12 items-center text-[var(--accent)]`}
+              className={`${kreditSumme >= 10000000 ? "text-lg md:text-2xl" : kreditSumme >= 1000000 ? "text-xl md:text-3xl" : kreditSumme >= 100000 ? "text-2xl md:text-4xl" : "text-3xl md:text-4xl"} flex h-12 items-center text-[var(--accent)] max-sm:font-fira-code `}
             >
               <div>{kreditSummeString}</div>
             </div>
