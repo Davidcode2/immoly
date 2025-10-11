@@ -1,7 +1,7 @@
 import Image from "next/image";
 export default function Impressum() {
   return (
-    <main className="mb-20 max-w-full px-8 md:px-24 py-16">
+    <main className="mb-20 max-w-full px-10 md:px-24 py-16">
       <h1 className="mb-6 text-3xl font-bold">Impressum</h1>
       <div className="grid lg:grid-cols-2">
         <div>

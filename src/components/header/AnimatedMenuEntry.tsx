@@ -7,9 +7,11 @@ import Link from "next/link";
 export default function AnimatedMenuEntry({
   href,
   text,
+  onSelect,
 }: {
   text: string;
   href: string;
+  onSelect?: () => void;
 }) {
   const [hovered, setHovered] = useState(false);
   const currentPath = usePathname();
@@ -37,7 +39,9 @@ export default function AnimatedMenuEntry({
         </>
       )}
       <li className="inline-block pl-8">
-        <Link href={href}>{text}</Link>
+        <Link href={href} onClick={() => onSelect !== undefined && onSelect()}>
+          {text}
+        </Link>
       </li>
     </div>
   );

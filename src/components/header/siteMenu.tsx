@@ -9,11 +9,15 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import AnimatedMenuEntry from "./AnimatedMenuEntry";
+import { useState } from "react";
 
 export default function SiteMenu() {
+  const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   return (
     <>
-      <Drawer direction="right">
+      <Drawer open={open} onOpenChange={setOpen} direction="right">
         <DrawerTrigger className="hidden md:block">
           <Equal />
         </DrawerTrigger>
@@ -25,7 +29,7 @@ export default function SiteMenu() {
           </DrawerHeader>
           <div className="p-14 py-20">
             <ul className="flex flex-col gap-y-10 text-3xl">
-              <AnimatedMenuEntry href="/" text="Rechner"/>
+              <AnimatedMenuEntry href="/" text="Rechner" />
               <AnimatedMenuEntry href="/about" text="Über Immoly"/>
               <AnimatedMenuEntry href="/impressum" text="Impressum"/>
             </ul>
@@ -33,7 +37,7 @@ export default function SiteMenu() {
         </DrawerContent>
       </Drawer>
 
-      <Drawer direction="bottom">
+      <Drawer open={mobileOpen} onOpenChange={setMobileOpen} direction="bottom">
         <DrawerTrigger className="md:hidden">
           <Equal />
         </DrawerTrigger>
@@ -45,9 +49,9 @@ export default function SiteMenu() {
           </DrawerHeader>
           <div className="p-14 py-20">
             <ul className="flex flex-col gap-y-10 text-3xl">
-              <AnimatedMenuEntry href="/" text="Rechner"/>
-              <AnimatedMenuEntry href="/about" text="Über Immoly"/>
-              <AnimatedMenuEntry href="/impressum" text="Impressum"/>
+              <AnimatedMenuEntry href="/" text="Rechner" onSelect={() => setMobileOpen(false)}/>
+              <AnimatedMenuEntry href="/about" text="Über Immoly" onSelect={() => setMobileOpen(false)}/>
+              <AnimatedMenuEntry href="/impressum" text="Impressum" onSelect={() => setMobileOpen(false)}/>
             </ul>
           </div>
         </DrawerContent>
