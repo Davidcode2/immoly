@@ -1,15 +1,20 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export default function AnimatedMenuEntry({
+  href,
   text,
-  selected,
 }: {
   text: string;
-  selected?: boolean;
+  href: string;
 }) {
   const [hovered, setHovered] = useState(false);
+  const currentPath = usePathname();
+
+  const selected = href === currentPath;
 
   return (
     <div
@@ -31,7 +36,9 @@ export default function AnimatedMenuEntry({
           </motion.span>
         </>
       )}
-      <li className="inline-block pl-8">{text}</li>
+      <li className="inline-block pl-8">
+        <Link href={href}>{text}</Link>
+      </li>
     </div>
   );
 }
