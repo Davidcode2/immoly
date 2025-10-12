@@ -26,7 +26,7 @@ const firaCode = Fira_Code({
 export const metadata: Metadata = {
   title: "Immoly - Immobilienfinanzierung",
   description:
-    "Immoly ist eine Plattform für Immobilienfinanzierung. Berechne Deine Finanzierungsmöglichkeiten mit Tilgungstabelle und Visualisierung.",
+    "Interaktiver Tilgungsrechner der mehr kann. Berechne Deine Finanzierungsmöglichkeiten mit Sondertilgungen und Tilgungswechseln in Echtzeit. Keine Registrierung, Keine Cookies, Keine Datensammlung.",
   keywords: [
     "Immobilienfinanzierung",
     "Hauskredit",
@@ -62,8 +62,16 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/images/favicons/favicon-light.svg", media: "(prefers-color-scheme: light)", type: "image/svg+xml" },
-      { url: "/images/favicons/favicon-dark.svg", media: "(prefers-color-scheme: dark)", type: "image/svg+xml" },
+      {
+        url: "/images/favicons/favicon-light.svg",
+        media: "(prefers-color-scheme: light)",
+        type: "image/svg+xml",
+      },
+      {
+        url: "/images/favicons/favicon-dark.svg",
+        media: "(prefers-color-scheme: dark)",
+        type: "image/svg+xml",
+      },
     ],
   },
 };

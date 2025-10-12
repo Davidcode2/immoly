@@ -29,10 +29,9 @@ export default function Descriptions() {
             sofort, wie sich deine Finanzierung verändert.
           </div>
         </StyledCard>
-        <StyledCard header={"Nachvollziehbar"}>
+        <StyledCard header={"Komplett"}>
           <div>
-            Alle Berechnungen werden nachvollziehbar dargestellt – so weißt du
-            immer, wie dein Tilgungsplan entsteht.
+          Mit Tilgungswechseln und Sondertilgung kannst du dein Szenario realistisch abbilden.
           </div>
         </StyledCard>
       </DescriptionContainer>
