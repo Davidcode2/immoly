@@ -60,6 +60,12 @@ export const metadata: Metadata = {
     locale: "de_DE",
     type: "website",
   },
+  icons: {
+    icon: [
+      { url: "/images/favicons/favicon-light.svg", media: "(prefers-color-scheme: light)", type: "image/svg+xml" },
+      { url: "/images/favicons/favicon-dark.svg", media: "(prefers-color-scheme: dark)", type: "image/svg+xml" },
+    ],
+  },
 };
 
 export default function RootLayout({
