@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/drawer";
 import AnimatedMenuEntry from "./AnimatedMenuEntry";
 import { useState } from "react";
+import CloseButton from "../utilities/closeButton";
 
 export default function SiteMenu() {
   const [open, setOpen] = useState(false);
@@ -28,6 +29,7 @@ export default function SiteMenu() {
             <DrawerDescription>Wohin möchtest du?</DrawerDescription>
           </DrawerHeader>
           <div className="p-14 py-20">
+            <CloseButton onClick={() => setOpen(false)} />
             <ul className="flex flex-col gap-y-10 text-3xl">
               <AnimatedMenuEntry href="/" text="Rechner" />
               <AnimatedMenuEntry href="/about" text="Über Immoly"/>
