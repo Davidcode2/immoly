@@ -1,4 +1,5 @@
 import CursorSwarm from "./cursor-swarm";
+import Logo from "./logo";
 
 export default function Hero() {
   return (
@@ -7,7 +8,7 @@ export default function Hero() {
         <div className="absolute left-48">
           <CursorSwarm />
         </div>
-        <h1 className="text-6xl font-extrabold">Immoly</h1>
+        <Logo/>
       </div>
     </div>
   );
