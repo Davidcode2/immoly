@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import calcTilgung from "@/lib/calculateArmotizaztionTable";
 import ArmotizationEntry from "@/lib/models/ArmotizationEntry";
 import CashRoiModel from "@/lib/models/cashRoiModel";
@@ -29,11 +29,11 @@ import { CalculationDbo } from "@/lib/models/calculationDbo";
 import SonderCacheHelper from "@/services/cacheHelper";
 import { DEFAULT_CALCULATION } from "@/constants";
 import { getGrundsteuer } from "@/services/nebenkostenGrundsteuer";
-import { debounce } from "@/utils/debounce";
 import FinanzierungsFormContainerMedium from "@/components/baseDataForm/finanzierungsFormContainerMedium";
 import { useCalcNebenkostenSum } from "@/hooks/useCalcNebenkostenSum";
 import FinanzierungsForm from "@/components/baseDataForm/finanzierungsForm";
 import useDarkThemeClassToggler from "./hooks/useDarkThemeClassToggler";
+import useTilgungsCalculationWorker from "./hooks/useTilgungCalculationWorker";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -55,7 +55,6 @@ export default function ResultDisplay() {
   );
   const notarkosten = useNotarkostenPercentageStore((state) => state.value);
   const principal = useRef(0);
-  const workerRef = useRef<Worker>(null);
   const [showForm, setShowForm] = useState(false);
 
   const maklergebuehrPercentage = Number(
@@ -128,25 +127,9 @@ export default function ResultDisplay() {
     setInput(DEFAULT_CALCULATION);
   }, []);
 
-  useEffect(() => {
-    workerRef.current = new Worker(
-      new URL("./workers/tilgungCalculation.worker.ts", import.meta.url),
-    );
-    workerRef.current.onmessage = (e) => {
-      setTable(e.data);
-    };
-    return () => workerRef.current?.terminate();
-  }, []);
-
-  const postToWorker = useMemo(
-    () =>
-      debounce((input, nebenkosten) => {
-        workerRef.current?.postMessage({ input, nebenkosten });
-      }, 5),
-    [],
-  );
-
   useCalcNebenkostenSum(principal.current);
+
+  const postToWorker = useTilgungsCalculationWorker(setTable);
 
   useEffect(() => {
     async function loadData() {
