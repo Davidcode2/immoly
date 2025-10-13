@@ -29,7 +29,7 @@ export default function MainStatsSection({ userInput, table }: PropTypes) {
   const paidInYear = new Date().getFullYear() + paidAfter;
 
   return (
-    <div className="top-10 z-20 mt-0 grid grid-cols-2 justify-stretch gap-4 md:m-0 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:sticky 2xl:h-56">
+    <div className="z-20 mt-0 grid grid-cols-2 justify-stretch gap-4 md:m-0 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:h-56">
       <KreditSummeTextComponent
         principal={Number(userInput?.principal)}
         downPayment={Number(userInput?.down_payment)}

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import ScrollIndicator from "@/components/utilities/scrollIndicator";
 import Hero from "./hero";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -44,7 +43,6 @@ export default function SloganHero() {
         </div>
         <p className="text-7xl">Immo?</p>
       </div>
-      <ScrollIndicator />
     </div>
   );
 }

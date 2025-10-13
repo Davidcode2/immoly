@@ -169,7 +169,7 @@ export default function ResultDisplay() {
   );
 
   return (
-    <div className="px-3 pt-2 sm:px-10 md:pb-10">
+    <div className="">
       <div className="fixed top-9 left-10 z-30">
         <FinanzierungsFormContainerMedium
           formValues={input}
@@ -183,9 +183,6 @@ export default function ResultDisplay() {
       >
         <div className="hidden 2xl:block">
           <FinanzierungsFormContainer formValues={input} setInput={setInput} />
-        </div>
-        <div className="rounded-lg backdrop-blur-2xl md:mt-12 md:hidden md:p-8">
-          <SloganHero />
         </div>
         <div className="md:hidden">
           <FinanzierungsForm
