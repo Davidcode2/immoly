@@ -34,6 +34,7 @@ import { useCalcNebenkostenSum } from "@/hooks/useCalcNebenkostenSum";
 import FinanzierungsForm from "@/components/baseDataForm/finanzierungsForm";
 import useDarkThemeClassToggler from "./hooks/useDarkThemeClassToggler";
 import useTilgungsCalculationWorker from "./hooks/useTilgungCalculationWorker";
+import { useRecalculateTableOnNebenkostenChange } from "./hooks/useRecalculateTableOnNebenkostenChange";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -69,7 +70,6 @@ export default function ResultDisplay() {
   );
 
   const skipNextInputEffect = useRef(false);
-
 
   useDarkThemeClassToggler();
 
@@ -157,29 +157,19 @@ export default function ResultDisplay() {
     loadData();
   }, [input, nebenkostenActive]);
 
-  useEffect(() => {
-    if (!input) return;
-    if (skipNextInputEffect.current) {
-      skipNextInputEffect.current = false;
-      return;
-    }
-
-    const worker = new Worker(
-      new URL("./workers/tilgungCalculation.worker.ts", import.meta.url),
-    );
-
-    worker.onmessage = (e) => {
-      setTable(e.data);
-      worker.terminate();
-    };
-
-    worker.postMessage({
-      input,
-      nebenkosten: calcSummeNebenkosten(principal.current),
-    });
-
-    return () => worker.terminate();
-  }, [maklergebuehrPercentage, bundeslandState, notarkosten, grundbuchkosten]);
+  useRecalculateTableOnNebenkostenChange({
+    input,
+    dependencies: [
+      maklergebuehrPercentage,
+      bundeslandState,
+      notarkosten,
+      grundbuchkosten,
+    ],
+    calcSummeNebenkosten,
+    principalRef: principal,
+    skipNextInputEffect,
+    setTable,
+  });
 
   const getFromBrowserStorage = (id: string) => {
     const calculation = calculationAccessor(id);
@@ -269,7 +259,11 @@ export default function ResultDisplay() {
           <SloganHero />
         </div>
         <div className="md:hidden">
-          <FinanzierungsForm values={input} setInput={setInput} showButton={false}/>
+          <FinanzierungsForm
+            values={input}
+            setInput={setInput}
+            showButton={false}
+          />
         </div>
         <div className="grid gap-y-6">
           {!table ? (
