@@ -10,15 +10,6 @@ export default function DarkModeToggle() {
 
   useEffect(() => {
     setMounted(true); // only render once we’re on the client
-    if (!theme || theme.includes("system")) {
-      setTheme("green-mist-light");
-    }
-    // set .dark class if dark theme active for tailwindss dark: utility
-    if (theme!.includes("dark"))
-      document.documentElement.classList.add("dark");
-    else {
-      document.documentElement.classList.remove("dark");
-    }
   }, []);
 
   const handleToggleDarkMode = () => {

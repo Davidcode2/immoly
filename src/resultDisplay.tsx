@@ -33,6 +33,7 @@ import { debounce } from "@/utils/debounce";
 import FinanzierungsFormContainerMedium from "@/components/baseDataForm/finanzierungsFormContainerMedium";
 import { useCalcNebenkostenSum } from "@/hooks/useCalcNebenkostenSum";
 import FinanzierungsForm from "@/components/baseDataForm/finanzierungsForm";
+import useDarkThemeClassToggler from "./hooks/useDarkThemeClassToggler";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -69,6 +70,9 @@ export default function ResultDisplay() {
   );
 
   const skipNextInputEffect = useRef(false);
+
+
+  useDarkThemeClassToggler();
 
   const changeHandler = async () => {
     if (!input) {
