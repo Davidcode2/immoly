@@ -5,8 +5,6 @@ import { ThemeProvider } from "@/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import Script from "next/script";
 import Head from "next/head";
-import Header from "@/components/header/header";
-import Footer from "@/components/footer/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -114,11 +112,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="mx-auto min-h-screen max-w-[2000px]">
-            <Header />
-            {children}
-            <Footer />
-          </div>
+          {children}
         </ThemeProvider>
       </body>
     </html>
