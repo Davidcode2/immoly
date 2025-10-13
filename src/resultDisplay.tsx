@@ -22,10 +22,6 @@ import {
   useNotarkostenPercentageStore,
 } from "@/store";
 import SloganHero from "@/components/hero/sloganHero";
-import { sondertilgungenAccessor } from "@/services/sondertilgungAccessor";
-import { tilgungswechselAccessor } from "@/services/tilgungswechselAccessor";
-import { calculationAccessor } from "@/services/calculationsAccessor";
-import { CalculationDbo } from "@/lib/models/calculationDbo";
 import SonderCacheHelper from "@/services/cacheHelper";
 import { DEFAULT_CALCULATION } from "@/constants";
 import { getGrundsteuer } from "@/services/nebenkostenGrundsteuer";
@@ -36,6 +32,7 @@ import useDarkThemeClassToggler from "./hooks/useDarkThemeClassToggler";
 import useTilgungsCalculationWorker from "./hooks/useTilgungCalculationWorker";
 import { useRecalculateTableOnNebenkostenChange } from "./hooks/useRecalculateTableOnNebenkostenChange";
 import useReactToInputChange from "./hooks/useReactToInputChange";
+import useReactToStoredCalculationChange from "./hooks/useReactToStoredCalculationChange";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -50,7 +47,6 @@ export default function ResultDisplay() {
 
   const searchParams = useSearchParams();
   const calculationId = searchParams.get("calculationId");
-  const updateBundesland = useBundeslandStore((state) => state.updateValue);
   const bundeslandState = useBundeslandStore((state) => state.value);
   const grundbuchkosten = useGrundbuchkostenPercentageStore(
     (state) => state.value,
@@ -159,73 +155,18 @@ export default function ResultDisplay() {
     setTable,
   });
 
-  const getFromBrowserStorage = (id: string) => {
-    const calculation = calculationAccessor(id);
-    if (!calculation) {
-      return null;
-    }
-    const sondertilgungen = sondertilgungenAccessor(id);
-    const tilgungswechsel = tilgungswechselAccessor(id);
-    calculation.sondertilgungen = sondertilgungen;
-    calculation.tilgungswechsel = tilgungswechsel;
-    return calculation;
-  };
-
-  useEffect(() => {
-    async function loadData() {
-      if (calculationId) {
-        try {
-          const result = getFromBrowserStorage(calculationId);
-          if (!result) {
-            console.warn("No result found for calculationId:", calculationId);
-            return;
-          }
-          principal.current = result.principal;
-          // TODO use nebenkosten from storage
-          const nebenkosten = calcSummeNebenkosten(
-            result.principal,
-            result.bundesland,
-          );
-
-          // reset cache
-          const sondertilgungen =
-            await sonderCacheHelper.getSondertilgungFromCache(
-              calculationId!,
-              sondertilgungenCache,
-              true,
-            );
-          const tilgungswechsel =
-            await sonderCacheHelper.getTilgungswechselFromCache(
-              calculationId!,
-              tilgungswechselCache,
-              true,
-            );
-          result.sondertilgungen = sondertilgungen;
-          result.tilgungswechsel = tilgungswechsel;
-
-          /* skip the inputEffect to prevent duplicating the calculation */
-          skipNextInputEffect.current = true;
-          setInput(result);
-
-          const tilgungungsTabelle = calcTilgung(result, nebenkosten);
-          setTable(tilgungungsTabelle);
-
-          /* update bundesland last to prevent jump in maklergebuehr value
-           * which would be caused by an update to the table. Downstream components would then update
-           * the nebenkosten with the old principal */
-          //updateMaklergebuehr((result as CalculationDbo).maklerguehrPercentage);
-          if (bundeslandState !== result.bundesland) {
-            updateBundesland((result as CalculationDbo).bundesland);
-            skipNextInputEffect.current = true;
-          }
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    }
-
-    loadData();
-  }, [calculationId]);
+  useReactToStoredCalculationChange(
+    principal,
+    calculationId,
+    bundeslandState,
+    sonderCacheHelper,
+    calcSummeNebenkosten,
+    sondertilgungenCache,
+    tilgungswechselCache,
+    skipNextInputEffect,
+    setInput,
+    setTable,
+  );
 
   return (
     <div className="px-3 pt-2 sm:px-10 md:pb-10">
