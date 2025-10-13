@@ -35,6 +35,7 @@ import FinanzierungsForm from "@/components/baseDataForm/finanzierungsForm";
 import useDarkThemeClassToggler from "./hooks/useDarkThemeClassToggler";
 import useTilgungsCalculationWorker from "./hooks/useTilgungCalculationWorker";
 import { useRecalculateTableOnNebenkostenChange } from "./hooks/useRecalculateTableOnNebenkostenChange";
+import useReactToInputChange from "./hooks/useReactToInputChange";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -131,31 +132,18 @@ export default function ResultDisplay() {
 
   const postToWorker = useTilgungsCalculationWorker(setTable);
 
-  useEffect(() => {
-    async function loadData() {
-      if (!input) return;
-      input.sondertilgungen = await sonderCacheHelper.getSondertilgungFromCache(
-        calculationId!,
-        sondertilgungenCache,
-      );
-      input.tilgungswechsel =
-        await sonderCacheHelper.getTilgungswechselFromCache(
-          calculationId!,
-          tilgungswechselCache,
-        );
-
-      const nebenkosten = calcSummeNebenkosten(input.principal);
-      principal.current = input.principal;
-
-      postToWorker(input, nebenkosten);
-    }
-
-    if (skipNextInputEffect.current) {
-      skipNextInputEffect.current = false;
-      return; // skip recalculation caused by URL change
-    }
-    loadData();
-  }, [input, nebenkostenActive]);
+  useReactToInputChange(
+    input,
+    calculationId,
+    nebenkostenActive,
+    calcSummeNebenkosten,
+    principal,
+    skipNextInputEffect,
+    postToWorker,
+    sonderCacheHelper,
+    sondertilgungenCache,
+    tilgungswechselCache,
+  );
 
   useRecalculateTableOnNebenkostenChange({
     input,
