@@ -91,7 +91,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
             <div className="">
               {sumNebenkosten.current.toLocaleString("de")}
             </div>
-            <div className="w-fit self-end rounded-xl bg-[var(--ultralight-accent)] p-1 px-2 text-base text-xs text-[var(--foreground)] dark:bg-[var(--dark-accent)]">
+            <div className="w-fit self-end rounded-xl bg-[var(--ultralight-accent)] p-1 px-2 text-xs text-[var(--foreground)] dark:bg-[var(--dark-accent)]">
               {(Math.round(sumPercentage * 100) / 100).toLocaleString("de")}
               &nbsp;%
             </div>
