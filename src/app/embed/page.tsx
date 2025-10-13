@@ -9,7 +9,7 @@ export default async function EmbedPage() {
     <div className="">
       <div className="flex flex-col md:gap-6">
         <Suspense fallback={<Loading />}>
-          <div className="px-3 pt-8">
+          <div className="p-3 md:pt-8">
             <ResultDisplay />
           </div>
         </Suspense>
