@@ -12,7 +12,7 @@ function generateNonce() {
 }
 
 export function middleware(request: NextRequest) {
-  const isEmbedRoute = request.nextUrl.pathname.startsWith("/embed"); // Check for your dedicated embed route (See Step 2)
+  const isEmbedRoute = request.nextUrl.pathname.startsWith("/embed");
 
   if (isEmbedRoute) {
     const nonce = generateNonce();
