@@ -8,7 +8,7 @@ export default function Hero() {
         <div className="absolute left-48">
           <CursorSwarm />
         </div>
-        <Logo/>
+        <Logo isLink={false}/>
       </div>
     </div>
   );

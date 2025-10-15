@@ -1,6 +1,15 @@
 import Link from "next/link";
 
-export default function Logo({ size, responsive = false }: { size?: string, responsive?: boolean }) {
+type PropTypes = {
+  size?: string;
+  responsive?: boolean;
+  isLink?: boolean;
+};
+export default function Logo({
+  size,
+  responsive = false,
+  isLink = true,
+}: PropTypes) {
   let fontSize;
   switch (size) {
     case "small": {
@@ -22,8 +31,14 @@ export default function Logo({ size, responsive = false }: { size?: string, resp
   }
 
   return (
-    <h1 className={`${fontSize} ${responsive && "max-md:text-2xl" } font-extrabold`}>
-      <Link href="/">Immoly</Link>
+    <h1
+      className={`${fontSize} ${responsive && "max-md:text-2xl"} font-extrabold`}
+    >
+    { isLink ? (
+        <Link href="/">Immoly</Link>
+      ) : (
+        "Immoly"
+      )}
     </h1>
   );
 }
