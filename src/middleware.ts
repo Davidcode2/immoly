@@ -46,16 +46,20 @@ const createCspHeader = (nonce: string) => {
   const isDevelopment = process.env.NODE_ENV === "development";
   const evalSource = isDevelopment ? "'unsafe-eval'" : "";
   const frameAncestors = ALLOWED_DOMAINS.join(" ");
-  const cspHeader = `
-      frame-ancestors 'self' ${frameAncestors};
-      default-src 'self';
-      script-src 'self' 'nonce-${nonce}' 'strict-dynamic' ${evalSource};
-      style-src 'self' 'unsafe-inline';
-      object-src 'none';
-      base-uri 'self';
-    `
-    .replace(/\s{2,}/g, " ")
-    .trim();
 
-  return cspHeader;
+  const createCspHeader = (nonce: string) =>
+    `
+  default-src 'self';
+  script-src 'self' 'nonce-${nonce}' 'strict-dynamic' ${evalSource};
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data:;
+  font-src 'self';
+  object-src 'none';
+  base-uri 'self';
+  frame-ancestors 'self' ${frameAncestors};
+`
+      .replace(/\s{2,}/g, " ")
+      .trim();
+
+  return createCspHeader(nonce);
 };
