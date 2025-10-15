@@ -4,7 +4,6 @@ import type { NextRequest } from "next/server";
 const ALLOWED_DOMAINS = [
   "https://localhost:8080",
   "http://localhost:8080",
-  // Add more customer domains here
 ];
 
 function generateNonce() {
@@ -20,15 +19,8 @@ export function middleware(request: NextRequest) {
 
     const response = NextResponse.next();
 
-    // Set the CSP header
     response.headers.set("Content-Security-Policy", cspHeader);
-
-    // Pass the nonce to the application via a custom header
-    // Next.js will read this custom header to inject the nonce into its script tags.
     response.headers.set("X-Nonce", nonce);
-
-    // As a backup, you should also ensure X-Frame-Options is NOT set to DENY
-    // (If you don't set it, modern browsers prioritize CSP)
     response.headers.delete("X-Frame-Options");
 
     return response;
@@ -37,9 +29,8 @@ export function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// Optionally define the paths to run the middleware on
 export const config = {
-  matcher: "/embed/:path*", // Match only the embed-specific routes
+  matcher: "/embed/:path*", 
 };
 
 const createCspHeader = (nonce: string) => {
