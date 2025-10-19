@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Fira_Code } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import Script from "next/script";
 import Head from "next/head";
@@ -107,13 +106,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         ></Script>
         <Toaster position="top-center" />
-        <ThemeProvider
-          defaultTheme="green-mist-dark"
-          enableSystem
-          disableTransitionOnChange
-        >
           {children}
-        </ThemeProvider>
       </body>
     </html>
   );

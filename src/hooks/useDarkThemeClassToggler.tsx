@@ -8,6 +8,7 @@ export default function useDarkThemeClassToggler() {
     if (!theme || theme.includes("system")) {
       setTheme("green-mist-light");
     }
+    if (!theme) return;
     // set .dark class if dark theme active for tailwindss dark: utility
     if (theme!.includes("dark"))
       document.documentElement.classList.add("dark");

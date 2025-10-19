@@ -6,10 +6,6 @@ const ALLOWED_DOMAINS = [
   "http://localhost:8080",
 ];
 
-function generateNonce() {
-  return Buffer.from(crypto.randomUUID()).toString("base64");
-}
-
 export function middleware(request: NextRequest) {
   const isEmbedRoute = request.nextUrl.pathname.startsWith("/embed");
 
@@ -54,3 +50,7 @@ const createCspHeader = (nonce: string) => {
 
   return createCspHeader(nonce);
 };
+
+function generateNonce() {
+  return Buffer.from(crypto.randomUUID()).toString("base64");
+}
