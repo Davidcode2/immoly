@@ -1,0 +1,486 @@
+{
+  "id": "a8922b0d-3055-4f45-a7c4-95658e8dbd95",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.calculations": {
+      "name": "calculations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "calculations_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "principal": {
+          "name": "principal",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "interest_rate": {
+          "name": "interest_rate",
+          "type": "numeric(8, 4)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "monthly_rate": {
+          "name": "monthly_rate",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "down_payment": {
+          "name": "down_payment",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "rent": {
+          "name": "rent",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "annual_percentage_rate": {
+          "name": "annual_percentage_rate",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.config": {
+      "name": "config",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "config_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "customer_id": {
+          "name": "customer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "config_customer_id_customer_id_fk": {
+          "name": "config_customer_id_customer_id_fk",
+          "tableFrom": "config",
+          "tableTo": "customer",
+          "columnsFrom": [
+            "customer_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "config_customer_id_unique": {
+          "name": "config_customer_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "customer_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.customer": {
+      "name": "customer",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "customer_name": {
+          "name": "customer_name",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "customer_customer_name_unique": {
+          "name": "customer_customer_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "customer_name"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sondertilgungen": {
+      "name": "sondertilgungen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "sondertilgungen_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "calculation_id": {
+          "name": "calculation_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "amount": {
+          "name": "amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "year": {
+          "name": "year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sondertilgungen_calculation_id_calculations_id_fk": {
+          "name": "sondertilgungen_calculation_id_calculations_id_fk",
+          "tableFrom": "sondertilgungen",
+          "tableTo": "calculations",
+          "columnsFrom": [
+            "calculation_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "sondertilgungen_year_calculation_id_unique": {
+          "name": "sondertilgungen_year_calculation_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "year",
+            "calculation_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.theme": {
+      "name": "theme",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "theme_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "config_id": {
+          "name": "config_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "primary_color": {
+          "name": "primary_color",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "background": {
+          "name": "background",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "foreground": {
+          "name": "foreground",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ultra_accent": {
+          "name": "ultra_accent",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dark_accent": {
+          "name": "dark_accent",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "neutral_accent": {
+          "name": "neutral_accent",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "accent": {
+          "name": "accent",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "strong_accent": {
+          "name": "strong_accent",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "light_accent": {
+          "name": "light_accent",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ultralight_accent": {
+          "name": "ultralight_accent",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "muted_accent": {
+          "name": "muted_accent",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "grey_accent": {
+          "name": "grey_accent",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "primary": {
+          "name": "primary",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "secondary": {
+          "name": "secondary",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "success": {
+          "name": "success",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dark_success": {
+          "name": "dark_success",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "alert": {
+          "name": "alert",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "theme_config_id_config_id_fk": {
+          "name": "theme_config_id_config_id_fk",
+          "tableFrom": "theme",
+          "tableTo": "config",
+          "columnsFrom": [
+            "config_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tilgungswechsel": {
+      "name": "tilgungswechsel",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "tilgungswechsel_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "calculation_id": {
+          "name": "calculation_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "amount": {
+          "name": "amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "year": {
+          "name": "year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tilgungswechsel_calculation_id_calculations_id_fk": {
+          "name": "tilgungswechsel_calculation_id_calculations_id_fk",
+          "tableFrom": "tilgungswechsel",
+          "tableTo": "calculations",
+          "columnsFrom": [
+            "calculation_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "tilgungswechsel_year_calculation_id_unique": {
+          "name": "tilgungswechsel_year_calculation_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "year",
+            "calculation_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
