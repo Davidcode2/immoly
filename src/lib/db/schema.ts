@@ -66,7 +66,6 @@ export const theme = pgTable("theme", {
   config_id: integer()
     .notNull()
     .references(() => config.id, { onDelete: "cascade" }),
-  primary_color: varchar({ length: 30 }),
   background: varchar({ length: 30 }),
   foreground: varchar({ length: 30 }),
   ultra_accent: varchar({ length: 30 }),

@@ -7,12 +7,12 @@ INSERT INTO config (customer_id) VALUES
 
 -- Acme Corp: green-mist-light
 INSERT INTO theme (
-  name, config_id, primary_color, background, foreground, ultra_accent, dark_accent,
+  name, config_id, background, foreground, ultra_accent, dark_accent,
   neutral_accent, accent, strong_accent, light_accent, ultralight_accent, muted_accent,
   grey_accent, "primary", "secondary", success, dark_success, alert
 ) VALUES (
   'green-mist-light', 1,
-  'hsl(129, 22%, 69%)',         -- primary_color / primary
+  'hsl(129, 22%, 69%)',         -- primary
   'hsl(1, 0%, 100%)',           -- background
   'hsl(194, 33%, 12%)',         -- foreground
   NULL,                         -- ultra_accent (not in light theme)
@@ -33,12 +33,12 @@ INSERT INTO theme (
 
 -- Acme Corp: green-mist-dark
 INSERT INTO theme (
-  name, config_id, primary_color, background, foreground, ultra_accent, dark_accent,
+  name, config_id, background, foreground, ultra_accent, dark_accent,
   neutral_accent, accent, strong_accent, light_accent, ultralight_accent, muted_accent,
   grey_accent, "primary", "secondary", success, dark_success, alert
 ) VALUES (
   'green-mist-dark', 1,
-  'hsl(129, 22%, 69%)',         -- primary_color / primary
+  'hsl(129, 22%, 69%)',         -- primary
   '#0a0a0a',                    -- background
   '#ededed',                    -- foreground
   'hsl(194, 13%, 12%)',         -- ultra_accent
@@ -59,12 +59,12 @@ INSERT INTO theme (
 
 -- Blue Sky: blue-dream-light
 INSERT INTO theme (
-  name, config_id, primary_color, background, foreground, ultra_accent, dark_accent,
+  name, config_id, background, foreground, ultra_accent, dark_accent,
   neutral_accent, accent, strong_accent, light_accent, ultralight_accent, muted_accent,
   grey_accent, "primary", "secondary", success, dark_success, alert
 ) VALUES (
   'blue-dream-light', 2,
-  '#99ccff',                    -- primary_color / primary
+  '#99ccff',                    -- primary
   NULL,                         -- background (not set in light theme)
   '#001a33',                    -- foreground
   NULL,                         -- ultra_accent (not in light theme)
@@ -85,12 +85,12 @@ INSERT INTO theme (
 
 -- Blue Sky: blue-dream-dark
 INSERT INTO theme (
-  name, config_id, primary_color, background, foreground, ultra_accent, dark_accent,
+  name, config_id, background, foreground, ultra_accent, dark_accent,
   neutral_accent, accent, strong_accent, light_accent, ultralight_accent, muted_accent,
   grey_accent, "primary", "secondary", success, dark_success, alert
 ) VALUES (
   'blue-dream-dark', 2,
-  '#99ccff',                    -- primary_color / primary
+  '#99ccff',                    -- primary
   '#0a0a0a',                    -- background
   '#ffffff',                    -- foreground
   'hsl(200, 13%, 12%)',         -- ultra_accent
@@ -111,12 +111,12 @@ INSERT INTO theme (
 
 -- Hearth stone 
 INSERT INTO theme (
-  name, config_id, primary_color, background, foreground, ultra_accent, dark_accent,
+  name, config_id, background, foreground, ultra_accent, dark_accent,
   neutral_accent, accent, strong_accent, light_accent, ultralight_accent, muted_accent,
   grey_accent, "primary", "secondary", success, dark_success, alert
 ) VALUES (
   'hearth-stone-dark', 2,
-  '#99ccff',                    -- primary_color / primary
+  '#99ccff',                    -- primary
   '#0a0a0a',                    -- background
   '#ffffff',                    -- foreground
   'hsl(200, 13%, 12%)',         -- ultra_accent
