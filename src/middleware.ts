@@ -4,6 +4,7 @@ import type { NextRequest } from "next/server";
 const ALLOWED_DOMAINS = [
   "https://localhost:8080",
   "http://localhost:8080",
+  "https://blog.jakob-lingel.dev"
 ];
 
 export function middleware(request: NextRequest) {
