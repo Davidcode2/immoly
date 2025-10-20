@@ -21,7 +21,6 @@ import {
   useNebenkostenActiveStore,
   useNotarkostenPercentageStore,
 } from "@/store";
-import SloganHero from "@/components/hero/sloganHero";
 import SonderCacheHelper from "@/services/cacheHelper";
 import { DEFAULT_CALCULATION } from "@/constants";
 import { getGrundsteuer } from "@/services/nebenkostenGrundsteuer";
