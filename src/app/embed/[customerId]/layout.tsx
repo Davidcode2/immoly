@@ -24,21 +24,12 @@ export default async function EmbedLayout({
   params: Promise<{ customerId: string }>;
 }) {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
-  const themeToCssVariables = (theme: any) => {
-    const vars: Record<string, string> = {};
-    if (!theme) return vars;
-    Object.entries(theme).forEach(([key, value]) => {
-      key = key.replaceAll("_", "-");
-      vars[`--${key as string}`] = value;
-    });
-    return vars;
-  };
-
   const isDarkTheme = (theme: any) => {
     if (!theme) return false;
     return theme["name"].includes("dark");
   };
 
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   const themeToCssVariablesString = (theme: any) => {
     if (!theme) return "";
     const mapped = Object.entries(theme).map(([key, value]) => {
@@ -49,7 +40,6 @@ export default async function EmbedLayout({
   };
 
   const resolvedParams = await params;
-  console.log("EmbedLayout params:", resolvedParams);
   const parsedCustomerId = decodeURIComponent(resolvedParams.customerId);
   const theme = await getThemeByCustomerId(parsedCustomerId);
 
