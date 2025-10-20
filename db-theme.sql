@@ -3,10 +3,10 @@ INSERT INTO theme (
   neutral_accent, accent, strong_accent, light_accent, ultralight_accent, muted_accent,
   grey_accent, "primary", "secondary", success, dark_success, alert
 ) VALUES (
-  'blog-theme-gray', 
+  'blog-theme-gray-dark', 
   '#18181b',
+  '#f5f5dc',
   'hsl(10, 13%, 12%)' ,
-  '#f5f5dc'           ,
   '#6b4c4c'           ,
   '#a0522d'           ,
   '#d2b48c'           ,

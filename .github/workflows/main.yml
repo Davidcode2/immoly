@@ -26,8 +26,8 @@ jobs:
         with:
           filters: |
             src:
-              - 'src/app/**'
-              - 'src/app'
+              - 'src/**'
+              - 'src/'
 
   check-for-new-migrations:
     runs-on: ubuntu-latest
