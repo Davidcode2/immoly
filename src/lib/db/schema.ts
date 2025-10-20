@@ -49,7 +49,15 @@ export const tilgungswechsel = pgTable(
 
 export const customer = pgTable("customer", {
   id: uuid().primaryKey().defaultRandom(),
-  customer_name: varchar({ length: 30 }).notNull().unique(),
+  customer_name: varchar({ length: 30 }),
+});
+
+export const customerUrl = pgTable("customer_url", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  customer_id: uuid()
+    .notNull()
+    .references(() => customer.id, { onDelete: "cascade" }),
+  url: varchar({ length: 100 }).notNull().unique(),
 });
 
 export const config = pgTable("config", {
@@ -60,12 +68,18 @@ export const config = pgTable("config", {
     .references(() => customer.id, { onDelete: "cascade" }),
 });
 
-export const theme = pgTable("theme", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar({ length: 30 }).notNull(),
+export const configToTheme = pgTable("config_theme", {
   config_id: integer()
     .notNull()
     .references(() => config.id, { onDelete: "cascade" }),
+  theme_id: integer()
+    .notNull()
+    .references(() => theme.id, { onDelete: "cascade" }),
+});
+
+export const theme = pgTable("theme", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar({ length: 30 }).notNull(),
   background: varchar({ length: 30 }),
   foreground: varchar({ length: 30 }),
   ultra_accent: varchar({ length: 30 }),

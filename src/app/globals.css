@@ -164,7 +164,6 @@ html {
 }
 
 [data-theme="hearth-stone-dark"] {
-  --background: #2f2b28;
   --background: hsl(10, 99%, 1%);
   --ultra-accent: hsl(10, 13%, 12%);
   --foreground: #f5f5dc;
