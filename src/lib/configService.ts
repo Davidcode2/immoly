@@ -20,7 +20,7 @@ export default async function getConfig(configId: number) {
   }
 }
 
-export async function getThemeByCustomerId(customerId: number) {
+export async function getThemeByCustomerId(customerId: string) {
   const pool = await getPool();
   try {
     const query = `
