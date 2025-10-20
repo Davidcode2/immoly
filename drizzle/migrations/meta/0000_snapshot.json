@@ -1,5 +1,5 @@
 {
-  "id": "a8922b0d-3055-4f45-a7c4-95658e8dbd95",
+  "id": "98f9c71a-6ed2-408b-943b-ee71915fc07f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -152,18 +152,74 @@
           "name": "customer_name",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         }
       },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.customer_url": {
+      "name": "customer_url",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "customer_url_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "customer_id": {
+          "name": "customer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "url": {
+          "name": "url",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "customer_url_customer_id_customer_id_fk": {
+          "name": "customer_url_customer_id_customer_id_fk",
+          "tableFrom": "customer_url",
+          "tableTo": "customer",
+          "columnsFrom": [
+            "customer_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "customer_customer_name_unique": {
-          "name": "customer_customer_name_unique",
+        "customer_url_url_unique": {
+          "name": "customer_url_url_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "customer_name"
+            "url"
           ]
         }
       },
@@ -275,107 +331,101 @@
           "primaryKey": false,
           "notNull": true
         },
-        "primary_color": {
-          "name": "primary_color",
-          "type": "varchar(30)",
-          "primaryKey": false,
-          "notNull": true
-        },
         "background": {
           "name": "background",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "foreground": {
           "name": "foreground",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "ultra_accent": {
           "name": "ultra_accent",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "dark_accent": {
           "name": "dark_accent",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "neutral_accent": {
           "name": "neutral_accent",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "accent": {
           "name": "accent",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "strong_accent": {
           "name": "strong_accent",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "light_accent": {
           "name": "light_accent",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "ultralight_accent": {
           "name": "ultralight_accent",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "muted_accent": {
           "name": "muted_accent",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "grey_accent": {
           "name": "grey_accent",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "primary": {
           "name": "primary",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "secondary": {
           "name": "secondary",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "success": {
           "name": "success",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "dark_success": {
           "name": "dark_success",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "alert": {
           "name": "alert",
           "type": "varchar(30)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         }
       },
       "indexes": {},
