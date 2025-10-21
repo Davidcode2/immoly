@@ -179,7 +179,6 @@ export default function ResultDisplay() {
               <MainStatsSection userInput={input} table={table} />
               <div className="grid gap-6 lg:grid-cols-[3fr_2fr]">
                 <div className="hidden md:block">
-                  <OverviewBarContainer />
                   <TilgungstabelleContainer
                     table={table}
                     calculationId={calculationId}
