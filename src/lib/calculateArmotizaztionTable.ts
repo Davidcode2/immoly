@@ -29,6 +29,7 @@ const calculateArmotizationTable = (
   const MAX_ITERATIONS = 120;
   let counter = 0;
   const armotizationTable = [];
+  let interestRate = calculation.interest_rate;
   while (restSumme >= 0.1) {
     if (counter >= MAX_ITERATIONS) {
       logMaximumIterationsReached(MAX_ITERATIONS);
@@ -38,8 +39,13 @@ const calculateArmotizationTable = (
     const currentYear = armotizationTable.length + 1;
     const sondertilgung = findSondertilgung(calculation, currentYear);
     const tilgungswechsel = findTilgungswechsel(calculation, currentYear);
+    const interestRateChange = findInterestRateChange(calculation, currentYear); 
 
-    const interestForYear = calcInterest(restSumme, calculation.interest_rate);
+    if (interestRateChange > 0) {
+      interestRate = interestRateChange;
+    }
+
+    const interestForYear = calcInterest(restSumme, interestRate);
 
     if (tilgungswechsel > 0) {
       annuitaet = tilgungswechsel * 12;
@@ -105,3 +111,13 @@ const findTilgungswechsel = (calculation: CashRoiModel, year: number) => {
   }
   return 0;
 };
+
+const findInterestRateChange = (calculation: CashRoiModel, year: number) => {
+  if (calculation.interestRateChanges) {
+    const interestRateChangeForYear = calculation.interestRateChanges.find(
+      (x) => x.year === year,
+    );
+    return interestRateChangeForYear?.newRate || 0;
+  }
+  return 0;
+}
