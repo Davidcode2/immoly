@@ -29,7 +29,6 @@ import useTilgungsCalculationWorker from "./hooks/useTilgungCalculationWorker";
 import { useRecalculateTableOnNebenkostenChange } from "./hooks/useRecalculateTableOnNebenkostenChange";
 import useReactToInputChange from "./hooks/useReactToInputChange";
 import useReactToStoredCalculationChange from "./hooks/useReactToStoredCalculationChange";
-import OverviewBarContainer from "./components/overviewBarContainer";
 import { useUpdateSonderamounts } from "./hooks/useUpdateSonderamounts";
 
 export default function ResultDisplay() {
