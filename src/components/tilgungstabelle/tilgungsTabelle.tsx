@@ -52,11 +52,7 @@ export default function Tilgungstabelle({
     setShowSondertilgungModal(false);
   };
 
-  const handleTilgungsWechsel = async (
-    newTilgung: string,
-    newZins: string,
-    year: number,
-  ) => {
+  const updateTilgungswechsel = (newTilgung: string, year: number) => {
     if (Number(newTilgung) !== selectedEntry!.yearlyRate / 12) {
       updateSonderAmountInBrowserStorage(
         "tilgungswechsel",
@@ -65,6 +61,9 @@ export default function Tilgungstabelle({
         calculationId!,
       );
     }
+  };
+
+  const updateZinswechsel = (newZins: string, year: number) => {
     if (newZins.includes(",")) {
       newZins = newZins.replace(",", ".");
     }
@@ -81,6 +80,15 @@ export default function Tilgungstabelle({
         calculationId!,
       );
     }
+  };
+
+  const handleTilgungsWechsel = async (
+    newTilgung: string,
+    newZins: string,
+    year: number,
+  ) => {
+    updateTilgungswechsel(newTilgung, year);
+    updateZinswechsel(newZins, year);
     sendChangeNotification();
     setShowTilgungswechselModal(false);
   };
