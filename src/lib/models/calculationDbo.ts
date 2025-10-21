@@ -1,6 +1,7 @@
 import BaseModel from "./baseModel";
 import { Sondertilgung } from "./sondertilgung";
 import { Tilgungswechsel } from "./tilgungswechsel";
+import { Zinswechsel } from "./zinswechsel";
 
 export interface CalculationDbo extends BaseModel {
   created_at: string;
@@ -9,4 +10,5 @@ export interface CalculationDbo extends BaseModel {
   bundesland: string;
   sondertilgungen?: Sondertilgung[];
   tilgungswechsel?: Tilgungswechsel[];
+  zinswechsel?: Zinswechsel[];
 }

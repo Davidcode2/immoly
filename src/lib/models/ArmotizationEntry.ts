@@ -6,4 +6,5 @@ export default interface ArmotizationEntry {
   remainingPrincipal: number;
   sondertilgung: number;
   tilgungswechsel: number;
+  zinswechsel: number;
 }

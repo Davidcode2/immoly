@@ -2,6 +2,8 @@ import { Sondertilgung } from "@/lib/models/sondertilgung";
 import { Tilgungswechsel } from "@/lib/models/tilgungswechsel";
 import { tilgungswechselAccessor } from "./tilgungswechselAccessor";
 import { sondertilgungenAccessor } from "./sondertilgungAccessor";
+import { Zinswechsel } from "@/lib/models/zinswechsel";
+import { zinswechselAccessor } from "./zinswechselAccessor";
 
 export const getTilgungswechselCacheHelper = async (
   calculationId: string,
@@ -40,5 +42,25 @@ export const getSondertilgungenCacheHelper = async (
       return null;
     }
     return sondertilgungen;
+  }
+};
+
+export const getZinswechselCacheHelper = async (
+  calculationId: string,
+  zinswechselCache: Zinswechsel[],
+  update: boolean,
+): Promise<Zinswechsel[] | null> => {
+  if (zinswechselCache && zinswechselCache.length && !update) {
+    return zinswechselCache;
+  } else {
+    const zinswechsel = zinswechselAccessor(calculationId);
+    if (!zinswechsel) {
+      console.error(
+        "No sondertilgungen found for calculationId:",
+        calculationId,
+      );
+      return null;
+    }
+    return zinswechsel;
   }
 };

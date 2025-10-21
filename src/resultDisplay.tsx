@@ -10,8 +10,6 @@ import TilgungstabelleContainer from "@/components/tilgungstabelle/tilgungstabel
 import FinanzierungsFormContainer from "@/components/baseDataForm/finanzierungsFormContainer";
 import ChartsContainer from "@/components/charts/chartsContainer";
 import MainStatsSection from "@/components/mainStatsSection";
-import { Sondertilgung } from "@/lib/models/sondertilgung";
-import { Tilgungswechsel } from "@/lib/models/tilgungswechsel";
 import MobileFormContainer from "@/components/baseDataForm/mobileFormContainer";
 import MobileTilgungsTabelleContainer from "@/components/tilgungstabelle/mobileTilgungsTabelleContainer";
 import {
@@ -21,7 +19,6 @@ import {
   useNebenkostenActiveStore,
   useNotarkostenPercentageStore,
 } from "@/store";
-import SonderCacheHelper from "@/services/cacheHelper";
 import { DEFAULT_CALCULATION } from "@/constants";
 import { getGrundsteuer } from "@/services/nebenkostenGrundsteuer";
 import FinanzierungsFormContainerMedium from "@/components/baseDataForm/finanzierungsFormContainerMedium";
@@ -32,16 +29,12 @@ import useTilgungsCalculationWorker from "./hooks/useTilgungCalculationWorker";
 import { useRecalculateTableOnNebenkostenChange } from "./hooks/useRecalculateTableOnNebenkostenChange";
 import useReactToInputChange from "./hooks/useReactToInputChange";
 import useReactToStoredCalculationChange from "./hooks/useReactToStoredCalculationChange";
+import OverviewBarContainer from "./components/overviewBarContainer";
+import { useUpdateSonderamounts } from "./hooks/useUpdateSonderamounts";
 
 export default function ResultDisplay() {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
   const [input, setInput] = useState<CashRoiModel | null>(null);
-  const [sondertilgungenCache, setSondertilgungenCache] = useState<
-    Sondertilgung[]
-  >([]);
-  const [tilgungswechselCache, setTilgungswechselCache] = useState<
-    Tilgungswechsel[]
-  >([]);
   const nebenkostenActive = useNebenkostenActiveStore().value;
 
   const searchParams = useSearchParams();
@@ -67,33 +60,22 @@ export default function ResultDisplay() {
 
   const skipNextInputEffect = useRef(false);
 
+  const addSonderAmountsToInput = useUpdateSonderamounts();
+
   useDarkThemeClassToggler();
 
   const changeHandler = async () => {
     if (!input) {
       return;
     }
-    input.sondertilgungen = await sonderCacheHelper.getSondertilgungFromCache(
-      calculationId!,
-      sondertilgungenCache,
-      true,
-    );
-    input.tilgungswechsel = await sonderCacheHelper.getTilgungswechselFromCache(
-      calculationId!,
-      tilgungswechselCache,
-      true,
-    );
+    await addSonderAmountsToInput(input, calculationId!, true);
+
     const tilgungungsTabelle = calcTilgung(
       input,
       calcSummeNebenkosten(input.principal),
     );
     setTable(tilgungungsTabelle);
   };
-
-  const sonderCacheHelper = new SonderCacheHelper(
-    setSondertilgungenCache,
-    setTilgungswechselCache,
-  );
 
   const calcSummeNebenkosten = (principal: number, bundesland?: string) => {
     if (!nebenkostenActive) {
@@ -135,9 +117,7 @@ export default function ResultDisplay() {
     principal,
     skipNextInputEffect,
     postToWorker,
-    sonderCacheHelper,
-    sondertilgungenCache,
-    tilgungswechselCache,
+    addSonderAmountsToInput
   );
 
   useRecalculateTableOnNebenkostenChange({
@@ -162,6 +142,7 @@ export default function ResultDisplay() {
     calcSummeNebenkosten,
     sondertilgungenCache,
     tilgungswechselCache,
+    zinswechselCache,
     skipNextInputEffect,
     setInput,
     setTable,
@@ -198,6 +179,7 @@ export default function ResultDisplay() {
               <MainStatsSection userInput={input} table={table} />
               <div className="grid gap-6 lg:grid-cols-[3fr_2fr]">
                 <div className="hidden md:block">
+                  <OverviewBarContainer />
                   <TilgungstabelleContainer
                     table={table}
                     calculationId={calculationId}

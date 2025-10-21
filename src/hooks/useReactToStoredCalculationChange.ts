@@ -9,6 +9,8 @@ import { Sondertilgung } from "@/lib/models/sondertilgung";
 import { Tilgungswechsel } from "@/lib/models/tilgungswechsel";
 import calcTilgung from "@/lib/calculateArmotizaztionTable";
 import ArmotizationEntry from "@/lib/models/ArmotizationEntry";
+import { zinswechselAccessor } from "@/services/zinswechselAccessor";
+import { Zinswechsel } from "@/lib/models/zinswechsel";
 
 export default function useReactToStoredCalculationChange(
   principal: React.RefObject<number>,
@@ -18,6 +20,7 @@ export default function useReactToStoredCalculationChange(
   calcSummeNebenkosten: (principal: number, bundesland: string) => number,
   sondertilgungenCache: Sondertilgung[],
   tilgungswechselCache: Tilgungswechsel[],
+  zinswechselCache: Zinswechsel[],
   skipNextInputEffect: React.RefObject<boolean>,
   setInput: (value: CalculationDbo | null) => void,
   setTable: (table: ArmotizationEntry[] | null) => void,
@@ -29,11 +32,29 @@ export default function useReactToStoredCalculationChange(
     if (!calculation) {
       return null;
     }
-    const sondertilgungen = sondertilgungenAccessor(id);
-    const tilgungswechsel = tilgungswechselAccessor(id);
-    calculation.sondertilgungen = sondertilgungen;
-    calculation.tilgungswechsel = tilgungswechsel;
+    calculation.sondertilgungen = sondertilgungenAccessor(id);
+    calculation.tilgungswechsel = tilgungswechselAccessor(id);
+    calculation.zinswechsel = zinswechselAccessor(id);
     return calculation;
+  };
+
+  const resetSondertilgungenCache = async () => {
+    const sondertilgungen = await sonderCacheHelper.getSondertilgungFromCache(
+      calculationId!,
+      sondertilgungenCache,
+      true,
+    );
+    const tilgungswechsel = await sonderCacheHelper.getTilgungswechselFromCache(
+      calculationId!,
+      tilgungswechselCache,
+      true,
+    );
+    const zinswechsel = await sonderCacheHelper.getZinswechselFromCache(
+      calculationId!,
+      zinswechselCache,
+      true,
+    );
+    return { sondertilgungen, tilgungswechsel, zinswechsel };
   };
 
   useEffect(() => {
@@ -52,21 +73,11 @@ export default function useReactToStoredCalculationChange(
             result.bundesland,
           );
 
-          // reset cache
-          const sondertilgungen =
-            await sonderCacheHelper.getSondertilgungFromCache(
-              calculationId!,
-              sondertilgungenCache,
-              true,
-            );
-          const tilgungswechsel =
-            await sonderCacheHelper.getTilgungswechselFromCache(
-              calculationId!,
-              tilgungswechselCache,
-              true,
-            );
+          const { sondertilgungen, tilgungswechsel, zinswechsel } =
+            await resetSondertilgungenCache();
           result.sondertilgungen = sondertilgungen;
           result.tilgungswechsel = tilgungswechsel;
+          result.zinswechsel = zinswechsel;
 
           /* skip the inputEffect to prevent duplicating the calculation */
           skipNextInputEffect.current = true;

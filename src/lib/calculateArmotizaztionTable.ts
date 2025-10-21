@@ -72,6 +72,7 @@ const calculateArmotizationTable = (
       remainingPrincipal: restSumme,
       sondertilgung: sondertilgung,
       tilgungswechsel: tilgungswechsel,
+      zinswechsel: interestRateChange,
     };
     armotizationTable.push(armortizationEntry);
     counter++;
@@ -117,7 +118,7 @@ const findInterestRateChange = (calculation: CashRoiModel, year: number) => {
     const interestRateChangeForYear = calculation.interestRateChanges.find(
       (x) => x.year === year,
     );
-    return interestRateChangeForYear?.newRate || 0;
+    return interestRateChangeForYear?.amount || 0;
   }
   return 0;
 }

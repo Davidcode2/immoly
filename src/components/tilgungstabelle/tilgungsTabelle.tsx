@@ -52,13 +52,35 @@ export default function Tilgungstabelle({
     setShowSondertilgungModal(false);
   };
 
-  const handleTilgungsWechsel = async (newTilgung: string, year: number) => {
-    updateSonderAmountInBrowserStorage(
-      "tilgungswechsel",
-      String(year),
-      newTilgung,
-      calculationId!,
-    );
+  const handleTilgungsWechsel = async (
+    newTilgung: string,
+    newZins: string,
+    year: number,
+  ) => {
+    if (Number(newTilgung) !== selectedEntry!.yearlyRate / 12) {
+      updateSonderAmountInBrowserStorage(
+        "tilgungswechsel",
+        String(year),
+        newTilgung,
+        calculationId!,
+      );
+    }
+    if (newZins.includes(",")) {
+      newZins = newZins.replace(",", ".");
+    }
+    if (
+      Number(newZins) !==
+      (selectedEntry!.interest /
+        (selectedEntry!.remainingPrincipal + selectedEntry!.principal)) *
+      100
+    ) {
+      updateSonderAmountInBrowserStorage(
+        "zinswechsel",
+        String(year),
+        newZins,
+        calculationId!,
+      );
+    }
     sendChangeNotification();
     setShowTilgungswechselModal(false);
   };
@@ -91,13 +113,22 @@ export default function Tilgungstabelle({
             handleSubmit={handleTilgungsWechsel}
             year={selectedEntry!.year!}
             tilgungswechsel={
-              selectedEntry!.tilgungswechsel || selectedEntry!.yearlyRate / 12
+              selectedEntry!.tilgungswechsel ||
+              Math.round(selectedEntry!.yearlyRate / 12)
+            }
+            zinswechsel={
+              selectedEntry!.zinswechsel ||
+              (selectedEntry!.interest /
+                (selectedEntry!.remainingPrincipal +
+                  selectedEntry!.principal)) *
+              100
             }
           />
         </CenteredModal>
       )}
       {showSondertilgungModal && (
-        <CenteredModal onClose={() => setShowSondertilgungModal(false)}
+        <CenteredModal
+          onClose={() => setShowSondertilgungModal(false)}
           historyState={{ modalId: "special-repayment" }}
         >
           <SondertilgungModal
@@ -130,12 +161,17 @@ export default function Tilgungstabelle({
           {temporaryTable.map((x) => (
             <tr
               key={x.year}
-              className="hover:cursor-pointer hover:bg-[var(--light-accent)]/40 hover:shadow"
+              className={`hover:cursor-pointer hover:bg-[var(--light-accent)]/40 hover:shadow ${x.zinswechsel > 0 && "border-t border-[var(--primary)]"}`}
               onClick={(e) => openTilgungswechselModal(e, x)}
             >
               <td className="px-4 py-3 md:py-5">{x.year}</td>
               <td className="max-w-12 py-3 sm:px-4 md:max-w-22 md:py-5">
                 {Math.round(x.interest).toLocaleString("de")}
+                {x.zinswechsel > 0 && (
+                  <div className="text-xs text-[var(--dark-success)]">
+                    {x.zinswechsel.toLocaleString("de")} %.
+                  </div>
+                )}
               </td>
               <td className="max-w-12 py-3 sm:px-4 md:max-w-22 md:py-5">
                 {Math.round(x.principal).toLocaleString("de")}

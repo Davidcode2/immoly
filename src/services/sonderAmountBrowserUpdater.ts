@@ -15,6 +15,7 @@ export const updateSonderAmountInBrowserStorage = (
   calculationId: string,
 ) => {
   const existingString = localStorage.getItem(`${calculationId}-${type}`);
+  // use Sondertilgung type as represenatative of all sonder types
   const existing: Sondertilgung[] = JSON.parse(existingString || "[]");
   const yearNumber = Number(year);
   const newAmountNumber = Number(newAmount);

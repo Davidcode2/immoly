@@ -1,8 +1,5 @@
 import { useEffect } from "react";
 import CashRoiModel from "@/lib/models/cashRoiModel";
-import SonderCacheHelper from "@/services/cacheHelper";
-import { Sondertilgung } from "@/lib/models/sondertilgung";
-import { Tilgungswechsel } from "@/lib/models/tilgungswechsel";
 
 export default function useReactToInputChange(
   input: CashRoiModel | null,
@@ -12,22 +9,12 @@ export default function useReactToInputChange(
   principal: React.RefObject<number>,
   skipNextInputEffect: React.RefObject<boolean>,
   postToWorker: (input: CashRoiModel, nebenkosten: number) => void,
-  sonderCacheHelper: SonderCacheHelper,
-  sondertilgungenCache: Sondertilgung[],
-  tilgungswechselCache: Tilgungswechsel[],
+  addSonderAmountsToInput: (input: CashRoiModel, calculationId: string, update: boolean) => void
 ) {
   useEffect(() => {
     async function loadData() {
       if (!input) return;
-      input.sondertilgungen = await sonderCacheHelper.getSondertilgungFromCache(
-        calculationId!,
-        sondertilgungenCache,
-      );
-      input.tilgungswechsel =
-        await sonderCacheHelper.getTilgungswechselFromCache(
-          calculationId!,
-          tilgungswechselCache,
-        );
+      addSonderAmountsToInput(input, calculationId!, false);
 
       const nebenkosten = calcSummeNebenkosten(input.principal);
       principal.current = input.principal;
