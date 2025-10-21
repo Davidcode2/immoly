@@ -42,6 +42,9 @@ export default function Tilgungstabelle({
     updatedSondertilgungAmount: string,
     year: number,
   ) => {
+    if (
+      Number(updatedSondertilgungAmount) < 1000
+    ) return;
     updateSonderAmountInBrowserStorage(
       "sondertilgungen",
       String(year),
