@@ -43,7 +43,7 @@ export default function Tilgungstabelle({
     year: number,
   ) => {
     if (
-      Number(updatedSondertilgungAmount) < 1000
+      Number(updatedSondertilgungAmount) < 1000 && updatedSondertilgungAmount !== ""
     ) return;
     updateSonderAmountInBrowserStorage(
       "sondertilgungen",
