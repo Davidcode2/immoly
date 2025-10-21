@@ -18,7 +18,7 @@ export default function useReactToInputChange(
       const { sondertilgungen, tilgungswechsel, zinswechsel } = await getSonderamounts(calculationId!, false);
       input.sondertilgungen = sondertilgungen;
       input.tilgungswechsel = tilgungswechsel;
-      input.interestRateChanges = zinswechsel;
+      input.zinswechsel = zinswechsel;
 
       const nebenkosten = calcSummeNebenkosten(input.principal);
       principal.current = input.principal;
