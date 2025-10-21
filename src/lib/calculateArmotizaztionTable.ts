@@ -114,8 +114,8 @@ const findTilgungswechsel = (calculation: CashRoiModel, year: number) => {
 };
 
 const findInterestRateChange = (calculation: CashRoiModel, year: number) => {
-  if (calculation.interestRateChanges) {
-    const interestRateChangeForYear = calculation.interestRateChanges.find(
+  if (calculation.zinswechsel) {
+    const interestRateChangeForYear = calculation.zinswechsel.find(
       (x) => x.year === year,
     );
     return interestRateChangeForYear?.amount || 0;

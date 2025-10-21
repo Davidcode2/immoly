@@ -60,7 +60,7 @@ export default function ResultDisplay() {
 
   const skipNextInputEffect = useRef(false);
 
-  const addSonderAmountsToInput = useUpdateSonderamounts();
+  const getSonderAmounts = useUpdateSonderamounts();
 
   useDarkThemeClassToggler();
 
@@ -68,7 +68,10 @@ export default function ResultDisplay() {
     if (!input) {
       return;
     }
-    await addSonderAmountsToInput(input, calculationId!, true);
+    const { sondertilgungen, tilgungswechsel, zinswechsel } = await getSonderAmounts(calculationId!, true);
+    input.sondertilgungen = sondertilgungen;
+    input.tilgungswechsel = tilgungswechsel;
+    input.zinswechsel = zinswechsel;
 
     const tilgungungsTabelle = calcTilgung(
       input,
@@ -117,7 +120,7 @@ export default function ResultDisplay() {
     principal,
     skipNextInputEffect,
     postToWorker,
-    addSonderAmountsToInput
+    getSonderAmounts
   );
 
   useRecalculateTableOnNebenkostenChange({
@@ -138,14 +141,11 @@ export default function ResultDisplay() {
     principal,
     calculationId,
     bundeslandState,
-    sonderCacheHelper,
     calcSummeNebenkosten,
-    sondertilgungenCache,
-    tilgungswechselCache,
-    zinswechselCache,
     skipNextInputEffect,
     setInput,
     setTable,
+    getSonderAmounts
   );
 
   return (

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import CashRoiModel from "@/lib/models/cashRoiModel";
+import { SonderAmounts } from "@/lib/models/sonderamounts";
 
 export default function useReactToInputChange(
   input: CashRoiModel | null,
@@ -9,12 +10,15 @@ export default function useReactToInputChange(
   principal: React.RefObject<number>,
   skipNextInputEffect: React.RefObject<boolean>,
   postToWorker: (input: CashRoiModel, nebenkosten: number) => void,
-  addSonderAmountsToInput: (input: CashRoiModel, calculationId: string, update: boolean) => void
+  getSonderamounts: (calculationId: string, update: boolean) => Promise<SonderAmounts>
 ) {
   useEffect(() => {
     async function loadData() {
       if (!input) return;
-      addSonderAmountsToInput(input, calculationId!, false);
+      const { sondertilgungen, tilgungswechsel, zinswechsel } = await getSonderamounts(calculationId!, false);
+      input.sondertilgungen = sondertilgungen;
+      input.tilgungswechsel = tilgungswechsel;
+      input.interestRateChanges = zinswechsel;
 
       const nebenkosten = calcSummeNebenkosten(input.principal);
       principal.current = input.principal;
