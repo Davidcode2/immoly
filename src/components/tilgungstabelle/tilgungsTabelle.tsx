@@ -169,7 +169,7 @@ export default function Tilgungstabelle({
                 {Math.round(x.interest).toLocaleString("de")}
                 {x.zinswechsel > 0 && (
                   <div className="text-xs text-[var(--dark-success)]">
-                    {x.zinswechsel.toLocaleString("de")} %.
+                    {x.zinswechsel.toLocaleString("de")} %
                   </div>
                 )}
               </td>
