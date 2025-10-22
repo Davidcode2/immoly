@@ -1,8 +1,12 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InputWithThousandsSeparator from "../inputWithThousandsSeparator";
 
 type PropTypes = {
-  handleSubmit: (type: "zins" | "tilgung", newZins: string, year: number) => void;
+  handleSubmit: (
+    type: "zins" | "tilgung",
+    newZins: string,
+    year: number,
+  ) => void;
   year: number;
   tilgungswechsel: number;
   zinswechsel: number;
@@ -14,7 +18,14 @@ export default function TilgungsWechselModal({
   zinswechsel,
 }: PropTypes) {
   const [selectedTab, setSelectedTab] = useState<"tilgung" | "zins">("tilgung");
-  const zinsRef = useRef<number>(zinswechsel)
+  const zinsRef = useRef<number>(zinswechsel);
+
+  const formattedZinswechsel = zinswechsel.toFixed(2).replace(".", ",");
+  const [inputValue, setInputValue] = useState(formattedZinswechsel);
+
+  useEffect(() => {
+    setInputValue(formattedZinswechsel);
+  }, [formattedZinswechsel]);
 
   const localHandleTilgungSubmit = (
     event: React.FormEvent<HTMLFormElement>,
@@ -36,7 +47,15 @@ export default function TilgungsWechselModal({
     handleSubmit("zins", unformattedZins, year);
   };
 
-  const formattedZinswechsel = zinswechsel.toFixed(2).replace(".", ",");
+  const handleZinsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+
+    const regex = /^(\d{1,2}(,\d{0,2})?)?$/;
+
+    if ((regex.test(newValue) && newValue.length <= 5) || newValue === "") {
+      setInputValue(newValue);
+    }
+  };
 
   return (
     <div className="tilgungsWechselModal z-40 mx-10 w-[400px] rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl sm:mx-0 dark:from-[var(--background)]/80 dark:to-[var(--background)]/50 dark:shadow-[0_4px_200px_var(--dark-accent)]/10">
@@ -63,7 +82,7 @@ export default function TilgungsWechselModal({
               <div className="flex flex-col px-4 pt-10 text-center md:px-18 md:pt-18">
                 <form
                   onSubmit={localHandleTilgungSubmit}
-                  className="flex flex-col gap-y-6 justify-around"
+                  className="flex flex-col justify-around gap-y-6"
                 >
                   <div className="">
                     Wähle eine neue monatliche Rate nach{" "}
@@ -90,7 +109,7 @@ export default function TilgungsWechselModal({
             <div className="flex flex-col px-4 pt-10 text-center md:px-18 md:pt-18">
               <form
                 onSubmit={localHandleZinsSubmit}
-                className="flex flex-col gap-y-6 justify-around"
+                className="flex flex-col justify-around gap-y-6"
               >
                 <div className="">
                   Wähle einen neuen Zinssatz nach{" "}
@@ -98,12 +117,16 @@ export default function TilgungsWechselModal({
                 </div>
                 <div className="flex items-center justify-center">
                   <input
-                    defaultValue={formattedZinswechsel}
+                    value={inputValue}
                     type="text"
+                    onChange={handleZinsChange}
                     id="newZins"
                     inputMode="decimal"
                     name="newZins"
-                    placeholder={String(zinsRef.current.toFixed(2)).replace(".", ",")}
+                    placeholder={String(zinsRef.current.toFixed(2)).replace(
+                      ".",
+                      ",",
+                    )}
                     maxLength={5}
                     max={99.99}
                     min={0}
