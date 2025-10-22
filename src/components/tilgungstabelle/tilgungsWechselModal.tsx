@@ -31,18 +31,18 @@ export default function TilgungsWechselModal({
   const formattedZinswechsel = zinswechsel.toFixed(2).replace(".", ",");
 
   return (
-    <div className="tilgungsWechselModal z-40 mx-10 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl sm:mx-0 md:w-[400px] dark:from-[var(--background)]/80 dark:to-[var(--background)]/50 dark:shadow-[0_4px_200px_var(--dark-accent)]/10">
+    <div className="tilgungsWechselModal z-40 mx-10 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl sm:mx-0 w-[400px] dark:from-[var(--background)]/80 dark:to-[var(--background)]/50 dark:shadow-[0_4px_200px_var(--dark-accent)]/10">
       <div className="tilgungsWechselModal">
         <div className="flex justify-center dark:border-b">
           <label
-            className={`tilgungsWechselModal ${selectedTab === "tilgung" ? "bg-[var(--primary)]/5 dark:bg-[var(--background)]" : "bg-[var(--primary)]/40 dark:bg-[var(--grey-accent)]/10"} w-full rounded-tl-xl text-base hover:bg-[var(--primary)]/20 md:p-10`}
+            className={`tilgungsWechselModal ${selectedTab === "tilgung" ? "bg-[var(--primary)]/5 dark:bg-[var(--background)]" : "bg-[var(--primary)]/40 dark:bg-[var(--grey-accent)]/10"} w-full rounded-tl-xl text-base hover:bg-[var(--primary)]/20 p-4 md:p-10`}
             htmlFor="newTilgung"
             onClick={() => setSelectedTab("tilgung")}
           >
             Tilgungswechsel
           </label>
           <label
-            className={`tilgungsWechselModal ${selectedTab === "zins" ? "dark:bg-[var(--background)]" : "bg-[var(--primary)]/40 dark:bg-[var(--grey-accent)]/10"} w-full rounded-tr-xl text-base hover:bg-[var(--primary)]/20 md:p-10`}
+            className={`tilgungsWechselModal ${selectedTab === "zins" ? "dark:bg-[var(--background)]" : "bg-[var(--primary)]/40 dark:bg-[var(--grey-accent)]/10"} w-full rounded-tr-xl text-base hover:bg-[var(--primary)]/20 md:p-10 p-4`}
             htmlFor="newZins"
             onClick={() => setSelectedTab("zins")}
           >
