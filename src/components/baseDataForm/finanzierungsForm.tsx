@@ -185,7 +185,7 @@ export default function FinanzierungsForm({
             </button>
           </div>
         ) : (
-          <div className="h-[102px]"></div>
+          <div className="lg:h-[102px]"></div>
         )}
       </Form>
     </>
