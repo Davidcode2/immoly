@@ -121,14 +121,6 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
           </CenteredModal>
         )}
         <EditIconComponent setShowModal={setShowModal} />
-        <div className="absolute -bottom-[5px] h-40 w-40 md:static md:hidden md:h-48 md:w-48">
-          <PieChartNebenkosten
-            data={pieChartData}
-            activeIndex={activeIndex}
-            handleMouseEnter={handleMouseEnter}
-            handleMouseLeave={handleMouseLeave}
-          />
-        </div>
         <NebenkostenGrid
           openModal={setShowModal}
           data={pieChartData}
@@ -136,7 +128,7 @@ export default function NebenkostenDisplay({ calculationData }: PropTypes) {
           handleMouseEnter={handleMouseEnter}
           handleMouseLeave={handleMouseLeave}
         />
-        <div className="relative bottom-4 z-20 hidden h-40 w-40 md:block md:h-38 md:w-48">
+        <div className="absolute -bottom-[5px] h-40 w-40 md:relative md:bottom-4 md:z-20 md:block md:h-38 md:w-48">
           <PieChartNebenkosten
             data={pieChartData}
             activeIndex={activeIndex}

@@ -7,7 +7,7 @@ type PropTypes = {
   activeIndex: number | null;
   handleMouseEnter: (index: number) => void;
   handleMouseLeave: () => void;
-  customInnerWidth?: string
+  customInnerWidth?: string;
 };
 
 export default function PieChartNebenkosten({
@@ -15,10 +15,12 @@ export default function PieChartNebenkosten({
   activeIndex,
   handleMouseEnter,
   handleMouseLeave,
-  customInnerWidth
+  customInnerWidth,
 }: PropTypes) {
   const [colors, setColors] = useState<string[]>([]);
   const { resolvedTheme } = useTheme();
+  const [isMobile, setIsMobile] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -38,8 +40,28 @@ export default function PieChartNebenkosten({
     return () => clearTimeout(id);
   }, [resolvedTheme]);
 
-  const cy =  window.innerWidth < 768 ? "100%" : "50%";
-  const innerWidth = customInnerWidth ? customInnerWidth : window.innerWidth < 768 ? "50%" : "70%";
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+
+    setHasMounted(true);
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
+
+  const cy = isMobile ? "100%" : "50%";
+  const innerWidth = customInnerWidth
+    ? customInnerWidth
+    : isMobile
+      ? "50%"
+      : "70%";
+
+  if (!hasMounted) {
+    return <div style={{ width: "100%", minHeight: 300 }} />;
+  }
 
   return (
     <ResponsiveContainer width="100%" height="100%">
