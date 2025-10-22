@@ -35,14 +35,14 @@ export default function TilgungsWechselModal({
       <div className="tilgungsWechselModal">
         <div className="flex justify-center dark:border-b">
           <label
-            className={`tilgungsWechselModal ${selectedTab === "tilgung" ? "bg-[var(--primary)]/10" : "bg-[var(--primary)]/40 dark:bg-[var(--background)]/80"} w-full rounded-tl-xl text-base hover:bg-[var(--primary)]/20 md:p-10`}
+            className={`tilgungsWechselModal ${selectedTab === "tilgung" ? "bg-[var(--primary)]/5 dark:bg-[var(--background)]" : "bg-[var(--primary)]/40 dark:bg-[var(--grey-accent)]/10"} w-full rounded-tl-xl text-base hover:bg-[var(--primary)]/20 md:p-10`}
             htmlFor="newTilgung"
             onClick={() => setSelectedTab("tilgung")}
           >
             Tilgungswechsel
           </label>
           <label
-            className={`tilgungsWechselModal ${selectedTab === "zins" ? "bg-[var(--primary)]/10" : "bg-[var(--primary)]/40 dark:bg-[var(--background)]/80"} w-full rounded-tr-xl text-base hover:bg-[var(--primary)]/20 md:p-10`}
+            className={`tilgungsWechselModal ${selectedTab === "zins" ? "dark:bg-[var(--background)]" : "bg-[var(--primary)]/40 dark:bg-[var(--grey-accent)]/10"} w-full rounded-tr-xl text-base hover:bg-[var(--primary)]/20 md:p-10`}
             htmlFor="newZins"
             onClick={() => setSelectedTab("zins")}
           >
