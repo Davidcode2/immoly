@@ -23,6 +23,7 @@ export default function PieChartNebenkosten({
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
+    if (!hasMounted) return;
     const root = document.documentElement;
     const updateColors = () => {
       const styles = getComputedStyle(root);
@@ -38,9 +39,14 @@ export default function PieChartNebenkosten({
     // Defer until after class change has applied
     const id = setTimeout(updateColors, 0);
     return () => clearTimeout(id);
-  }, [resolvedTheme]);
+  }, [resolvedTheme, hasMounted]);
 
   useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hasMounted) return;
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -48,9 +54,8 @@ export default function PieChartNebenkosten({
     checkIsMobile();
     window.addEventListener("resize", checkIsMobile);
 
-    setHasMounted(true);
     return () => window.removeEventListener("resize", checkIsMobile);
-  }, []);
+  }, [hasMounted]);
 
   const cy = isMobile ? "100%" : "50%";
   const innerWidth = customInnerWidth
@@ -60,11 +65,11 @@ export default function PieChartNebenkosten({
       : "70%";
 
   if (!hasMounted) {
-    return <div style={{ width: "100%", minHeight: 300 }} />;
+    return null;
   }
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height="100%" aspect={1}>
       <PieChart>
         <Pie
           data={data}
