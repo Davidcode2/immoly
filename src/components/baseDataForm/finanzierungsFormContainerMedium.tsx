@@ -19,12 +19,14 @@ type PropTypes = {
   setInput: (data: CashRoiModel) => void;
   showForm: boolean;
   setShowForm: (arg: boolean) => void;
+  showButton?: boolean;
 };
 export default function FinanzierungsFormContainerMedium({
   formValues,
   setInput,
   showForm,
   setShowForm,
+  showButton = true,
 }: PropTypes) {
   const searchParams = useSearchParams();
 
@@ -87,7 +89,7 @@ export default function FinanzierungsFormContainerMedium({
             >
               <PanelRightOpen strokeWidth={"1"} />
             </button>
-            <FinanzierungsForm values={formValues} setInput={setInput} />
+            <FinanzierungsForm showButton={showButton} values={formValues} setInput={setInput} />
           </div>
         </DrawerContent>
       </Drawer>

@@ -11,7 +11,7 @@ export default async function EmbedPage() {
       <div className="flex flex-col md:gap-6">
         <Suspense fallback={<Loading />}>
           <div className="p-3 md:pt-8">
-            <ResultDisplay />
+            <ResultDisplay showButton={false} />
           </div>
         </Suspense>
       </div>

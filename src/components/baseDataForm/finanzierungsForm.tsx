@@ -4,7 +4,11 @@ import CashRoiModel from "@/lib/models/cashRoiModel";
 import SliderInput from "@/components/slider/sliderInput";
 import { useRouter, useSearchParams } from "next/navigation";
 import { calculationsLocalStorageSetter } from "@/services/calculationsLocalStorageSetter";
-import { useBundeslandStore, useMaklergebuehrPercentageStore, useMobileFormOpenStore } from "@/store";
+import {
+  useBundeslandStore,
+  useMaklergebuehrPercentageStore,
+  useMobileFormOpenStore,
+} from "@/store";
 import NebenKostenModel from "@/lib/models/nebenkostenModel";
 import { transferSonderAmounts } from "@/services/sonderAmountBrowserUpdater";
 import { toast } from "sonner";
@@ -171,16 +175,18 @@ export default function FinanzierungsForm({
             ></SliderInput>
           </div>
         </div>
-        { showButton &&
-        <div className="mx-auto flex w-full justify-center">
-          <button
-            type="submit"
-            className="mt-15 w-full cursor-pointer rounded-full bg-[var(--primary)]/90 px-4 py-2 text-[var(--foreground)] shadow backdrop-blur-md transition-colors duration-200 hover:bg-[var(--primary)] md:w-fit 2xl:w-full dark:bg-[var(--accent)]/50 dark:hover:bg-[var(--accent)]/80"
-          >
-            Berechnung speichern
-          </button>
-        </div>
-        }
+        {showButton ? (
+          <div className="mx-auto flex w-full justify-center">
+            <button
+              type="submit"
+              className="mt-15 w-full cursor-pointer rounded-full bg-[var(--primary)]/90 px-4 py-2 text-[var(--foreground)] shadow backdrop-blur-md transition-colors duration-200 hover:bg-[var(--primary)] md:w-fit 2xl:w-full dark:bg-[var(--accent)]/50 dark:hover:bg-[var(--accent)]/80"
+            >
+              Berechnung speichern
+            </button>
+          </div>
+        ) : (
+          <div className="h-[102px]"></div>
+        )}
       </Form>
     </>
   );

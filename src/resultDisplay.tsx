@@ -31,7 +31,7 @@ import useReactToInputChange from "./hooks/useReactToInputChange";
 import useReactToStoredCalculationChange from "./hooks/useReactToStoredCalculationChange";
 import { useUpdateSonderamounts } from "./hooks/useUpdateSonderamounts";
 
-export default function ResultDisplay() {
+export default function ResultDisplay({ showButton }: { showButton?: boolean }) {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
   const [input, setInput] = useState<CashRoiModel | null>(null);
   const nebenkostenActive = useNebenkostenActiveStore().value;
@@ -155,13 +155,14 @@ export default function ResultDisplay() {
           setInput={setInput}
           showForm={showForm}
           setShowForm={setShowForm}
+          showButton={showButton}
         />
       </div>
       <div
         className={`grid gap-y-6 md:gap-x-6 md:gap-y-16 2xl:grid-cols-[1fr_5fr] ${table && "items-start"}`}
       >
         <div className="hidden 2xl:block">
-          <FinanzierungsFormContainer formValues={input} setInput={setInput} />
+          <FinanzierungsFormContainer showButton={showButton} formValues={input} setInput={setInput} />
         </div>
         <div className="md:hidden">
           <FinanzierungsForm

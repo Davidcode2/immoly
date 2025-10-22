@@ -5,11 +5,13 @@ import Hero from "@/components/hero/hero";
 type PropTypes = {
   formValues: CashRoiModel | null;
   setInput: (data: CashRoiModel) => void;
+  showButton?: boolean;
 };
 
 export default function FinanzierungsFormContainer({
   formValues,
   setInput,
+  showButton = true,
 }: PropTypes) {
   return (
     <div className="2xl:block rounded-lg shadow backdrop-blur-2xl md:p-8 lg:dark:shadow-[10px_4px_20px_var(--dark-accent)]/5">
@@ -17,7 +19,7 @@ export default function FinanzierungsFormContainer({
         <Hero />
       </div>
       <div className="p-4">
-        <FinanzierungsForm values={formValues} setInput={setInput} />
+        <FinanzierungsForm showButton={showButton} values={formValues} setInput={setInput} />
       </div>
     </div>
   );
