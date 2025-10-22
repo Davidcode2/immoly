@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import InputWithThousandsSeparator from "../inputWithThousandsSeparator";
 
 type PropTypes = {
-  handleSubmit: (newTilgung: string, newZins: string, year: number) => void;
+  handleSubmit: (type: "zins" | "tilgung", newZins: string, year: number) => void;
   year: number;
   tilgungswechsel: number;
   zinswechsel: number;
@@ -14,35 +14,43 @@ export default function TilgungsWechselModal({
   zinswechsel,
 }: PropTypes) {
   const [selectedTab, setSelectedTab] = useState<"tilgung" | "zins">("tilgung");
+  const zinsRef = useRef<number>(zinswechsel)
 
-  const localHandleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const localHandleTilgungSubmit = (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const newTilgung = form.elements.namedItem(
       "newTilgung",
     ) as HTMLInputElement;
-    const newZins = form.elements.namedItem("newZins") as HTMLInputElement;
     const unformattedTilgung = newTilgung.value.replace(/\./g, "");
+    handleSubmit("tilgung", unformattedTilgung, year);
+  };
+
+  const localHandleZinsSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const newZins = form.elements.namedItem("newZins") as HTMLInputElement;
     const unformattedZins = newZins.value;
-    console.log("unformattedZins before replace:", unformattedZins);
-    handleSubmit(unformattedTilgung, unformattedZins, year);
+    handleSubmit("zins", unformattedZins, year);
   };
 
   const formattedZinswechsel = zinswechsel.toFixed(2).replace(".", ",");
 
   return (
-    <div className="tilgungsWechselModal z-40 mx-10 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl sm:mx-0 w-[400px] dark:from-[var(--background)]/80 dark:to-[var(--background)]/50 dark:shadow-[0_4px_200px_var(--dark-accent)]/10">
+    <div className="tilgungsWechselModal z-40 mx-10 w-[400px] rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl sm:mx-0 dark:from-[var(--background)]/80 dark:to-[var(--background)]/50 dark:shadow-[0_4px_200px_var(--dark-accent)]/10">
       <div className="tilgungsWechselModal">
         <div className="flex justify-center dark:border-b">
           <label
-            className={`tilgungsWechselModal ${selectedTab === "tilgung" ? "bg-[var(--primary)]/5 dark:bg-[var(--background)]" : "bg-[var(--primary)]/40 dark:bg-[var(--grey-accent)]/10"} w-full rounded-tl-xl text-base hover:bg-[var(--primary)]/20 p-4 md:p-10`}
+            className={`tilgungsWechselModal ${selectedTab === "tilgung" ? "bg-[var(--primary)]/5 dark:bg-[var(--background)]" : "bg-[var(--primary)]/40 dark:bg-[var(--grey-accent)]/10"} w-full rounded-tl-xl p-4 text-base hover:bg-[var(--primary)]/20 md:p-10`}
             htmlFor="newTilgung"
             onClick={() => setSelectedTab("tilgung")}
           >
             Tilgungswechsel
           </label>
           <label
-            className={`tilgungsWechselModal ${selectedTab === "zins" ? "dark:bg-[var(--background)]" : "bg-[var(--primary)]/40 dark:bg-[var(--grey-accent)]/10"} w-full rounded-tr-xl text-base hover:bg-[var(--primary)]/20 md:p-10 p-4`}
+            className={`tilgungsWechselModal ${selectedTab === "zins" ? "dark:bg-[var(--background)]" : "bg-[var(--primary)]/40 dark:bg-[var(--grey-accent)]/10"} w-full rounded-tr-xl p-4 text-base hover:bg-[var(--primary)]/20 md:p-10`}
             htmlFor="newZins"
             onClick={() => setSelectedTab("zins")}
           >
@@ -50,13 +58,13 @@ export default function TilgungsWechselModal({
           </label>
         </div>
         <div>
-          <form
-            onSubmit={localHandleSubmit}
-            className="flex flex-col justify-around"
-          >
-            {selectedTab === "tilgung" ? (
-              <>
-                <div className="flex flex-col gap-y-5 px-4 pt-10 text-center md:px-18 md:pt-18">
+          {selectedTab === "tilgung" ? (
+            <>
+              <div className="flex flex-col px-4 pt-10 text-center md:px-18 md:pt-18">
+                <form
+                  onSubmit={localHandleTilgungSubmit}
+                  className="flex flex-col gap-y-6 justify-around"
+                >
                   <div className="">
                     Wähle eine neue monatliche Rate nach{" "}
                     {year <= 1 ? "einem Jahr" : year + " Jahren"}
@@ -72,10 +80,18 @@ export default function TilgungsWechselModal({
 
                     <div className="relative top-1 -left-6 text-lg">€</div>
                   </div>
-                </div>
-              </>
-            ) : (
-              <div className="flex flex-col gap-y-5 px-4 pt-10 text-center md:px-18 md:pt-18">
+                  <button className="mx-auto my-10 cursor-pointer rounded-full bg-[var(--light-accent)] p-2 px-10 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90 dark:bg-[var(--dark-accent)]">
+                    Übernehmen
+                  </button>
+                </form>
+              </div>
+            </>
+          ) : (
+            <div className="flex flex-col px-4 pt-10 text-center md:px-18 md:pt-18">
+              <form
+                onSubmit={localHandleZinsSubmit}
+                className="flex flex-col gap-y-6 justify-around"
+              >
                 <div className="">
                   Wähle einen neuen Zinssatz nach{" "}
                   {year <= 1 ? "einem Jahr" : year + " Jahren"}
@@ -87,6 +103,7 @@ export default function TilgungsWechselModal({
                     id="newZins"
                     inputMode="decimal"
                     name="newZins"
+                    placeholder={String(zinsRef.current.toFixed(2)).replace(".", ",")}
                     maxLength={5}
                     max={99.99}
                     min={0}
@@ -94,12 +111,12 @@ export default function TilgungsWechselModal({
                   />
                   <div className="relative right-6">%</div>
                 </div>
-              </div>
-            )}
-            <button className="mx-auto my-10 cursor-pointer rounded-full bg-[var(--light-accent)] p-2 px-10 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90 dark:bg-[var(--dark-accent)]">
-              Übernehmen
-            </button>
-          </form>
+                <button className="mx-auto my-10 cursor-pointer rounded-full bg-[var(--light-accent)] p-2 px-10 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90 dark:bg-[var(--dark-accent)]">
+                  Übernehmen
+                </button>
+              </form>
+            </div>
+          )}
         </div>
       </div>
     </div>

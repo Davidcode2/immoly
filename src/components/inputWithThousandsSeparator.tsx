@@ -12,8 +12,11 @@ type PropTypes = {
   min?: number;
   max?: number;
   maxLength?: number;
-  handleChange?: (arg1: React.ChangeEvent<HTMLInputElement>, arg2: number) => void
-}
+  handleChange?: (
+    arg1: React.ChangeEvent<HTMLInputElement>,
+    arg2: number,
+  ) => void;
+};
 export default function InputWithThousandsSeparator({
   value,
   className,
@@ -27,6 +30,7 @@ export default function InputWithThousandsSeparator({
   const [displayValue, setDisplayValue] = useState<string>("");
   const [prevValue, setPrevValue] = useState<string>("");
   const [prevNumberOfDots, setPrevNumberOfDots] = useState<number>(0);
+  const valueRef = useRef<string>(formatGerman(String(value)));
 
   useEffect(() => {
     inputRef.current!.select();
@@ -88,6 +92,7 @@ export default function InputWithThousandsSeparator({
       name={inputName}
       type="text"
       inputMode="numeric"
+      placeholder={valueRef.current}
       min={min || 0}
       max={max || 1000000}
       maxLength={maxLength || 10}

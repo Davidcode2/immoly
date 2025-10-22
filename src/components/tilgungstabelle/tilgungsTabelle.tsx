@@ -43,8 +43,10 @@ export default function Tilgungstabelle({
     year: number,
   ) => {
     if (
-      Number(updatedSondertilgungAmount) < 1000 && updatedSondertilgungAmount !== ""
-    ) return;
+      Number(updatedSondertilgungAmount) < 1000 &&
+      updatedSondertilgungAmount !== ""
+    )
+      return;
     updateSonderAmountInBrowserStorage(
       "sondertilgungen",
       String(year),
@@ -85,13 +87,18 @@ export default function Tilgungstabelle({
     }
   };
 
-  const handleTilgungsWechsel = async (
-    newTilgung: string,
-    newZins: string,
+  const handleTilgungsOrZinsWechsel = async (
+    type: "tilgung" | "zins",
+    newAmount: string,
     year: number,
   ) => {
-    updateTilgungswechsel(newTilgung, year);
-    updateZinswechsel(newZins, year);
+    if (type === "tilgung") {
+      updateTilgungswechsel(newAmount, year);
+    } else if (type === "zins") {
+      updateZinswechsel(newAmount, year);
+    } else {
+      return;
+    }
     sendChangeNotification();
     setShowTilgungswechselModal(false);
   };
@@ -121,7 +128,7 @@ export default function Tilgungstabelle({
           historyState={{ modalId: "repayment-change" }}
         >
           <TilgungsWechselModal
-            handleSubmit={handleTilgungsWechsel}
+            handleSubmit={handleTilgungsOrZinsWechsel}
             year={selectedEntry!.year!}
             tilgungswechsel={
               selectedEntry!.tilgungswechsel ||
