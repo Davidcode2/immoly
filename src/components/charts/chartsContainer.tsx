@@ -2,6 +2,7 @@ import PlotlyChart from "./chart";
 import ArmotizationEntry from "@/lib/models/ArmotizationEntry";
 import CashRoiModel from "@/lib/models/cashRoiModel";
 import SaveOrBuyContainer from "./saveOrBuyContainer";
+import { screenWidthMobile } from "@/utils/screenWidth";
 
 type PropTypes = {
   table: ArmotizationEntry[];
@@ -17,9 +18,11 @@ export default function ChartsContainer({ input, setInput, table }: PropTypes) {
           <div className="min-h-[450px] px-4 justify-around rounded-lg md:shadow backdrop-blur-lg md:min-h-[300px]">
             <PlotlyChart data={table} rent={input.rent} />
           </div>
-          <div className="hidden px-4 min-h-[200px] justify-around rounded-lg backdrop-blur-lg md:block md:min-h-[300px] md:shadow">
+          { !screenWidthMobile() && 
+          <div className="px-4 min-h-[200px] justify-around rounded-lg backdrop-blur-lg md:block md:min-h-[300px] md:shadow">
             <SaveOrBuyContainer table={table} setInput={setInput} input={input} />
           </div>
+          }
         </div>
       )}
     </div>
