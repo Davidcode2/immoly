@@ -33,7 +33,6 @@ export default function Embed() {
     };
     handleMessage();
     return () => {
-      window.removeEventListener("message", handleMessage);
       if (resizeObserverRef.current) {
         resizeObserverRef.current.disconnect();
       }
