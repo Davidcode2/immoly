@@ -17,9 +17,10 @@ import { useEffect, useRef, useState } from "react";
 type PropTypes = {
   input: CashRoiModel | null;
   setInput: (data: CashRoiModel) => void;
+  showButton?: boolean;
 };
 
-export default function MobileFormContainer({ input, setInput }: PropTypes) {
+export default function MobileFormContainer({ input, setInput, showButton }: PropTypes) {
   const mobileFormState = useMobileFormOpenStore();
   const showMobileForm = mobileFormState.value;
   const setShowMobileForm = mobileFormState.updateValue;
@@ -69,7 +70,7 @@ export default function MobileFormContainer({ input, setInput }: PropTypes) {
                 <div className="">
                   <div className="rounded-2xl">
                     <div className={``}>
-                      <FinanzierungsForm values={input} setInput={setInput} />
+                      <FinanzierungsForm showButton={showButton} values={input} setInput={setInput} />
                     </div>
                   </div>
                 </div>

@@ -168,7 +168,7 @@ export default function ResultDisplay({ showButton }: { showButton?: boolean }) 
           <FinanzierungsForm
             values={input}
             setInput={setInput}
-            showButton={false}
+            showButton={showButton}
           />
         </div>
         <div className="grid gap-y-6">
@@ -202,7 +202,7 @@ export default function ResultDisplay({ showButton }: { showButton?: boolean }) 
           )}
         </div>
         <div className="mx-auto md:hidden">
-          <MobileFormContainer input={input} setInput={setInput} />
+          <MobileFormContainer showButton={showButton} input={input} setInput={setInput} />
         </div>
       </div>
     </div>
