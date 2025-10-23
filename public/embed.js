@@ -112,7 +112,7 @@ function listenForViewportRequest() {
 
   const throttledPostHeight = throttle(
     () => postViewportHeight(iframe, origin),
-    50,
+    5,
   );
 
   iframe.addEventListener("load", () => {

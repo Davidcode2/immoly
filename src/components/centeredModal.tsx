@@ -116,7 +116,7 @@ export default function CenteredModal({
     const maxTop = Math.max(0, iframeHeight - modalElementHeight);
     modalTop = Math.max(minTop, Math.min(modalTop, maxTop));
 
-    offsetTopRef.current = Math.round(modalTop);
+    offsetTopRef.current = modalTop;
   }, []);
 
   useEffect(() => {
@@ -161,7 +161,7 @@ export default function CenteredModal({
       setOffsetTop((prev) => {
         const diff = offsetTopRef.current - prev;
         if (Math.abs(diff) < 0.5) return offsetTopRef.current; // snap when close
-        return prev + diff * 0.2; // lerp factor 0.2 gives ~smooth trailing
+        return prev + diff * 0.05; // lerp factor 0.2 gives ~smooth trailing
       });
       animationFrame = requestAnimationFrame(animate);
     };
