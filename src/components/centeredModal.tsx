@@ -56,7 +56,7 @@ export default function CenteredModal({
         >
           <div
             ref={backdropRef}
-            className="modal flex h-full w-full items-center justify-center"
+            className="modal flex h-[100dvh] w-full items-center justify-center"
           >
             {children}
           </div>
