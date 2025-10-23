@@ -127,7 +127,6 @@ export default function CenteredModal({
   useEffect(() => {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     const handleMessage = (event: any) => {
-      console.log("Received message: ", event);
       if (event.data?.type !== "PARENT_VIEWPORT") {
         return;
       }

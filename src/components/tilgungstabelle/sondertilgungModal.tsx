@@ -22,7 +22,6 @@ export default function SondertilgungModal({
     ) as HTMLInputElement;
     const unformatted = sondertilgungAmount.value.replace(/\./g, "");
     setTooLittle(Number(unformatted) < 1000);
-    console.log("Submitting sondertilgung:", tooLittle);
     handleSubmit(unformatted, year);
   };
 

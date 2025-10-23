@@ -29,7 +29,6 @@ export default function useReactToStoredCalculationChange(
     calculation.sondertilgungen = sondertilgungenAccessor(id);
     calculation.tilgungswechsel = tilgungswechselAccessor(id);
     calculation.zinswechsel = zinswechselAccessor(id);
-    console.log("loaded zinswechsel", calculation.zinswechsel);
     return calculation;
   };
 
