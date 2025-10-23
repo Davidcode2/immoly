@@ -3,6 +3,20 @@ function setIframeWidth(iframe) {
   iframe.style.width = `calc(100vw - ${scrollbarWidth}px)`;
 }
 
+function postViewportHeight(iframe) {
+  const viewportHeight = window.innerHeight;
+  const scrollY = window.scrollY || window.pageYOffset;
+  const scrollHeight = document.body.scrollHeight;
+
+  iframe.contentWindow.postMessage({
+    type: "PARENT_VIEWPORT",
+    viewportHeight,
+    scrollHeight,
+    scrollY
+  }, "*")
+}
+
+
 (() => {
   const script = document.currentScript;
   const id = script.dataset.id;
@@ -28,5 +42,12 @@ function setIframeWidth(iframe) {
       iframe.style.height = event.data.height + "px";
     }
   });
+
+  let timeout;
+  clearTimeout(timeout);
+  timeout = setTimeout(() => {
+    window.addEventListener("scroll", () => postViewportHeight(iframe));
+    window.addEventListener("load", () => postViewportHeight(iframe));
+  }, 500);
 })();
 

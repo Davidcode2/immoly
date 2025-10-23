@@ -1,5 +1,11 @@
+import {
+  useIsEmbedRoute,
+  useParentScrollHeight,
+  useParentScrollYStore,
+  useParentViewportHeightStore,
+} from "@/store";
 import { useSearchParams } from "next/navigation";
-import { ReactNode, useEffect, useRef, type JSX } from "react";
+import { ReactNode, useEffect, useRef, useState, type JSX } from "react";
 import { createPortal } from "react-dom";
 
 type PropTypes = {
@@ -15,6 +21,11 @@ export default function CenteredModal({
 }: PropTypes): JSX.Element {
   const backdropRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
+  const [offsetTop, setOffsetTop] = useState<number>(0);
+  const parentScrollY = Number(useParentScrollYStore().value);
+  const parentViewportHeight = Number(useParentViewportHeightStore().value);
+  const parentScrollHeight = Number(useParentScrollHeight().value);
+  const isEmbedRoute = useIsEmbedRoute().value;
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (
@@ -47,18 +58,56 @@ export default function CenteredModal({
     }
   }, []);
 
+  useEffect(() => {
+    if (!isEmbedRoute) return;
+    const centerModalVertically = () => {
+      const iframeHeight = document.body.scrollHeight;
+      const iframeTopInParent = parentScrollHeight - iframeHeight;
+
+      setOffsetTop(0);
+      const modalElement = backdropRef.current
+        ?.firstElementChild as HTMLElement;
+      const modalElementHeight = modalElement?.clientHeight;
+
+      let visibleTop = parentScrollY - iframeTopInParent;
+      visibleTop = Math.max(0, Math.min(visibleTop, iframeHeight));
+      let visibleBottom = visibleTop + parentViewportHeight;
+      visibleBottom = Math.max(0, Math.min(visibleBottom, iframeHeight));
+      const visibleCenter = (visibleTop + visibleBottom) / 2;
+      let modalTop = visibleCenter - modalElementHeight / 2;
+
+      const minTop = 0;
+      const maxTop = Math.max(0, iframeHeight - modalElementHeight);
+      modalTop = Math.max(minTop, Math.min(modalTop, maxTop));
+
+      setOffsetTop(Math.round(modalTop));
+    };
+    window.addEventListener("resize", centerModalVertically);
+    centerModalVertically();
+    return () => window.removeEventListener("resize", centerModalVertically);
+  }, []);
+
   return (
     <>
       {createPortal(
         <div
-          className={`fixed inset-0 z-40 backdrop-blur-lg transition-all`}
+          className={`fixed inset-0 z-40 h-screen backdrop-blur-lg transition-all`}
           onClick={handleBackdropClick}
         >
           <div
             ref={backdropRef}
-            className="modal flex h-[100dvh] w-full items-center justify-center"
+            className="modal flex h-screen w-full items-center justify-center"
           >
-            {children}
+            {isEmbedRoute ? (
+              <div
+                className=""
+                style={{ position: "absolute", top: `${offsetTop}px` }}
+              >
+                {children}
+              </div>
+            ) : (
+              children
+            )}
           </div>
         </div>,
         document.body,

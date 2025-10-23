@@ -25,7 +25,7 @@ export default function KreditSummeModal({
   ).toLocaleString("de");
 
   return (
-    <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 p-10 pt-14 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl lg:p-20">
+    <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 p-6 sm:p-10 pt-14 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl lg:p-20">
       <CloseButton onClick={onClose} />
       <div className="grid h-fit grid-cols-[1fr_2fr] items-baseline gap-x-2 gap-y-4">
         <span className="text-[var(--dark-accent)]/90 dark:text-[var(--ultralight-accent)]/90">

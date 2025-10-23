@@ -58,7 +58,7 @@ export default function TilgungsWechselModal({
   };
 
   return (
-    <div className="tilgungsWechselModal z-40 mx-10 w-[400px] rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl sm:mx-0 dark:from-[var(--background)]/80 dark:to-[var(--background)]/50 dark:shadow-[0_4px_200px_var(--dark-accent)]/10">
+    <div className="tilgungsWechselModal z-40 max-sm:max-w-[340px] mx-auto md:w-[400px] rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--primary)]/50 to-[var(--primary)]/40 shadow-2xl sm:mx-0 dark:from-[var(--background)]/80 dark:to-[var(--background)]/50 dark:shadow-[0_4px_200px_var(--dark-accent)]/10">
       <div className="tilgungsWechselModal">
         <div className="flex justify-center dark:border-b">
           <label

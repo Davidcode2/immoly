@@ -41,7 +41,7 @@ export default function NebenkostenModal({
   }, [bundesland]);
 
   return (
-    <div className="z-40 mx-4 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl">
+    <div className="z-40 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl">
       <CloseButton onClick={onClose} />
       <div className="grid md:grid-cols-2">
         {(!screenWidthMobile() || showMap) && (
