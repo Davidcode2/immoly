@@ -4,7 +4,6 @@ import {
   useParentScrollYStore,
   useParentViewportHeightStore,
 } from "@/store";
-import { debounce } from "@/utils/debounce";
 import { screenWidthMedium } from "@/utils/screenWidth";
 import { useSearchParams } from "next/navigation";
 import {
@@ -112,6 +111,45 @@ export default function CenteredModal({
     () => centerModalVertically,
     [centerModalVertically],
   );
+
+  const setParentViewportHeight = useParentViewportHeightStore().updateValue;
+  const setParentScrollY = useParentScrollYStore().updateValue;
+  const setParentScrollHeight = useParentScrollHeight().updateValue;
+
+  const parentOriginRef = useRef(null);
+
+  useEffect(() => {
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    const handleMessage = (event: any) => {
+      if (event.data?.type !== "PARENT_VIEWPORT") {
+        return;
+      }
+
+      const newOrigin = event.origin;
+
+      if (!parentOriginRef.current) {
+        parentOriginRef.current = newOrigin;
+      } else if (newOrigin !== parentOriginRef.current) {
+        console.warn(
+          `Embed rejected message from untrusted origin: ${newOrigin}`,
+        );
+        return;
+      }
+
+      setParentViewportHeight(event.data.viewportHeight);
+      setParentScrollY(event.data.scrollY);
+      setParentScrollHeight(event.data.scrollHeight);
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, [
+    setParentScrollHeight,
+    setParentScrollY,
+    setParentViewportHeight,
+  ]);
 
   return (
     <>
