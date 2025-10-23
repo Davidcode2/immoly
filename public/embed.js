@@ -6,7 +6,7 @@
 function throttle(func, limit) {
   let inThrottle;
   let lastResult;
-  return function (...args) {
+  return function(...args) {
     const context = this;
     if (!inThrottle) {
       inThrottle = true;
@@ -23,7 +23,7 @@ function throttle(func, limit) {
  */
 function debounce(func, delay) {
   let timeoutId;
-  return function (...args) {
+  return function(...args) {
     const context = this;
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
@@ -35,7 +35,7 @@ function debounce(func, delay) {
 function setIframeWidth(iframe) {
   const scrollbarWidth =
     window.innerWidth - document.documentElement.clientWidth;
-  
+
   iframe.style.width = `calc(100vw - ${scrollbarWidth}px)`;
 }
 
@@ -58,6 +58,22 @@ function postViewportHeight(iframe, targetOrigin) {
     },
     targetOrigin,
   );
+}
+
+function listenForViewportRequest() {
+  window.addEventListener("message", (e) => {
+    if (e.data.type === "REQUEST_PARENT_VIEWPORT") {
+      e.source.postMessage(
+        {
+          type: "PARENT_VIEWPORT",
+          scrollY: window.scrollY || window.pageYOffset,
+          scrollHeight: document.body.scrollHeight,
+          viewportHeight: window.innerHeight,
+        },
+        e.origin,
+      );
+    }
+  });
 }
 
 (() => {
@@ -89,7 +105,7 @@ function postViewportHeight(iframe, targetOrigin) {
   // --- Width Handling ---
   if (script.dataset.width === "screen") {
     const debouncedSetWidth = debounce(() => setIframeWidth(iframe), 150);
-    
+
     setIframeWidth(iframe);
     window.addEventListener("resize", debouncedSetWidth);
   }
@@ -118,4 +134,6 @@ function postViewportHeight(iframe, targetOrigin) {
       }
     }
   });
+
+  listenForViewportRequest();
 })();

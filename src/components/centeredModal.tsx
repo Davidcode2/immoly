@@ -10,7 +10,6 @@ import {
   ReactNode,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
   type JSX,
@@ -35,6 +34,13 @@ export default function CenteredModal({
   const parentViewportHeight = Number(useParentViewportHeightStore().value);
   const parentScrollHeight = Number(useParentScrollHeight().value);
   const isEmbedRoute = useIsEmbedRoute().value;
+  const offsetTopRef = useRef(0);
+
+  const setParentViewportHeight = useParentViewportHeightStore().updateValue;
+  const setParentScrollY = useParentScrollYStore().updateValue;
+  const setParentScrollHeight = useParentScrollHeight().updateValue;
+
+  const parentOriginRef = useRef(null);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (
@@ -70,13 +76,13 @@ export default function CenteredModal({
     if (!isEmbedRoute) {
       return;
     }
-    debouncedCenterModal();
-    window.addEventListener("resize", debouncedCenterModal);
+    centerModalVertically();
+    window.addEventListener("resize", centerModalVertically);
 
     return () => {
-      window.removeEventListener("resize", debouncedCenterModal);
+      window.removeEventListener("resize", centerModalVertically);
     };
-  }, []);
+  }, [parentScrollHeight, parentScrollY, parentViewportHeight]);
 
   const centerModalVertically = useCallback(() => {
     if (!isEmbedRoute || !backdropRef.current) {
@@ -87,6 +93,12 @@ export default function CenteredModal({
     if (!modalElement) {
       return;
     }
+
+    const parentScrollY = Number(useParentScrollYStore.getState().value);
+    const parentViewportHeight = Number(
+      useParentViewportHeightStore.getState().value,
+    );
+    const parentScrollHeight = Number(useParentScrollHeight.getState().value);
 
     const iframeHeight = document.body.scrollHeight;
     const modalElementHeight = modalElement.clientHeight;
@@ -104,23 +116,18 @@ export default function CenteredModal({
     const maxTop = Math.max(0, iframeHeight - modalElementHeight);
     modalTop = Math.max(minTop, Math.min(modalTop, maxTop));
 
-    setOffsetTop(Math.round(modalTop));
+    offsetTopRef.current = Math.round(modalTop);
   }, []);
 
-  const debouncedCenterModal = useMemo(
-    () => centerModalVertically,
-    [centerModalVertically],
-  );
-
-  const setParentViewportHeight = useParentViewportHeightStore().updateValue;
-  const setParentScrollY = useParentScrollYStore().updateValue;
-  const setParentScrollHeight = useParentScrollHeight().updateValue;
-
-  const parentOriginRef = useRef(null);
+  useEffect(() => {
+    if (!isEmbedRoute) return;
+    window.parent.postMessage({ type: "REQUEST_PARENT_VIEWPORT" }, "*");
+  }, []);
 
   useEffect(() => {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     const handleMessage = (event: any) => {
+      console.log("Received message: ", event);
       if (event.data?.type !== "PARENT_VIEWPORT") {
         return;
       }
@@ -145,11 +152,23 @@ export default function CenteredModal({
     return () => {
       window.removeEventListener("message", handleMessage);
     };
-  }, [
-    setParentScrollHeight,
-    setParentScrollY,
-    setParentViewportHeight,
-  ]);
+  }, [setParentScrollHeight, setParentScrollY, setParentViewportHeight]);
+
+  useEffect(() => {
+    let animationFrame: number;
+
+    const animate = () => {
+      setOffsetTop((prev) => {
+        const diff = offsetTopRef.current - prev;
+        if (Math.abs(diff) < 0.5) return offsetTopRef.current; // snap when close
+        return prev + diff * 0.2; // lerp factor 0.2 gives ~smooth trailing
+      });
+      animationFrame = requestAnimationFrame(animate);
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
+  }, []);
 
   return (
     <>
