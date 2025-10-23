@@ -4,14 +4,24 @@ import {
   useParentScrollYStore,
   useParentViewportHeightStore,
 } from "@/store";
+import { debounce } from "@/utils/debounce";
+import { screenWidthMedium } from "@/utils/screenWidth";
 import { useSearchParams } from "next/navigation";
-import { ReactNode, useEffect, useRef, useState, type JSX } from "react";
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type JSX,
+} from "react";
 import { createPortal } from "react-dom";
 
 type PropTypes = {
   children: ReactNode;
   onClose: () => void;
-  historyState?: { modalId: string; urlParam?: string }; // optional prop
+  historyState?: { modalId: string; urlParam?: string };
 };
 
 export default function CenteredModal({
@@ -50,7 +60,6 @@ export default function CenteredModal({
 
       return () => {
         window.removeEventListener("popstate", handlePopState);
-        // Optionally clean up URL
         const cleanUrl = new URL(window.location.href);
         cleanUrl.searchParams.delete(param);
         window.history.replaceState(null, "", cleanUrl.toString());
@@ -59,33 +68,50 @@ export default function CenteredModal({
   }, []);
 
   useEffect(() => {
-    if (!isEmbedRoute) return;
-    const centerModalVertically = () => {
-      const iframeHeight = document.body.scrollHeight;
-      const iframeTopInParent = parentScrollHeight - iframeHeight;
+    if (!isEmbedRoute) {
+      return;
+    }
+    debouncedCenterModal();
+    window.addEventListener("resize", debouncedCenterModal);
 
-      setOffsetTop(0);
-      const modalElement = backdropRef.current
-        ?.firstElementChild as HTMLElement;
-      const modalElementHeight = modalElement?.clientHeight;
-
-      let visibleTop = parentScrollY - iframeTopInParent;
-      visibleTop = Math.max(0, Math.min(visibleTop, iframeHeight));
-      let visibleBottom = visibleTop + parentViewportHeight;
-      visibleBottom = Math.max(0, Math.min(visibleBottom, iframeHeight));
-      const visibleCenter = (visibleTop + visibleBottom) / 2;
-      let modalTop = visibleCenter - modalElementHeight / 2;
-
-      const minTop = 0;
-      const maxTop = Math.max(0, iframeHeight - modalElementHeight);
-      modalTop = Math.max(minTop, Math.min(modalTop, maxTop));
-
-      setOffsetTop(Math.round(modalTop));
+    return () => {
+      window.removeEventListener("resize", debouncedCenterModal);
     };
-    window.addEventListener("resize", centerModalVertically);
-    centerModalVertically();
-    return () => window.removeEventListener("resize", centerModalVertically);
   }, []);
+
+  const centerModalVertically = useCallback(() => {
+    if (!isEmbedRoute || !backdropRef.current) {
+      return;
+    }
+
+    const modalElement = backdropRef.current?.firstElementChild as HTMLElement;
+    if (!modalElement) {
+      return;
+    }
+
+    const iframeHeight = document.body.scrollHeight;
+    const modalElementHeight = modalElement.clientHeight;
+
+    const iframeOffsetInParent = parentScrollHeight - iframeHeight;
+    let visibleTop = parentScrollY - iframeOffsetInParent;
+    let visibleBottom = visibleTop + parentViewportHeight;
+
+    visibleTop = Math.max(0, Math.min(visibleTop, iframeHeight));
+    visibleBottom = Math.max(0, Math.min(visibleBottom, iframeHeight));
+
+    const visibleCenter = (visibleTop + visibleBottom) / 2;
+    let modalTop = visibleCenter - modalElementHeight / 2;
+    const minTop = 0;
+    const maxTop = Math.max(0, iframeHeight - modalElementHeight);
+    modalTop = Math.max(minTop, Math.min(modalTop, maxTop));
+
+    setOffsetTop(Math.round(modalTop));
+  }, []);
+
+  const debouncedCenterModal = useMemo(
+    () => debounce(centerModalVertically, 50),
+    [centerModalVertically],
+  );
 
   return (
     <>
@@ -98,10 +124,10 @@ export default function CenteredModal({
             ref={backdropRef}
             className="modal flex h-screen w-full items-center justify-center"
           >
-            {isEmbedRoute ? (
+            {isEmbedRoute && screenWidthMedium() ? (
               <div
                 className=""
-                style={{ position: "absolute", top: `${offsetTop}px` }}
+                style={{ position: "fixed", top: `${offsetTop}px` }}
               >
                 {children}
               </div>

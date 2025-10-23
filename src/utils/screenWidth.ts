@@ -33,3 +33,7 @@ export function calcWidth() {
 export const screenWidthMobile = () => {
   return window.innerWidth < 640;
 };
+
+export const screenWidthMedium = () => {
+  return window.innerWidth < 1040;
+};
