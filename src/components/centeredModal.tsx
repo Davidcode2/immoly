@@ -109,7 +109,7 @@ export default function CenteredModal({
   }, []);
 
   const debouncedCenterModal = useMemo(
-    () => debounce(centerModalVertically, 50),
+    () => centerModalVertically,
     [centerModalVertically],
   );
 
@@ -127,7 +127,7 @@ export default function CenteredModal({
             {isEmbedRoute && screenWidthMedium() ? (
               <div
                 className=""
-                style={{ position: "fixed", top: `${offsetTop}px` }}
+                style={{ position: "absolute", top: `${offsetTop}px` }}
               >
                 {children}
               </div>
