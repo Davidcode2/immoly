@@ -6,7 +6,7 @@
 function throttle(func, limit) {
   let inThrottle;
   let lastResult;
-  return function(...args) {
+  return function (...args) {
     const context = this;
     if (!inThrottle) {
       inThrottle = true;
@@ -23,7 +23,7 @@ function throttle(func, limit) {
  */
 function debounce(func, delay) {
   let timeoutId;
-  return function(...args) {
+  return function (...args) {
     const context = this;
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
@@ -32,10 +32,11 @@ function debounce(func, delay) {
   };
 }
 
+// --- Iframe & Communication Helper Functions ---
+
 function setIframeWidth(iframe) {
   const scrollbarWidth =
     window.innerWidth - document.documentElement.clientWidth;
-
   iframe.style.width = `calc(100vw - ${scrollbarWidth}px)`;
 }
 
@@ -79,51 +80,27 @@ function listenForViewportRequest() {
 function setIframeWidthBasedOnDataset(script, iframe) {
   if (script.dataset.width === "screen") {
     const debouncedSetWidth = debounce(() => setIframeWidth(iframe), 150);
-
     setIframeWidth(iframe);
     window.addEventListener("resize", debouncedSetWidth);
   }
 }
 
-(() => {
-  const script = document.currentScript;
-  if (!script) {
-    console.error("Could not find currentScript. Embed will not load.");
-    return;
-  }
-
-  const id = script.dataset.id;
-  const origin = new URL(script.src).origin;
-
-  if (!id || !origin) {
-    console.error("Missing data-id or script origin. Embed will not load.");
-    return;
-  }
-
+function createIframe(origin, id) {
   const iframe = document.createElement("iframe");
   iframe.src = `${origin}/embed/${id}`;
   iframe.style.width = "100%";
   iframe.style.border = "none";
   iframe.style.overflow = "hidden";
   iframe.setAttribute("scrolling", "no");
-
   iframe.setAttribute("sandbox", "allow-scripts allow-same-origin");
+  return iframe;
+}
 
+function insertIframeAfterScript(script, iframe) {
   script.parentNode.insertBefore(iframe, script.nextSibling);
+}
 
-  setIframeWidthBasedOnDataset(script, iframe);
-
-  const throttledPostHeight = throttle(
-    () => postViewportHeight(iframe, origin),
-    5,
-  );
-
-  iframe.addEventListener("load", () => {
-    postViewportHeight(iframe, origin);
-    window.addEventListener("scroll", throttledPostHeight);
-    window.addEventListener("load", () => postViewportHeight(iframe, origin));
-  });
-
+function setupIframeHeightListener(iframe, origin) {
   window.addEventListener("message", (event) => {
     console.log("listen for height message");
     if (event.origin !== origin) return;
@@ -138,5 +115,43 @@ function setIframeWidthBasedOnDataset(script, iframe) {
       }
     }
   });
+}
+
+function setupViewportSync(iframe, origin) {
+  const throttledPostHeight = throttle(
+    () => postViewportHeight(iframe, origin),
+    5,
+  );
+
+  iframe.addEventListener("load", () => {
+    postViewportHeight(iframe, origin);
+    window.addEventListener("scroll", throttledPostHeight);
+    window.addEventListener("load", () => postViewportHeight(iframe, origin));
+  });
+}
+
+// --- Initialization (entry point) ---
+
+(function initWidget() {
+  const script = document.currentScript;
+  if (!script) {
+    console.error("Could not find currentScript. Embed will not load.");
+    return;
+  }
+
+  const id = script.dataset.id;
+  const origin = new URL(script.src).origin;
+
+  if (!id || !origin) {
+    console.error("Missing data-id or script origin. Embed will not load.");
+    return;
+  }
+
+  const iframe = createIframe(origin, id);
+  insertIframeAfterScript(script, iframe);
+  setIframeWidthBasedOnDataset(script, iframe);
+  setupViewportSync(iframe, origin);
+  setupIframeHeightListener(iframe, origin);
   listenForViewportRequest();
 })();
+
