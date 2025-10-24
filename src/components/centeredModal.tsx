@@ -74,7 +74,7 @@ export default function CenteredModal({
 
     if (offsetTopRef.current == 0) {
       offsetTopRef.current = offsetTop;
-      setOffsetTop(offsetTop); // apply immediately, no animation
+      setOffsetTop(offsetTop); 
       return;
     }
     offsetTopRef.current = offsetTop;
@@ -156,7 +156,7 @@ export default function CenteredModal({
     const animate = () => {
       if (!offsetTopRef.current) return;
       setOffsetTop((prev) => {
-        if (!offsetTopRef.current) return;
+        if (!offsetTopRef.current) return 0;
         const diff = offsetTopRef.current - prev;
         if (Math.abs(diff) < 0.5) return offsetTopRef.current; // snap when close
         return prev + diff * 0.05; // lerp factor 0.2 gives ~smooth trailing
