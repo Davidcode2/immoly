@@ -6,7 +6,7 @@
 function throttle(func, limit) {
   let inThrottle;
   let lastResult;
-  return function (...args) {
+  return function(...args) {
     const context = this;
     if (!inThrottle) {
       inThrottle = true;
@@ -23,7 +23,7 @@ function throttle(func, limit) {
  */
 function debounce(func, delay) {
   let timeoutId;
-  return function (...args) {
+  return function(...args) {
     const context = this;
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
@@ -35,9 +35,11 @@ function debounce(func, delay) {
 // --- Iframe & Communication Helper Functions ---
 
 function setIframeWidth(iframe) {
-  const scrollbarWidth =
-    window.innerWidth - document.documentElement.clientWidth;
-  iframe.style.width = `calc(100vw - ${scrollbarWidth}px)`;
+  requestAnimationFrame(() => {
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+    iframe.style.width = `calc(100vw - ${scrollbarWidth}px)`;
+  });
 }
 
 function postViewportHeight(iframe, targetOrigin) {
@@ -61,8 +63,8 @@ function postViewportHeight(iframe, targetOrigin) {
   );
 }
 
-function listenForViewportRequest() {
-  window.addEventListener("message", (e) => {
+function listenForViewportRequest(cleanup) {
+  cleanup.add(window, "message", (e) => {
     if (e.data.type === "REQUEST_PARENT_VIEWPORT") {
       e.source.postMessage(
         {
@@ -77,11 +79,11 @@ function listenForViewportRequest() {
   });
 }
 
-function setIframeWidthBasedOnDataset(script, iframe) {
+function setIframeWidthBasedOnDataset(script, iframe, cleanup) {
   if (script.dataset.width === "screen") {
     const debouncedSetWidth = debounce(() => setIframeWidth(iframe), 150);
     setIframeWidth(iframe);
-    window.addEventListener("resize", debouncedSetWidth);
+    cleanup.add(window, "resize", debouncedSetWidth);
   }
 }
 
@@ -100,8 +102,8 @@ function insertIframeAfterScript(script, iframe) {
   script.parentNode.insertBefore(iframe, script.nextSibling);
 }
 
-function setupIframeHeightListener(iframe, origin) {
-  window.addEventListener("message", (event) => {
+function setupIframeHeightListener(iframe, origin, cleanup) {
+  cleanup.add(window, "message", (event) => {
     console.log("listen for height message");
     if (event.origin !== origin) return;
 
@@ -117,22 +119,62 @@ function setupIframeHeightListener(iframe, origin) {
   });
 }
 
-function setupViewportSync(iframe, origin) {
-  const throttledPostHeight = throttle(
-    () => postViewportHeight(iframe, origin),
-    5,
-  );
+function setupViewportSync(iframe, origin, cleanup) {
+  let scheduled = false;
+
+  function postHeightIfNeeded() {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(() => {
+      postViewportHeight(iframe, origin);
+      scheduled = false;
+    });
+  }
 
   iframe.addEventListener("load", () => {
     postViewportHeight(iframe, origin);
-    window.addEventListener("scroll", throttledPostHeight);
-    window.addEventListener("load", () => postViewportHeight(iframe, origin));
+    cleanup.add(window, "scroll", postHeightIfNeeded, { passive: true });
+    cleanup.add(window, "load", () => postViewportHeight(iframe, origin));
   });
+}
+
+/*
+ * cleanup
+ *
+ */
+function createCleanupManager() {
+  const handlers = [];
+
+  return {
+    add(target, type, handler, options) {
+      target.addEventListener(type, handler, options);
+      handlers.push(() => target.removeEventListener(type, handler, options));
+    },
+    run() {
+      handlers.forEach((off) => off());
+      handlers.length = 0; // clear references
+    },
+  };
+}
+
+function observeIframeRemoval(iframe, cleanup) {
+  const observer = new MutationObserver(() => {
+    if (!document.body.contains(iframe)) {
+      cleanup.run();
+      observer.disconnect();
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
+function setupUnloadCleanup(cleanup) {
+  window.addEventListener("beforeunload", () => cleanup.run());
 }
 
 // --- Initialization (entry point) ---
 
 (function initWidget() {
+  const cleanupManager = createCleanupManager();
   const script = document.currentScript;
   if (!script) {
     console.error("Could not find currentScript. Embed will not load.");
@@ -149,9 +191,11 @@ function setupViewportSync(iframe, origin) {
 
   const iframe = createIframe(origin, id);
   insertIframeAfterScript(script, iframe);
-  setIframeWidthBasedOnDataset(script, iframe);
-  setupViewportSync(iframe, origin);
-  setupIframeHeightListener(iframe, origin);
-  listenForViewportRequest();
-})();
+  setIframeWidthBasedOnDataset(script, iframe, cleanupManager);
+  setupViewportSync(iframe, origin, cleanupManager);
+  setupIframeHeightListener(iframe, origin, cleanupManager);
+  listenForViewportRequest(cleanupManager);
 
+  observeIframeRemoval(iframe, cleanupManager);
+  setupUnloadCleanup(cleanupManager);
+})();
