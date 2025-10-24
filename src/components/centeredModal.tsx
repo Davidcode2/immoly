@@ -28,7 +28,7 @@ export default function CenteredModal({
   const parentViewportHeight = Number(useParentViewportHeightStore().value);
   const parentScrollHeight = Number(useParentScrollHeight().value);
   const isEmbedRoute = useIsEmbedRoute().value;
-  const offsetTopRef = useRef<number | null>(null);
+  const offsetTopRef = useRef<number>(0);
 
   const setParentViewportHeight = useParentViewportHeightStore().updateValue;
   const setParentScrollY = useParentScrollYStore().updateValue;
@@ -70,10 +70,9 @@ export default function CenteredModal({
     if (!isEmbedRoute) return;
 
     const offsetTop = centerModalVertically();
-    console.log(offsetTop);
     if (!offsetTop) return;
 
-    if (offsetTopRef.current == null) {
+    if (offsetTopRef.current == 0) {
       offsetTopRef.current = offsetTop;
       setOffsetTop(offsetTop); // apply immediately, no animation
       return;
