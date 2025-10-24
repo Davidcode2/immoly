@@ -30,7 +30,7 @@ export default function SondertilgungModal({
       <div className="sondertilgungInput">
         <label
           className="sondertilgungInput flex rounded-t-xl bg-[var(--primary)]/40 p-6 text-base md:p-10 dark:border-b dark:bg-[var(--background)]/80"
-          htmlFor="newTilgung"
+          htmlFor="sondertilgungAmount"
         >
           Erstelle eine Sondertilgung nach{" "}
           {year <= 1 ? "einem Jahr" : year + " Jahren"}
