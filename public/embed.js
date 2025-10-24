@@ -76,6 +76,15 @@ function listenForViewportRequest() {
   });
 }
 
+function setIframeWidthBasedOnDataset(script, iframe) {
+  if (script.dataset.width === "screen") {
+    const debouncedSetWidth = debounce(() => setIframeWidth(iframe), 150);
+
+    setIframeWidth(iframe);
+    window.addEventListener("resize", debouncedSetWidth);
+  }
+}
+
 (() => {
   const script = document.currentScript;
   if (!script) {
@@ -102,13 +111,7 @@ function listenForViewportRequest() {
 
   script.parentNode.insertBefore(iframe, script.nextSibling);
 
-  // --- Width Handling ---
-  if (script.dataset.width === "screen") {
-    const debouncedSetWidth = debounce(() => setIframeWidth(iframe), 150);
-
-    setIframeWidth(iframe);
-    window.addEventListener("resize", debouncedSetWidth);
-  }
+  setIframeWidthBasedOnDataset(script, iframe);
 
   const throttledPostHeight = throttle(
     () => postViewportHeight(iframe, origin),
@@ -122,6 +125,7 @@ function listenForViewportRequest() {
   });
 
   window.addEventListener("message", (event) => {
+    console.log("listen for height message");
     if (event.origin !== origin) return;
 
     if (event.data?.type === "IMMOLY_IFRAME_HEIGHT") {
@@ -134,6 +138,5 @@ function listenForViewportRequest() {
       }
     }
   });
-
   listenForViewportRequest();
 })();

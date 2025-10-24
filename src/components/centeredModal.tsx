@@ -1,3 +1,4 @@
+import centerModalVerticallyFunc from "@/services/centerVertically";
 import {
   useIsEmbedRoute,
   useParentScrollHeight,
@@ -84,7 +85,7 @@ export default function CenteredModal({
     };
   }, [parentScrollHeight, parentScrollY, parentViewportHeight]);
 
-  const centerModalVertically = useCallback(() => {
+  const centerModalVertically = () => {
     if (!isEmbedRoute || !backdropRef.current) {
       return;
     }
@@ -99,25 +100,17 @@ export default function CenteredModal({
       useParentViewportHeightStore.getState().value,
     );
     const parentScrollHeight = Number(useParentScrollHeight.getState().value);
-
     const iframeHeight = document.body.scrollHeight;
-    const modalElementHeight = modalElement.clientHeight;
 
-    const iframeOffsetInParent = parentScrollHeight - iframeHeight;
-    let visibleTop = parentScrollY - iframeOffsetInParent;
-    let visibleBottom = visibleTop + parentViewportHeight;
-
-    visibleTop = Math.max(0, Math.min(visibleTop, iframeHeight));
-    visibleBottom = Math.max(0, Math.min(visibleBottom, iframeHeight));
-
-    const visibleCenter = (visibleTop + visibleBottom) / 2;
-    let modalTop = visibleCenter - modalElementHeight / 2;
-    const minTop = 0;
-    const maxTop = Math.max(0, iframeHeight - modalElementHeight);
-    modalTop = Math.max(minTop, Math.min(modalTop, maxTop));
-
+    const modalTop = centerModalVerticallyFunc(
+      modalElement.clientHeight,
+      iframeHeight,
+      parentScrollHeight,
+      parentViewportHeight,
+      parentScrollY
+    )
     offsetTopRef.current = modalTop;
-  }, []);
+  };
 
   useEffect(() => {
     if (!isEmbedRoute) return;
@@ -125,6 +118,7 @@ export default function CenteredModal({
   }, []);
 
   useEffect(() => {
+    if (!isEmbedRoute) return;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     const handleMessage = (event: any) => {
       if (event.data?.type !== "PARENT_VIEWPORT") {
