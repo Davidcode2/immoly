@@ -7,14 +7,7 @@ import {
 } from "@/store";
 import { screenWidthMedium } from "@/utils/screenWidth";
 import { useSearchParams } from "next/navigation";
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type JSX,
-} from "react";
+import { ReactNode, useEffect, useRef, useState, type JSX } from "react";
 import { createPortal } from "react-dom";
 
 type PropTypes = {
@@ -35,7 +28,7 @@ export default function CenteredModal({
   const parentViewportHeight = Number(useParentViewportHeightStore().value);
   const parentScrollHeight = Number(useParentScrollHeight().value);
   const isEmbedRoute = useIsEmbedRoute().value;
-  const offsetTopRef = useRef(0);
+  const offsetTopRef = useRef<number | null>(null);
 
   const setParentViewportHeight = useParentViewportHeightStore().updateValue;
   const setParentScrollY = useParentScrollYStore().updateValue;
@@ -74,16 +67,27 @@ export default function CenteredModal({
   }, []);
 
   useEffect(() => {
-    if (!isEmbedRoute) {
+    if (!isEmbedRoute) return;
+
+    const offsetTop = centerModalVertically();
+    console.log(offsetTop);
+    if (!offsetTop) return;
+
+    if (offsetTopRef.current == null) {
+      offsetTopRef.current = offsetTop;
+      setOffsetTop(offsetTop); // apply immediately, no animation
       return;
     }
-    centerModalVertically();
+    offsetTopRef.current = offsetTop;
+  }, [parentScrollHeight, parentScrollY, parentViewportHeight]);
+
+  useEffect(() => {
     window.addEventListener("resize", centerModalVertically);
 
     return () => {
       window.removeEventListener("resize", centerModalVertically);
     };
-  }, [parentScrollHeight, parentScrollY, parentViewportHeight]);
+  }, []);
 
   const centerModalVertically = () => {
     if (!isEmbedRoute || !backdropRef.current) {
@@ -107,9 +111,9 @@ export default function CenteredModal({
       iframeHeight,
       parentScrollHeight,
       parentViewportHeight,
-      parentScrollY
-    )
-    offsetTopRef.current = modalTop;
+      parentScrollY,
+    );
+    return modalTop;
   };
 
   useEffect(() => {
@@ -151,7 +155,9 @@ export default function CenteredModal({
     let animationFrame: number;
 
     const animate = () => {
+      if (!offsetTopRef.current) return;
       setOffsetTop((prev) => {
+        if (!offsetTopRef.current) return;
         const diff = offsetTopRef.current - prev;
         if (Math.abs(diff) < 0.5) return offsetTopRef.current; // snap when close
         return prev + diff * 0.05; // lerp factor 0.2 gives ~smooth trailing
@@ -167,17 +173,21 @@ export default function CenteredModal({
     <>
       {createPortal(
         <div
-          className={`fixed inset-0 z-40 h-screen backdrop-blur-lg transition-all`}
+          className={`fixed inset-0 z-40 h-screen backdrop-blur-lg`}
           onClick={handleBackdropClick}
         >
           <div
             ref={backdropRef}
             className="modal flex h-screen w-full items-center justify-center"
           >
-            {isEmbedRoute && screenWidthMedium() ? (
+            {isEmbedRoute && screenWidthMedium() && offsetTop !== 0 ? (
               <div
                 className=""
-                style={{ position: "absolute", top: `${offsetTop}px` }}
+                style={{
+                  position: "absolute",
+                  top: `${offsetTop}px`,
+                  visibility: offsetTop === 0 ? "hidden" : "visible",
+                }}
               >
                 {children}
               </div>
