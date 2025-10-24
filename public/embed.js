@@ -104,7 +104,6 @@ function insertIframeAfterScript(script, iframe) {
 
 function setupIframeHeightListener(iframe, origin, cleanup) {
   cleanup.add(window, "message", (event) => {
-    console.log("listen for height message");
     if (event.origin !== origin) return;
 
     if (event.data?.type === "IMMOLY_IFRAME_HEIGHT") {
