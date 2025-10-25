@@ -3,7 +3,7 @@ import {
 } from "@/store";
 import { screenWidthMedium } from "@/utils/screenWidth";
 import { useSearchParams } from "next/navigation";
-import { ReactNode, useEffect, useRef, useState, type JSX } from "react";
+import { ReactNode, useEffect, useRef, type JSX } from "react";
 import { createPortal } from "react-dom";
 import EmmbedModal from "./embedModal";
 
