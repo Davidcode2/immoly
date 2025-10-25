@@ -21,10 +21,12 @@ export default function EmmbedModal({
   const parentScrollHeight = Number(useParentScrollHeight().value);
   const offsetTopRef = useRef<number>(0);
   const [offsetTop, setOffsetTop] = useState<number>(0);
+  const parentOriginRef = useRef(null);
 
   const setParentViewportHeight = useParentViewportHeightStore().updateValue;
   const setParentScrollY = useParentScrollYStore().updateValue;
   const setParentScrollHeight = useParentScrollHeight().updateValue;
+
   useEffect(() => {
     if (!isEmbedRoute) return;
 
@@ -132,8 +134,6 @@ export default function EmmbedModal({
     window.parent.postMessage({ type: "LOCK_BODY_SCROLL" }, "*");
     return () => window.parent.postMessage({ type: "UNLOCK_BODY_SCROLL" }, "*");
   }, []);
-
-  const parentOriginRef = useRef(null);
 
   return (
     <>
