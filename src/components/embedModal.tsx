@@ -22,24 +22,38 @@ export default function EmmbedModal({
   const offsetTopRef = useRef<number>(0);
   const [offsetTop, setOffsetTop] = useState<number>(0);
   const parentOriginRef = useRef(null);
+  const receivedParentSizeMessage = useRef(false);
 
   const setParentViewportHeight = useParentViewportHeightStore().updateValue;
   const setParentScrollY = useParentScrollYStore().updateValue;
   const setParentScrollHeight = useParentScrollHeight().updateValue;
 
+  const isMounted = useRef(false);
+
   useEffect(() => {
+    isMounted.current = true;
+  },[]);
+
+  useEffect(() => {
+    if (!isMounted.current) return;
     if (!isEmbedRoute) return;
+    if (!receivedParentSizeMessage.current) return;
 
     let offsetTop = centerModalVertically();
     if (!offsetTop) return;
     if ("virtualKeyboard" in navigator) {
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-      const { height } = (navigator as Navigator as any).virtualKeyboard.boundingRect;
-      offsetTop -= height / 2
+      /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+      const { height } = (navigator as Navigator as any).virtualKeyboard
+        .boundingRect;
+      offsetTop -= height / 2;
+    }
+
+    if (offsetTopRef.current !== 0) {
+      offsetTopRef.current = offsetTop;
+      setOffsetTop(offsetTop);
     }
 
     offsetTopRef.current = offsetTop;
-    setOffsetTop(offsetTop);
   }, [parentScrollHeight, parentScrollY, parentViewportHeight]);
 
   useEffect(() => {
@@ -60,20 +74,15 @@ export default function EmmbedModal({
       return;
     }
 
-    const parentScrollY = Number(useParentScrollYStore.getState().value);
-    const parentViewportHeight = Number(
-      useParentViewportHeightStore.getState().value,
-    );
-    const parentScrollHeight = Number(useParentScrollHeight.getState().value);
     const iframeHeight = document.body.scrollHeight;
 
     const modalTop = centerModalVerticallyFunc(
       modalElement.clientHeight,
       iframeHeight,
-      parentScrollHeight,
-      parentViewportHeight,
-      parentScrollY,
-    );
+      Number(useParentScrollHeight.getState().value),
+      Number(useParentViewportHeightStore.getState().value),
+      Number(useParentScrollYStore.getState().value)
+    )
     return modalTop;
   };
 
@@ -104,6 +113,7 @@ export default function EmmbedModal({
       setParentViewportHeight(event.data.viewportHeight);
       setParentScrollY(event.data.scrollY);
       setParentScrollHeight(event.data.scrollHeight);
+      receivedParentSizeMessage.current = true;
     };
 
     window.addEventListener("message", handleMessage);
@@ -111,24 +121,6 @@ export default function EmmbedModal({
       window.removeEventListener("message", handleMessage);
     };
   }, [setParentScrollHeight, setParentScrollY, setParentViewportHeight]);
-
-  useEffect(() => {
-    let animationFrame: number;
-
-    const animate = () => {
-      if (!offsetTopRef.current) return;
-      setOffsetTop((prev) => {
-        if (!offsetTopRef.current) return 0;
-        const diff = offsetTopRef.current - prev;
-        if (Math.abs(diff) < 0.5) return offsetTopRef.current; // snap when close
-        return prev + diff * 0.05; // lerp factor 0.2 gives ~smooth trailing
-      });
-      animationFrame = requestAnimationFrame(animate);
-    };
-
-    animationFrame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrame);
-  }, []);
 
   useEffect(() => {
     if (!isEmbedRoute) return;
