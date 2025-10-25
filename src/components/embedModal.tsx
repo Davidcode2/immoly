@@ -33,12 +33,8 @@ export default function EmmbedModal({
     const offsetTop = centerModalVertically();
     if (!offsetTop) return;
 
-    if (offsetTopRef.current == 0) {
-      offsetTopRef.current = offsetTop;
-      setOffsetTop(offsetTop);
-      return;
-    }
     offsetTopRef.current = offsetTop;
+    setOffsetTop(offsetTop);
   }, [parentScrollHeight, parentScrollY, parentViewportHeight]);
 
   useEffect(() => {
