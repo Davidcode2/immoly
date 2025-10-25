@@ -1,10 +1,5 @@
 import { RefObject, useEffect, useRef, useState } from "react";
 import centerModalVerticallyFunc from "@/services/centerVertically";
-import {
-  useParentScrollHeight,
-  useParentScrollYStore,
-  useParentViewportHeightStore,
-} from "@/store";
 
 type PropTypes = {
   children: React.ReactNode;
@@ -16,17 +11,10 @@ export default function EmmbedModal({
   isEmbedRoute,
   backdropRef,
 }: PropTypes) {
-  const parentScrollY = Number(useParentScrollYStore().value);
-  const parentViewportHeight = Number(useParentViewportHeightStore().value);
-  const parentScrollHeight = Number(useParentScrollHeight().value);
   const offsetTopRef = useRef<number>(0);
   const [offsetTop, setOffsetTop] = useState<number>(0);
   const parentOriginRef = useRef(null);
   const receivedParentSizeMessage = useRef(false);
-
-  const setParentViewportHeight = useParentViewportHeightStore().updateValue;
-  const setParentScrollY = useParentScrollYStore().updateValue;
-  const setParentScrollHeight = useParentScrollHeight().updateValue;
 
   const isMounted = useRef(false);
 
@@ -34,12 +22,16 @@ export default function EmmbedModal({
     isMounted.current = true;
   }, []);
 
-  useEffect(() => {
-    if (!isMounted.current) return;
-    if (!isEmbedRoute) return;
-    if (!receivedParentSizeMessage.current) return;
-
-    let offsetTop = centerModalVertically();
+  const centerModal = (
+    parentViewportHeight: number,
+    parentScrollY: number,
+    parentScrollHeight: number,
+  ) => {
+    let offsetTop = centerModalVertically(
+      parentViewportHeight,
+      parentScrollY,
+      parentScrollHeight,
+    );
     if (!offsetTop) return;
     if ("virtualKeyboard" in navigator) {
       /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -50,17 +42,13 @@ export default function EmmbedModal({
 
     setOffsetTop(offsetTop);
     offsetTopRef.current = offsetTop;
-  }, [parentScrollHeight, parentScrollY, parentViewportHeight]);
+  };
 
-  useEffect(() => {
-    window.addEventListener("resize", centerModalVertically);
-
-    return () => {
-      window.removeEventListener("resize", centerModalVertically);
-    };
-  }, []);
-
-  const centerModalVertically = () => {
+  const centerModalVertically = (
+    parentViewportHeight: number,
+    parentScrollY: number,
+    parentScrollHeight: number,
+  ) => {
     if (!isEmbedRoute || !backdropRef.current) {
       return;
     }
@@ -75,9 +63,9 @@ export default function EmmbedModal({
     const modalTop = centerModalVerticallyFunc(
       modalElement.clientHeight,
       iframeHeight,
-      Number(useParentScrollHeight.getState().value),
-      Number(useParentViewportHeightStore.getState().value),
-      Number(useParentScrollYStore.getState().value),
+      Number(parentScrollHeight),
+      Number(parentViewportHeight),
+      Number(parentScrollY),
     );
     return modalTop;
   };
@@ -106,17 +94,18 @@ export default function EmmbedModal({
         return;
       }
 
-      setParentViewportHeight(event.data.viewportHeight);
-      setParentScrollY(event.data.scrollY);
-      setParentScrollHeight(event.data.scrollHeight);
+      const parentViewportHeight = event.data.viewportHeight;
+      const parentScrollY = event.data.scrollY;
+      const parentScrollHeight = event.data.scrollHeight;
       receivedParentSizeMessage.current = true;
+      centerModal(parentViewportHeight, parentScrollY, parentScrollHeight);
     };
 
     window.addEventListener("message", handleMessage);
     return () => {
       window.removeEventListener("message", handleMessage);
     };
-  }, [setParentScrollHeight, setParentScrollY, setParentViewportHeight]);
+  }, []);
 
   useEffect(() => {
     if (!isEmbedRoute) return;

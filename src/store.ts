@@ -41,21 +41,6 @@ export const useNebenkostenActiveStore = create<BooleanState>((set) => ({
   updateValue: (newValue: boolean) => set({ value: newValue }),
 }));
 
-export const useParentViewportHeightStore = create<StringState>((set) => ({
-  value: "0",
-  updateValue: (newValue: string) => set({ value: newValue }),
-}));
-
-export const useParentScrollYStore = create<StringState>((set) => ({
-  value: "0",
-  updateValue: (newValue: string) => set({ value: newValue }),
-}));
-
-export const useParentScrollHeight = create<StringState>((set) => ({
-  value: "0",
-  updateValue: (newValue: string) => set({ value: newValue }),
-}));
-
 export const useIsEmbedRoute = create<BooleanState>((set) => ({
   value: false,
   updateValue: (newValue: boolean) => set({ value: newValue }),
