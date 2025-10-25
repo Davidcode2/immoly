@@ -111,6 +111,7 @@ export default function NebenkostenModal({
                 sumNebenkosten={sumNebenkosten}
                 nebenkostenActive={nebenkostenActive}
                 principal={principal}
+                setNebenkostenActive={setNebenkostenActive}
               />
               <div className="mt-2 flex gap-x-4">
                 <Label

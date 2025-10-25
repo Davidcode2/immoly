@@ -10,11 +10,13 @@ type PropTypes = {
   sumNebenkosten: number;
   nebenkostenActive: boolean;
   principal: number;
+  setNebenkostenActive: (arg1: boolean) => void;
 };
 export default function SummeNebenkosten({
   sumNebenkosten,
   nebenkostenActive,
   principal,
+  setNebenkostenActive,
 }: PropTypes) {
   const [edit, setEdit] = useState(false);
   const localSum = useRef(sumNebenkosten);
@@ -25,6 +27,9 @@ export default function SummeNebenkosten({
     useNotarkostenPercentageStore((state) => state.value).replace(",", "."),
   );
 
+    console.log("sum", sumNebenkosten);
+    console.log("localSum", localSum.current);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     parsedValue: number,
@@ -33,10 +38,28 @@ export default function SummeNebenkosten({
     console.log(parsedValue);
   };
 
+  const actualSumNebenkosten = useCalcNebenkostenSum(principal, true);
+
+  const activateOrDeactivateNebenkostenState = () => {
+    if (localSum.current === 0) {
+      setNebenkostenActive(false);
+      setEdit(false);
+      return;
+    } else if (sumNebenkosten === 0) {
+      setNebenkostenActive(true);
+      return true;
+    }
+    return false;
+  }
+
   const handleSubmit = () => {
+    const activate = activateOrDeactivateNebenkostenState();
+    if (activate) {
+      sumNebenkosten = actualSumNebenkosten; 
+    }
+    const differenceOldAndNewTotalSum = localSum.current - sumNebenkosten;
     const currentNotarkostenAbsolute =
       (Number(notarkostenPercentage) / 100) * principal;
-    const differenceOldAndNewTotalSum = localSum.current - sumNebenkosten;
     const differenceToNotarkosten =
       currentNotarkostenAbsolute + differenceOldAndNewTotalSum;
 
