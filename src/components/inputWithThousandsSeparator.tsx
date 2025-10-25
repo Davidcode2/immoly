@@ -23,7 +23,7 @@ export default function InputWithThousandsSeparator({
   inputName,
   min,
   max,
-  maxLength,
+  maxLength = 10,
   handleChange,
 }: PropTypes) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -51,8 +51,11 @@ export default function InputWithThousandsSeparator({
     const input = e.target;
     const selectionStart = input.selectionStart ?? 0;
     const unformatted = input.value.replace(/\./g, "");
+    console.log("localhandlechange", unformatted);
 
     const isValid = validationPattern().test(unformatted);
+    console.log(isValid);
+    console.log(maxLength);
     if (!isValid) {
       return;
     }

@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useNebenkostenActiveStore } from "@/store";
 import Image from "next/image";
+import SummeNebenkosten from "./summeNebenkosten";
 
 type PropTypes = {
   pieChartData: { name: string; value: number }[];
@@ -106,16 +107,11 @@ export default function NebenkostenModal({
             )}
 
             <div className="mt-6 border-t border-slate-500/20 pt-4 max-md:hidden">
-              <div className="flex items-center justify-between gap-x-8">
-                <h2
-                  className={`${!nebenkostenActive && "line-through"} text-lg`}
-                >
-                  Summe Nebenkosten
-                </h2>
-                <p className="w-32 text-end text-2xl dark:text-[var(--ultralight-accent)]">
-                  {sumNebenkosten.toLocaleString("de-DE")}&nbsp;€
-                </p>
-              </div>
+              <SummeNebenkosten
+                sumNebenkosten={sumNebenkosten}
+                nebenkostenActive={nebenkostenActive}
+                principal={principal}
+              />
               <div className="mt-2 flex gap-x-4">
                 <Label
                   htmlFor="enableNebenkosten"
