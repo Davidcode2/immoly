@@ -30,8 +30,13 @@ export default function EmmbedModal({
   useEffect(() => {
     if (!isEmbedRoute) return;
 
-    const offsetTop = centerModalVertically();
+    let offsetTop = centerModalVertically();
     if (!offsetTop) return;
+    if ("virtualKeyboard" in navigator) {
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+      const { height } = (navigator as Navigator as any).virtualKeyboard.boundingRect;
+      offsetTop -= height / 2
+    }
 
     offsetTopRef.current = offsetTop;
     setOffsetTop(offsetTop);
