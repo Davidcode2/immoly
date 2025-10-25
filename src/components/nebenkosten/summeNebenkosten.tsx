@@ -27,15 +27,12 @@ export default function SummeNebenkosten({
     useNotarkostenPercentageStore((state) => state.value).replace(",", "."),
   );
 
-    console.log("sum", sumNebenkosten);
-    console.log("localSum", localSum.current);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     parsedValue: number,
   ) => {
     localSum.current = parsedValue;
-    console.log(parsedValue);
   };
 
   const actualSumNebenkosten = useCalcNebenkostenSum(principal, true);
@@ -67,7 +64,6 @@ export default function SummeNebenkosten({
       .toFixed(10)
       .replace(".", ",");
 
-    console.log(newPercent);
     updateNotarkostenPercentageState(newPercent);
     setEdit(false);
   };

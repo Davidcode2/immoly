@@ -99,7 +99,6 @@ function createNoScrollCssRule() {
 function lockBodyScrollListener(cleanup) {
   cleanup.add(window, "message", (e) => {
     if (e.data.type === "LOCK_BODY_SCROLL") {
-      console.log("received lock message");
       document.body.classList.add('immoly-no-scroll');
     }
   });
@@ -108,7 +107,6 @@ function lockBodyScrollListener(cleanup) {
 function unlockBodyScrollListener(cleanup) {
   cleanup.add(window, "message", (e) => {
     if (e.data.type === "UNLOCK_BODY_SCROLL") {
-      console.log("received unlock message");
       document.body.classList.remove('immoly-no-scroll');
     }
   });
