@@ -32,7 +32,7 @@ export default function EmmbedModal({
 
   useEffect(() => {
     isMounted.current = true;
-  },[]);
+  }, []);
 
   useEffect(() => {
     if (!isMounted.current) return;
@@ -48,11 +48,7 @@ export default function EmmbedModal({
       offsetTop -= height / 2;
     }
 
-    if (offsetTopRef.current !== 0) {
-      offsetTopRef.current = offsetTop;
-      setOffsetTop(offsetTop);
-    }
-
+    setOffsetTop(offsetTop);
     offsetTopRef.current = offsetTop;
   }, [parentScrollHeight, parentScrollY, parentViewportHeight]);
 
@@ -81,8 +77,8 @@ export default function EmmbedModal({
       iframeHeight,
       Number(useParentScrollHeight.getState().value),
       Number(useParentViewportHeightStore.getState().value),
-      Number(useParentScrollYStore.getState().value)
-    )
+      Number(useParentScrollYStore.getState().value),
+    );
     return modalTop;
   };
 
