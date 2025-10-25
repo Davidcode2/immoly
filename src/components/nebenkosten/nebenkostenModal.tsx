@@ -64,11 +64,13 @@ export default function NebenkostenModal({
               />
             </div>
             <div className="relative top-18">
-              <div className="flex w-full flex-col justify-center text-center md:hidden">
-                <h5>Summe</h5>
-                <p className="text-2xl dark:text-[var(--ultralight-accent)]">
-                  {sumNebenkosten.toLocaleString("de-DE")}&nbsp;€
-                </p>
+              <div className="md:hidden">
+                <SummeNebenkosten
+                  sumNebenkosten={sumNebenkosten}
+                  nebenkostenActive={nebenkostenActive}
+                  principal={principal}
+                  setNebenkostenActive={setNebenkostenActive}
+                />
                 <div className="flex items-center justify-center space-x-2 pt-2">
                   <Label
                     htmlFor="enableNebenkosten"

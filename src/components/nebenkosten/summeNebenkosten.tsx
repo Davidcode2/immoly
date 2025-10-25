@@ -71,16 +71,16 @@ export default function SummeNebenkosten({
   localSum.current = useCalcNebenkostenSum(principal);
 
   return (
-    <div className="flex items-center justify-between gap-x-8">
+    <div className="md:flex md:items-center md:justify-between md:gap-x-8 max-md:flex max-md:w-full max-md:flex-col max-md:justify-center max-md:text-center ">
       <label
         htmlFor="sumNebenkosten"
         className={`${!nebenkostenActive && "line-through"} text-lg`}
         onClick={() => setEdit(true)}
       >
-        Summe Nebenkosten
+        <><span>Summe</span> <span className="max-md:hidden">Nebenkosten</span></>
       </label>
       {edit ? (
-        <form className="flex items-center text-2xl">
+        <form className="flex max-sm:w-full justify-center items-center text-center text-2xl">
           <InputWithThousandsSeparator
             value={localSum.current}
             className="w-26 bg-transparent text-end text-2xl transition-colors duration-200 focus:outline-none"
@@ -95,7 +95,7 @@ export default function SummeNebenkosten({
         </form>
       ) : (
         <p
-          className="w-32 text-end text-2xl dark:text-[var(--ultralight-accent)]"
+          className="md:w-32 md:text-end text-2xl dark:text-[var(--ultralight-accent)]"
           onClick={() => setEdit(true)}
         >
           {sumNebenkosten.toLocaleString("de-DE")}&nbsp;€
