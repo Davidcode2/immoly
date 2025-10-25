@@ -79,6 +79,41 @@ function listenForViewportRequest(cleanup) {
   });
 }
 
+function appendNoScrollStyleElement() {
+  const styleElement = document.createElement("style");
+  const noScrollClass = createNoScrollCssRule();
+  styleElement.textContent = noScrollClass;
+  document.head.appendChild(styleElement);
+}
+
+function createNoScrollCssRule() {
+  const cssRule = `
+  .immoly-no-scroll {
+    overflow: hidden !important;
+  }
+`;
+  return cssRule;
+}
+
+
+function lockBodyScrollListener(cleanup) {
+  cleanup.add(window, "message", (e) => {
+    if (e.data.type === "LOCK_BODY_SCROLL") {
+      console.log("received lock message");
+      document.body.classList.add('immoly-no-scroll');
+    }
+  });
+}
+
+function unlockBodyScrollListener(cleanup) {
+  cleanup.add(window, "message", (e) => {
+    if (e.data.type === "UNLOCK_BODY_SCROLL") {
+      console.log("received unlock message");
+      document.body.classList.remove('immoly-no-scroll');
+    }
+  });
+}
+
 function setIframeWidthBasedOnDataset(script, iframe, cleanup) {
   if (script.dataset.width === "screen") {
     const debouncedSetWidth = debounce(() => setIframeWidth(iframe), 150);
@@ -190,10 +225,16 @@ function setupUnloadCleanup(cleanup) {
 
   const iframe = createIframe(origin, id);
   insertIframeAfterScript(script, iframe);
+
+  appendNoScrollStyleElement();
+
   setIframeWidthBasedOnDataset(script, iframe, cleanupManager);
   setupViewportSync(iframe, origin, cleanupManager);
   setupIframeHeightListener(iframe, origin, cleanupManager);
   listenForViewportRequest(cleanupManager);
+
+  unlockBodyScrollListener(cleanupManager);
+  lockBodyScrollListener(cleanupManager);
 
   observeIframeRemoval(iframe, cleanupManager);
   setupUnloadCleanup(cleanupManager);

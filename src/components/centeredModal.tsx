@@ -34,6 +34,12 @@ export default function CenteredModal({
   const setParentScrollY = useParentScrollYStore().updateValue;
   const setParentScrollHeight = useParentScrollHeight().updateValue;
 
+  useEffect(() => {
+    if (!isEmbedRoute) return;
+    window.parent.postMessage({ type: "LOCK_BODY_SCROLL" }, "*");
+    return () => window.parent.postMessage({ type: "UNLOCK_BODY_SCROLL" }, "*");
+  }, []);
+
   const parentOriginRef = useRef(null);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
@@ -74,7 +80,7 @@ export default function CenteredModal({
 
     if (offsetTopRef.current == 0) {
       offsetTopRef.current = offsetTop;
-      setOffsetTop(offsetTop); 
+      setOffsetTop(offsetTop);
       return;
     }
     offsetTopRef.current = offsetTop;
