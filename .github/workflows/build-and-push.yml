@@ -12,6 +12,11 @@ on:
       build_args:
         required: false
         type: string
+    outputs:
+      version:
+        description: "Version extracted from package.json"
+        value: ${{ jobs.build-and-push.outputs.version }}
+
 
 env:
   REGISTRY: ghcr.io
@@ -19,6 +24,8 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.pkg.outputs.version }}
     permissions:
       contents: read
       packages: write

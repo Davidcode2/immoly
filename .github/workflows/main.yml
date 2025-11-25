@@ -59,6 +59,37 @@ jobs:
       build_args: |
         SKIP_BUILD_STATIC_GENERATION=true
 
+  deploy-app:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    permissions:
+      contents: read
+    env:
+      VERSION: ${{ needs.build-and-push.outputs.version }}
+
+    steps:
+      - name: Checkout app-of-apps repo
+        uses: actions/checkout@v4
+        with:
+          repository: app-of-apps
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: immoly
+
+      - name: Update deployment image tag
+        run: |
+          VERSION=${{ steps.pkg.outputs.version }}
+          DEPLOY_FILE="immoly/immoly-app-deployment.yaml"
+          sed -i "s|image: ghcr.io/davidcode2/immoly:.*|image: ghcr.io/davidcode2/immoly:${VERSION}|g" $DEPLOY_FILE
+
+      - name: Commit deployment changes
+        run: |
+          cd immoly
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Deploy immoly version ${VERSION}"
+          git push
+
   build-and-push-migrations-image:
     permissions:
       contents: read
@@ -69,94 +100,3 @@ jobs:
     with:
       image_name: ghcr.io/${{ github.repository }}-migrations
       dockerfile: dockerfile.migrations
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build-and-push
-    permissions:
-      id-token: write
-      contents: read
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Configure AWS Credentials Action for GitHub Actions
-        uses: aws-actions/configure-aws-credentials@v4.2.1
-        with:
-          aws-region: eu-central-1
-          role-to-assume: arn:aws:iam::${{secrets.AWS_ACCOUNT_ID}}:role/ci-role
-
-      - name: Get IP address from SSM
-        id: get-server-ip
-        run: |
-          ip=$(aws ssm get-parameter \
-            --name "/compute/hetzner-cloud-server-1/host" \
-            --query 'Parameter.Value' \
-            --output text)
-          echo "host_ip=$ip" >> "$GITHUB_OUTPUT"
-
-      - name: Retrieve SSH private key from SSM
-        run: |
-          key=$(aws ssm get-parameter \
-            --name "/ssh/hetzner-cloud-server-1/openssl_deployment_private_ssh_key" \
-            --with-decryption \
-            --query 'Parameter.Value' \
-            --output text)
-
-          echo "PRIVATE_SSH_KEY<<EOF" >> $GITHUB_ENV
-          echo "$key" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-
-      - name: Retrieve Database Secrets from SSM
-        id: get-db-secrets
-        run: |
-          REPO_NAME=$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
-
-          DB_USER=$(aws ssm get-parameter --name "/$REPO_NAME/db/user" --with-decryption --query 'Parameter.Value' --output text)
-          DB_PASSWORD=$(aws ssm get-parameter --name "/$REPO_NAME/db/password" --with-decryption --query 'Parameter.Value' --output text)
-          DB_NAME=$(aws ssm get-parameter --name "/$REPO_NAME/db/name" --with-decryption --query 'Parameter.Value' --output text)
-          DB_HOST=immoly-postgres
-          DB_PORT=5432
-
-          # Create .env file content
-          echo "POSTGRES_USER=$DB_USER" > .env.temp
-          echo "POSTGRES_PASSWORD=$DB_PASSWORD" >> .env.temp
-          echo "POSTGRES_DB=$DB_NAME" >> .env.temp
-          echo "POSTGRES_HOST=$DB_HOST" >> .env.temp
-          echo "POSTGRES_PORT=$DB_PORT" >> .env.temp
-
-          # Create DATABASE_URL env var
-          echo "DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}" >> $GITHUB_ENV
-
-      - name: Start ssh-agent and add key
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ env.PRIVATE_SSH_KEY }}
-
-      - name: Create deployment dir
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }} << 'EOF'
-            mkdir -p ${{ env.DEPLOYMENT_DIR }}
-          EOF
-
-      - name: Transfer docker-compose.yml
-        run: |
-          scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }}:${{ env.DEPLOYMENT_DIR }}
-          scp -o StrictHostKeyChecking=no .env.temp ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }}:${{ env.DEPLOYMENT_DIR }}/.env
-
-      - name: Deploy on server
-        env:
-          DEPLOY_IMAGE_TAG: ${{ github.sha }}
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ steps.get-server-ip.outputs.host_ip }} << 'EOF'
-            docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-
-            cd ${{ env.DEPLOYMENT_DIR }}
-            docker compose stop || true
-
-            docker compose pull
-            IMAGE_TAG=${DEPLOY_IMAGE_TAG} docker compose up -d
-
-            docker image prune -f
-          EOF
