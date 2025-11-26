@@ -14,15 +14,21 @@ export default function SondertilgungModal({
 }: PropTypes) {
   const [tooLittle, setTooLittle] = useState(false);
 
-  const localHandleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const sondertilgungAmount = form.elements.namedItem(
-      "sondertilgungAmount",
+  const localHandleSubmit = () => {
+    const sondertilgungAmount = document.querySelector(
+      'input[name="sondertilgungAmount"]',
     ) as HTMLInputElement;
+    if (!sondertilgungAmount) return;
     const unformatted = sondertilgungAmount.value.replace(/\./g, "");
     setTooLittle(Number(unformatted) < 1000);
     handleSubmit(unformatted, year);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent, submitHandler: () => void) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      submitHandler();
+    }
   };
 
   return (
@@ -35,8 +41,7 @@ export default function SondertilgungModal({
           Erstelle eine Sondertilgung nach{" "}
           {year <= 1 ? "einem Jahr" : year + " Jahren"}
         </label>
-        <form
-          onSubmit={localHandleSubmit}
+        <div
           className="flex flex-col justify-around"
         >
           <div className="flex justify-center pt-10 pb-4 md:pt-18">
@@ -46,14 +51,15 @@ export default function SondertilgungModal({
               max={9999999}
               min={1000}
               maxLength={9}
+              onKeyDown={(e) => handleKeyDown(e, localHandleSubmit)}
               className={`sondertilgungInput w-36 border-b border-[var(--dark-accent)] bg-transparent pb-1 text-xl transition-colors duration-200 focus:border-[var(--dark-accent)]/60 focus:outline-none md:text-2xl ${tooLittle && "focus:border-b-[var(--alert)]"}`}
             />
             <div className="relative top-1 -left-6 text-lg">€</div>
           </div>
-          <button className="mx-auto my-10 cursor-pointer rounded-full bg-[var(--light-accent)] p-2 px-10 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90 dark:bg-[var(--dark-accent)]">
+          <button onClick={localHandleSubmit} className="mx-auto my-10 cursor-pointer rounded-full bg-[var(--light-accent)] p-2 px-10 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90 dark:bg-[var(--dark-accent)]">
             Übernehmen
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );

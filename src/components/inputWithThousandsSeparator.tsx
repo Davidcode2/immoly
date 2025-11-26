@@ -16,6 +16,7 @@ type PropTypes = {
     arg1: React.ChangeEvent<HTMLInputElement>,
     arg2: number,
   ) => void;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
 };
 export default function InputWithThousandsSeparator({
   value,
@@ -25,6 +26,7 @@ export default function InputWithThousandsSeparator({
   max,
   maxLength = 10,
   handleChange,
+  onKeyDown,
 }: PropTypes) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [displayValue, setDisplayValue] = useState<string>("");
@@ -97,6 +99,7 @@ export default function InputWithThousandsSeparator({
       max={max || 1000000}
       maxLength={maxLength || 10}
       value={displayValue}
+      onKeyDown={onKeyDown}
     />
   );
 }
