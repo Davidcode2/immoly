@@ -11,18 +11,20 @@ export default function PreisePage() {
           <h4 className="font-fira-code text-4xl">
             Der Mehrwert für Ihr Business
           </h4>
-          <p className="py-6">
-            Bieten Sie Ihren Kundinnen und Kunden mehr als Zahlen: ein echtes
-            Beratungserlebnis. Unser Rechner – als sofort einbindbares Drop-In
-            oder individuell auf Ihr Unternehmen abgestimmt – macht Ihre Website
-            zum zuverlässigen Begleiter für alle Finanzierungsfragen.
+          <div className="py-6">
+            <p>
+              Bieten Sie Ihren Kundinnen und Kunden mehr als Zahlen: ein echtes
+              Beratungserlebnis. Unser Rechner – als sofort einbindbares Drop-In
+              oder individuell auf Ihr Unternehmen abgestimmt – macht Ihre
+              Website zum zuverlässigen Begleiter für alle Finanzierungsfragen.
+            </p>
             <p>
               Ob Sie Kredite vermitteln oder umfassende Beratung anbieten: Mit
               diesem Tool zeigen Sie, dass Sie nicht nur Produkte verkaufen,
               sondern Menschen bei einer der größten Entscheidungen ihres Lebens
               kompetent unterstützen.
             </p>
-          </p>
+          </div>
         </div>
         <div className="mb-24 grid gap-10 md:grid-cols-2 lg:-mr-8 lg:-ml-30 lg:grid-cols-3 xl:-mr-0 xl:-ml-20">
           <StyledCard
