@@ -67,13 +67,12 @@ jobs:
     env:
       VERSION: ${{ needs.build-and-push.outputs.version }}
 
-    steps:
-      - name: Generate token
-        id: app_token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.APP_ID }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+      steps:
+        - name: Checkout app-of-apps repo
+          uses: actions/checkout@v4
+          with:
+            repository: davidcode2/app-of-apps
+            token: ${{ secrets.DEPLOYMENT_PAT }}
 
       - name: Checkout app-of-apps repo
         uses: actions/checkout@v4
@@ -91,7 +90,7 @@ jobs:
       - name: Commit deployment changes
         working-directory: immoly
         env:
-          GIT_TOKEN: ${{ steps.app_token.outputs.token }}
+          GIT_TOKEN: ${{ secrets.DEPLOYMENT_PAT }}
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
