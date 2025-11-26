@@ -91,10 +91,12 @@ jobs:
       - name: Commit deployment changes
         working-directory: immoly
         env:
-          GH_TOKEN: ${{ steps.app_token.outputs.token }}
+          GIT_TOKEN: ${{ steps.app_token.outputs.token }}
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
+          git config --global credential.helper store
+          echo "https://x-access-token:${GIT_TOKEN}@github.com" > ~/.git-credentials
           git add .
           git commit -m "Deploy immoly version ${VERSION}"
           git push
