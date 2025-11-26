@@ -1,7 +1,7 @@
 export default function CloseButton({ onClick }: { onClick: () => void }) {
   return (
     <button
-      className="fixed top-3 right-3 z-40 cursor-pointer transition-colors hover:text-red-400 p-2"
+      className="fixed top-3 right-3 z-50 cursor-pointer transition-colors hover:text-red-400 p-2"
       onClick={() => onClick()}
       aria-label="Close"
     >
