@@ -1,7 +1,7 @@
 import Image from "next/image";
 export default function Impressum() {
   return (
-    <main className="mb-20 max-w-full px-10 md:px-24 py-16">
+    <main className="mb-20 max-w-full px-10 py-16 md:px-24">
       <h1 className="mb-6 text-3xl font-bold">Impressum</h1>
       <div className="grid lg:grid-cols-2">
         <div>
@@ -51,11 +51,11 @@ export default function Impressum() {
         </div>
         <div>
           <section className="mb-6">
-            <h2 className="mb-2 text-lg font-semibold">Umsatzsteuer-ID</h2>
+            <h2 className="mb-2 text-lg font-semibold">Wirtschafts-ID</h2>
             <p>
-              Umsatzsteuer-Identifikationsnummer gemäß §27 a Umsatzsteuergesetz:
+              Wirtschafts-Identifikationsnummer nach § 139c Abgabenordnung:
               <br />
-              TBD
+              DE457840760-00001
             </p>
           </section>
           <section className="mb-6">
