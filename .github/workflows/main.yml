@@ -68,11 +68,18 @@ jobs:
       VERSION: ${{ needs.build-and-push.outputs.version }}
 
     steps:
+      - name: Generate token
+        id: app_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Checkout app-of-apps repo
         uses: actions/checkout@v4
         with:
           repository: davidcode2/app-of-apps
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.app_token.outputs.token }}
 
       - name: Check directory
         run: |

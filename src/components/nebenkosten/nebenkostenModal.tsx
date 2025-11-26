@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PieChartNebenkosten from "./pieChartNebenkosten";
-import { screenWidthMobile } from "@/utils/screenWidth";
+import { screenWidthSmall } from "@/utils/screenWidth";
 import NebenkostenEntry from "./nebenkostenEntry";
 import { AbsoluteNebenkostenModel } from "./nebenkostenFrontendModel";
 import BundeslandSelection from "./bundeslandSelection";
@@ -45,7 +45,7 @@ export default function NebenkostenModal({
     <div className="z-40 rounded-xl border border-slate-500/20 bg-radial-[at_50%_75%] from-[var(--background)]/50 to-[var(--primary)]/20 shadow-2xl backdrop-blur-3xl md:mx-auto md:max-w-3xl md:backdrop-blur-xl">
       <CloseButton onClick={onClose} />
       <div className="grid md:grid-cols-2">
-        {(!screenWidthMobile() || showMap) && (
+        {(!screenWidthSmall() || showMap) && (
           <BundeslandSelection
             bundesland={bundesland}
             setBundesland={setBundesland}

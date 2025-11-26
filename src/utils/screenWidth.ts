@@ -37,3 +37,7 @@ export const screenWidthMobile = () => {
 export const screenWidthMedium = () => {
   return window.innerWidth < 1040;
 };
+
+export const screenWidthSmall = () => {
+  return window.innerWidth < 768;
+};
