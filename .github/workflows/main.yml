@@ -75,6 +75,19 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: immoly
 
+      - name: Check directory
+        run: |
+          echo "Files in directory:"
+          ls -la
+          find . -name "*deployment*" -o -name "*immoly*"
+
+      - name: Check Immoly directory
+        working-directory: immoly
+        run: |
+          echo "Files in immoly directory:"
+          ls -la
+          find . -name "*deployment*" -o -name "*immoly*"
+
       - name: Update deployment image tag
         working-directory: immoly
         run: |
@@ -83,6 +96,7 @@ jobs:
           sed -i "s|image: ghcr.io/davidcode2/immoly:.*|image: ghcr.io/davidcode2/immoly:${VERSION}|g" $DEPLOY_FILE
 
       - name: Commit deployment changes
+        working-directory: immoly
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
