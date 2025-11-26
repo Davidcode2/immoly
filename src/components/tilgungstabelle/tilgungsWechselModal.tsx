@@ -99,7 +99,7 @@ export default function TilgungsWechselModal({
 
                     <div className="relative top-1 -left-6 text-lg">€</div>
                   </div>
-                  <button className="mx-auto my-10 cursor-pointer rounded-full bg-[var(--light-accent)] p-2 px-10 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90 dark:bg-[var(--dark-accent)]">
+                  <button className="z-50 mx-auto my-10 cursor-pointer rounded-full bg-[var(--light-accent)] p-2 px-10 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90 dark:bg-[var(--dark-accent)]">
                     Übernehmen
                   </button>
                 </form>
@@ -134,7 +134,7 @@ export default function TilgungsWechselModal({
                   />
                   <div className="relative right-6">%</div>
                 </div>
-                <button className="mx-auto my-10 cursor-pointer rounded-full bg-[var(--light-accent)] p-2 px-10 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90 dark:bg-[var(--dark-accent)]">
+                <button className="z-50 mx-auto my-10 cursor-pointer rounded-full bg-[var(--light-accent)] p-2 px-10 text-white shadow-md transition-colors hover:bg-[var(--accent)]/90 dark:bg-[var(--dark-accent)]">
                   Übernehmen
                 </button>
               </form>
