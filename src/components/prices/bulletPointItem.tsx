@@ -6,7 +6,7 @@ type PropTypes = {
 };
 export default function BulletPointItem({ plus, children }: PropTypes) {
   return (
-    <div className="flex gap-x-2">
+    <div className="flex gap-x-2 lg:text-sm xl:text-base">
     { plus ?
       <span className="inline-block rounded-full dark:bg-green-900/20 bg-green-50"><PlusIcon /></span>
     : 
