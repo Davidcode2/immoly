@@ -71,7 +71,7 @@ jobs:
       - name: Checkout app-of-apps repo
         uses: actions/checkout@v4
         with:
-          repository: app-of-apps
+          repository: davidcode2/app-of-apps
           token: ${{ secrets.GITHUB_TOKEN }}
           path: immoly
 
