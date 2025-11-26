@@ -81,19 +81,6 @@ jobs:
           repository: davidcode2/app-of-apps
           token: ${{ steps.app_token.outputs.token }}
 
-      - name: Check directory
-        run: |
-          echo "Files in directory:"
-          ls -la
-          find . -name "*deployment*" -o -name "*immoly*"
-
-      - name: Check Immoly directory
-        working-directory: immoly
-        run: |
-          echo "Files in immoly directory:"
-          ls -la
-          find . -name "*deployment*" -o -name "*immoly*"
-
       - name: Update deployment image tag
         working-directory: immoly
         run: |
@@ -103,6 +90,8 @@ jobs:
 
       - name: Commit deployment changes
         working-directory: immoly
+        env:
+          GH_TOKEN: ${{ steps.app_token.outputs.token }}
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
