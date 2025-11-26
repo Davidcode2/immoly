@@ -60,7 +60,7 @@ export default function PreisePage() {
             header={"Enterprise"}
             icon={<TrendingUp stroke="var(--background)" />}
           >
-            <SeatCard header="Sprechen Sie mit uns">
+            <SeatCard tax={false} header="Sprechen Sie mit uns">
               <BulletPointItem>Alles aus Individuell</BulletPointItem>
               <BulletPointItem plus={true}>Unbegrenzte Seiten</BulletPointItem>
               <BulletPointItem plus={true}>Multi Domain</BulletPointItem>
