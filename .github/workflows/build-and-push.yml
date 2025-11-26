@@ -43,7 +43,7 @@ jobs:
           
       - name: Read version from package.json
         id: pkg
-        run: echo "version=$(cat package.json | jq .version)" >> $GITHUB_OUTPUT
+        run: echo "version=$(cat package.json | jq -r .version)" >> $GITHUB_OUTPUT
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
