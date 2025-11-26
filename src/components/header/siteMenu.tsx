@@ -33,8 +33,8 @@ export default function SiteMenu() {
             <ul className="flex flex-col gap-y-10 text-3xl">
               <AnimatedMenuEntry href="/" text="Rechner" />
               <AnimatedMenuEntry href="/about" text="Über Immoly"/>
-              <AnimatedMenuEntry href="/impressum" text="Impressum"/>
               <AnimatedMenuEntry href="/preise" text="Preise"/>
+              <AnimatedMenuEntry href="/impressum" text="Impressum"/>
             </ul>
           </div>
         </DrawerContent>
@@ -54,8 +54,8 @@ export default function SiteMenu() {
             <ul className="flex flex-col gap-y-10 text-3xl">
               <AnimatedMenuEntry href="/" text="Rechner" onSelect={() => setMobileOpen(false)}/>
               <AnimatedMenuEntry href="/about" text="Über Immoly" onSelect={() => setMobileOpen(false)}/>
-              <AnimatedMenuEntry href="/impressum" text="Impressum" onSelect={() => setMobileOpen(false)}/>
               <AnimatedMenuEntry href="/preise" text="Preise" onSelect={() => setMobileOpen(false)}/>
+              <AnimatedMenuEntry href="/impressum" text="Impressum" onSelect={() => setMobileOpen(false)}/>
             </ul>
           </div>
         </DrawerContent>

@@ -1,11 +1,12 @@
 import StyledCard from "@/components/about/styledCard";
 import BulletPointItem from "@/components/prices/bulletPointItem";
+import { Timer, TrendingUp } from "lucide-react";
 
 export default function PreisePage() {
   return (
     <div className="mx-10 lg:mt-10 lg:mr-20 lg:ml-40">
       <div className="grid gap-10">
-        <div className="text-lg">
+        <div className="text-lg mb-10">
           <h4 className="font-fira-code text-4xl">
             Der Mehrwert für Ihr Business
           </h4>
@@ -17,11 +18,14 @@ export default function PreisePage() {
             sondern mit echter Beratung zur Seite stehen.
           </p>
         </div>
-        <div className="grid gap-10 lg:grid-cols-3">
-          <StyledCard header={"DropIn"}>
+        <div className="mb-24 grid gap-10 lg:grid-cols-3">
+          <StyledCard
+            header={"DropIn"}
+            icon={<Timer stroke="var(--background)" />}
+          >
             <div className="flex flex-col justify-center">
               <div>
-                <div className="mb-8 text-center text-4xl">9€/Monat</div>
+                <div className="max-sm:mt-6 mb-8 text-center text-4xl">9€/Monat</div>
               </div>
               <div className="grid gap-y-4">
                 <BulletPointItem>Eine Seite</BulletPointItem>
@@ -33,28 +37,33 @@ export default function PreisePage() {
               </div>
             </div>
           </StyledCard>
-          <StyledCard header={"Individuell"}>
-            <div className="flex flex-col justify-center">
-              <div className="mb-8">
-                <div className="text-center text-4xl">12€/Monat</div>
-                <div className="text-center">
-                  einmalig 500€ Einrichtungsgebühr
+          <div className="xl:scale-105 border rounded-lg border-[var(--secondary)]">
+            <StyledCard header={"Individuell"}>
+              <div className="flex flex-col justify-center">
+                <div className="mb-8">
+                  <div className="text-center text-4xl">12€/Monat</div>
+                  <div className="text-center">
+                    einmalig 500€ Einrichtungsgebühr
+                  </div>
+                </div>
+                <div className="grid gap-y-4">
+                  <BulletPointItem>Alles aus DropIn</BulletPointItem>
+                  <BulletPointItem plus={true}>
+                    Individuell zugeschnitten auf Ihr Business
+                  </BulletPointItem>
+                  <BulletPointItem plus={true}>Eigenes Logo</BulletPointItem>
+                  <BulletPointItem plus={true}>
+                    Angepasst an Ihr Farbschema
+                  </BulletPointItem>
+                  <BulletPointItem plus={true}>Premium-Support</BulletPointItem>
                 </div>
               </div>
-              <div className="grid gap-y-4">
-                <BulletPointItem>Alles aus DropIn</BulletPointItem>
-                <BulletPointItem plus={true}>
-                  Individuell zugeschnitten auf Ihr Business
-                </BulletPointItem>
-                <BulletPointItem plus={true}>Eigenes Logo</BulletPointItem>
-                <BulletPointItem plus={true}>
-                  Angepasst an Ihr Farbschema
-                </BulletPointItem>
-                <BulletPointItem plus={true}>Premium-Support</BulletPointItem>
-              </div>
-            </div>
-          </StyledCard>
-          <StyledCard header={"Enterprise"}>
+            </StyledCard>
+          </div>
+          <StyledCard
+            header={"Enterprise"}
+            icon={<TrendingUp stroke="var(--background)" />}
+          >
             <div className="flex flex-col justify-center">
               <div className="mb-8">Sprechen Sie mit uns</div>
               <div className="grid gap-y-4">
