@@ -7,19 +7,24 @@ export default function PreisePage() {
   return (
     <div className="mx-10 lg:mt-10 lg:mr-20 lg:ml-40">
       <div className="grid gap-10">
-        <div className="mb-10 text-lg">
+        <div className="mb-6 text-lg">
           <h4 className="font-fira-code text-4xl">
             Der Mehrwert für Ihr Business
           </h4>
           <p className="py-6">
-            Sie vermitteln Kredite, haben eine öffentliche Website und möchten
-            Ihren Kunden das bestmögliche Erlebnis bieten? Mit unserem Rechner,
-            als DropIn oder individuell auf Ihr Unternehmen zugeschnitten,
-            zeigen Sie Ihren Kunden, dass Sie nicht nur Kredite verkaufen,
-            sondern mit echter Beratung zur Seite stehen.
+            Bieten Sie Ihren Kundinnen und Kunden mehr als Zahlen: ein echtes
+            Beratungserlebnis. Unser Rechner – als sofort einbindbares Drop-In
+            oder individuell auf Ihr Unternehmen abgestimmt – macht Ihre Website
+            zum zuverlässigen Begleiter für alle Finanzierungsfragen.
+            <p>
+              Ob Sie Kredite vermitteln oder umfassende Beratung anbieten: Mit
+              diesem Tool zeigen Sie, dass Sie nicht nur Produkte verkaufen,
+              sondern Menschen bei einer der größten Entscheidungen ihres Lebens
+              kompetent unterstützen.
+            </p>
           </p>
         </div>
-        <div className="mb-24 grid gap-10 md:grid-cols-2 lg:grid-cols-3 lg:-ml-30 lg:-mr-8 xl:-mr-0 xl:-ml-20">
+        <div className="mb-24 grid gap-10 md:grid-cols-2 lg:-mr-8 lg:-ml-30 lg:grid-cols-3 xl:-mr-0 xl:-ml-20">
           <StyledCard
             header={"DropIn"}
             icon={<Timer stroke="var(--background)" />}
@@ -33,7 +38,7 @@ export default function PreisePage() {
               <BulletPointItem plus={true}>Bereit in 24h</BulletPointItem>
             </SeatCard>
           </StyledCard>
-          <div className="rounded-lg border border-[var(--secondary)] xl:scale-105 h-fit">
+          <div className="h-fit rounded-lg border border-[var(--secondary)] xl:scale-105">
             <StyledCard header={"Individuell"}>
               <SeatCard
                 header="12€/Monat"
