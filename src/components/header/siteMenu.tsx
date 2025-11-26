@@ -34,6 +34,7 @@ export default function SiteMenu() {
               <AnimatedMenuEntry href="/" text="Rechner" />
               <AnimatedMenuEntry href="/about" text="Über Immoly"/>
               <AnimatedMenuEntry href="/impressum" text="Impressum"/>
+              <AnimatedMenuEntry href="/preise" text="Preise"/>
             </ul>
           </div>
         </DrawerContent>
@@ -54,6 +55,7 @@ export default function SiteMenu() {
               <AnimatedMenuEntry href="/" text="Rechner" onSelect={() => setMobileOpen(false)}/>
               <AnimatedMenuEntry href="/about" text="Über Immoly" onSelect={() => setMobileOpen(false)}/>
               <AnimatedMenuEntry href="/impressum" text="Impressum" onSelect={() => setMobileOpen(false)}/>
+              <AnimatedMenuEntry href="/preise" text="Preise" onSelect={() => setMobileOpen(false)}/>
             </ul>
           </div>
         </DrawerContent>
