@@ -76,14 +76,14 @@ jobs:
           path: immoly
 
       - name: Update deployment image tag
+        working-directory: immoly
         run: |
-          VERSION=${{ steps.pkg.outputs.version }}
-          DEPLOY_FILE="immoly/immoly-app-deployment.yaml"
+          VERSION=$VERSION
+          DEPLOY_FILE="immoly-app-deployment.yaml"
           sed -i "s|image: ghcr.io/davidcode2/immoly:.*|image: ghcr.io/davidcode2/immoly:${VERSION}|g" $DEPLOY_FILE
 
       - name: Commit deployment changes
         run: |
-          cd immoly
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add .
