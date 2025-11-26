@@ -73,7 +73,6 @@ jobs:
         with:
           repository: davidcode2/app-of-apps
           token: ${{ secrets.GITHUB_TOKEN }}
-          path: immoly
 
       - name: Check directory
         run: |
