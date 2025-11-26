@@ -74,12 +74,6 @@ jobs:
           repository: davidcode2/app-of-apps
           token: ${{ secrets.DEPLOYMENT_PAT }}
 
-      - name: Checkout app-of-apps repo
-        uses: actions/checkout@v4
-        with:
-          repository: davidcode2/app-of-apps
-          token: ${{ steps.app_token.outputs.token }}
-
       - name: Update deployment image tag
         working-directory: immoly
         run: |
