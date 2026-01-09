@@ -101,7 +101,7 @@ export default function RootLayout({
       >
         <Script
           src="https://analytics.jakob-lingel.dev/script.js"
-          data-website-id="ccf8342c-1b2a-4f38-b8ab-1b7c70acbbd4"
+          data-website-id="b78cc7f5-6dd5-4ccb-82c8-2eea06f94733"
           strategy="afterInteractive"
         ></Script>
         <Toaster position="top-center" />
