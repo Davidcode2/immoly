@@ -1,0 +1,32 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices"],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": ">=1.0.0",
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    },
+    {
+      "matchPackageNames": ["next", "react", "react-dom"],
+      "groupName": "nextjs core",
+      "automerge": false
+    },
+    {
+      "matchPackageNames": ["@radix-ui/*"],
+      "groupName": "radix-ui packages",
+      "automerge": true
+    },
+    {
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "automerge": true
+    }
+  ],
+  "schedule": ["before 5am on monday"],
+  "timezone": "Europe/Berlin"
+}
