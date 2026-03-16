@@ -18,7 +18,7 @@ jobs:
       src: ${{ steps.filter.outputs.src }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.2
 
       - name: Check for relevant changes
         id: filter
@@ -35,7 +35,7 @@ jobs:
       src: ${{ steps.filter.outputs.src }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.2
 
       - name: Check for relevant changes
         id: filter
@@ -69,7 +69,7 @@ jobs:
 
     steps:
       - name: Checkout app-of-apps repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.2
         with:
           repository: davidcode2/app-of-apps
           token: ${{ secrets.DEPLOYMENT_PAT }}
