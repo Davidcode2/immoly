@@ -7,9 +7,13 @@ on:
       - main
 
 env:
+  GITHUB_OWNER: Davidcode2
+  APP_REPO_NAME: immoly
+  APP_OF_APPS_REPO: app-of-apps
   IMAGE_NAME: ${{ github.repository }}
   REGISTRY: ghcr.io
-  DEPLOYMENT_DIR: /opt/deployments/immoly
+  DEPLOYMENT_DIR: immoly
+  DEPLOYMENT_FILE: immoly-app-deployment.yaml
 
 jobs:
   check-for-changes:
@@ -70,36 +74,35 @@ jobs:
     steps:
       - name: Create GitHub App token
         id: app-token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3.0.0
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
-          owner: Davidcode2
+          owner: ${{ env.GITHUB_OWNER }}
+          repositories: ${{ env.APP_OF_APPS_REPO }}
 
       - name: Checkout app-of-apps repo
         uses: actions/checkout@v6.0.2
         with:
-          repository: davidcode2/app-of-apps
+          repository: ${{ env.GITHUB_OWNER }}/${{ env.APP_OF_APPS_REPO }}
           token: ${{ steps.app-token.outputs.token }}
 
       - name: Update deployment image tag
-        working-directory: immoly
+        working-directory: ${{ env.DEPLOYMENT_DIR }}
         run: |
-          VERSION=$VERSION
-          DEPLOY_FILE="immoly-app-deployment.yaml"
-          sed -i "s|image: ghcr.io/davidcode2/immoly:.*|image: ghcr.io/davidcode2/immoly:${VERSION}|g" $DEPLOY_FILE
+          OWNER_LC=$(echo "${{ env.GITHUB_OWNER }}" | tr '[:upper:]' '[:lower:]')
+          REPO_LC=$(echo "${{ env.APP_REPO_NAME }}" | tr '[:upper:]' '[:lower:]')
+          sed -i "s|image: ghcr.io/${OWNER_LC}/${REPO_LC}:.*|image: ghcr.io/${OWNER_LC}/${REPO_LC}:${VERSION}|g" "${{ env.DEPLOYMENT_FILE }}"
+          echo "Updated image tag to ${VERSION}"
 
-      - name: Commit deployment changes
-        working-directory: immoly
-        env:
-          GIT_TOKEN: ${{ steps.app-token.outputs.token }}
+      - name: Commit and push deployment changes
+        working-directory: ${{ env.DEPLOYMENT_DIR }}
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git config --global credential.helper store
-          echo "https://x-access-token:${GIT_TOKEN}@github.com" > ~/.git-credentials
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git diff --exit-code && echo "No changes to commit" && exit 0
           git add .
-          git commit -m "Deploy immoly version ${VERSION}"
+          git commit -m "deploy: ${{ env.APP_REPO_NAME }} v${VERSION}"
           git push
 
   build-and-push-migrations-image:
