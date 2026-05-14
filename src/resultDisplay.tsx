@@ -30,6 +30,7 @@ import { useRecalculateTableOnNebenkostenChange } from "./hooks/useRecalculateTa
 import useReactToInputChange from "./hooks/useReactToInputChange";
 import useReactToStoredCalculationChange from "./hooks/useReactToStoredCalculationChange";
 import { useUpdateSonderamounts } from "./hooks/useUpdateSonderamounts";
+import BuyVsRentComparisonCard from "./components/buyVsRentComparisonCard";
 
 export default function ResultDisplay({ showButton }: { showButton?: boolean }) {
   const [table, setTable] = useState<ArmotizationEntry[] | null>(null);
@@ -198,6 +199,14 @@ export default function ResultDisplay({ showButton }: { showButton?: boolean }) 
                   changeHandler={changeHandler}
                 />
               </div>
+              {input && (
+                <BuyVsRentComparisonCard
+                  input={input}
+                  table={table}
+                  nebenkosten={calcSummeNebenkosten(input.principal)}
+                  setInput={setInput}
+                />
+              )}
             </>
           )}
         </div>

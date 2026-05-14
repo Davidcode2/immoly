@@ -9,4 +9,5 @@ export const DEFAULT_CALCULATION = {
       interest_rate: 3.8,
       rent: 800,
       cash_roi: 5,
+      holding_period_years: 10,
 } as CashRoiModel

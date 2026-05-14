@@ -4,4 +4,5 @@ export default interface BaseModel {
   interest_rate: number;
   monthly_rate: number;
   rent: number;
+  holding_period_years?: number;
 }

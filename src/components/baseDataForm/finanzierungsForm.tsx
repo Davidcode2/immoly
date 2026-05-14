@@ -65,6 +65,7 @@ export default function FinanzierungsForm({
         break;
     }
     setInput({
+      ...values,
       principal: name === "principal" ? Number(value) : Number(principalValue),
       down_payment:
         name === "down_payment" ? Number(value) : Number(downPayment),
