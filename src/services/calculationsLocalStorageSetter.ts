@@ -13,8 +13,14 @@ export function calculationsLocalStorageSetter(
     interest_rate: Number(input.interest_rate),
     monthly_rate: Number(input.monthly_rate),
     rent: Number(input.rent),
-    holding_period_years: Number(input.holding_period_years ?? 10),
     cash_roi: Number(input.cash_roi),
+    holding_period_years: Number(input.holding_period_years ?? 10),
+    expected_property_appreciation: Number(
+      input.expected_property_appreciation ?? 2,
+    ),
+    expected_inflation: Number(input.expected_inflation ?? 2),
+    monthly_buy_nebenkosten: Number(input.monthly_buy_nebenkosten ?? 0),
+    monthly_rent_nebenkosten: Number(input.monthly_rent_nebenkosten ?? 0),
   } as BaseModel;
   const uuid = crypto.randomUUID();
   const calculation = { id: uuid, ...model };

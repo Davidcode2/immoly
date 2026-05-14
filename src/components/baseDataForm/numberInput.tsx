@@ -24,7 +24,12 @@ export default function NumberInput({
   const [prevNumberOfDots, setPrevNumberOfDots] = useState<number>(0);
   const isLocalChange = useRef<boolean>(false);
 
-  const percentageInputs = ["interest_rate", "cash_roi"];
+  const percentageInputs = [
+    "interest_rate",
+    "cash_roi",
+    "expected_property_appreciation",
+    "expected_inflation",
+  ];
 
   useEffect(() => {
     if (value !== undefined) {
@@ -86,6 +91,9 @@ export default function NumberInput({
   const validationPattern = () => {
     if (inputName === "principal" || inputName === "down_payment") {
       return /^[0-9]{0,8}$/;
+    }
+    if (inputName === "expected_property_appreciation") {
+      return /^-?[0-9]{0,2}(,[0-9]{0,3})?$/;
     }
     if (percentageInputs.includes(inputName)) {
       return /^[0-9]{0,2}(,[0-9]{0,3})?$/;

@@ -1,6 +1,11 @@
 import SliderInput from "@/components/slider/sliderInput";
 import calculateBuyVsRentComparison, {
+  getCashRoi,
+  getExpectedInflation,
+  getExpectedPropertyAppreciation,
   getHoldingPeriodYears,
+  getMonthlyBuyNebenkosten,
+  getMonthlyRentNebenkosten,
 } from "@/lib/calculateBuyVsRentComparison";
 import ArmotizationEntry from "@/lib/models/ArmotizationEntry";
 import CashRoiModel from "@/lib/models/cashRoiModel";
@@ -42,7 +47,8 @@ export default function BuyVsRentComparisonCard({
             </h3>
             <p className="mt-1 max-w-2xl text-sm text-[var(--foreground)]/70">
               Die Kaufkosten werden auf {comparison.holdingPeriodYears} Jahre Haltedauer verteilt.
-              Annahme: Verkauf zum heutigen Kaufpreis, ohne Wertsteigerung oder Instandhaltung.
+              Beim Mieten wird eine positive Ersparnis gegenueber dem Kauf jedes Jahr mit der
+              Kapitalrendite angelegt. Alle Vergleichswerte werden in heutiger Kaufkraft gezeigt.
             </p>
           </div>
           <div
@@ -76,34 +82,101 @@ export default function BuyVsRentComparisonCard({
             sign={"Jahre"}
             handleChange={handleInputChange}
           />
+          <SliderInput
+            min={0}
+            max={10}
+            step={0.1}
+            value={getCashRoi(input)}
+            inputName={"cash_roi"}
+            label={"Jaehrliche Kapitalrendite"}
+            htmlFor={"cashRoiComparison"}
+            sign={"%"}
+            handleChange={handleInputChange}
+          />
+          <SliderInput
+            min={-2}
+            max={10}
+            step={0.1}
+            value={getExpectedPropertyAppreciation(input)}
+            inputName={"expected_property_appreciation"}
+            label={"Wertsteigerung Immobilie"}
+            htmlFor={"expectedPropertyAppreciation"}
+            sign={"%"}
+            handleChange={handleInputChange}
+          />
+          <SliderInput
+            min={0}
+            max={10}
+            step={0.1}
+            value={getExpectedInflation(input)}
+            inputName={"expected_inflation"}
+            label={"Erwartete Inflation"}
+            htmlFor={"expectedInflation"}
+            sign={"%"}
+            handleChange={handleInputChange}
+          />
+          <SliderInput
+            min={0}
+            max={2000}
+            step={10}
+            value={getMonthlyBuyNebenkosten(input)}
+            inputName={"monthly_buy_nebenkosten"}
+            label={"Monatliche Nebenkosten Kauf"}
+            htmlFor={"monthlyBuyNebenkosten"}
+            handleChange={handleInputChange}
+          />
+          <SliderInput
+            min={0}
+            max={2000}
+            step={10}
+            value={getMonthlyRentNebenkosten(input)}
+            inputName={"monthly_rent_nebenkosten"}
+            label={"Monatliche Nebenkosten Miete"}
+            htmlFor={"monthlyRentNebenkosten"}
+            handleChange={handleInputChange}
+          />
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
           <ComparisonStat
             label="Monatlicher Cashflow Kauf"
-            value={`${formatCurrency(comparison.monthlyBuyCashflow)} €`}
-            description="Aktuelle Finanzierungsrate"
+            value={`${formatCurrency(comparison.monthlyBuyTotalCost)} €`}
+            description={`${formatCurrency(comparison.monthlyBuyCashflow)} € Rate + ${formatCurrency(comparison.monthlyBuyNebenkosten)} € Nebenkosten`}
           />
           <ComparisonStat
             label="Monatliche Kosten Miete"
-            value={`${formatCurrency(comparison.monthlyRentCost)} €`}
-            description="Kaltmiete pro Monat"
+            value={`${formatCurrency(comparison.monthlyRentTotalCost)} €`}
+            description={`${formatCurrency(comparison.monthlyRentCost)} € Kaltmiete + ${formatCurrency(comparison.monthlyRentNebenkosten)} € Nebenkosten`}
           />
           <ComparisonStat
             label="Effektive Monatskosten Kauf"
             value={`${formatCurrency(comparison.effectiveMonthlyBuyCost)} €`}
-            description="Mit Verkauf nach Haltedauer verrechnet"
+            description="In heutiger Kaufkraft, inkl. Verkauf nach Haltedauer"
+          />
+          <ComparisonStat
+            label="Effektive Monatskosten Miete"
+            value={`${formatCurrency(comparison.effectiveMonthlyRentCost)} €`}
+            description="In heutiger Kaufkraft, nach Anlage der Miet-Ersparnis"
           />
           <ComparisonStat
             label="Differenz pro Monat"
             value={`${differenceIsPositive ? "+" : ""}${formatCurrency(comparison.differencePerMonth)} €`}
-            description={differenceIsPositive ? "Mehrkosten gegenueber Miete" : "Ersparnis gegenueber Miete"}
+            description={differenceIsPositive ? "Mehrkosten gegenueber Mieten inkl. Anlage" : "Ersparnis gegenueber Mieten inkl. Anlage"}
             emphasized
+          />
+          <ComparisonStat
+            label="Depotwert beim Mieten"
+            value={`${formatCurrency(comparison.renterInvestmentBalance)} €`}
+            description={`${formatCurrency(comparison.totalRenterSavingsContribution)} € eingezahlte Ersparnis`}
           />
         </div>
       </div>
 
       <div className="grid gap-4 border-t border-[var(--grey-accent)]/20 px-6 py-5 text-sm text-[var(--foreground)]/70 md:grid-cols-3 md:px-8">
+        <SummaryLine
+          label="Durchschnittliche Monatsmiete"
+          value={`${formatCurrency(comparison.averageMonthlyRentCost)} €`}
+        />
         <SummaryLine
           label={`Gesamtkosten Kauf in ${comparison.holdingPeriodYears} Jahren`}
           value={`${formatCurrency(comparison.totalBuyingCost)} €`}
@@ -113,8 +186,20 @@ export default function BuyVsRentComparisonCard({
           value={`${formatCurrency(comparison.totalRentCost)} €`}
         />
         <SummaryLine
+          label="Kapitalrendite auf Miet-Ersparnis"
+          value={`${comparison.realCashRoi.toFixed(1).replace(".", ",")}% real`}
+        />
+        <SummaryLine
           label="Auszahlung nach Verkauf"
           value={`${formatCurrency(comparison.saleProceedsAfterLoan)} €`}
+        />
+        <SummaryLine
+          label="Geschaetzter Verkaufspreis"
+          value={`${formatCurrency(comparison.estimatedSalePrice)} €`}
+        />
+        <SummaryLine
+          label="Annahmen"
+          value={`${comparison.realPropertyAppreciation.toFixed(1).replace(".", ",")}% reale Wertsteigerung / ${comparison.realCashRoi.toFixed(1).replace(".", ",")}% reale Rendite`}
         />
       </div>
     </section>

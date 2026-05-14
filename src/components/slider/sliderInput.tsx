@@ -29,7 +29,12 @@ const SliderInput: React.FC<SliderInputProps> = ({
   children,
 }) => {
 
-  const percentageInputs = ["interest_rate", "cash_roi"];
+  const percentageInputs = [
+    "interest_rate",
+    "cash_roi",
+    "expected_property_appreciation",
+    "expected_inflation",
+  ];
 
   return (
     <div>

@@ -10,4 +10,8 @@ export const DEFAULT_CALCULATION = {
       rent: 800,
       cash_roi: 5,
       holding_period_years: 10,
+      expected_property_appreciation: 2,
+      expected_inflation: 2,
+      monthly_buy_nebenkosten: 0,
+      monthly_rent_nebenkosten: 0,
 } as CashRoiModel
