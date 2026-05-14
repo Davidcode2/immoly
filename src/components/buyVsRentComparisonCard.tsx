@@ -88,7 +88,7 @@ export default function BuyVsRentComparisonCard({
             step={0.1}
             value={getCashRoi(input)}
             inputName={"cash_roi"}
-            label={"Jaehrliche Kapitalrendite"}
+            label={"Jährliche Kapitalrendite"}
             htmlFor={"cashRoiComparison"}
             sign={"%"}
             handleChange={handleInputChange}
@@ -194,7 +194,7 @@ export default function BuyVsRentComparisonCard({
           value={`${formatCurrency(comparison.saleProceedsAfterLoan)} €`}
         />
         <SummaryLine
-          label="Geschaetzter Verkaufspreis"
+          label="Geschätzter Verkaufspreis"
           value={`${formatCurrency(comparison.estimatedSalePrice)} €`}
         />
         <SummaryLine
