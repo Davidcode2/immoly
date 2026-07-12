@@ -9,7 +9,7 @@ export default function Impressum() {
             <h2 className="mb-2 text-xl font-semibold">
               Angaben gemäß § 5 TMG
             </h2>
-            <p className="mb-1 font-medium">Immoly.io</p>
+            <p className="mb-1 font-medium">immo.jakob-lingel.dev</p>
             <p>Jakob Lingel</p>
             <p>Amselweg 3</p>
             <p>73560 Böbingen an der Rems</p>
@@ -39,12 +39,12 @@ export default function Impressum() {
             <p>
               Website:{" "}
               <a
-                href="https://immoly.io"
+                href="https://immo.jakob-lingel.dev"
                 className="text-blue-600 underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                https://immoly.io
+                https://immo.jakob-lingel.dev
               </a>
             </p>
           </section>

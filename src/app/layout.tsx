@@ -35,15 +35,15 @@ export const metadata: Metadata = {
   authors: [{ name: "Jakob Lingel" }],
   creator: "Jakob Lingel",
   publisher: "Immoly",
-  metadataBase: new URL("https://immoly.io"),
+  metadataBase: new URL("https://immo.jakob-lingel.dev"),
   alternates: {
-    canonical: "https://immoly.io",
+    canonical: "https://immo.jakob-lingel.dev",
   },
   openGraph: {
     title: "Immoly – Dein smarter Immobilienfinanzierungsrechner",
     description:
       "Berechne Deine Immobilienfinanzierung mit Immoly. Erhalte Tilgungstabellen und Visualisierungen in Sekunden.",
-    url: "https://immoly.io",
+    url: "https://immo.jakob-lingel.dev",
     siteName: "Immoly",
     images: [
       {
@@ -87,7 +87,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebApplication",
               name: "Immoly",
-              url: "https://immoly.io",
+              url: "https://immo.jakob-lingel.dev",
               description:
                 "Immoly ist eine Plattform für Immobilienfinanzierung mit Tilgungsrechner und Visualisierung.",
               applicationCategory: "FinanceApplication",
